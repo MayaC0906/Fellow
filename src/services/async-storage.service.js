@@ -5,7 +5,6 @@ export const storageService = {
     put,
     remove,
 }
-//checking remote
 function query(entityType, delay = 500) {
     var entities = JSON.parse(localStorage.getItem(entityType)) || []
     return new Promise(resolve => setTimeout(() => resolve(entities), delay))
