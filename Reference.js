@@ -56,15 +56,15 @@ function saveTask(boardId, groupId, task, activity) {
 }
 
 
-const board = {
+const board = [{
     _id: "b101",
     title: "Robot dev proj",
     isStarred: false,
     archivedAt: 1589983468418,
     createdBy: {
-        "_id": "u101",
-        "fullname": "Abi Abambi",
-        "imgUrl": "http://some-img"
+        "_id": "u103",
+        "fullname": "Sahar Machpud",
+        "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
     },
     style: {
         backgroundImage: ""
@@ -72,67 +72,67 @@ const board = {
     labels: [
         {
             "id": "l101",
-            "title": "Done",
-            "color": "#61bd4f"
+            "title": "Urgent",
+            "color": "#f87462"
         },
         {
             "id": "l102",
-            "title": "Progress",
-            "color": "#61bd33"
+            "title": "Tasks",
+            "color": "#b8acf6"
+        },
+        {
+            "id": "l103",
+            "title": "Data",
+            "color": "#c1f0f5"
         }
     ],
     members: [
         {
             "_id": "u101",
-            "fullname": "Tal Tarablus",
-            "imgUrl": "https://www.google.com"
+            "fullname": "Maya Cohen",
+            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
+        },
+        {
+            "_id": "u102",
+            "fullname": "Reut Edry",
+            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+        },
+        {
+            "_id": "u103",
+            "fullname": "Sahar Machpud",
+            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
         }
     ],
     groups: [
         {
             "id": "g101",
-            "title": "Group 1",
-            "archivedAt": 1589983468418,
-            "tasks": [
-                {
-                    "id": "c101",
-                    "title": "Replace logo"
-
-                },
-                {
-                    "id": "c102",
-                    "title": "Add Samples"
-                }
-            ],
-            "style": {}
-        },
-        {
-            "id": "g102",
-            "title": "Group 2",
+            "title": "Backlog-server",
             "tasks": [
                 {
                     "id": "c103",
-                    "title": "Do that",
-                    "archivedAt": 1589983468418,
-                },
-                {
-                    "id": "c104",
-                    "title": "Help me",
-                    "status": "in-progress", // monday
-                    "priority": "high",
-                    "description": "description",
-                    "comments": [
+                    "title": "Demo data",
+                    "description": null,
+                    "cover": {
+                        "backgroundColor": "",
+                        "img": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696368347/%D7%A6%D7%99%D7%9C%D7%95%D7%9D_%D7%9E%D7%A1%D7%9A_2023-07-20_131912_zfdlhz.png",
+                        "createdAt": 1696332780
+                    },
+                    "attachments": [
                         {
-                            "id": "ZdPnm",
-                            "txt": "also @yaronb please CR this",
-                            "createdAt": 1590999817436,
-                            "byMember": {
-                                "_id": "u101",
-                                "fullname": "Tal Tarablus",
-                                "imgUrl": "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
-                            }
+                            "id": "123abc",
+                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696368347/%D7%A6%D7%99%D7%9C%D7%95%D7%9D_%D7%9E%D7%A1%D7%9A_2023-07-20_131912_zfdlhz.png"
                         }
                     ],
+                    "byMember": {
+                        "_id": "u102",
+                        "fullname": "Reut Edry",
+                        "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+                    },
+                    "archivedAt": null,
+                    "labelIds": ["l101", "l102", "l103"],
+                    "memberIds": ["u101", "u102", "u103"],
+                    "watching": true,
+                    "dueDate": 1696764840,
                     "checklists": [
                         {
                             "id": "YEhmF",
@@ -140,52 +140,188 @@ const board = {
                             "todos": [
                                 {
                                     "id": "212jX",
-                                    "title": "To Do 1",
+                                    "title": "Finishing untill 16:30",
+                                    "isDone": true
+                                },
+                                {
+                                    "id": "212je",
+                                    "title": "Successing",
                                     "isDone": false
                                 }
                             ]
                         }
                     ],
-                    "memberIds": ["u101"],
-                    "labelIds": ["l101", "l102"],
-                    "dueDate": 16156215211,
-                    "byMember": {
-                        "_id": "u101",
-                        "username": "Tal",
-                        "fullname": "Tal Tarablus",
-                        "imgUrl": "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
+                    "comments": [
+                        {
+                            "id": "ZdPnm",
+                            "txt": "Important",
+                            "createdAt": 1696334520,
+                            "byMember": {
+                                "_id": "u101",
+                                "fullname": "Maya Cohen",
+                                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
+                            }
+                        }
+                    ],
+                },
+                {
+                    "id": "c104",
+                    "title": "Connect to Mongo",
+                    "description": null,
+                    "archivedAt": null,
+                    "cover": {
+                        "backgroundColor": "",
+                        "img": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696368598/1_1_tasfsz.png"
                     },
-                    "style": {
-                        "backgroundColor": "#26de81"
-                    }
+                    "byMember": {
+                        "_id": "u103",
+                        "fullname": "Sahar Machpud",
+                        "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
+                    },
+                    "attachments": [
+                        {
+                            "id": "123abg",
+                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
+                            'createdAt': 1696333740,
+                        },
+                    ],
+                    "comments": [],
+                    "checklists": [],
+                    "memberIds": ["u102"],
+                    "labelIds": ["l101"],
+                    "dueDate": null,
+                    "watching": false
+                },
+                {
+                    "id": "c1045",
+                    "title": "Adding npm packages",
+                    "description": null,
+                    "archivedAt": null,
+                    "cover": {
+                        "backgroundColor": "",
+                        "img": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696371749/npm_zfi8q9.png"
+                    },
+                    "byMember": {
+                        "_id": "u102",
+                        "fullname": "Reut Edry",
+                        "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+                    },
+                    "attachments": [
+                        {
+                            "id": "123abger",
+                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696371749/npm_zfi8q9.png",
+                            'createdAt': 1696348680,
+                        },
+                    ],
+                    "comments": [],
+                    "checklists": [],
+                    "memberIds": ["u102"],
+                    "labelIds": ["l101"],
+                    "dueDate": null,
+                    "watching": true
                 }
             ],
             "style": {}
-        }
+        },
+        // {
+        //     "id": "g102",
+        //     "title": "Group 2",
+        //     "tasks": [
+        //         {
+        //             "id": "c103",
+        //             "title": "Do that",
+        //             "archivedAt": 1589983468418,
+        //         },
+        //         {
+        //             "id": "c104",
+        //             "title": "Help me",
+        //             "priority": null,
+        //             "description": "description",
+        //             "comments": [
+        //                 {
+        //                     "id": "ZdPnm",
+        //                     "txt": "also @yaronb please CR this",
+        //                     "createdAt": 1590999817436,
+        //                     "byMember": {
+        //                         "_id": "u101",
+        //                         "fullname": "Tal Tarablus",
+        //                         "imgUrl": "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
+        //                     }
+        //                 }
+        //             ],
+        //             "checklists": [
+        //                 {
+        //                     "id": "YEhmF",
+        //                     "title": "Checklist",
+        //                     "todos": [
+        //                         {
+        //                             "id": "212jX",
+        //                             "title": "To Do 1",
+        //                             "isDone": false
+        //                         }
+        //                     ]
+        //                 }
+        //             ],
+        //             "memberIds": ["u101"],
+        //             "labelIds": ["l101", "l102"],
+        //             "dueDate": 16156215211,
+        //             "byMember": {
+        //                 "_id": "u101",
+        //                 "username": "Tal",
+        //                 "fullname": "Tal Tarablus",
+        //                 "imgUrl": "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
+        //             },
+        //             "style": {
+        //                 "backgroundColor": "#26de81"
+        //             }
+        //         }
+        //     ],
+        //     "style": {}
+        // }
     ],
     activities: [
         {
             "id": "a101",
-            "txt": "Changed Color",
-            "createdAt": 154514,
+            "txt": "marked the due date incomplete",
+            "createdAt": 1696368960,
             "byMember": {
-                "_id": "u101",
-                "fullname": "Abi Abambi",
-                "imgUrl": "http://some-img"
+                "_id": "u102",
+                "fullname": "Reut Edry",
+                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
             },
             "group": {
                 "id": "g101",
-                "title": "Urgent Stuff"
+                "title": "Backlog-server"
             },
             "task": {
-                "id": "c101",
-                "title": "Replace Logo"
+                "id": "c103",
+                "title": "Demo data"
+            }
+        },
+        {
+            "id": "b102",
+            "txt": "left this card",
+            "createdAt": 1696333780,
+            "byMember": {
+                "_id": "u103",
+                "fullname": "Sahar Machpud",
+                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
+            },
+            "group": {
+                "id": "g101",
+                "title": "Backlog-server"
+            },
+            "task": {
+                "id": "c104",
+                "title": "Connect to Mongo"
             }
         }
+
     ],
 
     cmpsOrder: ["StatusPicker", "MemberPicker", "DatePicker"]
 }
+]
 
 
 const user = {
