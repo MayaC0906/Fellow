@@ -1,0 +1,42 @@
+.main-container {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    background: center bottom -0.5px / 100% 14% no-repeat scroll padding-box border-box, linear-gradient(60deg, rgb(82, 67, 170), rgb(237, 80, 180)) 0% 0% / auto repeat scroll padding-box border-box rgb(82, 67, 170);
+    
+    background-blend-mode: normal, normal;
+    color: rgb(255, 255, 255);
+    height: rem(680px);
+    // align-items: end;
+    .home-wave{
+        display: flex;
+        align-self: end;
+        height: 250px;
+    }
+    .enter-section {
+        height: rem(560px);
+        align-items: center;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr;
+        position: relative;
+        &-img {
+            img {
+                position: absolute;
+                height: rem(600px);
+                width: rem(620px);
+                bottom: rem(-110px);
+            }
+           
+        }
+       a {
+        color: gray;
+            img{
+                height: 20px;
+                width: 20px;
+                border-radius: 50%;
+            }
+       }
+      
+    }
+
+}
