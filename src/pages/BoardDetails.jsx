@@ -1,10 +1,10 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from "react";
 import { useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import { GroupList } from './GroupList.jsx'
 import { loadBoards } from '../store/actions/board.actions.js'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
-
+import { boardService } from "../services/board.service.local.js";
 export function BoardDetails() {
 	const { boardId } = useParams()
     console.log(boardId);
