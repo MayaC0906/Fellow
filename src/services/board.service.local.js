@@ -5,7 +5,7 @@ import { userService } from './user.service.js'
 
 const STORAGE_KEY = 'boardDB'
 //check
-export const babaService = {
+export const boardService = {
     query,
     getById,
     save,
@@ -14,9 +14,9 @@ export const babaService = {
     addBabaMsg
 }
 // debug trick
-window.bs = babaService
+window.bs = boardService
 
-const boards = [
+const board = [
     {
         _id: "b101",
         title: "Final-project",
@@ -790,10 +790,12 @@ const boards = [
 
 ]
 
-async function query(filterBy = { txt: '', price: 0 }) {
-    const boards = utilService.loadFromStorage(STORAGE_KEY)
+async function query() {
+    console.log('entered');
+    let boards = utilService.loadFromStorage(STORAGE_KEY)
     if (!boards || !boards.length) utilService.saveToStorage(STORAGE_KEY, board)
     boards = await storageService.query(STORAGE_KEY)
+    console.log('boards from:', boards)
     // if (filterBy.txt) {
     //     const regex = new RegExp(filterBy.txt, 'i')
     //     boards = boards.filter(board => regex.test(board.title) || regex.test(board.description))
@@ -804,8 +806,8 @@ async function query(filterBy = { txt: '', price: 0 }) {
     return boards
 }
 
-function getById(babaId) {
-    return storageService.get(STORAGE_KEY, babaId)
+function getById(boardId) {
+    return storageService.get(STORAGE_KEY, boardId)
 }
 
 async function remove(babaId) {

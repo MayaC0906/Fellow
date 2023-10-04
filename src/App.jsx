@@ -17,6 +17,7 @@ export function App() {
                     <Route path="/workspace" element={<Workspace />} />
                     <Route path="/board" element={<BoardDetails />} />
                     <Route path="/login" element={<LoginSignup />} />
+                    <Route path='/board/:boardId' element={<BoardDetails/>} />
                 </Routes>
             </main>
         </div>
