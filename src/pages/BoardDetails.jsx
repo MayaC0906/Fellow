@@ -1,15 +1,18 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from "react";
 import { useSelector } from 'react-redux'
-
+import { useNavigate, useParams } from 'react-router-dom'
+import { GroupList } from './GroupList.jsx'
+import { loadBoards } from '../store/actions/board.actions.js'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
-
+import { boardService } from "../services/board.service.local.js";
 export function BoardDetails() {
-
+	const { boardId } = useParams()
+    console.log(boardId);
     // const babas = useSelector(storeState => storeState.babaModule.babas)
 
-    // useEffect(() => {
-    //     loadBabas()
-    // }, [])
+    useEffect(() => {
+        loadBoards()
+    }, [])
 
     // async function onRemoveBaba(babaId) {
     //     try {
@@ -54,6 +57,7 @@ export function BoardDetails() {
 
     return (
         <div>
+            <GroupList boardId={boardId}/>
             {/* <h3>Baba App</h3>
             <main>
                 <button onClick={onAddBaba}>Add Baba ⛐</button>
