@@ -38,10 +38,12 @@ export function AppHeader() {
                 <button className='app-header-btn nav-link-btn menu'>{appHeaderSvg.menu}</button>
                 <img className='logo' src='https://res.cloudinary.com/dehxwadkk/image/upload/v1696425587/logo_vuo3fy.gif' alt="" />
                 <section className='links'>
-                <button className='app-header-btn nav-link-btn link'><span>Workspaces</span> {appHeaderSvg.arrowDown}</button>
-                <button className='app-header-btn nav-link-btn link'><span>Recent</span> {appHeaderSvg.arrowDown}</button>
-                <button className='app-header-btn nav-link-btn link'> <span>Starred</span> {appHeaderSvg.arrowDown}</button>
-                <button className='app-header-btn nav-link-btn link'>Templats {appHeaderSvg.arrowDown}</button>
+                    <NavLink to={"/workspace"}>
+                        <button className='app-header-btn nav-link-btn link'><span>Workspaces</span> {appHeaderSvg.arrowDown}</button>
+                    </NavLink>
+                    <button className='app-header-btn nav-link-btn link'><span>Recent</span> {appHeaderSvg.arrowDown}</button>
+                    <button className='app-header-btn nav-link-btn link'> <span>Starred</span> {appHeaderSvg.arrowDown}</button>
+                    <button className='app-header-btn nav-link-btn link'>Templats {appHeaderSvg.arrowDown}</button>
                 </section>
                 <button className='create-btn'>Create</button>
             </section>
