@@ -32,7 +32,7 @@ export function GroupList() {
        <div className='group-list-container'>
             <ul className='group-list clean-list'>
             {board && groups && groups.map((group, idx) => (
-                <li className='group' key={idx}>
+                <li className='group-preview-container' key={idx}>
                     <GroupPreview group={group} />
                 </li>
             ))}
