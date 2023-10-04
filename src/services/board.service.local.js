@@ -5,7 +5,7 @@ import { userService } from './user.service.js'
 
 const STORAGE_KEY = 'boardDB'
 //check
-export const babaService = {
+export const boardService = {
     query,
     getById,
     save,
@@ -14,9 +14,9 @@ export const babaService = {
     addBabaMsg
 }
 // debug trick
-window.bs = babaService
+window.bs = boardService
 
-const boards = [
+const board = [
     {
         _id: "b101",
         title: "Final-project",
@@ -804,8 +804,8 @@ async function query(filterBy = { txt: '', price: 0 }) {
     return boards
 }
 
-function getById(babaId) {
-    return storageService.get(STORAGE_KEY, babaId)
+function getById(boardId) {
+    return storageService.get(STORAGE_KEY, boardId)
 }
 
 async function remove(babaId) {

@@ -1,14 +1,17 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from "react";
 import { useSelector } from 'react-redux'
-
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
-
+import { boardService } from "../services/board.service.local.js";
 export function BoardDetails() {
-
+    const { boardId } = useParams()
+    console.log('boardId', boardId);
     // const babas = useSelector(storeState => storeState.babaModule.babas)
 
     // useEffect(() => {
     //     loadBabas()
+    //     dispatch({ type: 'SET_BOARD', board: updatedBoard })
+
     // }, [])
 
     // async function onRemoveBaba(babaId) {
@@ -54,26 +57,8 @@ export function BoardDetails() {
 
     return (
         <div>
-            {/* <h3>Baba App</h3>
-            <main>
-                <button onClick={onAddBaba}>Add Baba ⛐</button>
-                <ul className="baba-list">
-                    {babas.map(baba =>
-                        <li className="baba-preview" key={baba._id}>
-                            <h4>{baba.title}</h4>
-                            <h1>⛐</h1>
-                            <p>Price: <span>${baba.price.toLocaleString()}</span></p>
-                            <p>Owner: <span>{baba.owner && baba.owner.fullname}</span></p>
-                            {shouldShowActionBtns(baba) && <div>
-                                <button onClick={() => { onRemoveBaba(baba._id) }}>x</button>
-                                <button onClick={() => { onUpdateBaba(baba) }}>Edit</button>
-                            </div>}
-
-                            <button onClick={() => { onAddBabaMsg(baba) }}>Add baba msg</button>
-                        </li>)
-                    }
-                </ul>
-            </main> */}
+            hey
+            
         </div>
     )
 }
