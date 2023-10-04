@@ -5,7 +5,7 @@ import { userService } from './user.service.js'
 
 const STORAGE_KEY = 'boardDB'
 //check
-export const babaService = {
+export const boardService = {
     query,
     getById,
     save,
@@ -14,14 +14,15 @@ export const babaService = {
     addBabaMsg
 }
 // debug trick
-window.bs = babaService
+window.bs = boardService
 
-const boards = [
+const board = [
     {
         _id: "b101",
         title: "Final-project",
         isStarred: false,
         archivedAt: 1589983468418,
+        isStarred: false,
         createdBy: {
             "_id": "u103",
             "fullname": "Sahar Machpud",
@@ -29,7 +30,7 @@ const boards = [
         },
         style: {
             backgroundImage: "",
-            backgroundColor: ""
+            backgroundColor: "rgb(230, 165, 165)"
         },
         labels: [
             {
@@ -407,6 +408,7 @@ const boards = [
         title: "Test",
         isStarred: false,
         archivedAt: 1589983468418,
+        isStarred: true,
         createdBy: {
             "_id": "u103",
             "fullname": "Sahar Machpud",
@@ -414,7 +416,7 @@ const boards = [
         },
         style: {
             backgroundImage: "",
-            backgroundColor: ""
+            backgroundColor: "rgb(225, 98, 98)"
         },
         labels: [
             {
@@ -791,7 +793,7 @@ const boards = [
 ]
 
 async function query(filterBy = { txt: '', price: 0 }) {
-    const boards = utilService.loadFromStorage(STORAGE_KEY)
+    let boards = utilService.loadFromStorage(STORAGE_KEY)
     if (!boards || !boards.length) utilService.saveToStorage(STORAGE_KEY, board)
     boards = await storageService.query(STORAGE_KEY)
     // if (filterBy.txt) {
@@ -804,8 +806,8 @@ async function query(filterBy = { txt: '', price: 0 }) {
     return boards
 }
 
-function getById(babaId) {
-    return storageService.get(STORAGE_KEY, babaId)
+function getById(boardId) {
+    return storageService.get(STORAGE_KEY, boardId)
 }
 
 async function remove(babaId) {

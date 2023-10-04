@@ -26,7 +26,7 @@ export function getActionUpdateBoard(board) {
 export async function loadBoards() {
     try {
         const boards = await boardService.query()
-        console.log('Boards from DB:', boards)
+        // console.log('Boards from DB:', boards)
         store.dispatch({
             type: SET_BOARDS,
             boards
@@ -94,4 +94,17 @@ export function onRemoveBoardOptimistic(boardId) {
                 type: UNDO_REMOVE_BOARD
             })
         })
+}
+
+export async function settingIsStarred(boardId) {
+    try {
+        const board = await boardService.getById(boardId)
+        board.isStarred = !board.isStarred
+        const type = board.isStarred ? 'UNSTARRED_BOARDS' : 'STARRED_BOARDS'
+        store.dispatch(type, board)
+        return board
+    } catch (err) {
+        console.log('Cannot add board', err)
+        throw err
+    }
 }
