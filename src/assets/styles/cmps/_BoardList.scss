@@ -1,0 +1,42 @@
+.board {
+    &-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 16px;
+    }
+
+    &-preview {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin: 0;
+        padding: 0px;
+        width: 190px;
+        border-radius: 3px;
+
+        .details {
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            height: 100px;
+            justify-content: space-between;
+            position: relative;
+
+            h2 {
+                font-size: 14px;
+                margin: 0;
+                padding: 0;
+            }
+
+            div {
+                display: flex;
+                align-self: flex-end;
+                // right: 0;
+                // position: absolute;
+            }
+        }
+    }
+
+}

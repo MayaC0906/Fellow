@@ -45,6 +45,7 @@ const board = [
         title: "Final-project",
         isStarred: false,
         archivedAt: 1589983468418,
+        isStarred: false,
         createdBy: {
             "_id": "u103",
             "fullname": "Sahar Machpud",
@@ -52,7 +53,7 @@ const board = [
         },
         style: {
             backgroundImage: "",
-            backgroundColor: ""
+            backgroundColor: "rgb(230, 165, 165)"
         },
         labels: [
             {
@@ -430,6 +431,7 @@ const board = [
         title: "Test",
         isStarred: false,
         archivedAt: 1589983468418,
+        isStarred: true,
         createdBy: {
             "_id": "u103",
             "fullname": "Sahar Machpud",
@@ -437,7 +439,7 @@ const board = [
         },
         style: {
             backgroundImage: "",
-            backgroundColor: ""
+            backgroundColor: "rgb(225, 98, 98)"
         },
         labels: [
             {
