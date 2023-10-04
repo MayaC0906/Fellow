@@ -223,9 +223,128 @@ const board = [{
             ],
             "style": {}
         },
+        {
+            "id": "g102",
+            "title": "Group 2",
+            "tasks": [
+                {
+                    "id": "c103",
+                    "title": "Demo data",
+                    "description": null,
+                    "cover": {
+                        "backgroundColor": "",
+                        "img": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696368347/%D7%A6%D7%99%D7%9C%D7%95%D7%9D_%D7%9E%D7%A1%D7%9A_2023-07-20_131912_zfdlhz.png",
+                        "createdAt": 1696332780
+                    },
+                    "attachments": [
+                        {
+                            "id": "123abc",
+                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696368347/%D7%A6%D7%99%D7%9C%D7%95%D7%9D_%D7%9E%D7%A1%D7%9A_2023-07-20_131912_zfdlhz.png"
+                        }
+                    ],
+                    "byMember": {
+                        "_id": "u102",
+                        "fullname": "Reut Edry",
+                        "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+                    },
+                    "archivedAt": null,
+                    "labelIds": ["l101", "l102", "l103"],
+                    "memberIds": ["u101", "u102", "u103"],
+                    "watching": true,
+                    "dueDate": 1696764840,
+                    "checklists": [
+                        {
+                            "id": "YEhmF",
+                            "title": "Checklist",
+                            "todos": [
+                                {
+                                    "id": "212jX",
+                                    "title": "Finishing untill 16:30",
+                                    "isDone": true
+                                },
+                                {
+                                    "id": "212je",
+                                    "title": "Successing",
+                                    "isDone": false
+                                }
+                            ]
+                        }
+                    ],
+                    "comments": [
+                        {
+                            "id": "ZdPnm",
+                            "txt": "Important",
+                            "createdAt": 1696334520,
+                            "byMember": {
+                                "_id": "u101",
+                                "fullname": "Maya Cohen",
+                                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
+                            }
+                        }
+                    ],
+                },
+                {
+                    "id": "c104",
+                    "title": "Connect to Mongo",
+                    "description": null,
+                    "archivedAt": null,
+                    "cover": {
+                        "backgroundColor": "",
+                        "img": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696368598/1_1_tasfsz.png"
+                    },
+                    "byMember": {
+                        "_id": "u103",
+                        "fullname": "Sahar Machpud",
+                        "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
+                    },
+                    "attachments": [
+                        {
+                            "id": "123abg",
+                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
+                            'createdAt': 1696333740,
+                        },
+                    ],
+                    "comments": [],
+                    "checklists": [],
+                    "memberIds": ["u102"],
+                    "labelIds": ["l101"],
+                    "dueDate": null,
+                    "watching": false
+                },
+                {
+                    "id": "c1045",
+                    "title": "Adding npm packages",
+                    "description": null,
+                    "archivedAt": null,
+                    "cover": {
+                        "backgroundColor": "",
+                        "img": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696371749/npm_zfi8q9.png"
+                    },
+                    "byMember": {
+                        "_id": "u102",
+                        "fullname": "Reut Edry",
+                        "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+                    },
+                    "attachments": [
+                        {
+                            "id": "123abger",
+                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696371749/npm_zfi8q9.png",
+                            'createdAt': 1696348680,
+                        },
+                    ],
+                    "comments": [],
+                    "checklists": [],
+                    "memberIds": ["u102"],
+                    "labelIds": ["l101"],
+                    "dueDate": null,
+                    "watching": true
+                }
+            ],
+            "style": {}
+        },
         // {
-        //     "id": "g102",
-        //     "title": "Group 2",
+        //     "id": "g103",
+        //     "title": "Group 3",
         //     "tasks": [
         //         {
         //             "id": "c103",
