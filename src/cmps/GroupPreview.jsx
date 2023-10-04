@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import {TaskList} from './TaskList'
 
-export function GroupPreview({group}){
-    
+export function GroupPreview({group, members, labels}){
+    console.log(labels,members);
     return (
         <div className="group-preview">
 			<header className='group-preview-header'>			
@@ -18,7 +18,7 @@ export function GroupPreview({group}){
 				<img src="https://res.cloudinary.com/dpwmxprpp/image/upload/v1696437012/asset_14_gltqff.svg" alt="" />
 			</header>
 			<section className='task-list-container'>
-				<TaskList labels={group.labels} memebers={group.memebers} tasks={group.tasks}/>
+				<TaskList members={members} labels={labels} tasks={group.tasks}/>
 			</section>
 			<input type="text" defaultValue='+ Add a card'/>
         </div>
