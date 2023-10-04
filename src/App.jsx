@@ -17,7 +17,6 @@ export function App() {
                     <Route path="/workspace" element={<Workspace />} />
                     <Route path="/board/:boardId" element={<BoardDetails />} />
                     <Route path="/login" element={<LoginSignup />} />
-                    {/* <Route path="/board" element={<BoardDetails />}/> */}
                 </Routes>
             </main>
         </div>

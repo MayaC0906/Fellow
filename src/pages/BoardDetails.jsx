@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import { useSelector } from 'react-redux'
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from 'react-router-dom'
+import { GroupList } from './GroupList.jsx'
+import { loadBoards } from '../store/actions/board.actions.js'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 import { boardService } from "../services/board.service.local.js";
 export function BoardDetails() {
-    const { boardId } = useParams()
-    console.log('boardId', boardId);
+	const { boardId } = useParams()
+    console.log(boardId);
     // const babas = useSelector(storeState => storeState.babaModule.babas)
 
-    // useEffect(() => {
-    //     loadBabas()
-    //     dispatch({ type: 'SET_BOARD', board: updatedBoard })
-
-    // }, [])
+    useEffect(() => {
+        loadBoards()
+    }, [])
 
     // async function onRemoveBaba(babaId) {
     //     try {
@@ -57,8 +57,27 @@ export function BoardDetails() {
 
     return (
         <div>
-            hey
-            
+            <GroupList boardId={boardId}/>
+            {/* <h3>Baba App</h3>
+            <main>
+                <button onClick={onAddBaba}>Add Baba ⛐</button>
+                <ul className="baba-list">
+                    {babas.map(baba =>
+                        <li className="baba-preview" key={baba._id}>
+                            <h4>{baba.title}</h4>
+                            <h1>⛐</h1>
+                            <p>Price: <span>${baba.price.toLocaleString()}</span></p>
+                            <p>Owner: <span>{baba.owner && baba.owner.fullname}</span></p>
+                            {shouldShowActionBtns(baba) && <div>
+                                <button onClick={() => { onRemoveBaba(baba._id) }}>x</button>
+                                <button onClick={() => { onUpdateBaba(baba) }}>Edit</button>
+                            </div>}
+
+                            <button onClick={() => { onAddBabaMsg(baba) }}>Add baba msg</button>
+                        </li>)
+                    }
+                </ul>
+            </main> */}
         </div>
     )
 }

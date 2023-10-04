@@ -1,0 +1,12 @@
+
+.group-list-container{
+    display: flex;
+    width: fit-content;
+
+    .group-list{
+        display: grid;
+        grid-template-columns: repeat(auto-fit, 280px);
+        grid-auto-flow: column;
+        height: 100%;
+    }
+}
