@@ -27,12 +27,21 @@
         .logo {
             height: 32px;
             padding: 0 8px;
-            width: auto;
+
+            img {
+                width: 150px;
+            }
         }
 
         .links {
             display: flex;
             align-items: center;
+
+            a {
+                &:hover {
+                    text-decoration: none;
+                }
+            }
 
             button {
                 gap: 2px;
@@ -73,9 +82,9 @@
                 cursor: pointer;
             }
         }
-        
+
     }
-    
+
     .nav-info {
         display: flex;
         height: 32px;
@@ -95,7 +104,7 @@
                 background-color: lighten(gray, 30%);
                 cursor: pointer;
             }
-            
+
             span {
                 display: flex;
 
@@ -111,6 +120,18 @@
                 border: none;
                 align-items: center;
                 color: white;
+                width: 165px;
+
+                &[type="text"] {
+                    &:focus-visible {
+                        border: none;
+                        outline: none;
+                    }
+                }
+
+                &::placeholder {
+                    color: white;
+                }
             }
         }
 
@@ -122,16 +143,19 @@
             width: 32px;
             border: none;
             display: flex;
-            align-items:center ;
-            justify-content:center ;
-            
+            align-items: center;
+            justify-content: center;
+
             &:hover {
                 background-color: lighten(gray, 30%);
                 cursor: pointer;
             }
-            img, svg {
+
+            img,
+            svg {
                 height: 24px;
                 width: 24px;
+                border-radius: 50%;
             }
         }
     }

@@ -11,11 +11,34 @@ export const boardService = {
     save,
     remove,
     getEmptyBaba,
-    addBabaMsg
+    addBabaMsg,
+    getLabels,
+    getCheckListStatus,
+    getMembers
 }
 // debug trick
 window.bs = boardService
 
+
+function getLabels(labelsIds, boardLabels) {
+    return boardLabels.filter(label=>labelsIds.includes(label.id))
+}
+
+function getMembers(memberIds, boardMembers) {
+    return boardMembers.filter(member=>memberIds.includes(member._id))
+}
+
+function getCheckListStatus(checkLists) {
+    const checkListStatus = {done: 0, all: 0}
+
+    checkLists.forEach (checkList=> checkList.todos.forEach(todo=>{
+        if (todo.isDone) {checkListStatus.done++
+        checkListStatus.all++
+    } else checkListStatus.all++
+    } )
+    )
+    return checkListStatus
+}
 const board = [
     {
         _id: "b101",

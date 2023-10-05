@@ -6,7 +6,8 @@ export const utilService = {
     randomPastTime,
     saveToStorage,
     loadFromStorage,
-    getAssetSrc
+    getAssetSrc,
+    formatTimestamp
 }
 
 function makeId(length = 6) {
@@ -70,3 +71,21 @@ function getAssetSrc(name) {
     const mod = modules[path]
     return mod.default
 }
+
+function formatTimestamp(timestamp) {
+    const date = new Date(timestamp);
+    const currentDate = new Date();
+  
+    const monthShort = new Intl.DateTimeFormat('en', { month: 'short' }).format(date);
+    const day = date.getDate();
+    const year = date.getFullYear();
+  
+    if (year === currentDate.getFullYear()) {
+      // If it's the current year, return the short month and day only
+      return `${monthShort} ${day}`;
+    } else {
+      // If it's a different year, return the short month, day, and full year
+      return `${monthShort} ${day}, ${year}`;
+    }
+  }
+  
