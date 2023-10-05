@@ -10,17 +10,14 @@ export const boardService = {
     getById,
     save,
     remove,
-<<<<<<< HEAD
-    getEmptyBaba,
+    // getEmptyBaba,
     addBabaMsg,
     getLabels,
     getCheckListStatus,
-    getMembers
-=======
+    getMembers,
     getEmptyGroup,
     saveGroup,
     removeGroup
->>>>>>> 53b41d7 (board details)
 }
 // debug trick
 window.bs = boardService
