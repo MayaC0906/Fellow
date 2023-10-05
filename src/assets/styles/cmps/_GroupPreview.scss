@@ -29,6 +29,7 @@
 
         .task-list-container {
             overflow-y: scroll;
+            overflow-x:hidden;
             flex-grow: 1;
             max-height: calc(100vh - 120px);
         }
