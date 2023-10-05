@@ -14,8 +14,8 @@ export function BoardDetails() {
     
     useEffect(() => {
         loadBoards()
-         onLoadBoard()
-    }, [boardId]);
+        onLoadBoard()
+    }, [boardId])
 
 
    async function onLoadBoard(){

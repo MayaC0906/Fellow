@@ -1,7 +1,7 @@
 import { utilService } from "../services/util.service";
 import { taskSvg } from "./Svgs";
 
-export function TaskPreview({task, setIsLabelsShown, isLabelsShown, taskLabels, taskMembers, taskChecklist}) {
+export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels, taskMembers, taskChecklist }) {
     return (
         <article key={task.id} className="task">
             <button>{taskSvg.edit}</button>

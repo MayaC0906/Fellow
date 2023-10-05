@@ -4,8 +4,8 @@ export const REMOVE_BOARD = 'REMOVE_BOARD'
 export const ADD_BOARD = 'ADD_BOARD'
 export const UPDATE_BOARD = 'UPDATE_BOARD'
 export const UNDO_REMOVE_BOARD = 'UNDO_REMOVE_BOARD'
-export const STARRED_BOARD = "STARRED_BOARD"
-export const UNSTARRED_BOARD = "UNSTARRED_BOARD"
+// export const STARRED_BOARD = "STARRED_BOARD"
+// export const UNSTARRED_BOARD = "UNSTARRED_BOARD"
 
 
 const initialState = {
@@ -42,12 +42,13 @@ export function boardReducer(state = initialState, action) {
             if (state.lastRemovedBoard) {
                 newState = { ...state, boards: [...state.boards, state.lastRemovedBoard], lastRemovedBoard: null }
             }
-        case STARRED_BOARD:
-            newState = { ...state, isStarred: action.isStarred }
-            break
-        case UNSTARRED_BOARD:
-            starredBoards = state.starredBoards.filter(starredBoard => starredBoard._id !== action.board._id)
-            newState = { ...state, starredBoards }
+        // case STARRED_BOARD:
+        //     newState = { ...state, starredBoards: [...state.starredBoards, action.board] }
+        //     break
+        // case UNSTARRED_BOARD:
+        //     const updatedStarredBoards = state.starredBoards.filter(starredBoard => starredBoard._id !== action.board._id)
+        //     newState = { ...state, starredBoards: updatedStarredBoards }
+        //     break
         case SET_BOARD:
             newState = { ...state, board: action.board }
             break
