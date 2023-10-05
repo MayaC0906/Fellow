@@ -8,15 +8,11 @@
     box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px 0px, rgba(9, 30, 66, 0.31) 0px 0px 1px 0px;
     background-color: #ebecf0;
     .group-preview {
-        height: max-content;
         display: flex;
         height: max-content;
         max-height: 700px;
         flex-direction: column;
         justify-content: space-between;
-        overflow: scroll;
-
-
         .header-wrapper {
             position: sticky;
             top: 0;
@@ -32,9 +28,10 @@
         }
 
         .task-list-container {
-            overflow: auto;
+            overflow-y: scroll;
+            overflow-x:hidden;
             flex-grow: 1;
-            max-height: calc(100vh - 60px - 60px);
+            max-height: calc(100vh - 120px);
         }
         &-header{
             margin-top: 5px;

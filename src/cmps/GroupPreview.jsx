@@ -7,14 +7,11 @@ import Textarea from '@mui/joy/Textarea';
 import Button from '@mui/joy/Button';
 
 
-export function GroupPreview({isLabelsShown,setIsLabelsShown,group, members, labels, onRemoveGroup, onDuplicateGroup}){
+export function GroupPreview({ onEditGroup ,isLabelsShown, setIsLabelsShown, group , members, labels, onRemoveGroup, onDuplicateGroup }){
 	const [toggleGroupMenu, setToggleGroupMenu] = useState(false)
 	const [isInputExpand, setInputExpand] = useState(false)
 
-	// function handleSubmit({target}) {
-    //     console.log(target);
-    // }
-	
+
     return (
         <section className="group-preview">
 			<section className='header-wrapper'>
@@ -24,6 +21,7 @@ export function GroupPreview({isLabelsShown,setIsLabelsShown,group, members, lab
 							className="edit-group-title clean-btn"
 							id={group.id}
 							defaultValue={group.title}
+							onChange={onEditGroup}
 							// onChange={} TODO
 						></Textarea>
 						<img onClick={() => setToggleGroupMenu(!toggleGroupMenu)} src="https://res.cloudinary.com/dpwmxprpp/image/upload/v1696437012/asset_14_gltqff.svg" alt="" />

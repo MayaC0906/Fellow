@@ -8,7 +8,7 @@ import { GroupPreview } from '../cmps/GroupPreview.jsx'
 import { saveGroup, removeGroup } from '../store/actions/board.actions.js'
 import Textarea from '@mui/joy/Textarea';
 import Button from '@mui/joy/Button';
-
+// 
 
 export function GroupList() {
     const [isInputExpand, setInputExpand] = useState(false)
@@ -36,8 +36,20 @@ export function GroupList() {
         }
     }
 
-    async function onEditGroup(){
-        let currGroup = boardModule.getGroupById
+    async function onEditGroup({target}){
+        let groupToSave = getGroupById(target.id)
+        groupToSave.title = target.value
+        try {
+            await saveGroup(groupToSave, board._id)
+        }catch (err) {
+            console.log(err);
+            throw err
+        }
+    }
+
+    function getGroupById(groupId){
+            const group = groups.find(group => group.id === groupId)
+            return group
     }
    
     async function onRemoveGroup(groupId) {
@@ -55,8 +67,7 @@ export function GroupList() {
 			await saveGroup(duplicatedGroup, board._id)
 		} catch (err) {
 			console.log('Failed to duplicate group', err)
-		} finally {
-			toggleDropdown()
+            throw err
 		}
 	}
 
@@ -68,7 +79,7 @@ export function GroupList() {
             <ul className='group-list clean-list'>
             {board && board?.groups && groups.map((group, idx) => (
                 <li className='group-preview-container' key={idx}>
-                    <GroupPreview onDuplicateGroup={onDuplicateGroup} setIsLabelsShown={setIsLabelsShown} isLabelsShown={isLabelsShown} onRemoveGroup={onRemoveGroup} labels={board.labels} members={board.members} group={group} />
+                    <GroupPreview  onEditGroup={onEditGroup} setIsLabelsShown={setIsLabelsShown} isLabelsShown={isLabelsShown} onRemoveGroup={onRemoveGroup} labels={board.labels} members={board.members} group={group} />
                 </li>))}
                 <section className='add-group-input'>
                     {!isInputExpand ?
