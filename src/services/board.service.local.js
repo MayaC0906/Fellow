@@ -51,13 +51,6 @@ async function query() {
     if (!boards || !boards.length) utilService.saveToStorage(STORAGE_KEY, board)
     boards = await storageService.query(STORAGE_KEY)
     console.log('boards from:', boards)
-    // if (filterBy.txt) {
-    //     const regex = new RegExp(filterBy.txt, 'i')
-    //     boards = boards.filter(board => regex.test(board.title) || regex.test(board.description))
-    // }
-    // if (filterBy.price) {
-    //     boards = boards.filter(board => board.price <= filterBy.price)
-    // }
     return boards
 }
 
