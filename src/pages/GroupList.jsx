@@ -35,6 +35,10 @@ export function GroupList() {
             console.log('Failed to save new group', err)
         }
     }
+
+    async function onEditGroup(){
+        let currGroup = boardModule.getGroupById
+    }
    
     async function onRemoveGroup(groupId) {
 		try {

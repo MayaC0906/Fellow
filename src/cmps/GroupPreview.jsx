@@ -45,7 +45,7 @@ export function GroupPreview({isLabelsShown,setIsLabelsShown,group, members, lab
 				setIsLabelsShown={setIsLabelsShown}
 				members={members} labels={labels}
 				tasks={group.tasks}
-				groupId={group._id}
+				groupId={group.id}
 				/>
 			</section>
 			<section className='footer-wrapper'>
