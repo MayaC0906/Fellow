@@ -1,6 +1,7 @@
 import { useParams } from "react-router"
 import { loadTask } from "../store/actions/board.actions"
 import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 
 export function TaskDetails() {
 
@@ -20,9 +21,17 @@ export function TaskDetails() {
             throw err
         }
     }
-    return (
-        <div className="task-details">
 
+
+    return (
+            <div className="task-details">
+            <section className="modal-container">
+                <article className="task-modal">
+                    <Link to={`/board/${boardId}`}>X</Link>
+                </article>
+            </section>
+            <div className="layer"></div>
         </div>
     )
+
 }

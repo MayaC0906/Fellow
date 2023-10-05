@@ -150,7 +150,6 @@ export async function loadTask (boardId, groupId, taskId) {
     try {const task = await taskService.getById (boardId, groupId, taskId)
         return task
     } catch (err) {
-        console.log('Cannot get task', err)
         throw err
     }
 }

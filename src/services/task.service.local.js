@@ -7,8 +7,8 @@ export const taskService = {
 async function getById(boardId, groupId, taskId) {
     try {
         const board = await boardService.getById(boardId)
-        const group = board.find(group => group.id === groupId)
-        const task = group.find(task => task.id === taskId)
+        const group = board.groups.find(group => group.id === groupId)
+        const task = group.tasks.find(task => task.id === taskId)
         return task
     } catch (err) {
         console.log('couldn\'t get task', err);
