@@ -15,7 +15,6 @@ export function TaskEdit() {
 
 
     function onChangeVal(id, val) {
-
         const answersToSave = { ...answersMap }
         answersToSave[id] = val
         setAnswersMap(answersToSave)
