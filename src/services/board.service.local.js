@@ -839,10 +839,6 @@ function getById(boardId) {
     return storageService.get(STORAGE_KEY, boardId)
 }
 
-async function getById(boardId) {
-    return storageService.get(STORAGE_KEY, boardId)
-}
-
 async function remove(babaId) {
     // throw new Error('Nope')
     await storageService.remove(STORAGE_KEY, babaId)

@@ -7,17 +7,17 @@ import Textarea from '@mui/joy/Textarea';
 import Button from '@mui/joy/Button';
 
 
-export function GroupPreview({isLabelsShown,setIsLabelsShown,group, members, labels, onRemoveGroup}){
+export function GroupPreview({isLabelsShown,setIsLabelsShown,group, members, labels, onRemoveGroup, onDuplicateGroup}){
 	const [toggleGroupMenu, setToggleGroupMenu] = useState(false)
 	const [isInputExpand, setInputExpand] = useState(false)
 
 	// function handleSubmit({target}) {
     //     console.log(target);
     // }
+	
     return (
         <section className="group-preview">
 			<section className='header-wrapper'>
-
 				<header className='group-preview-header'>			
 						<Textarea 
 							name="title"
@@ -32,9 +32,11 @@ export function GroupPreview({isLabelsShown,setIsLabelsShown,group, members, lab
 			<section className='group-edit'>
 				{toggleGroupMenu && 
 					<QuickGroupEdit
+					group={group}
 					setToggleGroupMenu={setToggleGroupMenu}
-					groupId={group.id}
+					// groupId={group.id}
 					onRemoveGroup={onRemoveGroup}
+					onDuplicateGroup={onDuplicateGroup}
 					/>}
 			</section>
 			<section className='task-list-container'>

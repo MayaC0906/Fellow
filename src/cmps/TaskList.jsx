@@ -2,7 +2,7 @@
 import { boardService } from "../services/board.service.local";
 import { TaskPreview } from "./TaskPreview";
 import { useParams } from "react-router";
-
+import { Link } from "react-router-dom";
 
 export function TaskList({ tasks, labels, members, isLabelsShown, setIsLabelsShown, groupId }) {
 

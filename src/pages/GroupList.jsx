@@ -44,6 +44,18 @@ export function GroupList() {
 		}
 	}
 
+    async function onDuplicateGroup(group) {
+		let duplicatedGroup = { ...group }
+		duplicatedGroup.id = null
+		try {
+			await saveGroup(duplicatedGroup, board._id)
+		} catch (err) {
+			console.log('Failed to duplicate group', err)
+		} finally {
+			toggleDropdown()
+		}
+	}
+
 
     console.log(groups);
     if(!groups) return <div>Loading..</div>
@@ -52,7 +64,7 @@ export function GroupList() {
             <ul className='group-list clean-list'>
             {board && board?.groups && groups.map((group, idx) => (
                 <li className='group-preview-container' key={idx}>
-                    <GroupPreview setIsLabelsShown={setIsLabelsShown} isLabelsShown={isLabelsShown} onRemoveGroup={onRemoveGroup} labels={board.labels} members={board.members} group={group} />
+                    <GroupPreview onDuplicateGroup={onDuplicateGroup} setIsLabelsShown={setIsLabelsShown} isLabelsShown={isLabelsShown} onRemoveGroup={onRemoveGroup} labels={board.labels} members={board.members} group={group} />
                 </li>))}
                 <section className='add-group-input'>
                     {!isInputExpand ?
