@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, Outlet, useNavigate, useParams } from 'react-router-dom'
 import { GroupList } from './GroupList.jsx'
 import { loadBoard, loadBoards } from '../store/actions/board.actions.js'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
@@ -39,6 +39,7 @@ export function BoardDetails() {
         </div>
     )
 }
+
 
 
 

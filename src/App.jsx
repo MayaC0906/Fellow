@@ -5,6 +5,7 @@ import { HomePage } from './pages/HomePage'
 import { Workspace } from './pages/Workspace'
 import { BoardDetails } from './pages/BoardDetails'
 import { LoginSignup } from './pages/LoginSignup'
+import { TaskDetails } from './cmps/TaskDetails'
 
 export function App() {
 
@@ -15,9 +16,12 @@ export function App() {
                 <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/workspace" element={<Workspace />} />
-                    <Route path="/board/:boardId" element={<BoardDetails />} />
+                    <Route path="/board/:boardId" element={<BoardDetails />}>
+                        <Route path=":groupId/:taskId" element={<TaskDetails />} />
+                    </Route>
                     <Route path="/login" element={<LoginSignup />} />
                 </Routes>
+
             </main>
         </div>
     )

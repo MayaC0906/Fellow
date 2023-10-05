@@ -17,6 +17,8 @@ const initialState = {
 export function boardReducer(state = initialState, action) {
     let newState = state
     let boards
+    let starredBoards
+    let board
     switch (action.type) {
         case SET_BOARDS:
             newState = { ...state, boards: action.boards }

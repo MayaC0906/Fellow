@@ -1,56 +1,30 @@
-import { useState } from "react";
+
 import { boardService } from "../services/board.service.local";
-import { utilService } from "../services/util.service";
-import { taskSvg } from "./Svgs";
+import { TaskPreview } from "./TaskPreview";
+import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 
+export function TaskList({ tasks, labels, members, isLabelsShown, setIsLabelsShown, groupId }) {
 
-export function TaskList({ tasks, labels, members }) {
-    console.log('tasks',tasks);
-
-    const [isLabelsShown, setIsLabelsShown ] = useState(false)
+    const {boardId} = useParams()
 
     return (
         <section className="task-list">
-{        tasks.map(task => {
-            const taskLabels = boardService.getLabels(task.labelIds, labels) || null
-            const taskMembers = boardService.getMembers(task.memberIds, members) || null
-            const taskChecklist = task.checklists.length ? boardService.getCheckListStatus(task.checklists) : ''
+            {tasks.map(task => {
+                const taskLabels = boardService.getLabels(task.labelIds, labels) || null
+                const taskMembers = boardService.getMembers(task.memberIds, members) || null
+                const taskChecklist = task.checklists.length ? boardService.getCheckListStatus(task.checklists) : ''
 
-            return (
-                <article key={task.id} className="task">
-                    <button>{taskSvg.edit}</button>
-                    {task.cover.backgroundColor && <div className="task-cover" style={{ backgroundColor: task.cover.backgroundColor }}></div>}
-                    {task.cover.img && <img className="task-cover" src={task.cover.img} alt="" />}
-
-                    <section className="task-info">
-                        <section className="labels">
-                            {taskLabels.map(label => {
-                                return <div key={label.id} className= {"label " + (isLabelsShown ? 'open': 'close')} style={{ backgroundColor: label.color }}
-                                onClick={()=>{setIsLabelsShown(!isLabelsShown)}} >
-                                    {label.title && <span>{label.title}</span>} </div>
-                            })}
-                        </section>
-                        <h3>{task.title}</h3>
-                        <section className="task-badges">
-                            {task.watching && <div className="task-badge">{taskSvg.watch}</div>}
-                            {task.dueDate && <div className="task-badge">{taskSvg.clock}<span>{utilService.formatTimestamp(task.dueDate)}</span></div>}
-                            {task.description && <div className="task-badge">{taskSvg.description}</div>}
-                            {task.comments?.length>0 && <div className="task-badge">{taskSvg.comment} <span>{task.comments.length}</span></div>}
-                            {task.attachments?.length>0 && <div className="task-badge">{taskSvg.attatchment} <span>{task.attachments.length}</span></div>}
-                            {task.checklists?.length>0 && <div className="task-badge">{taskSvg.checklist}
-                                <span>{taskChecklist.done}/{taskChecklist.all}</span></div>}
-                        </section> 
-
-                        {task.memberIds.length &&
-                            <section className="task-members">
-                                {taskMembers.map(member => <img key={member._id} className="member" src={member.imgUrl} alt="" />)}
-                            </section>
-                        }
-                    </section>
-                </article>
-
-            )
-        })}
+                return <Link to = {`board/${boardId}/${groupId}/${task.id}`}><TaskPreview
+                    setIsLabelsShown={setIsLabelsShown}
+                    isLabelsShown={isLabelsShown}
+                    task={task}
+                    taskLabels={taskLabels}
+                    taskMembers={taskMembers}
+                    taskChecklist={taskChecklist}
+                />
+                </Link>
+            })}
         </section>
     )
 }
