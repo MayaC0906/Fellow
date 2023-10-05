@@ -1,4 +1,46 @@
-// * {
-//     background-image: rgb(230, 165, 165);
-// }
-// }
+.workspace-container {
+    margin-block-start: em(40px);
+    gap: em(16px);
+    align-items: baseline;
+
+    nav {
+        flex-direction: column;
+        gap: 4px;
+        padding: 6px 8px;
+
+        button {
+            margin-bottom: 4px;
+            width: 240px;
+            height: 36px;
+            align-items: center;
+            gap: 8px;
+            border: none;
+            background-color: inherit;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #0000002d;
+                border-radius: 4px;
+                color: #0C66E4;
+            }
+
+            &:active {
+                background-color: #e4f0f6;
+                border-radius: 4px;
+            }
+
+            span {
+                font-size: em(14px);
+            }
+
+            svg {
+                width: 16px;
+                height: 16px;
+            }
+        }
+    }
+
+    h2 {
+        font-size: em(16px);
+    }
+}

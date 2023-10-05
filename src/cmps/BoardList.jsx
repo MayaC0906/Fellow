@@ -2,11 +2,20 @@ import { Link } from "react-router-dom";
 import { BoardPreview } from "./BoardPreview";
 import { settingIsStarred } from "../store/actions/board.actions";
 
-export function BoardList({ boards }) {
+export function BoardList({ boards, setStarredBoard }) {
 
-    function onStarredBoard(boardId) {
-        // settingIsStarred(boardId)
-        console.log('hye');
+    async function onStarredBoard(event, boardId) {
+        event.preventDefault()
+        try {
+            const board = await settingIsStarred(boardId)
+            if (board.isStarred) {
+                setStarredBoard(prevBoard => [...prevBoard, board])
+            } else {
+                setStarredBoard(prevBoard => prevBoard.filter(b => b._id !== board._id))
+            }
+        } catch (err) {
+            console.log('could not star the board', err)
+        }
     }
 
     return (

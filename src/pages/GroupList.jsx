@@ -17,8 +17,8 @@ export function GroupList() {
     const groups = board?.groups
     
     
-    useEffect(()=>{
-    },[board])
+    // useEffect(()=>{
+    // },[board])
 
     function handleChange(ev) {
         let { value, name: field } = ev.target
@@ -54,7 +54,12 @@ export function GroupList() {
             <ul className='group-list clean-list'>
             {board && board?.groups && groups.map((group, idx) => (
                 <li className='group-preview-container' key={idx}>
-                    <GroupPreview onRemoveGroup={onRemoveGroup} labels={board.labels} members={board.members} group={group} />
+                    <GroupPreview 
+                        onRemoveGroup={onRemoveGroup} 
+                        labels={board.labels} 
+                        members={board.members} 
+                        group={group} 
+                    />
                 </li>
             ))}
              <section className='add-group-input'>
