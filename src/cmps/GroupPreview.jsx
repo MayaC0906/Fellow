@@ -9,6 +9,7 @@ import Button from '@mui/joy/Button';
 
 export function GroupPreview({isLabelsShown,setIsLabelsShown,group, members, labels, onRemoveGroup}){
 	const [toggleGroupMenu, setToggleGroupMenu] = useState(false)
+	const [isInputExpand, setInputExpand] = useState(false)
 
 	// function handleSubmit({target}) {
     //     console.log(target);
@@ -24,38 +25,45 @@ export function GroupPreview({isLabelsShown,setIsLabelsShown,group, members, lab
 							id={group.id}
 							defaultValue={group.title}
 							// onChange={} TODO
-							></Textarea>
-					
+						></Textarea>
 						<img onClick={() => setToggleGroupMenu(!toggleGroupMenu)} src="https://res.cloudinary.com/dpwmxprpp/image/upload/v1696437012/asset_14_gltqff.svg" alt="" />
 				</header>
 			</section>
 			<section className='group-edit'>
-				{toggleGroupMenu && <QuickGroupEdit setToggleGroupMenu={setToggleGroupMenu} groupId={group.id} onRemoveGroup={onRemoveGroup}/>}
+				{toggleGroupMenu && 
+					<QuickGroupEdit
+					setToggleGroupMenu={setToggleGroupMenu}
+					groupId={group.id}
+					onRemoveGroup={onRemoveGroup}
+					/>}
 			</section>
 			<section className='task-list-container'>
-				<TaskList isLabelsShown={isLabelsShown} setIsLabelsShown={setIsLabelsShown}  members={members} labels={labels} tasks={group.tasks}/>
+				<TaskList 
+				isLabelsShown={isLabelsShown}
+				setIsLabelsShown={setIsLabelsShown}
+				members={members} labels={labels}
+				tasks={group.tasks}
+				/>
 			</section>
-			{/* <TextInputs toggle={toggleAddCardInput} setToggle={setToggleCardInput} handleSubmit={handleSubmit} from={'task'}/> */}
 			<section className='footer-wrapper'>
-
 				<footer>
-					<Textarea />
-				
+						{!isInputExpand ?
+						<div className='add-group-msg' onClick={() => setInputExpand(!isInputExpand)}>+ Add new card</div> :
+						<div className='add-group-input-expanded'>
+							<Textarea name="title"
+								placeholder="Enter card title..."
+								autoFocus
+								minRows={2}
+								// value={newGroup.title}
+								// onChange={handleChange} 
+								/>
+								<section className='add-controls'>
+									<Button type="submit" >Add Card</Button>
+									<button className='cancel' onClick={() => setInputExpand(!isInputExpand)}>X</button>
+								</section>
+						</div>}
 				</footer>
 			</section>
-			{/* {!toggleGroupMenu ?
-                    <div className='add-group-msg' onClick={() => setInputExpand(!toggleGroupMenu)}>+ Add new card</div> :
-                    <div className='add-group-input-expanded'>
-                        <Textarea name="title"
-                            placeholder="Enter list title..."
-                            autoFocus
-                            value={newGroup.title}
-                            onChange={handleChange} />
-                            <section className='add-controls'>
-                                <Button type="submit" onClick={onSaveNewGroup}>Add List</Button>
-                                <button className='cancel' onClick={() => setInputExpand(!toggleGroupMenu)}>X</button>
-                            </section>
-                    </div>} */}
         </section>
     )
 }
