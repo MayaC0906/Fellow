@@ -1,7 +1,7 @@
 import { boardService } from "../../services/board.service.local.js";
 import { store } from '../store.js'
 import { showSuccessMsg, showErrorMsg } from '../../services/event-bus.service.js'
-import { ADD_BOARD, REMOVE_BOARD, SET_BOARDS, UNDO_REMOVE_BOARD, UPDATE_BOARD } from "../reducers/board.reducer.js";
+import { ADD_BOARD, REMOVE_BOARD, SET_BOARD, SET_BOARDS, UNDO_REMOVE_BOARD, UPDATE_BOARD } from "../reducers/board.reducer.js";
 
 // Action Creators:
 export function getActionRemoveBoard(boardId) {
@@ -27,16 +27,26 @@ export async function loadBoards() {
     try {
         const boards = await boardService.query()
         console.log('Boards from DB:', boards)
-        store.dispatch({
-            type: SET_BOARDS,
-            boards
-        })
+        store.dispatch({type: SET_BOARDS, boards})
 
+        return boards
     } catch (err) {
         console.log('Cannot load boards', err)
         throw err
     }
 
+}
+
+export async function loadBoard(boardId) {
+    try {
+        const board = await boardService.getById(boardId)
+        store.dispatch({type: SET_BOARD, board})
+        return board
+    }
+    catch {
+        console.log('cannot load board:', err  )
+        throw err
+    }
 }
 
 export async function removeBoard(boardId) {
@@ -72,6 +82,28 @@ export function updateBoard(board) {
             console.log('Cannot save board', err)
             throw err
         })
+}
+
+export async function removeGroup(groupId, boardId) {
+	try {
+		const savedBoard = await boardService.removeGroup(groupId, boardId)
+		store.dispatch(getActionUpdateBoard(savedBoard))
+		return groupId
+	} catch (err) {
+		console.log('Cannot remove group', err)
+		throw err
+	}
+}
+
+export async function saveGroup(group, boardId) {
+	try {
+		const board = await boardService.saveGroup(group, boardId)
+		store.dispatch(getActionUpdateBoard(board))
+		return group
+	} catch (err) {
+		console.log('Cannot save group', err)
+		throw err
+	}
 }
 
 // Demo for Optimistic Mutation 

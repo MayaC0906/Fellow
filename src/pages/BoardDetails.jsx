@@ -1,18 +1,44 @@
 import { useEffect, useState } from "react";
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import { GroupList } from './GroupList.jsx'
-import { loadBoards } from '../store/actions/board.actions.js'
+import { loadBoard, loadBoards } from '../store/actions/board.actions.js'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 import { boardService } from "../services/board.service.local.js";
-export function BoardDetails() {
-	const { boardId } = useParams()
-    console.log(boardId);
-    // const babas = useSelector(storeState => storeState.babaModule.babas)
+import { SET_BOARD } from '../store/reducers/board.reducer.js'
 
+export function BoardDetails() {
+    const dispatch = useDispatch();
+    const { boardId } = useParams();
+    
     useEffect(() => {
         loadBoards()
-    }, [])
+         onLoadBoard()
+    }, [boardId]);
+
+
+   async function onLoadBoard(){
+        try {
+            const board = await loadBoard(boardId)
+            console.log(board,' from details ');
+            dispatch({ type: SET_BOARD, board })
+        } catch(err) {
+            console.log('cant set board', err);
+            throw err
+        }     
+    }
+
+    
+
+
+    return (
+        <div className="board-details-container">
+            <GroupList boardId={boardId}/>
+        </div>
+    )
+}
+
+
 
     // async function onRemoveBaba(babaId) {
     //     try {
@@ -54,30 +80,3 @@ export function BoardDetails() {
     //     if (user.isAdmin) return true
     //     return baba.owner?._id === user._id
     // }
-
-    return (
-        <div>
-            <GroupList boardId={boardId}/>
-            {/* <h3>Baba App</h3>
-            <main>
-                <button onClick={onAddBaba}>Add Baba ⛐</button>
-                <ul className="baba-list">
-                    {babas.map(baba =>
-                        <li className="baba-preview" key={baba._id}>
-                            <h4>{baba.title}</h4>
-                            <h1>⛐</h1>
-                            <p>Price: <span>${baba.price.toLocaleString()}</span></p>
-                            <p>Owner: <span>{baba.owner && baba.owner.fullname}</span></p>
-                            {shouldShowActionBtns(baba) && <div>
-                                <button onClick={() => { onRemoveBaba(baba._id) }}>x</button>
-                                <button onClick={() => { onUpdateBaba(baba) }}>Edit</button>
-                            </div>}
-
-                            <button onClick={() => { onAddBabaMsg(baba) }}>Add baba msg</button>
-                        </li>)
-                    }
-                </ul>
-            </main> */}
-        </div>
-    )
-}

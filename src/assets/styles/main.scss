@@ -16,9 +16,10 @@
 @import "views/AboutUs";
 @import "views/HomePage";
 @import "views/CarIndex";
-@import "views/BabaIndex";
+@import "views/BoardDetails";
 @import "views/ReviewIndex";
 @import "views/UserDetails";
+
 
 // Components
 @import "cmps/AppHeader";
@@ -26,7 +27,8 @@
 @import "cmps/UserMsg";
 @import "cmps/ShoppingCart";
 @import "cmps/GroupList";
-@import "cmps/GroupPreview"
+@import "cmps/GroupPreview";
+@import "cmps/QuickGroupEdit"
 
 
 
