@@ -11,7 +11,7 @@ import Button from '@mui/joy/Button';
 
 
 export function GroupList() {
-    const [toggleAddCardInput, setToggleCardInput] = useState(false)
+    const [isInputExpand, setInputExpand] = useState(false)
     const [newGroup, setNewGroup] = useState(boardService.getEmptyGroup())
 	const board = useSelector((storeState) => storeState.boardModule.board)
     const groups = board?.groups
@@ -32,7 +32,7 @@ export function GroupList() {
         try {
             await saveGroup(newGroup, board._id)
             setNewGroup(boardService.getEmptyGroup())
-            setToggleCardInput(!toggleAddCardInput)
+            setInputExpand(!isInputExpand)
         } catch (err) {
             console.log('Failed to save new group', err)
         }
@@ -55,23 +55,22 @@ export function GroupList() {
             {board && board?.groups && groups.map((group, idx) => (
                 <li className='group-preview-container' key={idx}>
                     <GroupPreview onRemoveGroup={onRemoveGroup} labels={board.labels} members={board.members} group={group} />
-                </li>
-            ))}
-             <section className='add-group-input'>
-            {!toggleAddCardInput ?
-                <div className='add-group-msg' onClick={() => setToggleCardInput(!toggleAddCardInput)}>+ Add new list</div> :
-                <div className='add-group-input-expanded'>
-                    <Textarea name="title"
-                        placeholder="Enter list title..."
-                        autoFocus
-                        value={newGroup.title}
-						onChange={handleChange} />
-                        <section className='add-controls'>
-                            <Button type="submit" onClick={onSaveNewGroup}>Add List</Button>
-                            <button className='cancel' onClick={() => setToggleCardInput(!toggleAddCardInput)}>X</button>
-                        </section>
-                </div>}
-        </section>
+                </li>))}
+                <section className='add-group-input'>
+                    {!isInputExpand ?
+                    <div className='add-group-msg' onClick={() => setInputExpand(!isInputExpand)}>+ Add new list</div> :
+                    <div className='add-group-input-expanded'>
+                        <Textarea name="title"
+                            placeholder="Enter list title..."
+                            autoFocus
+                            value={newGroup.title}
+                            onChange={handleChange} />
+                            <section className='add-controls'>
+                                <Button type="submit" onClick={onSaveNewGroup}>Add List</Button>
+                                <button className='cancel' onClick={() => setInputExpand(!isInputExpand)}>X</button>
+                            </section>
+                    </div>}
+                </section>
             </ul>           
        </div>
     )

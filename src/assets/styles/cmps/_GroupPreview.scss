@@ -5,44 +5,48 @@
     height: max-content;
     overflow: hidden;
     border-radius: 12px;
-   box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px 0px, rgba(9, 30, 66, 0.31) 0px 0px 1px 0px;
-   background-color: #ebecf0;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px 0px, rgba(9, 30, 66, 0.31) 0px 0px 1px 0px;
+    background-color: #ebecf0;
     .group-preview {
         height: max-content;
         display: flex;
+        height: max-content;
+        max-height: 700px;
         flex-direction: column;
         justify-content: space-between;
         overflow: scroll;
+
+
+        .header-wrapper {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background-color: #ebecf0;
+        }
+
+        .footer-wrapper {
+            position: sticky;
+            bottom: 0;
+            z-index: 10;
+            background-color: #ebecf0;
+        }
+
+        .task-list-container {
+            overflow: auto;
+            flex-grow: 1;
+            max-height: calc(100vh - 60px - 60px);
+        }
         &-header{
+            margin-top: 5px;
             align-items: center;
             color: #172b4d;
             display: flex;
             font-weight: 800;
             height: 34px;
             justify-content: space-between;
-
-            textarea {
+            .edit-group-title {
                 background: #0000;
-                border-radius: 8px;
-
-                display: flex;
-                text-justify: end;
-                font-weight: 600;
-                height: 20px;
-                margin-top: 15px;
-                overflow: hidden;
-                overflow-wrap: break-word;
-                resize: none;
                 border: none;
-                &:focus-visible {
-                    outline: none;
-                } 
-                &:focus {
-                    border: none;
-                    box-shadow: rgb(0, 121, 191) 0px 0px 0px 2px inset;
-                    min-height: 20px;
-                    max-height: 256px;
-                }
             }
             img {
                 font-size: 16px;
@@ -74,6 +78,10 @@
 
     .group-edit{
         position: relative;
+    }
+
+    .add-task-preview{
+        position: absolute;
     }
     
 }
