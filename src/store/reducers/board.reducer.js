@@ -15,15 +15,10 @@ const initialState = {
 }
 
 export function boardReducer(state = initialState, action) {
-<<<<<<< HEAD
     let newState = state
     let boards
     let starredBoards
-=======
-    var newState = state
-    var boards
-    var board
->>>>>>> 53b41d7 (board details)
+    // var board
     switch (action.type) {
         case SET_BOARDS:
             newState = { ...state, boards: action.boards }
@@ -50,15 +45,12 @@ export function boardReducer(state = initialState, action) {
         case STARRED_BOARD:
             newState = { ...state, isStarred: action.isStarred }
             break
-<<<<<<< HEAD
         case UNSTARRED_BOARD:
             starredBoards = state.starredBoards.filter(starredBoard => starredBoard._id !== action.board._id)
             newState = { ...state, starredBoards }
-=======
         case SET_BOARD:
             newState = { ...state, board: action.board }
             break
->>>>>>> 53b41d7 (board details)
         default:
     }
     return newState

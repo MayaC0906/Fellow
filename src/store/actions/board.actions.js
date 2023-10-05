@@ -26,16 +26,11 @@ export function getActionUpdateBoard(board) {
 export async function loadBoards() {
     try {
         const boards = await boardService.query()
-<<<<<<< HEAD
         // console.log('Boards from DB:', boards)
         store.dispatch({
             type: SET_BOARDS,
             boards
         })
-=======
-        console.log('Boards from DB:', boards)
-        store.dispatch({type: SET_BOARDS, boards})
->>>>>>> 53b41d7 (board details)
 
         return boards
     } catch (err) {

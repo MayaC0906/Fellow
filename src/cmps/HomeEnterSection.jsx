@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 
 export function HomeEnterSection(){
     return (
@@ -9,7 +10,7 @@ export function HomeEnterSection(){
                 <p>
                     Keep everything in the same place-even if your team isn't.
                 </p>
-                <button>Start demo</button>
+                <Link to="/workspace" > <button>Start demo</button> </Link> 
                 {/* <a href="#">Watch video <img src="https://res.cloudinary.com/dpwmxprpp/image/upload/v1696379493/asset_50_epbd6c.svg" alt="" /></a> */}
             </section>
             <section className="enter-section-img">
