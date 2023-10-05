@@ -36,7 +36,9 @@ export function AppHeader() {
         <header className='app-header'>
             <section className='nav-links'>
                 <button className='app-header-btn nav-link-btn menu'>{appHeaderSvg.menu}</button>
-                <img className='logo' src='https://res.cloudinary.com/dehxwadkk/image/upload/v1696425587/logo_vuo3fy.gif' alt="" />
+                <div className='logo'>
+                    <img src='https://res.cloudinary.com/dehxwadkk/image/upload/v1696466880/logo_transparent_dz6ld4.png' alt="" />
+                </div>
                 <section className='links'>
                     <NavLink to={"/workspace"}>
                         <button className='app-header-btn nav-link-btn link'><span>Workspaces</span> {appHeaderSvg.arrowDown}</button>
@@ -54,7 +56,9 @@ export function AppHeader() {
                     <input type="text" placeholder='Search' />
                 </div>
                 <button className='app-header-btn user-info'>{appHeaderSvg.notifications}</button>
-                <img className='app-header-btn user-info' src="https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg" alt="" />
+                <div className='app-header-btn user-info' >
+                <img src="https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg" alt="" />
+                </div>
             </section>
         </header>
     )
