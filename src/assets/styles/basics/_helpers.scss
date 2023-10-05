@@ -44,6 +44,19 @@
     outline: inherit;
 }
 
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-btn:hover {
+    color: #8c8c8c;
+}
+
+
 .hide {
     display: none;
 }

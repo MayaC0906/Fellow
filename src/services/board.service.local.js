@@ -10,11 +10,17 @@ export const boardService = {
     getById,
     save,
     remove,
+<<<<<<< HEAD
     getEmptyBaba,
     addBabaMsg,
     getLabels,
     getCheckListStatus,
     getMembers
+=======
+    getEmptyGroup,
+    saveGroup,
+    removeGroup
+>>>>>>> 53b41d7 (board details)
 }
 // debug trick
 window.bs = boardService
@@ -868,12 +874,42 @@ async function addBabaMsg(babaId, txt) {
     return msg
 }
 
-function getEmptyBaba() {
-    return {
-        title: 'Baba-' + (Date.now() % 1000),
-        price: utilService.getRandomIntInclusive(1000, 9000),
-    }
+function getEmptyGroup() {
+	return {
+		title: '',
+		tasks: [],
+	}
 }
+
+async function saveGroup(group, boardId) {
+	try {
+		let board = await getById(boardId)
+		if (group.id) {
+			const idx = board.groups.findIndex((currGroup) => currGroup.id === group.id)
+			board.groups.splice(idx, 1, group)
+		} else {
+			group.id = utilService.makeId()
+			board.groups.push(group)
+		}
+		return save(board)
+	} catch (err) {
+		console.log('couldnt save group', err)
+		throw err
+	}
+}
+
+async function removeGroup(groupId, boardId) {
+	try {
+		let board = await getById(boardId)
+		const updatedGroups = board.groups.filter((group) => group.id !== groupId)
+		board.groups = updatedGroups
+		return save(board)
+	} catch (err) {
+		console.log('Failed to remove group', err)
+		throw err
+	}
+}
+
 
 
 // TEST DATA

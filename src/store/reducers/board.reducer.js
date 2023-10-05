@@ -15,9 +15,15 @@ const initialState = {
 }
 
 export function boardReducer(state = initialState, action) {
+<<<<<<< HEAD
     let newState = state
     let boards
     let starredBoards
+=======
+    var newState = state
+    var boards
+    var board
+>>>>>>> 53b41d7 (board details)
     switch (action.type) {
         case SET_BOARDS:
             newState = { ...state, boards: action.boards }
@@ -28,12 +34,15 @@ export function boardReducer(state = initialState, action) {
             newState = { ...state, boards, lastRemovedBoard }
             break
         case ADD_BOARD:
-            newState = { ...state, boards: [...state.boards, action.board] }
+            newState = { ...state, boards: [...state.boards, action.boards] }
             break
+        // case UPDATE_BOARD:
+        //     boards = state.boards.map(board => (board._id === action.board._id) ? action.board : board)
+        //     newState = { ...state, boards }
+        //     break
         case UPDATE_BOARD:
-            boards = state.boards.map(board => (board._id === action.board._id) ? action.board : board)
-            newState = { ...state, boards }
-            break
+            newState = { ...state, board: action.board }
+            break;
         case UNDO_REMOVE_BOARD:
             if (state.lastRemovedBoard) {
                 newState = { ...state, boards: [...state.boards, state.lastRemovedBoard], lastRemovedBoard: null }
@@ -41,9 +50,15 @@ export function boardReducer(state = initialState, action) {
         case STARRED_BOARD:
             newState = { ...state, isStarred: action.isStarred }
             break
+<<<<<<< HEAD
         case UNSTARRED_BOARD:
             starredBoards = state.starredBoards.filter(starredBoard => starredBoard._id !== action.board._id)
             newState = { ...state, starredBoards }
+=======
+        case SET_BOARD:
+            newState = { ...state, board: action.board }
+            break
+>>>>>>> 53b41d7 (board details)
         default:
     }
     return newState
