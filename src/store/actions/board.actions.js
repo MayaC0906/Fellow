@@ -99,6 +99,7 @@ export function onRemoveBoardOptimistic(boardId) {
 export async function settingIsStarred(boardId) {
     try {
         const board = await boardService.getById(boardId)
+        console.log(board);
         board.isStarred = !board.isStarred
         const type = board.isStarred ? 'UNSTARRED_BOARDS' : 'STARRED_BOARDS'
         store.dispatch(type, board)

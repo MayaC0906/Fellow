@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import { workspaceSvg } from "./Svgs"
 
 export function BoardPreview({ board, onStarredBoard }) {
     const { title } = board
@@ -7,7 +8,7 @@ export function BoardPreview({ board, onStarredBoard }) {
             <section className="details">
                 <h2>{title}</h2>
                 {/* <button onClick={() => onStarredBoard(board._id)}>{board.isStarred ? '⭐' : ''}</button> */}
-                <div className="star-svg">⭐</div>
+                <div className="star-svg">{workspaceSvg.star}</div>
             </section>
         </li>
     )

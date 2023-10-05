@@ -5,7 +5,8 @@ import { settingIsStarred } from "../store/actions/board.actions";
 export function BoardList({ boards }) {
 
     function onStarredBoard(boardId) {
-        settingIsStarred(boardId)
+        // settingIsStarred(boardId)
+        console.log('hye');
     }
 
     return (

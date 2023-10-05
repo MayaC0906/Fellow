@@ -808,8 +808,8 @@ async function query() {
     return boards
 }
 
-function getById(boardId) {
-    return storageService.get(STORAGE_KEY, boardId)
+async function getById(boardId) {
+    await storageService.get(STORAGE_KEY, boardId)
 }
 
 async function remove(babaId) {
