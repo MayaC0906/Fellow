@@ -54,6 +54,7 @@ async function query() {
     // if (filterBy.price) {
     //     boards = boards.filter(board => board.price <= filterBy.price)
     // }
+    console.log('boards from:', boards)
     return boards
 }
 
