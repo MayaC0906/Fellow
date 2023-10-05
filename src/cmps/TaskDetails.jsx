@@ -1,5 +1,6 @@
 import { useParams } from "react-router"
 import { loadTask } from "../store/actions/board.actions"
+import { useEffect, useState } from "react"
 
 export function TaskDetails() {
 
@@ -20,9 +21,8 @@ export function TaskDetails() {
         }
     }
     return (
-        <>
-            <div>{boardId}</div>
-            <div>{taskId}</div>
-        </>
+        <div className="task-details">
+
+        </div>
     )
 }

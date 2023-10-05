@@ -2,6 +2,12 @@ import { utilService } from "../services/util.service";
 import { taskSvg } from "./Svgs";
 
 export function TaskPreview({task, setIsLabelsShown, isLabelsShown, taskLabels, taskMembers, taskChecklist}) {
+
+    function onLabelOpen(ev) {
+        ev.preventDefault()
+        setIsLabelsShown(!isLabelsShown)
+    }
+
     return (
         <article key={task.id} className="task">
             <button>{taskSvg.edit}</button>
@@ -12,7 +18,7 @@ export function TaskPreview({task, setIsLabelsShown, isLabelsShown, taskLabels, 
                 <section className="labels">
                     {taskLabels.map(label => {
                         return <div key={label.id} className={"label " + (isLabelsShown ? 'open' : 'close')} style={{ backgroundColor: label.color }}
-                            onClick={() => { setIsLabelsShown(!isLabelsShown) }} >
+                            onClick={onLabelOpen} >
                             {label.title && <span>{label.title}</span>} </div>
                     })}
                 </section>

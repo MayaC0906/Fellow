@@ -15,7 +15,7 @@ export function TaskList({ tasks, labels, members, isLabelsShown, setIsLabelsSho
                 const taskMembers = boardService.getMembers(task.memberIds, members) || null
                 const taskChecklist = task.checklists.length ? boardService.getCheckListStatus(task.checklists) : ''
 
-                return <Link to = {`board/${boardId}/${groupId}/${task.id}`}><TaskPreview
+                return <Link to = {`${groupId}/${task.id}`}><TaskPreview
                     setIsLabelsShown={setIsLabelsShown}
                     isLabelsShown={isLabelsShown}
                     task={task}

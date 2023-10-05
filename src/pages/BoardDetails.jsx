@@ -35,6 +35,7 @@ export function BoardDetails() {
     return (
         <div className="board-details-container">
             <GroupHeader />
+            <Outlet/>
             <GroupList boardId={boardId}/>
         </div>
     )
