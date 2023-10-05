@@ -831,8 +831,8 @@ async function query() {
     return boards
 }
 
-async function getById(boardId) {
-    await storageService.get(STORAGE_KEY, boardId)
+ function getById(boardId) {
+    return storageService.get(STORAGE_KEY, boardId)
 }
 
 async function remove(babaId) {

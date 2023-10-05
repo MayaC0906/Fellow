@@ -5,6 +5,7 @@ import { taskSvg } from "./Svgs";
 
 
 export function TaskList({ tasks, labels, members }) {
+    console.log('tasks',tasks);
 
     const [isLabelsShown, setIsLabelsShown ] = useState(false)
 
