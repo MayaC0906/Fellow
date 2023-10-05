@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 import { loadBoards } from "../store/actions/board.actions"
 import { useSelector } from "react-redux"
 import { BoardList } from "../cmps/BoardList"
-import { GroupHeader } from "../cmps/GroupHedear"
 
 export function Workspace() {
     const boards = useSelector(storeState => storeState.boardModule.boards)
@@ -17,10 +16,9 @@ export function Workspace() {
         <>
             <section className="workplace-container flex justify-center">
                 <nav>
-                    <button>Boards</button>
-                    <button>Template</button>
+                    {/* <button> { } <span>Boards</span></button> */}
+                    {/* <button> { } <span>Template</span></button> */}
                 </nav>
-                {/* <GroupHeader /> */}
                 <section className="board">
                     <h2>Starred boards</h2>
                     <section className="board-bontainer">
