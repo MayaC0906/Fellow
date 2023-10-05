@@ -7,8 +7,9 @@ import Textarea from '@mui/joy/Textarea';
 import Button from '@mui/joy/Button';
 
 
-export function GroupPreview({group, members, labels, onRemoveGroup}){
+export function GroupPreview({isLabelsShown,setIsLabelsShown,group, members, labels, onRemoveGroup}){
 	const [toggleGroupMenu, setToggleGroupMenu] = useState(false)
+
 	// function handleSubmit({target}) {
     //     console.log(target);
     // }
@@ -32,7 +33,7 @@ export function GroupPreview({group, members, labels, onRemoveGroup}){
 				{toggleGroupMenu && <QuickGroupEdit setToggleGroupMenu={setToggleGroupMenu} groupId={group.id} onRemoveGroup={onRemoveGroup}/>}
 			</section>
 			<section className='task-list-container'>
-				<TaskList members={members} labels={labels} tasks={group.tasks}/>
+				<TaskList isLabelsShown={isLabelsShown} setIsLabelsShown={setIsLabelsShown}  members={members} labels={labels} tasks={group.tasks}/>
 			</section>
 			{/* <TextInputs toggle={toggleAddCardInput} setToggle={setToggleCardInput} handleSubmit={handleSubmit} from={'task'}/> */}
 			<section className='footer-wrapper'>

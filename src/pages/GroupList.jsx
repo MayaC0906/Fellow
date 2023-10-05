@@ -15,10 +15,8 @@ export function GroupList() {
     const [newGroup, setNewGroup] = useState(boardService.getEmptyGroup())
 	const board = useSelector((storeState) => storeState.boardModule.board)
     const groups = board?.groups
-    
-    
-    useEffect(()=>{
-    },[board])
+    const [isLabelsShown, setIsLabelsShown] = useState(false)
+
 
     function handleChange(ev) {
         let { value, name: field } = ev.target
@@ -54,7 +52,7 @@ export function GroupList() {
             <ul className='group-list clean-list'>
             {board && board?.groups && groups.map((group, idx) => (
                 <li className='group-preview-container' key={idx}>
-                    <GroupPreview onRemoveGroup={onRemoveGroup} labels={board.labels} members={board.members} group={group} />
+                    <GroupPreview setIsLabelsShown={setIsLabelsShown} isLabelsShown={isLabelsShown} onRemoveGroup={onRemoveGroup} labels={board.labels} members={board.members} group={group} />
                 </li>))}
                 <section className='add-group-input'>
                     {!isInputExpand ?

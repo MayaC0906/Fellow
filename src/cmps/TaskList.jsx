@@ -3,8 +3,7 @@ import { boardService } from "../services/board.service.local";
 import { TaskPreview } from "./TaskPreview";
 
 
-export function TaskList({ tasks, labels, members }) {
-    const [isLabelsShown, setIsLabelsShown] = useState(false)
+export function TaskList({ tasks, labels, members,setIsLabelsShown,isLabelsShown }) {
 
     return (
         <section className="task-list">
