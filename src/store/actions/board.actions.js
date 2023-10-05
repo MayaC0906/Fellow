@@ -2,6 +2,7 @@ import { boardService } from "../../services/board.service.local.js";
 import { store } from '../store.js'
 import { showSuccessMsg, showErrorMsg } from '../../services/event-bus.service.js'
 import { ADD_BOARD, REMOVE_BOARD, SET_BOARD, SET_BOARDS, UNDO_REMOVE_BOARD, UPDATE_BOARD } from "../reducers/board.reducer.js";
+import { taskService } from "../../services/task.service.local.js";
 
 // Action Creators:
 export function getActionRemoveBoard(boardId) {
@@ -141,6 +142,15 @@ export async function settingIsStarred(boardId) {
         return board
     } catch (err) {
         console.log('Cannot add board', err)
+        throw err
+    }
+}
+
+export async function loadTask (boardId, groupId, taskId) {
+    try {const task = await taskService.getById (boardId, groupId, taskId)
+        return task
+    } catch (err) {
+        console.log('Cannot get task', err)
         throw err
     }
 }

@@ -24,21 +24,22 @@ window.bs = boardService
 
 
 function getLabels(labelsIds, boardLabels) {
-    return boardLabels.filter(label=>labelsIds.includes(label.id))
+    return boardLabels.filter(label => labelsIds.includes(label.id))
 }
 
 function getMembers(memberIds, boardMembers) {
-    return boardMembers.filter(member=>memberIds.includes(member._id))
+    return boardMembers.filter(member => memberIds.includes(member._id))
 }
 
 function getCheckListStatus(checkLists) {
-    const checkListStatus = {done: 0, all: 0}
+    const checkListStatus = { done: 0, all: 0 }
 
-    checkLists.forEach (checkList=> checkList.todos.forEach(todo=>{
-        if (todo.isDone) {checkListStatus.done++
-        checkListStatus.all++
-    } else checkListStatus.all++
-    } )
+    checkLists.forEach(checkList => checkList.todos.forEach(todo => {
+        if (todo.isDone) {
+            checkListStatus.done++
+            checkListStatus.all++
+        } else checkListStatus.all++
+    })
     )
     return checkListStatus
 }
@@ -834,7 +835,11 @@ async function query() {
     return boards
 }
 
- function getById(boardId) {
+function getById(boardId) {
+    return storageService.get(STORAGE_KEY, boardId)
+}
+
+async function getById(boardId) {
     return storageService.get(STORAGE_KEY, boardId)
 }
 
@@ -872,39 +877,39 @@ async function addBabaMsg(babaId, txt) {
 }
 
 function getEmptyGroup() {
-	return {
-		title: '',
-		tasks: [],
-	}
+    return {
+        title: '',
+        tasks: [],
+    }
 }
 
 async function saveGroup(group, boardId) {
-	try {
-		let board = await getById(boardId)
-		if (group.id) {
-			const idx = board.groups.findIndex((currGroup) => currGroup.id === group.id)
-			board.groups.splice(idx, 1, group)
-		} else {
-			group.id = utilService.makeId()
-			board.groups.push(group)
-		}
-		return save(board)
-	} catch (err) {
-		console.log('couldnt save group', err)
-		throw err
-	}
+    try {
+        let board = await getById(boardId)
+        if (group.id) {
+            const idx = board.groups.findIndex((currGroup) => currGroup.id === group.id)
+            board.groups.splice(idx, 1, group)
+        } else {
+            group.id = utilService.makeId()
+            board.groups.push(group)
+        }
+        return save(board)
+    } catch (err) {
+        console.log('couldnt save group', err)
+        throw err
+    }
 }
 
 async function removeGroup(groupId, boardId) {
-	try {
-		let board = await getById(boardId)
-		const updatedGroups = board.groups.filter((group) => group.id !== groupId)
-		board.groups = updatedGroups
-		return save(board)
-	} catch (err) {
-		console.log('Failed to remove group', err)
-		throw err
-	}
+    try {
+        let board = await getById(boardId)
+        const updatedGroups = board.groups.filter((group) => group.id !== groupId)
+        board.groups = updatedGroups
+        return save(board)
+    } catch (err) {
+        console.log('Failed to remove group', err)
+        throw err
+    }
 }
 
 
