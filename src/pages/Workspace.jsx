@@ -3,11 +3,11 @@ import { loadBoards } from "../store/actions/board.actions"
 import { useSelector } from "react-redux"
 import { BoardList } from "../cmps/BoardList"
 import { workspaceSvg } from "../cmps/Svgs"
+import { TaskDetailsSideNav } from "../cmps/TaskDetailsSideNav"
 
 export function Workspace() {
     const boards = useSelector(storeState => storeState.boardModule.boards)
     const [starredBoard, setStarredBoard] = useState([])
-    // const [isActive, setActiveState] = useState([])
 
     useEffect(() => {
         onLoadBoards()
@@ -18,9 +18,7 @@ export function Workspace() {
             const boards = await loadBoards()
             if (boards.length || boards) {
                 boards.map(board => {
-                    console.log('boards', board)
                     if (board.isStarred) {
-                        console.log(board._id);
                         setStarredBoard(prevBoard => [...prevBoard, board])
                     }
                 })
@@ -30,10 +28,10 @@ export function Workspace() {
         }
     }
 
-    console.log((starredBoard))
     if (!boards || !boards.length) return <div>loading</div>
     return (
         <>
+            <TaskDetailsSideNav />
             <section className="workspace-container flex justify-center">
                 <nav className="flex">
                     <button className="flex"> {workspaceSvg.boards} <span>Boards</span></button>

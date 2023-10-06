@@ -1,12 +1,22 @@
 .group-preview-container{
     display: flex;
     flex-direction: column;
-    width: 272px;
+    width: 250px;
     height: max-content;
     overflow: hidden;
     border-radius: 12px;
     box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px 0px, rgba(9, 30, 66, 0.31) 0px 0px 1px 0px;
     background-color: #ebecf0;
+    scroll-margin: 8px;
+    white-space: nowrap;
+    // box-sizing: border-box;
+    // display: inline-block;
+    // height: 100%;
+    // margin: 0 4px;
+   
+    // vertical-align: top;
+ 
+    // width: 272px;
     .group-preview {
         display: flex;
         height: max-content;
@@ -28,19 +38,19 @@
         }
 
         .task-list-container {
-            overflow-y: scroll;
+       
             overflow-x:hidden;
             flex-grow: 1;
             max-height: calc(100vh - 120px);
         }
         &-header{
-            margin-top: 5px;
-            align-items: center;
-            color: #172b4d;
-            display: flex;
-            font-weight: 800;
-            height: 34px;
-            justify-content: space-between;
+            column-gap: 4px;
+            display: grid;
+            flex: 0 0 auto;
+            grid-template-columns: 1fr max-content;
+            min-height: 20px;
+            padding: 8px;
+            position: relative;
             .edit-group-title {
                 background: #0000;
                 border: none;
