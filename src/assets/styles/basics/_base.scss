@@ -10,6 +10,7 @@
 html {
     // font-family: montserrat;
     line-height: 1.6;
+    overflow: hidden;
 }
 
 body {
@@ -26,9 +27,9 @@ body {
 // }
 
 
-section, main, footer {
-    padding: 3px;
-}
+// section, main, footer {
+//     padding: 3px;
+// }
 
 img {
     width: 100%;

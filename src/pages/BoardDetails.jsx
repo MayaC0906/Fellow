@@ -7,7 +7,7 @@ import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 import { boardService } from "../services/board.service.local.js";
 import { SET_BOARD } from '../store/reducers/board.reducer.js'
 import { GroupHeader } from "../cmps/GroupHedear"
-
+import { BoardSidebar } from "../cmps/BoardSidebar.jsx";
 export function BoardDetails() {
     const dispatch = useDispatch();
     const { boardId } = useParams();
@@ -35,6 +35,7 @@ export function BoardDetails() {
     return (
         <div className="board-details-container">
             <GroupHeader />
+            <Outlet/>
             <GroupList boardId={boardId}/>
         </div>
     )

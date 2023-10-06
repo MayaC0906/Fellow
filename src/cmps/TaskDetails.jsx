@@ -1,10 +1,14 @@
 import { useParams } from "react-router"
 import { loadTask } from "../store/actions/board.actions"
+import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
+import { TaskTitle } from "./TaskTitle"
 
 export function TaskDetails() {
 
     const { boardId, groupId, taskId } = useParams()
     const [task, setTask] = useState(null)
+    console.log(task);
 
     useEffect(() => {
         onLoadTask(boardId, groupId, taskId)
@@ -19,10 +23,21 @@ export function TaskDetails() {
             throw err
         }
     }
+
+if (!task) return <div>Loading</div>
     return (
-        <>
-            <div>{boardId}</div>
-            <div>{taskId}</div>
-        </>
+            <div className="task-details">
+            <section className="modal-container">
+                <article className="task-modal">
+                    <Link to={`/board/${boardId}`}>X</Link>
+                    {task.cover?.backgroundColor && <div style= {{backgroundColor: task.cover.backgroundColor}}></div>} 
+                    {/* 116px */}
+                    {task.cover?.img && <img src={task.cover.img} alt="" /> } 
+                    {/* maxwidth 16px */}
+                    <TaskTitle task={task}/>
+                </article>
+            </section>
+        </div>
     )
+
 }

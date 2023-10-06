@@ -17,7 +17,6 @@ export function GroupList() {
     const groups = board?.groups
     const [isLabelsShown, setIsLabelsShown] = useState(false)
 
-
     function handleChange(ev) {
         let { value, name: field } = ev.target
 		setNewGroup((prevGroup) => ({ ...prevGroup, [field]: value }))
@@ -79,7 +78,9 @@ export function GroupList() {
        <div className='group-list-container'>
             <ul className='group-list clean-list'>
             {board && board?.groups && groups.map((group, idx) => (
+                <div className='list-wrapper'>
                 <li className='group-preview-container' key={idx}>
+                   
                     <GroupPreview
                         onDuplicateGroup={onDuplicateGroup}
                         onEditGroup={onEditGroup}
@@ -90,16 +91,19 @@ export function GroupList() {
                         members={board.members}
                         group={group}
                         />
-                </li>))}
+                </li> </div>))}
                 <section className='add-group-input'>
                     {!isInputExpand ?
                     <div className='add-group-msg' onClick={() => setInputExpand(!isInputExpand)}>+ Add new list</div> :
                     <div className='add-group-input-expanded'>
-                        <Textarea name="title"
+                        <Textarea 
+                            sx={{ border:'none'}}
+                            name="title"
                             placeholder="Enter list title..."
                             autoFocus
                             value={newGroup.title}
-                            onChange={handleChange} />
+                            onChange={handleChange}
+                             />
                             <section className='add-controls'>
                                 <Button type="submit" onClick={onSaveNewGroup}>Add List</Button>
                                 <button className='cancel' onClick={() => setInputExpand(!isInputExpand)}>X</button>
