@@ -844,16 +844,14 @@ async function remove(babaId) {
     await storageService.remove(STORAGE_KEY, babaId)
 }
 
-async function save(baba) {
-    var savedBaba
-    if (baba._id) {
-        savedBaba = await storageService.put(STORAGE_KEY, baba)
+async function save(board) {
+    var savedBoard
+    if (board._id) {
+        savedBoard = await storageService.put(STORAGE_KEY, board)
     } else {
-        // Later, owner is set by the backend
-        baba.owner = userService.getLoggedinUser()
-        savedBaba = await storageService.post(STORAGE_KEY, baba)
+        savedBoard = await storageService.post(STORAGE_KEY, board)
     }
-    return savedBaba
+    return savedBoard
 }
 
 async function addBabaMsg(babaId, txt) {
