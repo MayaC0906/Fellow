@@ -94,7 +94,9 @@ export function GroupList() {
                 </li> </div>))}
                 <section className='add-group-input'>
                     {!isInputExpand ?
-                    <div className='add-group-msg' onClick={() => setInputExpand(!isInputExpand)}>+ Add new list</div> :
+                    <div className='add-group-msg' onClick={() => setInputExpand(!isInputExpand)}>
+                        <span>+ Add another list </span>
+                        </div> :
                     <div className='add-group-input-expanded'>
                         <Textarea 
                             sx={{ border:'none'}}

@@ -1,11 +1,11 @@
 .app-header {
-    background-color: gray;
+    background: hsl(250,47.9%,40.7%);
     padding: rem(8px);
     height: 48px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-
+    
     .nav-links {
         display: flex;
         align-items: center;
@@ -50,8 +50,9 @@
                 background: none;
                 height: 32px;
                 border: none;
-                color: white;
+                // background: white;
                 font-size: rem(14px);
+                color: white;
 
                 svg {
                     height: rem(16px);
@@ -63,7 +64,7 @@
         .create-btn {
             margin: 0 4px 0 0;
             padding: 6px 10px 6px 12px;
-            background: lighten(gray, 25%);
+            background:lighten(#473699, 25%);
             height: 32px;
             border: none;
             color: white;
@@ -78,7 +79,7 @@
             align-items: center;
 
             &:hover {
-                background-color: lighten(gray, 30%);
+                background-color: lighten(#473699, 15%);
                 cursor: pointer;
             }
         }
@@ -94,14 +95,14 @@
         .search-input {
             width: 200px;
             border-radius: 5px;
-            background-color: lighten(gray, 25%);
+            background-color: lighten(#473699, 25%);
             height: 32px;
             display: flex;
             align-items: center;
             color: white;
 
             &:hover {
-                background-color: lighten(gray, 30%);
+                background-color: lighten(#473699, 15%);
                 cursor: pointer;
             }
 
