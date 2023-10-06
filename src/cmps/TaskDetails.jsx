@@ -37,7 +37,6 @@ if (!task) return <div>Loading</div>
                     <TaskTitle task={task}/>
                 </article>
             </section>
-            <div className="layer"></div>
         </div>
     )
 
