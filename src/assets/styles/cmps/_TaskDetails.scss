@@ -5,15 +5,13 @@
     z-index: 50;
     overflow-y: scroll;
     background-color: rgba(0, 0, 0, 0.475);
- 
+
     .modal-container {
         z-index: 60;
         display: grid;
-        
+
         grid-template-columns:
-         clamp(3px, calc((100% - 768px) / 2),40%)
-         minmax(300px, 1fr)
-         clamp(3px, calc((100% - 768px) / 2),40%);
+            clamp(3px, calc((100% - 768px) / 2), 40%) minmax(300px, 1fr) clamp(3px, calc((100% - 768px) / 2), 40%);
         grid-template-rows: 48px 1fr 80px;
         gap: 0px 0px;
         grid-auto-flow: row;
@@ -29,6 +27,48 @@
             min-height: 600px;
             width: 100%;
             max-width: 768px;
+            position: relative;
+            border-radius: 8px;
+
+            a {
+                position: absolute;
+                width: 40px;
+                height: 40px;
+                top: 12px;
+                right: 12px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                
+                svg {
+                    width: 20px;
+                    height: 20px;
+                    color: #42526e;
+                }
+            }
+
+            .img-cover {
+                justify-content: center;
+                max-height: 160px;
+                display: flex;
+                // align-items: center;
+                img {
+                    border-top-right-radius: 8px;
+                    border-top-left-radius: 8px;
+                    width: auto;
+                    max-height: 160px;
+                }
+            }
+
+            .color-cover {
+                width:100%;
+                height: 116px
+            }
+
+            .task-title{
+                display: flex;
+            }
+
         }
     }
 }

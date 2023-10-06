@@ -4,6 +4,8 @@ import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { TaskTitle } from "./TaskTitle"
 import { TaskDescription } from "./TaskDescription"
+import { TaskDetailsSideNav } from "./TaskDetailsSideNav"
+import { taskSvg } from "./Svgs"
 
 export function TaskDetails() {
 
@@ -25,18 +27,35 @@ export function TaskDetails() {
         }
     }
 
-if (!task) return <div>Loading</div>
+    if (!task) return <div>Loading</div>
     return (
-            <div className="task-details">
+        <div className="task-details">
             <section className="modal-container">
                 <article className="task-modal">
-                    <Link to={`/board/${boardId}`}>X</Link>
-                    {task.cover?.backgroundColor && <div style= {{backgroundColor: task.cover.backgroundColor}}></div>} 
-                    {/* 116px */}
-                    {task.cover?.img && <img src={task.cover.img} alt="" /> } 
-                    {/* maxwidth 16px */}
-                    <TaskTitle task={task}/>
-                    <TaskDescription task={task}/>
+
+                    <Link to={`/board/${boardId}`}>
+                        {taskSvg.plus}
+                    </Link>
+
+                    {task.cover?.backgroundColor && <div className="color-cover" style={{ backgroundColor: task.cover.backgroundColor }}></div>}
+                    {task.cover?.img &&
+                        <div className="img-cover">
+                            <img src={task.cover.img} alt="" />
+                        </div>}
+                
+
+                    <TaskTitle task={task} />
+
+                    <section className="task-main">
+                        <section className="task-info">
+                            <TaskDescription task={task} />
+                        </section>
+
+                        <section className="edit-task-nav">
+                            <TaskDetailsSideNav />
+                        </section>
+                    </section>
+
                 </article>
             </section>
         </div>
