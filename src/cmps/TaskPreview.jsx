@@ -2,6 +2,12 @@ import { utilService } from "../services/util.service";
 import { taskSvg } from "./Svgs";
 
 export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels, taskMembers, taskChecklist }) {
+
+    function onLabelOpen(ev) {
+        ev.preventDefault()
+        setIsLabelsShown(!isLabelsShown)
+    }
+
     return (
         <article key={task.id} className="task">
             <button>{taskSvg.edit}</button>
