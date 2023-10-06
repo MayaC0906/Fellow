@@ -3,6 +3,7 @@ import { loadTask } from "../store/actions/board.actions"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { TaskTitle } from "./TaskTitle"
+import { TaskDescription } from "./TaskDescription"
 
 export function TaskDetails() {
 
@@ -35,6 +36,7 @@ if (!task) return <div>Loading</div>
                     {task.cover?.img && <img src={task.cover.img} alt="" /> } 
                     {/* maxwidth 16px */}
                     <TaskTitle task={task}/>
+                    <TaskDescription task={task}/>
                 </article>
             </section>
         </div>

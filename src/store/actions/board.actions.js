@@ -161,3 +161,11 @@ export async function saveTaskTitle(boardId, groupId, taskId, newTitle) {
         throw err
     }
 }
+
+export async function saveTaskDescription(boardId, groupId, taskId, newDescription) {
+    try {const board = await  taskService.saveTaskDescription(boardId, groupId, taskId, newDescription)
+        store.dispatch(getActionUpdateBoard(board))
+    } catch (err) {
+        throw err
+    }
+}

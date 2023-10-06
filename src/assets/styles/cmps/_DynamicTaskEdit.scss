@@ -1,0 +1,46 @@
+.edit-modal {
+    width: 304px;
+    border-radius: 8px;
+    border: 1px solid black;
+    box-shadow: 0px 8px 12px #091e4226, 0px 0px 1px #091e424f;
+
+    button {
+        border: none;
+        background-color: white;
+        cursor: pointer;
+    }
+
+    .content {
+        padding: 0 12px 12px;
+    }
+
+    .title-container {
+        display: grid;
+        grid-template-columns: 32px 1fr 32px;
+        padding: 4px 8px;
+        align-items: center;
+        text-align: center;
+
+        p {
+            grid-column: 2/3;
+            place-self: center;
+            margin: 0;
+        }
+
+        .close-modal {
+            grid-column: 3/4;
+            display: flex;
+            align-self: flex-end;
+            border: none;
+            background-color: white;
+            cursor: pointer;
+            padding: 6px;
+            margin: 0;
+
+            svg {
+                width: 16px;
+                height: 16px;
+            }
+        }
+    }
+}

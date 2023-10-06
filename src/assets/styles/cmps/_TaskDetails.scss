@@ -1,10 +1,6 @@
 .task-details {
     position: fixed;
     inset: 0;
-    // top: 0;
-    // bottom: 0;
-    // left: 0;
-    // right: 0;
     pointer-events: auto;
     z-index: 50;
     overflow-y: scroll;
@@ -13,7 +9,11 @@
     .modal-container {
         z-index: 60;
         display: grid;
-        grid-template-columns: 1fr 768px 1fr;
+        
+        grid-template-columns:
+         clamp(3px, calc((100% - 768px) / 2),40%)
+         minmax(300px, 1fr)
+         clamp(3px, calc((100% - 768px) / 2),40%);
         grid-template-rows: 48px 1fr 80px;
         gap: 0px 0px;
         grid-auto-flow: row;
@@ -27,8 +27,8 @@
             z-index: 60;
             background-color: white;
             min-height: 600px;
-            // max-height: 100%;
-            width: 768px;
+            width: 100%;
+            max-width: 768px;
         }
     }
 }

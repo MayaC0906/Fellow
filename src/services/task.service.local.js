@@ -2,7 +2,8 @@ import { boardService } from "./board.service.local"
 
 export const taskService = {
     getById,
-    saveTaskTitle
+    saveTaskTitle,
+    saveTaskDescription
 }
 
 async function getById(boardId, groupId, taskId) {
@@ -32,6 +33,25 @@ async function saveTaskTitle(boardId, groupId, taskId, newTitle) {
         return board
     } catch (err) {
         console.log('couldn\'t save task title', err);
+        throw err
+    }
+}
+
+async function saveTaskDescription(boardId, groupId, taskId, newDescriptoin) {
+    try {
+        const board = await boardService.getById(boardId)
+        const group = board.groups.find(group => group.id === groupId)
+        const groupIdx = board.groups.findIndex(group => group.id === groupId)
+        const task = group.tasks.find(task => task.id === taskId)
+        const taskIdx = group.tasks.findIndex(task => task.id === taskId)
+
+        const newTask = { ...task, description: newDescriptoin }
+        board.groups[groupIdx].tasks[taskIdx] = newTask
+
+        boardService.saveGroup(board.groups[groupIdx], boardId)
+        return board
+    } catch (err) {
+        console.log('couldn\'t save task description', err);
         throw err
     }
 }
