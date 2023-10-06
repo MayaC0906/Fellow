@@ -7,7 +7,8 @@ export const utilService = {
     saveToStorage,
     loadFromStorage,
     getAssetSrc,
-    formatTimestamp
+    formatTimestamp,
+    getFileNameFromUrl
 }
 
 function makeId(length = 6) {
@@ -75,17 +76,26 @@ function getAssetSrc(name) {
 function formatTimestamp(timestamp) {
     const date = new Date(timestamp);
     const currentDate = new Date();
-  
+
     const monthShort = new Intl.DateTimeFormat('en', { month: 'short' }).format(date);
     const day = date.getDate();
     const year = date.getFullYear();
-  
+
     if (year === currentDate.getFullYear()) {
-      // If it's the current year, return the short month and day only
-      return `${monthShort} ${day}`;
+        // If it's the current year, return the short month and day only
+        return `${monthShort} ${day}`;
     } else {
-      // If it's a different year, return the short month, day, and full year
-      return `${monthShort} ${day}, ${year}`;
+        // If it's a different year, return the short month, day, and full year
+        return `${monthShort} ${day}, ${year}`;
     }
-  }
-  
+}
+
+function getFileNameFromUrl(url) {
+    const match = url.match(/\/([^/]+\.(jpg|png|jpeg))$/i);
+
+    if (match && match[1]) {
+        return match[1];
+    } else {
+        return null;
+    }
+}
