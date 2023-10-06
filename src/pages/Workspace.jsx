@@ -7,6 +7,7 @@ import { workspaceSvg } from "../cmps/Svgs"
 export function Workspace() {
     const boards = useSelector(storeState => storeState.boardModule.boards)
     const [starredBoard, setStarredBoard] = useState([])
+    // const [isActive, setActiveState] = useState([])
 
     useEffect(() => {
         onLoadBoards()
@@ -39,12 +40,12 @@ export function Workspace() {
                     <button className="flex"> {workspaceSvg.template} <span>Template</span></button>
                 </nav>
                 <section className="board">
-                    {starredBoard.length > 0 && <section className="board-bontainer">
-                        <h2>Starred boards</h2>
+                    {starredBoard.length > 0 && <section className="board-container">
+                        <h2> {workspaceSvg.star} <span>Starred boards</span></h2>
                         <BoardList boards={starredBoard} setStarredBoard={setStarredBoard} />
                     </section>}
-                    <section className="board-bontainer">
-                        <h2>Recently viewed</h2>
+                    <section className="board-container">
+                        <h2> {workspaceSvg.clock} <span>Recently viewed</span></h2>
                         <BoardList boards={boards} setStarredBoard={setStarredBoard} />
                     </section>
                 </section>
