@@ -2,12 +2,15 @@ export function QuickGroupEdit({onDuplicateGroup,group,onRemoveGroup,setToggleGr
     return (
         <section className="group-edit-modal">
                 <header>
-                    <h1>List action</h1>
+                    <div>List action</div>
                     <button onClick={() => setToggleGroupMenu(false)} className="close-btn">X</button>
                 </header>
+                <ul className="clean-list">
+
                 <li onClick={() => onRemoveGroup(group.id)}>Delete</li>
                 <li onClick={() => onDuplicateGroup(group)}>Copy list</li>
                 <li>Add card...</li>
+                </ul>
                 {/* <span>Copy list...</span>
                 <span>Move list...</span>
                 <span>Watch</span> */}

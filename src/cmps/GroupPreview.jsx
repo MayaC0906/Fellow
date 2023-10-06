@@ -13,6 +13,7 @@ export function GroupPreview({ onEditGroup ,isLabelsShown, setIsLabelsShown, gro
 
 
     return (
+		
         <section className="group-preview">
 			<section className='header-wrapper'>
 				<header className='group-preview-header'>			
