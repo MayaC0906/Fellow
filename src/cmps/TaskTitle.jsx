@@ -25,7 +25,7 @@ export function TaskTitle({ task }) {
 
     return (
 
-        <section className="task-detail-title">
+        <section className="task-title">
             {taskSvg.title}
             <Textarea
                 name="title"
@@ -34,7 +34,7 @@ export function TaskTitle({ task }) {
                 onChange={handleChange}
                 onBlur={onSaveTitle}
                 onKeyDown={onSaveTitle}
-                sx={{ width: '600px', minHeight: '37px', padding: '6px 10px', margin: '0', border: 'none' }}
+                sx={{ width: '78.125%', minHeight: '37px', padding: '6px 10px', margin: '0', border: 'none' }}
             />
         </section>
     )
