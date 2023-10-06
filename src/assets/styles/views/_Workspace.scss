@@ -19,7 +19,7 @@
             cursor: pointer;
 
             &:hover {
-                background-color: #0000002d;
+                background-color: #091E4224;
                 border-radius: 4px;
                 color: #0C66E4;
             }
@@ -30,17 +30,19 @@
             }
 
             span {
-                font-size: em(14px);
+
+                font-size: rem(16px);
             }
 
             svg {
                 width: 16px;
                 height: 16px;
+                font-size: rem(16px);
             }
         }
     }
 
     h2 {
-        font-size: em(16px);
+        font-size: rem(16px);
     }
 }

@@ -54,11 +54,11 @@
         margin-block-end: 52px;
 
         h2 {
-            font-size: em(14px);
+            font-size: rem(16px);
             margin: 0;
             padding: 0;
             display: flex;
-            align-items: flex-end;
+            // align-items: flex-end;
             gap: 8px;
             margin-block-end: 20px;
         }
