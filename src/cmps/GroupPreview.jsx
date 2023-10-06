@@ -21,7 +21,8 @@ export function GroupPreview({ onEditGroup ,isLabelsShown, setIsLabelsShown, gro
 							className="edit-group-title clean-btn"
 							id={group.id}
 							defaultValue={group.title}
-							onChange={onEditGroup}
+							// onChange={(event) => onEditGroup(group.id,event)}
+							onBlur={(event) => onEditGroup(group.id,event)}
 							// onChange={} TODO
 						></Textarea>
 						<img onClick={() => setToggleGroupMenu(!toggleGroupMenu)} src="https://res.cloudinary.com/dpwmxprpp/image/upload/v1696437012/asset_14_gltqff.svg" alt="" />

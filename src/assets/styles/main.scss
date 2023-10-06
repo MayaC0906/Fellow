@@ -19,6 +19,7 @@
 @import "views/BoardDetails";
 @import "views/ReviewIndex";
 @import "views/UserDetails";
+@import "views/Workspace";
 
 
 // Components
@@ -32,10 +33,5 @@
 @import "cmps/GroupHeader";
 @import "cmps/TaskList";
 @import "cmps/TaskDetails";
-@import "cmps/QuickGroupEdit"
-
-
-
-
-
-
+@import "cmps/QuickGroupEdit";
+@import "cmps/UserMsg.scss";

@@ -38,17 +38,16 @@ export async function loadBoards() {
         console.log('Cannot load boards', err)
         throw err
     }
-
 }
 
 export async function loadBoard(boardId) {
     try {
         const board = await boardService.getById(boardId)
-        store.dispatch({type: SET_BOARD, board})
+        store.dispatch({ type: SET_BOARD, board })
         return board
     }
     catch {
-        console.log('cannot load board:', err  )
+        console.log('cannot load board:', err)
         throw err
     }
 }
@@ -89,25 +88,25 @@ export function updateBoard(board) {
 }
 
 export async function removeGroup(groupId, boardId) {
-	try {
-		const savedBoard = await boardService.removeGroup(groupId, boardId)
-		store.dispatch(getActionUpdateBoard(savedBoard))
-		return groupId
-	} catch (err) {
-		console.log('Cannot remove group', err)
-		throw err
-	}
+    try {
+        const savedBoard = await boardService.removeGroup(groupId, boardId)
+        store.dispatch(getActionUpdateBoard(savedBoard))
+        return groupId
+    } catch (err) {
+        console.log('Cannot remove group', err)
+        throw err
+    }
 }
 
 export async function saveGroup(group, boardId) {
-	try {
-		const board = await boardService.saveGroup(group, boardId)
-		store.dispatch(getActionUpdateBoard(board))
-		return group
-	} catch (err) {
-		console.log('Cannot save group', err)
-		throw err
-	}
+    try {
+        const board = await boardService.saveGroup(group, boardId)
+        store.dispatch(getActionUpdateBoard(board))
+        return group
+    } catch (err) {
+        console.log('Cannot save group', err)
+        throw err
+    }
 }
 
 // Demo for Optimistic Mutation 
@@ -132,13 +131,14 @@ export function onRemoveBoardOptimistic(boardId) {
         })
 }
 
+// const type = board.isStarred ? UNSTARRED_BOARD : STARRED_BOARD
+// store.dispatch({ type, board })
+// if (board.isStarred) boardService.savingStarredBoards(board)
 export async function settingIsStarred(boardId) {
     try {
         const board = await boardService.getById(boardId)
-        console.log(board);
         board.isStarred = !board.isStarred
-        const type = board.isStarred ? 'UNSTARRED_BOARDS' : 'STARRED_BOARDS'
-        store.dispatch(type, board)
+        await boardService.save(board)
         return board
     } catch (err) {
         console.log('Cannot add board', err)

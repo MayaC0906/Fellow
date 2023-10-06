@@ -1,11 +1,13 @@
 .group-header {
+    position: sticky;
+    top: 0;
+    z-index: 1; // Ensures the header is above other content.
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 56px;
-    background-color: rgb(173, 170, 170);
+    background-color: rgb(205, 139, 193);
     // margin: 0 4px;
-
+    
     .visibility {
         display: flex;
         align-items: baseline;
@@ -27,8 +29,6 @@
         color: white;
         border-radius: 3px;
         cursor: pointer;
-
-
 
         &:focus {
             background-color: white;
@@ -57,7 +57,6 @@
         font-size: rem(14px);
         border-radius: 3px;
         height: 32px;
-
         &:hover {
             cursor: pointer;
             background-color: lighten(rgb(173, 170, 170), 5%);

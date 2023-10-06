@@ -17,13 +17,11 @@ export function GroupList() {
     const groups = board?.groups
     const [isLabelsShown, setIsLabelsShown] = useState(false)
 
-
     function handleChange(ev) {
         let { value, name: field } = ev.target
 		setNewGroup((prevGroup) => ({ ...prevGroup, [field]: value }))
     }
     
-
     async function onSaveNewGroup(ev) {
         ev.preventDefault();
         if (!newGroup.title) return;
@@ -31,13 +29,14 @@ export function GroupList() {
             await saveGroup(newGroup, board._id)
             setNewGroup(boardService.getEmptyGroup())
             setInputExpand(!isInputExpand)
+            showSuccessMsg('New group')
         } catch (err) {
             console.log('Failed to save new group', err)
         }
     }
 
-    async function onEditGroup({target}){
-        let groupToSave = getGroupById(target.id)
+    async function onEditGroup(groupId,{target}){
+        let groupToSave = getGroupById(groupId)
         groupToSave.title = target.value
         try {
             await saveGroup(groupToSave, board._id)
@@ -53,6 +52,7 @@ export function GroupList() {
     }
    
     async function onRemoveGroup(groupId) {
+        console.log(groupId);
 		try {
 			await removeGroup(groupId, board._id)
 		} catch (err) {
@@ -79,17 +79,29 @@ export function GroupList() {
             <ul className='group-list clean-list'>
             {board && board?.groups && groups.map((group, idx) => (
                 <li className='group-preview-container' key={idx}>
-                    <GroupPreview  onEditGroup={onEditGroup} setIsLabelsShown={setIsLabelsShown} isLabelsShown={isLabelsShown} onRemoveGroup={onRemoveGroup} labels={board.labels} members={board.members} group={group} />
+                    <GroupPreview
+                        onDuplicateGroup={onDuplicateGroup}
+                        onEditGroup={onEditGroup}
+                        setIsLabelsShown={setIsLabelsShown}
+                        isLabelsShown={isLabelsShown}
+                        onRemoveGroup={onRemoveGroup}
+                        labels={board.labels}
+                        members={board.members}
+                        group={group}
+                        />
                 </li>))}
                 <section className='add-group-input'>
                     {!isInputExpand ?
                     <div className='add-group-msg' onClick={() => setInputExpand(!isInputExpand)}>+ Add new list</div> :
                     <div className='add-group-input-expanded'>
-                        <Textarea name="title"
+                        <Textarea 
+                            sx={{ border:'none'}}
+                            name="title"
                             placeholder="Enter list title..."
                             autoFocus
                             value={newGroup.title}
-                            onChange={handleChange} />
+                            onChange={handleChange}
+                             />
                             <section className='add-controls'>
                                 <Button type="submit" onClick={onSaveNewGroup}>Add List</Button>
                                 <button className='cancel' onClick={() => setInputExpand(!isInputExpand)}>X</button>
