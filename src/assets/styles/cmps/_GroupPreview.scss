@@ -35,6 +35,23 @@
             bottom: 0;
             z-index: 10;
             background-color: #ebecf0;
+            height: max-content;
+            align-content: center;
+            font-family: Arial,Helvetica,sans-serif;
+            font-size: 14px;
+            
+        }
+        footer{
+            border-radius: 8px;
+            color: #44546F;
+            display: block;
+            flex: 1 0 auto;
+            margin: 8px 0 8px 8px;
+            padding: 4px 8px 4px 6px;
+            position: relative;
+            text-decoration: none;
+            -webkit-user-select: none;
+            user-select: none;
         }
 
         .task-list-container {
@@ -43,7 +60,7 @@
             flex-grow: 1;
             max-height: calc(100vh - 120px);
         }
-        &-header{
+        header{
             column-gap: 4px;
             display: grid;
             flex: 0 0 auto;
@@ -51,6 +68,8 @@
             min-height: 20px;
             padding: 8px;
             position: relative;
+            align-items: center;
+
             .edit-group-title {
                 background: #0000;
                 border: none;
@@ -60,6 +79,7 @@
                 height: 20px;
                 line-height: 20px;
                 width: 20px;
+            
                 &:hover{
                     cursor: pointer;
                     // height: 30px;

@@ -24,6 +24,7 @@ export function GroupPreview({ onEditGroup ,isLabelsShown, setIsLabelsShown, gro
 							// onChange={(event) => onEditGroup(group.id,event)}
 							onBlur={(event) => onEditGroup(group.id,event)}
 							// onChange={} TODO
+							sx={{ border:'none'}}
 						></Textarea>
 						<img onClick={() => setToggleGroupMenu(!toggleGroupMenu)} src="https://res.cloudinary.com/dpwmxprpp/image/upload/v1696437012/asset_14_gltqff.svg" alt="" />
 				</header>

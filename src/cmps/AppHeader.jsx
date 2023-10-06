@@ -44,10 +44,10 @@ export function AppHeader() {
                         <button className='app-header-btn nav-link-btn link'><span>Workspaces</span> {appHeaderSvg.arrowDown}</button>
                     </NavLink>
                     <button className='app-header-btn nav-link-btn link'><span>Recent</span> {appHeaderSvg.arrowDown}</button>
-                    <button className='app-header-btn nav-link-btn link'> <span>Starred</span> {appHeaderSvg.arrowDown}</button>
-                    <button className='app-header-btn nav-link-btn link'>Templats {appHeaderSvg.arrowDown}</button>
+                    <button className='app-header-btn nav-link-btn  link'> <span>Starred</span> {appHeaderSvg.arrowDown}</button>
+                    <button className='app-header-btn nav-link-btn  link'>Templats {appHeaderSvg.arrowDown}</button>
                 </section>
-                <button className='create-btn'>Create</button>
+                <button className='create-btn '>Create</button>
             </section>
 
             <section className='nav-info'>
