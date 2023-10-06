@@ -5,8 +5,8 @@ import { saveTaskTitle } from "../store/actions/board.actions"
 import Textarea from '@mui/joy/Textarea';
 import { useRef } from "react";
 
-export function TaskTitle({ task }) {
-    const [titleToEdit, setTitleToEdit] = useState(task.title)
+export function TaskTitle({ taskTitle }) {
+    const [titleToEdit, setTitleToEdit] = useState(taskTitle)
     const { boardId, groupId, taskId } = useParams()
     const textareaRef = useRef(null);
 
@@ -36,7 +36,6 @@ export function TaskTitle({ task }) {
         const task = await saveTaskTitle(boardId, groupId, taskId, titleToEdit)
         return task
     }
-
 
     function handleChange(event) {
         setTitleToEdit(event.target.value)

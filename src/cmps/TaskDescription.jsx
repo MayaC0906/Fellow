@@ -16,10 +16,10 @@ import { saveTaskDescription } from '../store/actions/board.actions';
 import { useState } from 'react';
 import { taskSvg } from './Svgs';
 
-export function TaskDescription({ task }) {
+export function TaskDescription({ taskDescription }) {
 
     const [isDescExpand, setIsDescExpand] = useState(false)
-    const [description, setDescription] = useState(task.description)
+    const [description, setDescription] = useState(taskDescription)
     const { boardId, groupId, taskId } = useParams()
 
     const [italic, setItalic] = useState(false);
