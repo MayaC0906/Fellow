@@ -6,8 +6,10 @@ import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 import { boardService } from '../services/board.service.local.js'
 import { GroupPreview } from '../cmps/GroupPreview.jsx'
 import { saveGroup, removeGroup } from '../store/actions/board.actions.js'
+import { updateBoard } from '../store/actions/board.actions.js'
 import Textarea from '@mui/joy/Textarea';
 import Button from '@mui/joy/Button';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 // 
 
 export function GroupList() {
@@ -71,51 +73,97 @@ export function GroupList() {
 		}
 	}
 
+    function handleDrag(result){
+        const { destination, source, type } = result
+		const copiedBoard = board
+
+		if (!destination || destination.droppableId === source.droppableId
+             && destination.index === source.index) return
+
+		if (type === 'groups') {
+			const newGroups = [...groups]
+			const [reorderedGroups] = newGroups.splice(source.index, 1)
+			newGroups.splice(destination.index, 0, reorderedGroups)
+
+			copiedBoard.groups = newGroups
+			updateBoard(copiedBoard)
+			return
+		}
+    }
+
 
     console.log(groups);
     if(!groups) return <div>Loading..</div>
     return (
-       <div className='group-list-container'>
-            <ul className='group-list clean-list'>
-            {board && board?.groups && groups.map((group, idx) => (
-                // <div key={} className='list-wrapper'>
-                <li className='group-preview-container' key={idx}>
-                   
-                    <GroupPreview
-                        onDuplicateGroup={onDuplicateGroup}
-                        onEditGroup={onEditGroup}
-                        setIsLabelsShown={setIsLabelsShown}
-                        isLabelsShown={isLabelsShown}
-                        onRemoveGroup={onRemoveGroup}
-                        labels={board.labels}
-                        members={board.members}
-                        group={group}
-                        />
-                </li> ))}
+        <div className='group-list-container'>
+            <DragDropContext onDragEnd={handleDrag}>
+                <Droppable droppableId="groups" type="groups" key="groups" direction="horizontal">
+                    {(provided) => (
+                        <ul 
+                            className='group-list clean-list'
+                            {...provided.droppableProps} 
+                            ref={provided.innerRef}
+                        >
+                            {board?.groups?.map((group, idx) => (
+                                <Draggable 
+                                    draggableId={group.id} 
+                                    key={group.id} 
+                                    index={idx}
+                                >
+                                    {(provided) => (
+                                        <li 
+                                            className='group-preview-container' 
+                                            key={group.id}
+                                            {...provided.draggableProps}
+                                            {...provided.dragHandleProps}
+                                            ref={provided.innerRef}
+                                        >
+                                            <GroupPreview
+                                                onDuplicateGroup={onDuplicateGroup}
+                                                onEditGroup={onEditGroup}
+                                                setIsLabelsShown={setIsLabelsShown}
+                                                isLabelsShown={isLabelsShown}
+                                                onRemoveGroup={onRemoveGroup}
+                                                labels={board.labels}
+                                                members={board.members}
+                                                group={group}
+                                            />
+                                        </li>
+                                    )}
+                                </Draggable>
+                            ))}
+                            {provided.placeholder}
+                        </ul>
+                    )}
+                    </Droppable>
+                </DragDropContext>
                 <section className='add-group-input'>
                     {!isInputExpand ?
-                    <div className='add-group-msg' onClick={() => setInputExpand(!isInputExpand)}>
-                        <span>+ Add another list </span>
+                        <div className='add-group-msg' onClick={() => setInputExpand(!isInputExpand)}>
+                            <span>+ Add another list </span>
                         </div> :
-                    <div className='add-group-input-expanded'>
-                        <Textarea 
-                            sx={{ border:'none'}}
-                            name="title"
-                            placeholder="Enter list title..."
-                            autoFocus
-                            value={newGroup.title}
-                            onChange={handleChange}
-                             />
+                        <div className='add-group-input-expanded'>
+                            <Textarea 
+                                sx={{ border:'none'}}
+                                name="title"
+                                placeholder="Enter list title..."
+                                autoFocus
+                                value={newGroup.title}
+                                onChange={handleChange}
+                            />
                             <section className='add-controls'>
                                 <Button type="submit" onClick={onSaveNewGroup}>Add List</Button>
                                 <button className='cancel' onClick={() => setInputExpand(!isInputExpand)}>X</button>
                             </section>
-                    </div>}
-                </section>
-            </ul>           
-       </div>
-    )
+                        </div>
+                    }
+                </section>         
+        </div>
+    );
 }
+
+
+
 
 
 

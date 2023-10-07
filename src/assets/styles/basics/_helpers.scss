@@ -44,8 +44,34 @@
     outline: inherit;
 }
 
+.task-btn {
+    margin-top: 8px;
+    align-items: center;
+    background-color:#091e420f;
+    border: none;
+    border-radius: 3px;
+    box-shadow: none;
+    box-sizing: border-box;
+    color:#172b4d;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Droid Sans,Helvetica Neue,sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    font-weight: 500;
+    justify-content: center;
+    line-height: 20px;
+    padding: 6px 12px;
+    text-decoration: none;
+    transition-duration: 85ms;
+    transition-property: background-color,border-color,box-shadow;
+    transition-timing-function: ease;
+    white-space: normal;
+}
+
 .done {
     text-decoration: line-through;
+    color: #44546f;
 }
 .close-btn {
     background: none;

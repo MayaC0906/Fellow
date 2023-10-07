@@ -8,7 +8,7 @@ import Button from '@mui/joy/Button';
 import { TaskProgressbar } from './TaskProgressbar';
 import { Flag } from '@mui/icons-material';
 import { taskService } from '../services/task.service.local';
-
+import { checkedSvg } from './Svgs';
 export function TaskChecklistPreview({onAddTodo, onUpdateListTitle, onDeleteTodo,checklists, onToggleDoneTodo,onUpdateTodoTitle }) {
     const board = useSelector((storeState) => storeState.boardModule.board);
     const [localChecklists, setLocalChecklists] = useState(checklists);
@@ -116,6 +116,11 @@ export function TaskChecklistPreview({onAddTodo, onUpdateListTitle, onDeleteTodo
         }
     }
 
+
+    //TODO Delete checklist
+
+
+    //TODO Create new checklist
     function calculateDoneTodos() {
         const numOfTodos = localChecklists.reduce((total, list) => total + list.todos.length, 0)
     
@@ -130,7 +135,12 @@ export function TaskChecklistPreview({onAddTodo, onUpdateListTitle, onDeleteTodo
         <section>
             {localChecklists[0] && localChecklists[0].todos.length > 0 && localChecklists.map(list => (
                 <ul key={list.id} className="task-checklist clean-list">
-                    {!isListTitleExpand ? <span onClick={() => setListTitleExpand(!isListTitleExpand)}>{list.title}</span> : 
+                    {!isListTitleExpand ? <span className='header' onClick={() => setListTitleExpand(!isListTitleExpand)}>
+                        
+                        <span className='checklist-svg'>{checkedSvg.check}</span>
+                        <span className='title'>{list.title}</span>
+                        
+                        </span> : 
                      <div className='add-group-input-expanded'>
                      <Textarea 
                          sx={{ border:'none'}}
@@ -147,11 +157,20 @@ export function TaskChecklistPreview({onAddTodo, onUpdateListTitle, onDeleteTodo
                     </div>
                     
                     }
-                    <TaskProgressbar props={progressbarCalc}/>
+                    
+                    <div className='progress-bar'>
+                    <span>{progressbarCalc.toFixed()}%</span>
+                        <div className='progress-bar-container'>
+                        <div className="fill" style={{ width: `${progressbarCalc}%` }}></div>
+                        </div>                        
+                    </div>
                     {list.todos.map(todo => {
                         return (
                         <li key={todo.id} className={`checklist-item ${todo.isDone ? 'done' : ''}` }>
-                            <Checkbox defaultChecked={todo.isDone} onChange={(event) => handleToggle(todo.id, !todo.isDone,event)} />
+                            <div className='checkbox'>
+
+                                <Checkbox sx={{ '& .MuiSvgIcon-root': { fontSize: 16 } }} defaultChecked={todo.isDone} onChange={(event) => handleToggle(todo.id, !todo.isDone,event)} />
+                            </div>
                             {!isTodoExpand || selectedTodoId !== todo.id ? 
                              <span onClick={() => { setSelectedTodoId(todo.id), setTodoExpand(!isTodoExpand) }}>{todo.title}</span> : 
                              <div className='add-group-input-expanded'>
@@ -172,7 +191,7 @@ export function TaskChecklistPreview({onAddTodo, onUpdateListTitle, onDeleteTodo
                         </li>
                     )})}
 
-                    {isAddTodoExpand ? <Button className='add-todo' onClick={() => setAddTodoExpand(!isAddTodoExpand)}>Add an item</Button>
+                    {!isAddTodoExpand ? <button className='add-todo task-btn' onClick={() => setAddTodoExpand(!isAddTodoExpand)}>Add an item</button>
                     : <section>
                         <Textarea 
                                  sx={{ border:'none'}}
@@ -183,8 +202,8 @@ export function TaskChecklistPreview({onAddTodo, onUpdateListTitle, onDeleteTodo
                                  onChange={handleTextChange}
                         />
                         <div>
-                            <Button type='submit' onClick={() => addTodo(list.id, txt)}>Save</Button>
-                            <button className='cancel' onClick={() => setAddTodoExpand(!isAddTodoExpand)}>X</button>
+                            <Button type='submit'  onClick={() => addTodo(list.id, txt)}>Save</Button>
+                            <button className='cancel task-btn' onClick={() => setAddTodoExpand(!isAddTodoExpand)}>Cancel</button>
                         </div>
                         </section>}
                 </ul>
