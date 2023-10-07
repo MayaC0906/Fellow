@@ -75,8 +75,44 @@
                 display: grid;
                 grid-template-columns: 1fr 192px;
                 gap: 16px;
+                padding: 0 8px 8px 16px;
+
+                .task-descriptoin {
+                    margin: 8px 0;
+                    position: relative;
+
+                    .description-title {
+                        display: flex;
+                        align-items: center;
+                        margin-inline-start: 40px;
+
+                        svg {
+                            position: absolute;
+                            left:3px
+                        }
+                    }
+
+                    .description-input {
+                        padding: 8px 12px;
+                        margin-inline-start: 40px;
+
+                        &.add-description {
+                            background-color: #091e420f;
+                            font-weight: 500;
+                            border-radius: 3px;
+                            color: #172b4d;
+                            margin: 18px 0 0 40px;
+                            height: 56px;
+                            padding: 8px 12px;
+                            width: 85%;
+                            &:hover {
+                                cursor: pointer;
+                            }
+                        }
+                    }
+                }
             }
 
-        }
+        }  
     }
 }

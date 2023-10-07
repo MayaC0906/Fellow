@@ -14,11 +14,12 @@ import Check from '@mui/icons-material/Check';
 import { useParams } from 'react-router';
 import { saveTaskDescription } from '../store/actions/board.actions';
 import { useState } from 'react';
+import { taskSvg } from './Svgs';
 
-export function TaskDescription({ task }) {
+export function TaskDescription({ taskDescription }) {
 
     const [isDescExpand, setIsDescExpand] = useState(false)
-    const [description, setDescription] = useState(task.description)
+    const [description, setDescription] = useState(taskDescription)
     const { boardId, groupId, taskId } = useParams()
 
     const [italic, setItalic] = useState(false);
@@ -37,16 +38,28 @@ export function TaskDescription({ task }) {
     }
 
     return (
+
+
         <section className="task-descriptoin">
-            {description && <div onClick={onToggleDescription}
-             className={isDescExpand ? 'hide' : ''}>{description}</div>}
+            <div className='description-title'>
+                {taskSvg.description}
+                Description
+            </div>
 
-            {!description && <div  onClick={onToggleDescription}
-             className={isDescExpand ? 'hide' : ''}>Add a more detailed description...</div>}
+            <div onClick={onToggleDescription}
+                className={'description-input ' + (isDescExpand ? 'hide ' : '' + (description ? '' : 'add-description'))}>
+                {description || 'Add a more detailed description...'}
+            </div>
 
-            {isDescExpand && <FormControl sx={{ width: '90%'}}>
+            {/* {description && <div onClick={onToggleDescription}
+                className={'description-input ' + { isDescExpand? 'hide': '' }}>{description}</div>}
+
+            {!description && <div onClick={onToggleDescription}
+                className={'description-input add-description ' + isDescExpand ? 'hide' : ''}>Add a more detailed description...</div>} */}
+
+            {isDescExpand && < FormControl className="description-input" sx={{ width: '90%' }}>
                 <Textarea
-                autoFocus
+                    autoFocus
                     onChange={(event) => { setDescription(event.target.value) }}
                     defaultValue={description}
                     minRows={5}
@@ -103,6 +116,18 @@ export function TaskDescription({ task }) {
                                 <FormatItalic />
                             </IconButton>
                             <Button onClick={onSaveDesscription} sx={{ ml: 'auto' }}>Save</Button>
+                            <Button
+                                onClick={onToggleDescription}
+                                sx={{
+                                    background: 'none',
+                                    color: 'black',
+                                    '&:hover': {
+                                        backgroundColor: 'lightgray',
+                                    },
+                                }}
+                            >
+                                Cancel
+                            </Button>
                         </Box>
                     }
                     sx={{
@@ -111,8 +136,8 @@ export function TaskDescription({ task }) {
                         fontStyle: italic ? 'italic' : 'initial',
                     }}
                 />
-            </FormControl> 
-}
+            </FormControl>
+            }
         </section>
     )
 }

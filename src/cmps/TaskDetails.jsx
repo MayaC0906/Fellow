@@ -44,11 +44,11 @@ export function TaskDetails() {
                         </div>}
                 
 
-                    <TaskTitle task={task} />
+                    <TaskTitle taskTitle={task.title} />
 
                     <section className="task-main">
                         <section className="task-info">
-                            <TaskDescription task={task} />
+                            <TaskDescription taskDescription={task.description} />
                         </section>
 
                         <section className="edit-task-nav">
