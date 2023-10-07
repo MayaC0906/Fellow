@@ -6,7 +6,7 @@ import { TaskTitle } from "./TaskTitle"
 import { TaskDescription } from "./TaskDescription"
 import { TaskDetailsSideNav } from "./TaskDetailsSideNav"
 import { taskSvg } from "./Svgs"
-
+import { TaskCheckList } from "./TaskChecklist-list"
 export function TaskDetails() {
 
     const { boardId, groupId, taskId } = useParams()
@@ -53,6 +53,10 @@ export function TaskDetails() {
 
                         <section className="edit-task-nav">
                             <TaskDetailsSideNav />
+                        </section>
+                        <section>
+                            <TaskCheckList checklists={task.checklists}/>
+                            
                         </section>
                     </section>
 

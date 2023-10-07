@@ -78,7 +78,7 @@ export function GroupList() {
        <div className='group-list-container'>
             <ul className='group-list clean-list'>
             {board && board?.groups && groups.map((group, idx) => (
-                <div className='list-wrapper'>
+                // <div key={} className='list-wrapper'>
                 <li className='group-preview-container' key={idx}>
                    
                     <GroupPreview
@@ -91,7 +91,7 @@ export function GroupList() {
                         members={board.members}
                         group={group}
                         />
-                </li> </div>))}
+                </li> ))}
                 <section className='add-group-input'>
                     {!isInputExpand ?
                     <div className='add-group-msg' onClick={() => setInputExpand(!isInputExpand)}>

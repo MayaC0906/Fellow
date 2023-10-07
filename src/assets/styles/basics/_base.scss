@@ -7,6 +7,11 @@
     color: $clr6;
 }
 
+body::-webkit-scrollbar {
+    background-color: #c1c1c1;
+    width: 16px;
+}
+
 html {
     // font-family: montserrat;
     line-height: 1.6;
