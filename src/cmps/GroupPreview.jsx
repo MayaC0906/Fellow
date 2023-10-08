@@ -10,8 +10,14 @@ import Button from '@mui/joy/Button';
 export function GroupPreview({ onEditGroup ,isLabelsShown, setIsLabelsShown, group , members, labels, onRemoveGroup, onDuplicateGroup }){
 	const [toggleGroupMenu, setToggleGroupMenu] = useState(false)
 	const [isInputExpand, setInputExpand] = useState(false)
+	const [txt, setTxt] = useState('')
 
-	
+
+	function handleTextChange(event) {
+        setTxt(event.target.value);
+    }
+
+
     return (
 		
         <section className="group-preview">
@@ -60,7 +66,7 @@ export function GroupPreview({ onEditGroup ,isLabelsShown, setIsLabelsShown, gro
 								autoFocus
 								minRows={2}
 								// value={newGroup.title}
-								// onChange={handleChange} 
+								onChange={handleTextChange} 
 								/>
 								<section className='add-controls'>
 									<Button type="submit" >Add Card</Button>
