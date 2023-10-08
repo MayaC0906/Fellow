@@ -146,8 +146,9 @@ export async function settingIsStarred(boardId) {
     }
 }
 
-export async function loadTask (boardId, groupId, taskId) {
-    try {const task = await taskService.getById (boardId, groupId, taskId)
+export async function loadTask(boardId, groupId, taskId) {
+    try {
+        const task = await taskService.getById(boardId, groupId, taskId)
         return task
     } catch (err) {
         throw err
@@ -155,7 +156,8 @@ export async function loadTask (boardId, groupId, taskId) {
 }
 
 export async function saveTaskTitle(boardId, groupId, taskId, newTitle) {
-    try {const board = await  taskService.saveTaskTitle(boardId, groupId, taskId, newTitle)
+    try {
+        const board = await taskService.saveTaskTitle(boardId, groupId, taskId, newTitle)
         store.dispatch(getActionUpdateBoard(board))
     } catch (err) {
         console.log('cannot save task', err)
@@ -164,7 +166,8 @@ export async function saveTaskTitle(boardId, groupId, taskId, newTitle) {
 }
 
 export async function saveTaskDescription(boardId, groupId, taskId, newDescription) {
-    try {const board = await  taskService.saveTaskDescription(boardId, groupId, taskId, newDescription)
+    try {
+        const board = await taskService.saveTaskDescription(boardId, groupId, taskId, newDescription)
         store.dispatch(getActionUpdateBoard(board))
     } catch (err) {
         console.log('cant save description', err)
@@ -172,20 +175,20 @@ export async function saveTaskDescription(boardId, groupId, taskId, newDescripti
     }
 }
 
-export async function updateTodoIsDone(boardId, groupId, taskId,todoId, isDone) {
+export async function updateTodoIsDone(boardId, groupId, taskId, todoId, isDone) {
     console.log('isDone: from action', isDone)
     try {
-        const board = await taskService.updateTodoIsDone(boardId, groupId, taskId,todoId, isDone)
+        const board = await taskService.updateTodoIsDone(boardId, groupId, taskId, todoId, isDone)
         console.log('board:', board)
         store.dispatch(getActionUpdateBoard(board))
-    } catch(err) {
+    } catch (err) {
         console.log('cant update todo', err)
         throw err
     }
 }
 
-export async function deleteTodo(boardId, groupId, taskId, todoId){
-    try{
+export async function deleteTodo(boardId, groupId, taskId, todoId) {
+    try {
         const board = await taskService.deleteTodo(boardId, groupId, taskId, todoId)
         store.dispatch(getActionUpdateBoard(board))
     } catch (err) {
@@ -194,19 +197,19 @@ export async function deleteTodo(boardId, groupId, taskId, todoId){
     }
 }
 
-export async function updateTodoTitle(boardId,groupId,taskId,todoId,txt){
+export async function updateTodoTitle(boardId, groupId, taskId, todoId, txt) {
     console.log('txt:', txt)
     try {
-        const board = await taskService.updateTodoTitle(boardId,groupId,taskId,todoId,txt)
+        const board = await taskService.updateTodoTitle(boardId, groupId, taskId, todoId, txt)
         store.dispatch(getActionUpdateBoard(board))
-    } catch(err) {
+    } catch (err) {
         console.log('cant update todo title', err)
         throw err
     }
 }
 
-export async function addTodo(boardId,groupId,taskId,listId, txt){
-    console.log('listId,txt,taskId:', listId,txt,taskId)
+export async function addTodo(boardId, groupId, taskId, listId, txt) {
+    console.log('listId,txt,taskId:', listId, txt, taskId)
     try {
         const board = await taskService.addTodo(boardId, groupId, taskId, listId, txt)
         store.dispatch(getActionUpdateBoard(board))
@@ -216,7 +219,7 @@ export async function addTodo(boardId,groupId,taskId,listId, txt){
     }
 }
 
-export async function updateListTitle(boardId, groupId, taskId, listId, txt){
+export async function updateListTitle(boardId, groupId, taskId, listId, txt) {
     try {
         const board = await taskService.updateListTitle(boardId, groupId, taskId, listId, txt)
         store.dispatch(getActionUpdateBoard(board))

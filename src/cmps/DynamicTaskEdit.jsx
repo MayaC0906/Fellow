@@ -1,6 +1,6 @@
 import { AttachmentEdit } from './AttachmentEdit';
 import { ChecklistEdit } from './ChecklistEdit';
-import { DatesEdit } from './DatesEdit';
+import { DateEdit } from './DateEdit';
 import { LabelEdit } from './LabelEdit';
 import { MemberEdit } from './MemberEdit'
 
@@ -14,7 +14,7 @@ export function DynamicTaskEdit(props) {
         case 'Checklist':
             return <ChecklistEdit {...props} />
         case 'Dates':
-            return <DatesEdit {...props} />
+            return <DateEdit {...props} />
         case 'Attachment':
             return <AttachmentEdit {...props} />
         default:

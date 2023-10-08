@@ -7,6 +7,7 @@ import { TaskDescription } from "./TaskDescription"
 import { TaskDetailsSideNav } from "./TaskDetailsSideNav"
 import { taskSvg } from "./Svgs"
 import { TaskCheckList } from "./TaskChecklist-list"
+import { TaskDate } from "./TaskDate"
 export function TaskDetails() {
 
     const { boardId, groupId, taskId } = useParams()
@@ -42,7 +43,7 @@ export function TaskDetails() {
                         <div className="img-cover">
                             <img src={task.cover.img} alt="" />
                         </div>}
-                
+
 
                     <TaskTitle taskTitle={task.title} />
 
@@ -51,12 +52,18 @@ export function TaskDetails() {
                             <TaskDescription taskDescription={task.description} />
                         </section>
 
+
+
                         <section className="edit-task-nav">
                             <TaskDetailsSideNav />
                         </section>
+
+                        <section className="task-date">
+                            <TaskDate />
+                        </section>
+
                         <section>
-                            <TaskCheckList checklists={task.checklists}/>
-                            
+                            <TaskCheckList checklists={task.checklists} />
                         </section>
                     </section>
 
