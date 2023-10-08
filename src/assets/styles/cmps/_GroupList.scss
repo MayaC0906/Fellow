@@ -5,12 +5,57 @@
     white-space: nowrap;
     overflow-x: scroll;
     margin-inline-start: 0.25em;
-    // height: calc(100% - 56px);
     margin-bottom: 8px;
     display: flex;
+    &::-webkit-scrollbar {
+        -webkit-transform: translateZ(0);
+        height: 12px;
+        width: 12px;
+    }
 
+    &::-webkit-scrollbar-button {
+        display: block;
+        height: 4px;
+        width: 4px;
+        
+    }
+   
+    // ::-webkit-scrollbar-track-piece {
+    //     background: #8b7d7dc2;
+    // }
+
+    &::-webkit-scrollbar-thumb {
+        background: #ffffff70;
+        border: none;
+        border-radius: 4px;
+        // width: 100px;
+        &:hover {
+            background: #ffffff70;
+        }
+
+        &:active {
+            background: #ffffff70;
+        }
+    }
+
+    &::-webkit-scrollbar-track {
+        background: #00000026;
+        border: none;
+        border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-track:hover {
+        background: #00000026;
+    }
+
+    &::-webkit-scrollbar-track:active {
+        background: #00000026;
+    }
+
+    &::-webkit-scrollbar-corner {
+        background: transparent;
+    }
     .group-list{
-       
         display: flex;
         gap: 8px;
         margin: 10px 0 8px 5px;

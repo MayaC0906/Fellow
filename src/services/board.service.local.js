@@ -120,6 +120,8 @@ async function saveGroup(group, boardId) {
     }
 }
 
+
+
 async function removeGroup(groupId, boardId) {
     try {
         const board = await getById(boardId)
