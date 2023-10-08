@@ -11,7 +11,7 @@ export function GroupPreview({ onEditGroup ,isLabelsShown, setIsLabelsShown, gro
 	const [toggleGroupMenu, setToggleGroupMenu] = useState(false)
 	const [isInputExpand, setInputExpand] = useState(false)
 
-
+	
     return (
 		
         <section className="group-preview">
