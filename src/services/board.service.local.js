@@ -104,6 +104,9 @@ function getEmptyGroup() {
 }
 
 async function saveGroup(group, boardId) {
+    console.log('save group');
+    console.log('group from save group', group);
+    console.log('boardId from save group', boardId);
     try {
         let board = await getById(boardId)
         if (group.id) {

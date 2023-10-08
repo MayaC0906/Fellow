@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 export function TaskList({ tasks, labels, members, isLabelsShown, setIsLabelsShown, groupId }) {
 
-    const {boardId} = useParams()
+    const { boardId } = useParams()
 
     return (
         <section className="task-list">
@@ -15,7 +15,7 @@ export function TaskList({ tasks, labels, members, isLabelsShown, setIsLabelsSho
                 const taskMembers = boardService.getMembers(task.memberIds, members) || null
                 const taskChecklist = task.checklists.length ? boardService.getCheckListStatus(task.checklists) : ''
 
-                return <Link to = {`${groupId}/${task.id}`}><TaskPreview
+                return <Link to={`${groupId}/${task.id}`} key={task.id}><TaskPreview
                     setIsLabelsShown={setIsLabelsShown}
                     isLabelsShown={isLabelsShown}
                     task={task}

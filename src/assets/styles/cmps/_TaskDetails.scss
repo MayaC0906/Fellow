@@ -78,24 +78,26 @@
                 padding: 0 8px 8px 16px;
 
                 .task-descriptoin {
-                    margin: 8px 0;
+                    margin: 8px 0 24px 0;
                     position: relative;
 
                     .description-title {
                         display: flex;
                         align-items: center;
                         margin-inline-start: 40px;
+                        font-size: rem(16px);
 
                         svg {
                             position: absolute;
-                            left:3px
+                            left: 3px
                         }
                     }
 
                     .description-input {
                         padding: 8px 12px;
                         margin-inline-start: 40px;
-
+                        width: calc(100% - 40px);
+                        
                         &.add-description {
                             background-color: #091e420f;
                             font-weight: 500;
@@ -104,7 +106,8 @@
                             margin: 18px 0 0 40px;
                             height: 56px;
                             padding: 8px 12px;
-                            width: 85%;
+                            width: calc(100% - 40px);
+
                             &:hover {
                                 cursor: pointer;
                             }
@@ -113,6 +116,6 @@
                 }
             }
 
-        }  
+        }
     }
 }

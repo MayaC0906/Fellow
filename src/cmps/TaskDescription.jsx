@@ -30,10 +30,15 @@ export function TaskDescription({ taskDescription }) {
         setIsDescExpand(!isDescExpand)
     }
 
-    function onSaveDesscription(ev) {
+    async function onSaveDesscription(ev) {
         ev.preventDefault()
-        saveTaskDescription(boardId, groupId, taskId, description)
-        onToggleDescription()
+        try {
+            const description = await saveTaskDescription(boardId, groupId, taskId, description)
+            onToggleDescription()
+            console.log('Task description changed successfully')
+        } catch (err) {
+            console.log('Cannot save description title', err);
+        }
         console.log('I want to save', description);
     }
 
@@ -51,15 +56,8 @@ export function TaskDescription({ taskDescription }) {
                 {description || 'Add a more detailed description...'}
             </div>
 
-            {/* {description && <div onClick={onToggleDescription}
-                className={'description-input ' + { isDescExpand? 'hide': '' }}>{description}</div>}
-
-            {!description && <div onClick={onToggleDescription}
-                className={'description-input add-description ' + isDescExpand ? 'hide' : ''}>Add a more detailed description...</div>} */}
-
             {isDescExpand && < FormControl className="description-input" sx={{ width: '90%' }}>
                 <Textarea
-                    autoFocus
                     onChange={(event) => { setDescription(event.target.value) }}
                     defaultValue={description}
                     minRows={5}

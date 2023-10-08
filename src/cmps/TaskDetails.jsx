@@ -6,26 +6,30 @@ import { TaskTitle } from "./TaskTitle"
 import { TaskDescription } from "./TaskDescription"
 import { TaskDetailsSideNav } from "./TaskDetailsSideNav"
 import { taskSvg } from "./Svgs"
+import { TaskAttachments } from "./TaskAttachments"
+
 
 export function TaskDetails() {
-
     const { boardId, groupId, taskId } = useParams()
     const [task, setTask] = useState(null)
-    console.log(task);
+    let [editName, setEditName] = useState('')
 
     useEffect(() => {
         onLoadTask(boardId, groupId, taskId)
     }, [])
 
     async function onLoadTask(boardId, groupId, taskId) {
+        console.log('loadTask');
         try {
-            const task = await loadTask(boardId, groupId, taskId)
-            setTask(task)
+            const newTask = await loadTask(boardId, groupId, taskId)
+            console.log('newTask', newTask);
+            setTask({ ...newTask })
         } catch (err) {
             console.log('Can\'t load board', err);
             throw err
         }
     }
+
 
     if (!task) return <div>Loading</div>
     return (
@@ -42,17 +46,23 @@ export function TaskDetails() {
                         <div className="img-cover">
                             <img src={task.cover.img} alt="" />
                         </div>}
-                
+
 
                     <TaskTitle taskTitle={task.title} />
 
                     <section className="task-main">
                         <section className="task-info">
                             <TaskDescription taskDescription={task.description} />
+                            <TaskAttachments
+                                setEditName={setEditName}
+                                taskAttachments={task.attachments}
+                                cover={task.cover}
+                                setTask={setTask}
+                            />
                         </section>
 
                         <section className="edit-task-nav">
-                            <TaskDetailsSideNav />
+                            <TaskDetailsSideNav editName={editName} setEditName={setEditName} />
                         </section>
                     </section>
 
