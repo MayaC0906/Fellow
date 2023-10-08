@@ -155,6 +155,15 @@ export async function loadTask(boardId, groupId, taskId) {
     }
 }
 
+export async function loadAttachments(boardId, groupId, taskId) {
+    try {
+        const task = await taskService.getById(boardId, groupId, taskId)
+        return task.attachments
+    } catch (err) {
+        throw err
+    }
+}
+
 export async function saveTaskTitle(boardId, groupId, taskId, newTitle) {
     try {
         const board = await taskService.saveTaskTitle(boardId, groupId, taskId, newTitle)
@@ -228,3 +237,35 @@ export async function updateListTitle(boardId, groupId, taskId, listId, txt) {
         throw err
     }
 }
+
+
+export async function removeAttachment(boardId, groupId, taskId, attachmentId) {
+    try {
+        const board = await taskService.removeAttachment(boardId, groupId, taskId, attachmentId)
+        console.log('board before save', board);
+        store.dispatch(getActionUpdateBoard(board))
+    } catch (err) {
+        throw err
+    }
+}
+
+export async function removeCover(boardId, groupId, taskId) {
+    try {
+        const board = await taskService.removeCover(boardId, groupId, taskId)
+        store.dispatch(getActionUpdateBoard(board))
+        return board
+    } catch (err) {
+        throw err
+    }
+}
+
+export async function addCoverImg (boardId, groupId, taskId, url) {
+    try {
+        const board = await taskService.addCoverImg (boardId, groupId, taskId, url)
+        store.dispatch(getActionUpdateBoard(board))
+        return board
+    } catch (err) {
+        throw err
+    }
+}
+

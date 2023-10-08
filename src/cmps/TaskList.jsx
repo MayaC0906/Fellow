@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 export function TaskList({ tasks, labels, members, isLabelsShown, setIsLabelsShown, groupId }) {
 
-    const {boardId} = useParams()
+    const { boardId } = useParams()
 
     return (
         <section className="task-list">
