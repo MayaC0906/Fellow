@@ -1,14 +1,5 @@
 .group-preview-container{
-    display: flex;
-    flex-direction: column;
-    width: 250px;
-    height: max-content;
-    overflow: hidden;
-    border-radius: 12px;
-    box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px 0px, rgba(9, 30, 66, 0.31) 0px 0px 1px 0px;
-    background-color: #ebecf0;
-    scroll-margin: 8px;
-    white-space: nowrap;
+
     // box-sizing: border-box;
     // display: inline-block;
     // height: 100%;
@@ -19,10 +10,16 @@
     // width: 272px;
     .group-preview {
         display: flex;
-        height: max-content;
-        max-height: 700px;
         flex-direction: column;
-        justify-content: space-between;
+        width: 272px;
+        // height: fit-content;
+        max-height: 100%;
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px 0px, rgba(9, 30, 66, 0.31) 0px 0px 1px 0px;
+        background-color: #ebecf0;
+        scroll-margin: 8px;
+        white-space: nowrap;
         .header-wrapper {
             position: sticky;
             top: 0;
@@ -59,6 +56,25 @@
             overflow-x:hidden;
             flex-grow: 1;
             max-height: calc(100vh - 120px);
+            
+    &::-webkit-scrollbar {
+        width: 8px;
+        padding-top: 20px;
+
+      }
+    
+    &::-webkit-scrollbar-thumb {
+        background-color: #BFC4CE;
+        border-radius: 30px;
+        height: 12px;
+      }
+    
+    &::-webkit-scrollbar-track {
+        background-color: #D9DCE2;
+        border-radius: 30px;
+        height: 12px;
+        border-bottom: 10px solid transparent;
+      }
         }
         header{
             column-gap: 4px;

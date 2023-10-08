@@ -9,6 +9,8 @@ import { taskSvg } from "./Svgs"
 import { TaskAttachments } from "./TaskAttachments"
 
 
+import { TaskCheckList } from "./TaskChecklist-list"
+import { TaskDate } from "./TaskDate"
 export function TaskDetails() {
     const { boardId, groupId, taskId } = useParams()
     const [task, setTask] = useState(null)
@@ -61,8 +63,18 @@ export function TaskDetails() {
                             />
                         </section>
 
+
+
                         <section className="edit-task-nav">
                             <TaskDetailsSideNav editName={editName} setEditName={setEditName} />
+                        </section>
+
+                        <section className="task-date">
+                            <TaskDate />
+                        </section>
+
+                        <section>
+                            <TaskCheckList checklists={task.checklists} />
                         </section>
                     </section>
 

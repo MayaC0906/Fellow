@@ -6,7 +6,7 @@ import { loadBoard, loadBoards } from '../store/actions/board.actions.js'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 import { boardService } from "../services/board.service.local.js";
 import { SET_BOARD } from '../store/reducers/board.reducer.js'
-import { GroupHeader } from "../cmps/GroupHedear"
+import { GroupHeader } from "../cmps/GroupHeader.jsx"
 import { BoardSidebar } from "../cmps/BoardSidebar.jsx";
 export function BoardDetails() {
     const dispatch = useDispatch();
