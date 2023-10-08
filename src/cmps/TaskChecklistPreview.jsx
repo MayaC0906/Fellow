@@ -18,7 +18,6 @@ export function TaskChecklistPreview({onAddTodo, onUpdateListTitle, onDeleteTodo
     const [txt, setTxt] = useState('')
     const [selectedTodoId, setSelectedTodoId] = useState(null);
     const [progressbarCalc,setProgressbarCalc] = useState(0)
-    // const [selectedListId, setSelectedListId] = 
 
     useEffect(() => {
         setLocalChecklists(checklists);
@@ -80,6 +79,7 @@ export function TaskChecklistPreview({onAddTodo, onUpdateListTitle, onDeleteTodo
             setTxt('')
         } catch (err) {
             console.log('cannot update list title');
+            throw err
         }
     }
 
@@ -121,6 +121,8 @@ export function TaskChecklistPreview({onAddTodo, onUpdateListTitle, onDeleteTodo
 
 
     //TODO Create new checklist
+
+    
     function calculateDoneTodos() {
         const numOfTodos = localChecklists.reduce((total, list) => total + list.todos.length, 0)
     
