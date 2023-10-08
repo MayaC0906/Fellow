@@ -40,6 +40,11 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                border-radius: 50%;
+
+                &:hover {
+                    background-color: #091E4224;
+                }
 
                 svg {
                     width: 20px;
@@ -72,8 +77,9 @@
             }
 
             .task-main {
+                width: 100%;
                 display: grid;
-                grid-template-columns: 1fr 192px;
+                grid-template-columns: calc(100% - 192px) 192px;
                 gap: 16px;
                 padding: 0 8px 8px 16px;
 

@@ -69,9 +69,9 @@ export function TaskDetails() {
                             <TaskDetailsSideNav editName={editName} setEditName={setEditName} />
                         </section>
 
-                        <section className="task-date">
+                        {/* <section className="task-date">
                             <TaskDate />
-                        </section>
+                        </section> */}
 
                         <section>
                             <TaskCheckList checklists={task.checklists} />
