@@ -1,0 +1,38 @@
+.board-sidebar{
+    display: flex;
+    background: hsl(250,47.9%,40.7%);
+    header{
+        display: flex;
+        align-items: center;
+        padding: 8px 12px 8px;
+        min-height: 40px;
+        border-bottom: 1px solid #DFE1E6;
+    }
+    ul{
+        
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        overflow: hidden;
+        color: #fff;
+        min-width: 16px;
+        min-height: 100%;
+        transition: .3s ease-in-out;
+        border-right: 1px solid hsla(0deg,0%,100%,.16);
+        li {
+            display: flex;
+            justify-content: center;
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            border: 1px solid rgb(185, 185, 185);
+            align-items: center;
+        }
+        .expand-btn{
+            color:white;
+            font-size: 12px;
+        }
+    }
+   
+}
+
