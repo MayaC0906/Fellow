@@ -6,14 +6,13 @@ import { Workspace } from './pages/Workspace'
 import { BoardDetails } from './pages/BoardDetails'
 import { LoginSignup } from './pages/LoginSignup'
 import { TaskDetails } from './cmps/TaskDetails'
-import { BoardSidebar } from './cmps/BoardSidebar'
+
 export function App() {
 
     return (
         <div>
             <AppHeader />
             <main>
-                <BoardSidebar />
                 <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/workspace" element={<Workspace />} />
