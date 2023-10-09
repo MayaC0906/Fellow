@@ -53,6 +53,7 @@ export function GroupPreview({ onEditGroup ,isLabelsShown, setIsLabelsShown, gro
 							name="title"
 							className="edit-group-title clean-btn"
 							id={group.id}
+							maxRows={1}
 							defaultValue={group.title}
 							// onChange={(event) => onEditGroup(group.id,event)}
 							onBlur={(event) => onEditGroup(group.id,event)}

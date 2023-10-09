@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useSelector,useDispatch } from 'react-redux'
 import { sideBar } from "./Svgs";
+import { Link } from "react-router-dom";
+
 export function BoardSidebar() {
     const [isSidebarExpand, setSidebarExpand] = useState(false);
 
@@ -18,8 +20,9 @@ export function BoardSidebar() {
                         </div> 
                     : [boards].map(board => (
                     <li>
+                        {console.log(board)}
                         <header>
-                            <logo>F</logo>
+                            <span className="logo">F</span>
                             <div>
                                 <h3>Fellow's workspace</h3>
                                 <p>Free</p>
@@ -30,10 +33,10 @@ export function BoardSidebar() {
                             </button>
                         </header>    
                         <div className="upper-section">
-
+                    
                             <section className="boards" key={board._id}> 
                                 <div className="svg">{sideBar.boards}</div>
-                                <span>Boards</span>   
+                                <span><Link to={`/workspace`}>Boards</Link></span>   
                             </section>
                             <section>
                                 <div className="svg">{sideBar.members}</div>
@@ -46,10 +49,19 @@ export function BoardSidebar() {
                                 </span>
                             </section>
                         </div>
+                       
                     </li>
                     ))
+                    
                 }
-            </ul>
+                    {isSidebarExpand && <section className="user-boards ">
+                        <header>Your Boards</header>
+                        <section className="active">
+                            <div><span></span></div>  
+                            <Link >{board.title}</Link>
+                        </section>      {/* // <img src="" alt="" /> TODO */}
+                    </section>}
+                </ul>
         </section>
     )
 }
