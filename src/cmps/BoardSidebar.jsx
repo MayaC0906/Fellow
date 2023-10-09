@@ -1,21 +1,38 @@
-import { sideBar } from "./Svgs"
-import { useState } from "react"
-export function BoardSidebar(){
-    const [isSidebarExpand, setSidebarExpand] = useState(false)
-    
+import { useState } from "react";
+import { useSelector,useDispatch } from 'react-redux'
 
+export function BoardSidebar() {
+    const [isSidebarExpand, setSidebarExpand] = useState(false);
 
+    const boards = useSelector((storeState) => storeState.boardModule.board)
+    console.log(boards);
     return (
         <section className='board-sidebar'>
-            {/* <header>LOGO</header> */}
-            <ul className={`clean-list ${isSidebarExpand ? 'expand' : ''}`}>
+            <ul className={`${isSidebarExpand ? 'expand' : 'unexpand'}`}>
+               
+            {
+            !isSidebarExpand 
+            ? <button className='expand-btn' onClick={() => setSidebarExpand(!isSidebarExpand)}>{'>'}</button> 
+            : [boards].map(board => (
+            <li>
+                <header>
+                    <logo>F</logo>
+                    <div>
+                        <h3>Fellow's workspace</h3>
+                        <p>Free</p>
+                    </div>
+                    <button className='unexpand-btn clean-btn' onClick={() => setSidebarExpand(!isSidebarExpand)}>{'<'}</button>
+                </header>    
                 
-                <li>
-                    
-                    {/* TODO - RENDER BOARD  */}
-                    <button className="expand-btn clean-btn"
-                     onClick={() => setSidebarExpand(!isSidebarExpand)}>{'>'}</button>
-                </li>
+                <section className="boards" key={board._id}>    
+                </section>
+            </li>
+      ))
+}
+
+                
+                
+                {/* Add more list items or content here when the sidebar expands */}
             </ul>
         </section>
     )
