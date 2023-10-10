@@ -8,6 +8,8 @@ import { boardService } from "../services/board.service.local.js";
 import { SET_BOARD } from '../store/reducers/board.reducer.js'
 import { GroupHeader } from "../cmps/GroupHeader.jsx"
 import { BoardSidebar } from "../cmps/BoardSidebar.jsx";
+
+
 export function BoardDetails() {
     const dispatch = useDispatch();
     const { boardId } = useParams();
@@ -33,11 +35,14 @@ export function BoardDetails() {
 
 
     return (
-        <div className="board-details-container">
-            <GroupHeader />
-            <Outlet/>
-            <GroupList boardId={boardId}/>
-        </div>
+        <>
+            <BoardSidebar />
+            <div className="board-details-container">
+                <GroupHeader />
+                <Outlet/>
+                <GroupList boardId={boardId}/>
+            </div>
+        </>
     )
 }
 

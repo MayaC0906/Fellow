@@ -68,7 +68,7 @@ async function getById(boardId, groupId, taskId) {
     }
 }
 
-
+// async function 
 
 async function deleteTodo(boardId, groupId, taskId,todoId){
     try {
@@ -248,6 +248,7 @@ async function removeCover(boardId, groupId, taskId) {
 
 function getEmptyTask() {
 	return {
+        id: utilService.makeId(),
 		title: '',
 		archivedAt: null,
 		labelIds: [],
@@ -264,5 +265,6 @@ function getEmptyTask() {
 		attachments: [],
 		checklists: [],
 		isDone: false,
+        style:{}
 	}
 }

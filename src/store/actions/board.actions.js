@@ -74,17 +74,16 @@ export async function addBoard(board) {
     }
 }
 
-export function updateBoard(board) {
-    return boardService.save(board)
-        .then(savedBoard => {
-            console.log('Updated Board:', savedBoard)
-            store.dispatch(getActionUpdateBoard(savedBoard))
-            return savedBoard
-        })
-        .catch(err => {
-            console.log('Cannot save board', err)
-            throw err
-        })
+export async function updateBoard(board) {
+    try {
+        const savedBoard = await boardService.save(board)
+        console.log('Updated Board:', savedBoard)
+        store.dispatch(getActionUpdateBoard(savedBoard))
+        return savedBoard
+    } catch(err) {
+        console.log('Cannot save board', err)
+        throw err
+        }       
 }
 
 export async function removeGroup(groupId, boardId) {
@@ -94,6 +93,17 @@ export async function removeGroup(groupId, boardId) {
         return groupId
     } catch (err) {
         console.log('Cannot remove group', err)
+        throw err
+    }
+}
+
+export async function saveNewTask(group, boardId){
+    try{
+        const board = await boardService.saveGroup(group, boardId)
+        store.dispatch(getActionUpdateBoard(board))
+        return group
+    } catch (err) {
+        console.log('cannot save new task');
         throw err
     }
 }
@@ -163,6 +173,7 @@ export async function loadAttachments(boardId, groupId, taskId) {
         throw err
     }
 }
+
 
 export async function saveTaskTitle(boardId, groupId, taskId, newTitle) {
     try {
