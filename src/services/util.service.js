@@ -93,22 +93,19 @@ function formatTimestamp(timestamp) {
 
 function getFileNameFromUrl(url) {
     try {
-        const parsedUrl = new URL(url);
-        const pathname = parsedUrl.pathname;
-        const parts = pathname.split('/');
-        const fileNameWithExtension = parts.pop();
-        const fileNameParts = fileNameWithExtension.split('.');
-        if (fileNameParts.length >= 2) {
-            // Extract the last two parts as the filename and extension
-            const fileName = fileNameParts.slice(-2).join('.');
-            return fileName;
-        }
-    } catch (error) {
+        const urlArr = url.split('.')
+        const imgFormat = urlArr.pop()
+        const urlLeft = urlArr.join().split(/[,|;_%//]/);
+        const urlName = urlLeft.pop()
+
+        const fileName = `${urlName}.${imgFormat}`
+        return fileName;
+    }
+    catch (error) {
         console.error('Error parsing URL:', error);
     }
-    // Return the original URL if parsing fails or no filename found
-    return url;
 }
+// Return the original URL if parsing fails or no filename found
 
 
 function formatImgTime(timestamp) {
@@ -118,7 +115,7 @@ function formatImgTime(timestamp) {
     const differenceInMinutes = Math.floor(differenceInSeconds / 60);
     const differenceInHours = Math.floor(differenceInMinutes / 60);
     const differenceInDays = Math.floor(differenceInHours / 24);
-    
+
     if (differenceInMinutes < 1) {
         return "just now";
     } else if (differenceInMinutes < 60) {
