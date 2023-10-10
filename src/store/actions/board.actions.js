@@ -208,7 +208,7 @@ export async function saveTaskDueDate(boardId, groupId, taskId, formatedDate) {
     }
 }
 
-export async function updateTodoIsDone(boardId, groupId, taskId, todoId, isDone) {
+export async function updateTodoIsDone(boardId, groupId, taskId, listId,todoId, isDone) {
     console.log('isDone: from action', isDone)
     try {
         const board = await taskService.updateTodoIsDone(boardId, groupId, taskId, listId,todoId, isDone)
