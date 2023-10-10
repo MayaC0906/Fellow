@@ -8,11 +8,14 @@ import { TaskDetailsSideNav } from "./TaskDetailsSideNav"
 import { taskSvg } from "./Svgs"
 import { TaskCheckList } from "./TaskChecklist-list"
 import { TaskDate } from "./TaskDate"
+import { TaskMember } from "./TaskMember"
+
 export function TaskDetails() {
 
     const { boardId, groupId, taskId } = useParams()
     const [task, setTask] = useState(null)
-    console.log(task);
+    let [editName, setEditName] = useState('')
+
 
     useEffect(() => {
         onLoadTask(boardId, groupId, taskId)
@@ -27,6 +30,8 @@ export function TaskDetails() {
             throw err
         }
     }
+
+    // console.log('task.memberIds', task.memberIds);
 
     if (!task) return <div>Loading</div>
     return (
@@ -47,6 +52,14 @@ export function TaskDetails() {
 
                     <TaskTitle taskTitle={task.title} />
 
+                    {<section className="task-member">
+                        <TaskMember taskMembersId={task.memberIds} setEditName={setEditName} />
+                    </section>}
+
+                    <section className="task-date">
+                        <TaskDate taskDate={task.dueDate} setEditName={setEditName} />
+                    </section>
+
                     <section className="task-main">
                         <section className="task-info">
                             <TaskDescription taskDescription={task.description} />
@@ -55,12 +68,10 @@ export function TaskDetails() {
 
 
                         <section className="edit-task-nav">
-                            <TaskDetailsSideNav />
+                            <TaskDetailsSideNav setTask={setTask} editName={editName} setEditName={setEditName} />
                         </section>
 
-                        <section className="task-date">
-                            <TaskDate />
-                        </section>
+
 
                         <section>
                             <TaskCheckList checklists={task.checklists} />

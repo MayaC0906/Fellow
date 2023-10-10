@@ -147,6 +147,7 @@ export async function settingIsStarred(boardId) {
 }
 
 export async function loadTask(boardId, groupId, taskId) {
+    console.log(boardId, groupId, taskId);
     try {
         const task = await taskService.getById(boardId, groupId, taskId)
         return task
@@ -171,6 +172,17 @@ export async function saveTaskDescription(boardId, groupId, taskId, newDescripti
         store.dispatch(getActionUpdateBoard(board))
     } catch (err) {
         console.log('cant save description', err)
+        throw err
+    }
+}
+
+export async function saveTaskDueDate(boardId, groupId, taskId, formatedDate) {
+    try {
+        const board = await taskService.saveTaskDueDateTime(boardId, groupId, taskId, formatedDate)
+        store.dispatch(getActionUpdateBoard(board))
+        console.log('after:', board)
+    } catch (err) {
+        console.log('can not save due date:', err)
         throw err
     }
 }
@@ -228,3 +240,37 @@ export async function updateListTitle(boardId, groupId, taskId, listId, txt) {
         throw err
     }
 }
+
+export async function removeDueDate(boardId, groupId, taskId, formatedDate) {
+
+    try {
+        const board = await taskService.removeDueDate(boardId, groupId, taskId, attachmentId)
+        store.dispatch(getActionUpdateBoard(board))
+    } catch (err) {
+        throw err
+    }
+
+}
+
+export async function loadDueDate(boardId, groupId, taskId) {
+    try {
+        const task = await taskService.getById(boardId, groupId, taskId)
+        return task.dueDate
+    } catch (err) {
+        throw err
+    }
+}
+
+export async function addMemberToTask(boardId, groupId, taskId, memberId) {
+    try {
+        const boardItems = await taskService.addMember(boardId, groupId, taskId, memberId)
+        // store.dispatch(getActionUpdateBoard(boardItems.board))
+        const board = boardItems.board
+        store.dispatch({ type: SET_BOARD, board })
+        console.log('board action', boardItems.board);
+        return boardItems.newTask
+    } catch (err) {
+        throw err
+    }
+
+} 

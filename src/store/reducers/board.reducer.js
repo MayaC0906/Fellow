@@ -11,7 +11,8 @@ export const UNDO_REMOVE_BOARD = 'UNDO_REMOVE_BOARD'
 const initialState = {
     boards: [],
     lastRemovedBoard: null,
-    starredBoards: []
+    starredBoards: [],
+    board: {}
 }
 
 export function boardReducer(state = initialState, action) {
@@ -31,10 +32,6 @@ export function boardReducer(state = initialState, action) {
         case ADD_BOARD:
             newState = { ...state, boards: [...state.boards, action.boards] }
             break
-        // case UPDATE_BOARD:
-        //     boards = state.boards.map(board => (board._id === action.board._id) ? action.board : board)
-        //     newState = { ...state, boards }
-        //     break
         case UPDATE_BOARD:
             newState = { ...state, board: action.board }
             break;
@@ -51,6 +48,7 @@ export function boardReducer(state = initialState, action) {
         //     break
         case SET_BOARD:
             newState = { ...state, board: action.board }
+            // console.log('new sate:', newState.board);
             break
         default:
     }

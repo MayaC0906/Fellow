@@ -92,7 +92,6 @@ export function GroupList() {
     }
 
 
-    console.log(groups);
     if(!groups) return <div>Loading..</div>
     return (
         <div className='group-list-container'>

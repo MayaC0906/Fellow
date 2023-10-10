@@ -5,7 +5,6 @@ import { LabelEdit } from './LabelEdit';
 import { MemberEdit } from './MemberEdit'
 
 export function DynamicTaskEdit(props) {
-    console.log('props:', props)
     switch (props.editName) {
         case 'Member':
             return <MemberEdit {...props} />
