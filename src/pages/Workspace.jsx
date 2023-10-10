@@ -3,7 +3,7 @@ import { loadBoards } from "../store/actions/board.actions"
 import { useSelector } from "react-redux"
 import { BoardList } from "../cmps/BoardList"
 import { workspaceSvg } from "../cmps/Svgs"
-import { TaskDetailsSideNav } from "../cmps/TaskDetailsSideNav"
+import { } from "../cmps/TaskDetailsSideNav"
 
 export function Workspace() {
     const boards = useSelector(storeState => storeState.boardModule.boards)
@@ -31,7 +31,6 @@ export function Workspace() {
     if (!boards || !boards.length) return <div>loading</div>
     return (
         <>
-            <TaskDetailsSideNav />
             <section className="workspace-container flex justify-center">
                 <nav className="flex">
                     <button className="flex"> {workspaceSvg.boards} <span>Boards</span></button>

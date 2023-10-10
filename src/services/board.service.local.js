@@ -55,7 +55,6 @@ async function query() {
     // if (filterBy.price) {
     //     boards = boards.filter(board => board.price <= filterBy.price)
     // }
-    console.log('boards from:', boards)
     return boards
 }
 
@@ -119,7 +118,9 @@ async function getGroupById(groupId, boardId) {
 
 async function saveGroup(group, boardId) {
     try {
+        console.log('GET FROM SAVE GROUP');
         let board = await getById(boardId)
+        // console.log('board from group:', board);
         if (group.id) {
             const idx = board.groups.findIndex((currGroup) => currGroup.id === group.id)
             board.groups.splice(idx, 1, group)
@@ -227,7 +228,7 @@ const board = [
                         "labelIds": ["l101", "l102", "l103"],
                         "memberIds": ["u101", "u102", "u103"],
                         "watching": true,
-                        "dueDate": 1696764840,
+                        "dueDate": null,
                         "checklists": [
                             {
                                 "id": "YEhmF",
@@ -346,7 +347,7 @@ const board = [
                         "labelIds": ["l101", "l102", "l103"],
                         "memberIds": ["u101", "u102", "u103"],
                         "watching": true,
-                        "dueDate": 1696764840,
+                        "dueDate": null,
                         "checklists": [
                             {
                                 "id": "YEhmF",
@@ -466,7 +467,7 @@ const board = [
                         "labelIds": ["l101", "l102", "l103"],
                         "memberIds": ["u101", "u102", "u103"],
                         "watching": true,
-                        "dueDate": 1696764840,
+                        "dueDate": null,
                         "checklists": [
                             {
                                 "id": "YEhmF",
@@ -585,7 +586,7 @@ const board = [
                         "labelIds": ["l101", "l102", "l103"],
                         "memberIds": ["u101", "u102", "u103"],
                         "watching": true,
-                        "dueDate": 1696764840,
+                        "dueDate": null,
                         "checklists": [
                             {
                                 "id": "YEhmF",
@@ -706,7 +707,7 @@ const board = [
                         "labelIds": ["l101", "l102", "l103"],
                         "memberIds": ["u101", "u102", "u103"],
                         "watching": true,
-                        "dueDate": 1696764840,
+                        "dueDate": null,
                         "checklists": [
                             {
                                 "id": "YEhmF",
@@ -923,7 +924,7 @@ const board = [
                         "labelIds": ["l101", "l102", "l103"],
                         "memberIds": ["u101", "u102", "u103"],
                         "watching": true,
-                        "dueDate": 1696764840,
+                        "dueDate": null,
                         "checklists": [
                             {
                                 "id": "YEhmF",
@@ -1042,7 +1043,7 @@ const board = [
                         "labelIds": ["l101", "l102", "l103"],
                         "memberIds": ["u101", "u102", "u103"],
                         "watching": true,
-                        "dueDate": 1696764840,
+                        "dueDate": null,
                         "checklists": [
                             {
                                 "id": "YEhmF",

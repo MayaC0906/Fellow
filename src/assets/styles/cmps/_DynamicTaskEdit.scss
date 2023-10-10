@@ -9,11 +9,7 @@
     right: 130px;
     background-color: white;
 
-    button {
-        border: none;
-        background-color: white;
-        cursor: pointer;
-    }
+
 
     .content {
         padding: 0 12px 12px;
@@ -46,6 +42,12 @@
                 width: 16px;
                 height: 16px;
             }
+        }
+
+        button {
+            border: none;
+            background-color: white;
+            cursor: pointer;
         }
     }
 }

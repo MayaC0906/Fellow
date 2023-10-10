@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 export function TaskList({ tasks, labels, members, isLabelsShown, setIsLabelsShown, groupId }) {
 
     const { boardId } = useParams()
-    if(!tasks) return <div>Loading...</div>
+    if (!tasks) return <div>Loading...</div>
     return (
         <section className="task-list">
             {tasks && tasks.map(task => {

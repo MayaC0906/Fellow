@@ -80,10 +80,10 @@ export async function updateBoard(board) {
         console.log('Updated Board:', savedBoard)
         store.dispatch(getActionUpdateBoard(savedBoard))
         return savedBoard
-    } catch(err) {
+    } catch (err) {
         console.log('Cannot save board', err)
         throw err
-        }       
+    }
 }
 
 export async function removeGroup(groupId, boardId) {
@@ -97,8 +97,8 @@ export async function removeGroup(groupId, boardId) {
     }
 }
 
-export async function saveNewTask(group, boardId){
-    try{
+export async function saveNewTask(group, boardId) {
+    try {
         const board = await boardService.saveGroup(group, boardId)
         store.dispatch(getActionUpdateBoard(board))
         return group
@@ -157,6 +157,7 @@ export async function settingIsStarred(boardId) {
 }
 
 export async function loadTask(boardId, groupId, taskId) {
+    console.log(boardId, groupId, taskId);
     try {
         const task = await taskService.getById(boardId, groupId, taskId)
         console.log('task: from action', task)
@@ -196,7 +197,18 @@ export async function saveTaskDescription(boardId, groupId, taskId, newDescripti
     }
 }
 
-export async function updateTodoIsDone(boardId, groupId, taskId, listId,todoId, isDone) {
+export async function saveTaskDueDate(boardId, groupId, taskId, formatedDate) {
+    try {
+        const board = await taskService.saveTaskDueDateTime(boardId, groupId, taskId, formatedDate)
+        store.dispatch(getActionUpdateBoard(board))
+        console.log('after:', board)
+    } catch (err) {
+        console.log('can not save due date:', err)
+        throw err
+    }
+}
+
+export async function updateTodoIsDone(boardId, groupId, taskId, todoId, isDone) {
     console.log('isDone: from action', isDone)
     try {
         const board = await taskService.updateTodoIsDone(boardId, groupId, taskId, listId,todoId, isDone)
@@ -250,12 +262,28 @@ export async function updateListTitle(boardId, groupId, taskId, listId, txt) {
     }
 }
 
+export async function removeDueDate(boardId, groupId, taskId, formatedDate) {
+
+    // try {
+    //     const board = await taskService.removeDueDate(boardId, groupId, taskId, attachmentId)
+}
+
 
 export async function removeAttachment(boardId, groupId, taskId, attachmentId) {
     try {
         const board = await taskService.removeAttachment(boardId, groupId, taskId, attachmentId)
         console.log('board before save', board);
         store.dispatch(getActionUpdateBoard(board))
+    } catch (err) {
+        throw err
+    }
+
+}
+
+export async function loadDueDate(boardId, groupId, taskId) {
+    try {
+        const task = await taskService.getById(boardId, groupId, taskId)
+        return task.dueDate
     } catch (err) {
         throw err
     }
@@ -271,9 +299,22 @@ export async function removeCover(boardId, groupId, taskId) {
     }
 }
 
-export async function addCoverImg (boardId, groupId, taskId, url) {
+export async function addMemberToTask(boardId, groupId, taskId, memberId) {
     try {
-        const board = await taskService.addCoverImg (boardId, groupId, taskId, url)
+        const boardItems = await taskService.addMember(boardId, groupId, taskId, memberId)
+        // store.dispatch(getActionUpdateBoard(boardItems.board))
+        const board = boardItems.board
+        store.dispatch({ type: SET_BOARD, board })
+        console.log('board action', boardItems.board);
+        return boardItems.newTask
+    } catch (err) {
+        throw err
+    }
+
+}
+export async function addCoverImg(boardId, groupId, taskId, url) {
+    try {
+        const board = await taskService.addCoverImg(boardId, groupId, taskId, url)
         store.dispatch(getActionUpdateBoard(board))
         return board
     } catch (err) {
