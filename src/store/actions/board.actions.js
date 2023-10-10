@@ -261,10 +261,11 @@ export async function updateListTitle(boardId, groupId, taskId, listId, txt) {
     }
 }
 
-// export async function removeDueDate(boardId, groupId, taskId, formatedDate) {
+export async function removeDueDate(boardId, groupId, taskId, formatedDate) {
 
-//     try {
-//         const board = await taskService.removeDueDate(boardId, groupId, taskId, attachmentId)
+    // try {
+    //     const board = await taskService.removeDueDate(boardId, groupId, taskId, attachmentId)
+}
 
 
 export async function removeAttachment(boardId, groupId, taskId, attachmentId) {
