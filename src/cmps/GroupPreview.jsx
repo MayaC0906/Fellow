@@ -61,7 +61,9 @@ export function GroupPreview({ onEditGroup ,isLabelsShown, setIsLabelsShown, gro
 							onKeyDown={(event) => onEditGroup(group.id,event)}
 							sx={{ border:'none'}}
 						></Textarea>
-						<img onClick={() => setToggleGroupMenu(!toggleGroupMenu)} src="https://res.cloudinary.com/dpwmxprpp/image/upload/v1696437012/asset_14_gltqff.svg" alt="" />
+						<section>
+							<img onClick={() => setToggleGroupMenu(!toggleGroupMenu)} src="https://res.cloudinary.com/dpwmxprpp/image/upload/v1696437012/asset_14_gltqff.svg" alt="" />
+						</section>
 				</header>
 			</section>
 			<section className='group-edit'>
