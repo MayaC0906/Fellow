@@ -137,7 +137,7 @@ async function updateListTitle(boardId, groupId, taskId, listId, title) {
 }
 
 async function addTodo(boardId, groupId, taskId, listId, txt) {
-    try {
+
     try {
         const board = await boardService.getById(boardId);
         const groupIdx = board.groups.findIndex(group => group.id === groupId);
