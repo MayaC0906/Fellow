@@ -31,13 +31,13 @@ export function boardReducer(state = initialState, action) {
         case ADD_BOARD:
             newState = { ...state, boards: [...state.boards, action.boards] }
             break
-        // case UPDATE_BOARD:
-        //     boards = state.boards.map(board => (board._id === action.board._id) ? action.board : board)
-        //     newState = { ...state, boards }
-        //     break
         case UPDATE_BOARD:
-            newState = { ...state, board: action.board }
-            break;
+            boards = state.boards.map(board => (board._id === action.board._id) ? action.board : board)
+            newState = { ...state, boards }
+            break
+        // case UPDATE_BOARD:
+        //     newState = { ...state, board: action.board }
+        //     break;
         case UNDO_REMOVE_BOARD:
             if (state.lastRemovedBoard) {
                 newState = { ...state, boards: [...state.boards, state.lastRemovedBoard], lastRemovedBoard: null }
