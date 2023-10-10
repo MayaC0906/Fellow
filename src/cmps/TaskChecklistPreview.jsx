@@ -10,7 +10,7 @@ import { Flag } from '@mui/icons-material';
 import { taskService } from '../services/task.service.local';
 import { checkedSvg } from './Svgs';
 export function TaskChecklistPreview({onAddTodo, onUpdateListTitle, onDeleteTodo,checklists, onToggleDoneTodo,onUpdateTodoTitle }) {
-    const board = useSelector((storeState) => storeState.boardModule.board);
+    // const board = useSelector((storeState) => storeState.boardModule.board);
     const [localChecklists, setLocalChecklists] = useState(checklists);
     const [isTodoExpand, setTodoExpand] = useState(false)
     const [isAddTodoExpand, setAddTodoExpand] = useState(false)
@@ -19,25 +19,25 @@ export function TaskChecklistPreview({onAddTodo, onUpdateListTitle, onDeleteTodo
     const [selectedTodoId, setSelectedTodoId] = useState(null);
     const [progressbarCalc,setProgressbarCalc] = useState(0)
 
-    useEffect(() => {
-        setLocalChecklists(checklists);
-    }, [board]);
+    // useEffect(() => {
+    //     setLocalChecklists(checklists);
+    // }, [board]);
 
     useEffect(() => {
         calculateDoneTodos();
     }, [localChecklists]);
 
-    async function handleToggle(todoId, isDone,ev) {
+    async function handleToggle(listId, todoId, isDone,ev) {
         ev.preventDefault()   
         try{
-            await onToggleDoneTodo(todoId, isDone);
+            await onToggleDoneTodo(listId,todoId, isDone);
             const updatedChecklists = localChecklists.map(list => ({
                 ...list,
                 todos: list.todos.map(todo => 
                     todo.id === todoId ? { ...todo,isDone } : todo
                 )}));
-            setLocalChecklists(updatedChecklists);
-            calculateDoneTodos()
+                setLocalChecklists(updatedChecklists);
+                calculateDoneTodos()
         }
         catch(err) {
             console.log('cannot toggle todo', err);
@@ -49,9 +49,9 @@ export function TaskChecklistPreview({onAddTodo, onUpdateListTitle, onDeleteTodo
         setTxt(event.target.value);
     }
 
-    async function updateTodoTitle(todoId, title) {
+    async function updateTodoTitle(listId,todoId, title) {
         try{
-            await onUpdateTodoTitle(todoId, title);
+            await onUpdateTodoTitle(listId,todoId, title);
             const updatedChecklists = localChecklists.map(list => ({
                 ...list,
                 todos: list.todos.map(todo => 
@@ -101,9 +101,9 @@ export function TaskChecklistPreview({onAddTodo, onUpdateListTitle, onDeleteTodo
     }
     
 
-    async function deleteTodo(todoId) {
+    async function deleteTodo(listId,todoId) {
         try {
-            await onDeleteTodo(todoId);
+            await onDeleteTodo(listId,todoId);
                 const updatedChecklists = localChecklists.map(list => ({
                 ...list,
                 todos: list.todos.filter(todo => todo.id !== todoId)
@@ -116,13 +116,6 @@ export function TaskChecklistPreview({onAddTodo, onUpdateListTitle, onDeleteTodo
         }
     }
 
-
-    //TODO Delete checklist
-
-
-    //TODO Create new checklist
-
-    
     function calculateDoneTodos() {
         const numOfTodos = localChecklists.reduce((total, list) => total + list.todos.length, 0)
     
@@ -132,6 +125,7 @@ export function TaskChecklistPreview({onAddTodo, onUpdateListTitle, onDeleteTodo
         const doneTodos = (numOfDoneTodos / numOfTodos) * 100 
         setProgressbarCalc(doneTodos) 
     }
+    
     
     return (
         <section>
@@ -172,7 +166,7 @@ export function TaskChecklistPreview({onAddTodo, onUpdateListTitle, onDeleteTodo
                         <li key={todo.id} className={`checklist-item ${todo.isDone ? 'done' : ''}` }>
                             <div className='checkbox'>
 
-                                <Checkbox sx={{ '& .MuiSvgIcon-root': { fontSize: 16 } }} defaultChecked={todo.isDone} onChange={(event) => handleToggle(todo.id, !todo.isDone,event)} />
+                                <Checkbox sx={{ '& .MuiSvgIcon-root': { fontSize: 16 } }} defaultChecked={todo.isDone} onChange={(event) => handleToggle(list.id, todo.id, !todo.isDone,event)} />
                             </div>
                             {!isTodoExpand || selectedTodoId !== todo.id ? 
                              <span onClick={() => { setSelectedTodoId(todo.id), setTodoExpand(!isTodoExpand) }}>{todo.title}</span> : 
@@ -185,9 +179,9 @@ export function TaskChecklistPreview({onAddTodo, onUpdateListTitle, onDeleteTodo
                                  onChange={handleTextChange}
                                   />
                                  <section className='add-controls'>
-                                     <Button type="submit" onClick={() => updateTodoTitle(todo.id,txt)} >Save</Button>
+                                     <Button type="submit" onClick={() => updateTodoTitle(list.id,todo.id,txt)} >Save</Button>
                                      <button className='cancel' onClick={() => setTodoExpand(!isTodoExpand)}>X</button>
-                                     <button className='delete' onClick={()=> deleteTodo(todo.id)}>Delete</button>
+                                     <button className='delete' onClick={()=> deleteTodo(list.id,todo.id)}>Delete</button>
                                  </section>
                             </div>
                             }

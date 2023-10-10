@@ -13,20 +13,18 @@ export function TaskCheckList({checklists}){
     
     // console.log(toggleTodo);
 
-    async function onToggleDoneTodo(todoId,isDone){
-        console.log(isDone);
-        console.log(todoId);
+    async function onToggleDoneTodo(listId,todoId,isDone){
         try{
-            await updateTodoIsDone(boardId, groupId, taskId, todoId,isDone)
+            await updateTodoIsDone(boardId, groupId, taskId, listId,todoId,isDone)
         } catch (err) {
             console.log('cannot toggle todo done');
             throw err
         }
     } 
 
-    async function onUpdateTodoTitle(todoId, txt){
+    async function onUpdateTodoTitle(listId,todoId, txt){
         try {
-            await updateTodoTitle(boardId,groupId,taskId,todoId,txt)
+            await updateTodoTitle(boardId,groupId,taskId,listId,todoId,txt)
         } catch (err) {
             console.log('cannot save todo title')
             throw err
@@ -42,9 +40,9 @@ export function TaskCheckList({checklists}){
         }
     }
 
-    async function onDeleteTodo(todoId){
+    async function onDeleteTodo(listId, todoId){
         try {
-            await deleteTodo(boardId, groupId, taskId, todoId)
+            await deleteTodo(boardId, groupId, taskId,listId, todoId)
         } catch (err) {
             console.log('cannot delete todo')
             throw err

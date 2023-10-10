@@ -35,69 +35,81 @@ async function getById(boardId, groupId, taskId) {
     }
 }
 
-async function updateTodoProperty(boardId, groupId, taskId, todoId, key, value) {
+
+// async function getTaskById(taskId, groupId, boardId) {
+// 	try {
+// 		const tasks = await queryTasks(groupId, boardId)
+// 		const task = tasks.find((task) => task.id === taskId)
+// 		return task
+// 	} catch (err) {
+// 		console.log('Failed to get task', err)
+// 		throw err
+// 	}
+// }
+async function updateTodoProperty(boardId, groupId, taskId, listId, todoId, key, value) {
+
     try {
-        const board = await boardService.getById(boardId);
-        const groupIdx = board.groups.findIndex(group => group.id === groupId);
-        const group = board.groups[groupIdx];
-        const taskIdx = group.tasks.findIndex(task => task.id === taskId);
-        const checklists = group.tasks[taskIdx].checklists;
-        let todoIdx, checklistIdx;
+        const board = await boardService.getById(boardId)
+        const groupIdx = board.groups.findIndex(group => group.id === groupId)
+        const group = board.groups[groupIdx]
+        const taskIdx = group.tasks.findIndex(task => task.id === taskId)  
+        const checklistIdx = group.tasks[taskIdx].checklists.findIndex(list => list.id === listId)
+        if (checklistIdx === -1) {
+            throw new Error("checklist isn't found!")
+        }    
+      console.log('hhereeeeeeee' ,group.tasks[taskIdx].checklists[checklistIdx].todos);
 
-        for (const [index, checklist] of checklists.entries()) {
-            todoIdx = checklist.todos.findIndex(todo => todo.id === todoId);
-            if (todoIdx !== -1) {
-                checklistIdx = index;
-                break;
-            }
+        const todoIdx = group.tasks[taskIdx].checklists[checklistIdx].todos.findIndex(todo => todo.id === todoId)
+        if (todoIdx === -1) {
+            throw new Error("todo isn't found!")
         }
-
-        if (key === 'delete') {
+        if (key === 'delete'){
+            console.log('board: from delete', board.groups[groupIdx].tasks[taskIdx].checklists[checklistIdx])
             board.groups[groupIdx].tasks[taskIdx].checklists[checklistIdx].todos.splice(todoIdx, 1)
-            await boardService.saveGroup(group, boardId);
-            return board;
+            await boardService.saveGroup(group, boardId)
+            return board
         }
-        if (typeof checklistIdx === "undefined" || typeof todoIdx === "undefined") {
-            throw new Error("checklist isnt found!");
-        }
-
         if (!board.groups[groupIdx].tasks[taskIdx].checklists[checklistIdx].todos[todoIdx].hasOwnProperty(key)) {
-            throw new Error("The provided key doesn't exist on the todo");
+            throw new Error("The provided key doesn't exist on the todo")
         }
 
-        board.groups[groupIdx].tasks[taskIdx].checklists[checklistIdx].todos[todoIdx][key] = value;
+        board.groups[groupIdx].tasks[taskIdx].checklists[checklistIdx].todos[todoIdx][key] = value
+        console.log('board: after change', board)
 
-        await boardService.saveGroup(group, boardId);
+        await boardService.saveGroup(group, boardId)
         return board;
     } catch (err) {
-        console.log(`cannot update todo's ${key}`, err);
-        throw err;
-    }
-}
-
-// async function 
-
-async function deleteTodo(boardId, groupId, taskId, todoId) {
-    try {
-        return updateTodoProperty(boardId, groupId, taskId, todoId, 'delete')
-    } catch (err) {
-        console.log('cannot delete todo', err)
+        console.log(`cannot update todo's ${key}`, err)
         throw err
     }
 }
 
-async function updateTodoIsDone(boardId, groupId, taskId, todoId, state) {
+
+ 
+
+async function deleteTodo(boardId, groupId, taskId, listId, todoId) {
+    console.log('todoId:', todoId)
     try {
-        return updateTodoProperty(boardId, groupId, taskId, todoId, 'isDone', state);
+        return updateTodoProperty(boardId, groupId, taskId, listId,todoId, 'delete', null);
+    } catch (err) {
+        console.log('cannot delete todo', err);
+        throw err;
+    }
+}
+
+
+ async function updateTodoIsDone(boardId, groupId, taskId, listId,todoId,  state) {
+    try {
+        return updateTodoProperty(boardId, groupId, taskId, listId,todoId, 'isDone', state);
     } catch (err) {
         console.log('cannot update todo isDone status', err);
         throw err;
     }
 }
 
-async function updateTodoTitle(boardId, groupId, taskId, todoId, txt) {
-    try {
-        return updateTodoProperty(boardId, groupId, taskId, todoId, 'title', txt)
+ async function updateTodoTitle(boardId,groupId,taskId, listId, todoId,txt){
+    try{
+        return updateTodoProperty(boardId,groupId,taskId,listId,todoId,'title', txt)
     } catch (err) {
         console.log('cannot update todo title', err);
         throw err;
@@ -107,16 +119,17 @@ async function updateTodoTitle(boardId, groupId, taskId, todoId, txt) {
 async function updateListTitle(boardId, groupId, taskId, listId, title) {
     try {
         const board = await boardService.getById(boardId);
-        const group = board.groups.find(group => group.id === groupId);
         const groupIdx = board.groups.findIndex(group => group.id === groupId);
-        const task = group.tasks.find(task => task.id === taskId);
-        const taskIdx = group.tasks.findIndex(task => task.id === taskId);
-        const list = task.checklists.find(list => list.id === listId);
-        const listIdx = task.checklists.findIndex(list => list.id === listId);
-        const newListTitle = { ...list, title };
-        board.groups[groupIdx].tasks[taskIdx].checklists[listIdx] = newListTitle;
-        await boardService.saveGroup(group, boardId);
-        return board
+        const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId);
+        const checklistIdx = board.groups[groupIdx].tasks[taskIdx].checklists.findIndex(list => list.id === listId);
+        
+        if (checklistIdx === -1) {
+            throw new Error("checklist isn't found!");
+        }
+
+        board.groups[groupIdx].tasks[taskIdx].checklists[checklistIdx].title = title;
+        await boardService.saveGroup(board.groups[groupIdx], boardId);
+        return board;
     } catch (err) {
         console.log('cannot update list title', err);
         throw err;
@@ -124,19 +137,29 @@ async function updateListTitle(boardId, groupId, taskId, listId, title) {
 }
 
 async function addTodo(boardId, groupId, taskId, listId, txt) {
+
     try {
         const board = await boardService.getById(boardId);
-        const group = board.groups.find(group => group.id === groupId);
-        const task = group.tasks.find(task => task.id === taskId);
-        const list = task.checklists.find(list => list.id === listId);
-        console.log('list: before change', list)
+        const groupIdx = board.groups.findIndex(group => group.id === groupId);
+        const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId);
+        const checklistIdx = board.groups[groupIdx].tasks[taskIdx].checklists.findIndex(list => list.id === listId);
+        
+        if (checklistIdx === -1) {
+            throw new Error("checklist isn't found!");
+        }
+
+        console.log('list: before change', board.groups[groupIdx].tasks[taskIdx].checklists[checklistIdx]);
+
         const newTodo = getDefaultTodo(txt);
-        list.todos.push(newTodo);
-        console.log('list: after list', list)
-        await boardService.saveGroup(group, boardId);
+        board.groups[groupIdx].tasks[taskIdx].checklists[checklistIdx].todos.push(newTodo);
+        
+        console.log('list: after change', board.groups[groupIdx].tasks[taskIdx].checklists[checklistIdx]);
+
+        await boardService.saveGroup(board.groups[groupIdx], boardId);
         return board;
     } catch (err) {
-        throw err
+        console.log('cannot add todo', err);
+        throw err;
     }
 
 }
@@ -145,7 +168,6 @@ async function addTodo(boardId, groupId, taskId, listId, txt) {
 
 function getDefaultTodo(txt) {
     return {
-        id: utilService.makeId(),
         title: txt,
         isDone: false
     }

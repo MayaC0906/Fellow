@@ -7,6 +7,7 @@ import { TaskDescription } from "./TaskDescription"
 import { TaskDetailsSideNav } from "./TaskDetailsSideNav"
 import { taskSvg } from "./Svgs"
 import { TaskAttachments } from "./TaskAttachments"
+import { useSelector } from 'react-redux'
 
 
 import { TaskCheckList } from "./TaskChecklist-list"
@@ -14,11 +15,13 @@ import { TaskDate } from "./TaskDate"
 import { TaskMember } from "./TaskMember"
 
 export function TaskDetails() {
+    const board = useSelector((storeState) => storeState.boardModule.board)
     const { boardId, groupId, taskId } = useParams()
-    const [task, setTask] = useState(null)
+    const [task, setTask] = useState('')
     let [editName, setEditName] = useState('')
-
+    
     useEffect(() => {
+        console.log('boardid,groupId,taskid', boardId,groupId,taskId);
         onLoadTask(boardId, groupId, taskId)
     }, [])
 
@@ -27,14 +30,14 @@ export function TaskDetails() {
         try {
             const newTask = await loadTask(boardId, groupId, taskId)
             console.log('newTask', newTask);
-            setTask({ ...newTask })
+            setTask(newTask)
         } catch (err) {
             console.log('Can\'t load board', err);
             throw err
         }
     }
 
-
+    console.log(board);
     if (!task) return <div>Loading</div>
     return (
         <div className="task-details">

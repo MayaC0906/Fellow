@@ -17,6 +17,7 @@ export const boardService = {
     getEmptyGroup,
     saveGroup,
     removeGroup,
+    getGroupById
 }
 window.bs = boardService
 
@@ -100,6 +101,19 @@ function getEmptyGroup() {
         title: '',
         tasks: [],
     }
+}
+
+async function getGroupById(groupId, boardId) {
+	try {
+		const groups = await queryGroups(boardId)
+		const group = groups.find((grp) => {
+			return grp.id === groupId
+		})
+		return group
+	} catch (err) {
+		console.log('Failed to get group', err)
+		throw err
+	}
 }
 
 async function saveGroup(group, boardId) {
