@@ -300,12 +300,9 @@ export async function removeCover(boardId, groupId, taskId) {
 
 export async function addMemberToTask(boardId, groupId, taskId, memberId) {
     try {
-        const boardItems = await taskService.addMember(boardId, groupId, taskId, memberId)
+        const board = await taskService.addMember(boardId, groupId, taskId, memberId)
         // store.dispatch(getActionUpdateBoard(boardItems.board))
-        const board = boardItems.board
         store.dispatch({ type: SET_BOARD, board })
-        console.log('board action', boardItems.board);
-        return boardItems.newTask
     } catch (err) {
         throw err
     }

@@ -295,10 +295,8 @@ async function removeDueDate(boardId, groupId, taskId) {
 }
 
 async function addMember(boardId, groupId, taskId, memberId) {
-    // console.log('task service', memberId);
     try {
         let newTask
-        console.log('GET FROM ADD MEMBER IN TASK SERVICE=>');
         const board = await boardService.getById(boardId)
         const group = board.groups.find(group => group.id === groupId)
         const groupIdx = board.groups.findIndex(group => group.id === groupId)
@@ -306,32 +304,49 @@ async function addMember(boardId, groupId, taskId, memberId) {
         const taskIdx = group.tasks.findIndex(task => task.id === taskId)
         const memberIdx = task.memberIds.findIndex(id => id === memberId)
 
-        // console.log('task.memberIds before', task.memberIds);
-        // console.log('Idx:', memberIdx);
         if (memberIdx === -1) {
-            // console.log('if');
             newTask = { ...task, memberIds: [...task.memberIds, memberId] }
         } else {
-            // console.log('else');
             const updatedMembers = [...task.memberIds]
             updatedMembers.splice(memberIdx, 1)
-            // console.log('updated Members in if:', updatedMembers);
             newTask = { ...task, memberIds: updatedMembers }
         }
 
-        // newTask =         
-        // console.log('task.memberIds after', newTask.memberIds);
-
-        // console.log('task after:', newTask);
         board.groups[groupIdx].tasks[taskIdx] = newTask
-
-        boardService.saveGroup(group, boardId)
-        return { board, newTask }
+        await boardService.saveGroup(group, boardId)
+        return board
     } catch (err) {
         console.log('couldn\'t add member to task', err);
         throw err
     }
 }
+
+// async function addMember(boardId, groupId, taskId, memberId) {
+//     try {
+//         let newTask
+//         const board = await boardService.getById(boardId)
+//         const group = board.groups.find(group => group.id === groupId)
+//         const groupIdx = board.groups.findIndex(group => group.id === groupId)
+//         const task = group.tasks.find(task => task.id === taskId)
+//         const taskIdx = group.tasks.findIndex(task => task.id === taskId)
+//         const memberIdx = task.memberIds.findIndex(id => id === memberId)
+
+//         if (memberIdx === -1) {
+//             newTask = { ...task, memberIds: [...task.memberIds, memberId] }
+//         } else {
+//             const updatedMembers = [...task.memberIds]
+//             updatedMembers.splice(memberIdx, 1)
+//             newTask = { ...task, memberIds: updatedMembers }
+//         }
+
+//         board.groups[groupIdx].tasks[taskIdx] = newTask
+//         await boardService.saveGroup(group, boardId)
+//         return { board, newTask }
+//     } catch (err) {
+//         console.log('couldn\'t add member to task', err);
+//         throw err
+//     }
+// }
 
 
 

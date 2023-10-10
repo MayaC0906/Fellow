@@ -23,10 +23,9 @@ export function MemberEdit({ editName, onCloseEditTask, setTask }) {
     }
 
     async function onAddMemberToTask(memberId) {
-        // console.log('id:', memberId);
         try {
             console.log('BEFORE ADD MEMBER =>');
-            const updatedTask = await addMemberToTask(boardId, groupId, taskId, memberId)
+            await addMemberToTask(boardId, groupId, taskId, memberId)
             // const state = store.getState()
             // const board = state.boardModule.board
             // console.log('state:', state.boardModule.board)
@@ -34,8 +33,8 @@ export function MemberEdit({ editName, onCloseEditTask, setTask }) {
             // console.log('board inside comp func', board)
             console.log('BEFOR LOAD TASK =>');
             const task = await loadTask(boardId, groupId, taskId)
-            // console.log('task from comp func:', task);
-            // setTask(prevTask => ({ ...prevTask, memberIds: updatedTask.memberIds }))
+            console.log('task from comp func:', task);
+            setTask(prevTask => ({ ...prevTask, memberIds: task.memberIds }))
             // setIsChoose(!isChoose)
         } catch (err) {
             console.log('Could not save date =>', err)
