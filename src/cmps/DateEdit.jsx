@@ -45,7 +45,7 @@ export function DateEdit({ editName, onCloseEditTask, setTask }) {
             await saveTaskDueDate(boardId, groupId, taskId, formatedDate)
             setTask(prevTask => ({ ...prevTask, dueDate: formatedDate }))
             setSelectedDate(selectedDate)
-            onCloseEditTask('')
+            onCloseEditTask()
         } catch (err) {
             console.log('Could not save date =>', err)
         }
