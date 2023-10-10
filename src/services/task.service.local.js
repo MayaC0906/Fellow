@@ -4,6 +4,9 @@ export const taskService = {
     getById,
     saveTaskTitle,
     saveTaskDescription,
+    removeAttachment,
+    addCoverImg,
+    removeCover,
     updateTodoIsDone,
     updateTodoTitle,
     deleteTodo,
@@ -12,7 +15,8 @@ export const taskService = {
     updateListTitle,
     saveTaskDueDateTime,
     removeDueDate,
-    addMember
+    addMember,
+    getEmptyTask
 }
 
 async function getById(boardId, groupId, taskId) {
@@ -21,6 +25,7 @@ async function getById(boardId, groupId, taskId) {
         console.log('BEFORE GET ID');
         const board = await boardService.getById(boardId)
         console.log('board from get is task', board);
+        console.log('board to load task', board);
         const group = board.groups.find(group => group.id === groupId)
         const task = group.tasks.find(task => task.id === taskId)
         return task
@@ -70,7 +75,7 @@ async function updateTodoProperty(boardId, groupId, taskId, todoId, key, value) 
     }
 }
 
-
+// async function 
 
 async function deleteTodo(boardId, groupId, taskId, todoId) {
     try {
@@ -207,101 +212,185 @@ async function saveTaskDueDateTime(boardId, groupId, taskId, formatedDate) {
         return board
     } catch (err) {
         console.log('couldn\'t save task due date', err);
-        throw err
     }
 
-}
+    async function removeAttachment(boardId, groupId, taskId, attachmentId) {
+        try {
+            const board = await boardService.getById(boardId)
+            const group = board.groups.find(group => group.id === groupId)
+            const groupIdx = board.groups.findIndex(group => group.id === groupId)
+            const taskIdx = group.tasks.findIndex(task => task.id === taskId)
 
-async function removeDueDate(boardId, groupId, taskId) {
-    try {
-        const board = await boardService.getById(boardId)
-        const group = board.groups.find(group => group.id === groupId)
-        const groupIdx = board.groups.findIndex(group => group.id === groupId)
-        const task = group.tasks.find(task => task.id === taskId)
-        const taskIdx = group.tasks.findIndex(task => task.id === taskId)
-        const newTask = { ...task, dueDate: null }
-        board.groups[groupIdx].tasks[taskIdx] = newTask
+            const attachmentIdx = board.groups[groupIdx].tasks[taskIdx]
+                .attachments.findIndex(attachment => attachment.id === attachmentId)
 
-        boardService.saveGroup(group, boardId)
-        return board
-    } catch (err) {
-        console.log('couldn\'t remove task due date', err);
-        throw err
-    }
+            board.groups[groupIdx].tasks[taskIdx].attachments.splice(attachmentIdx, 1)
+            board.groups[groupIdx].tasks[taskIdx].cover.img = ''
 
-}
-
-async function addMember(boardId, groupId, taskId, memberId) {
-    // console.log('task service', memberId);
-    try {
-        let newTask
-        console.log('GET FROM ADD MEMBER IN TASK SERVICE=>');
-        const board = await boardService.getById(boardId)
-        const group = board.groups.find(group => group.id === groupId)
-        const groupIdx = board.groups.findIndex(group => group.id === groupId)
-        const task = group.tasks.find(task => task.id === taskId)
-        const taskIdx = group.tasks.findIndex(task => task.id === taskId)
-        const memberIdx = task.memberIds.findIndex(id => id === memberId)
-
-        // console.log('task.memberIds before', task.memberIds);
-        // console.log('Idx:', memberIdx);
-        if (memberIdx === -1) {
-            // console.log('if');
-            newTask = { ...task, memberIds: [...task.memberIds, memberId] }
-        } else {
-            // console.log('else');
-            const updatedMembers = [...task.memberIds]
-            updatedMembers.splice(memberIdx, 1)
-            // console.log('updated Members in if:', updatedMembers);
-            newTask = { ...task, memberIds: updatedMembers }
+            console.log(group, 'group to send');
+            boardService.saveGroup(group, boardId)
+            return board
+        } catch (err) {
+            console.log('couldn\'t remove task attachment', err);
+            throw err
         }
 
-        // newTask =         
-        // console.log('task.memberIds after', newTask.memberIds);
+    }
 
-        // console.log('task after:', newTask);
-        board.groups[groupIdx].tasks[taskIdx] = newTask
+    async function addCoverImg(boardId, groupId, taskId, url) {
+        try {
+            const board = await boardService.getById(boardId)
+            const group = board.groups.find(group => group.id === groupId)
+            const groupIdx = board.groups.findIndex(group => group.id === groupId)
+            const taskIdx = group.tasks.findIndex(task => task.id === taskId)
 
-        boardService.saveGroup(group, boardId)
-        return { board, newTask }
-    } catch (err) {
-        console.log('couldn\'t add member to task', err);
-        throw err
+            board.groups[groupIdx].tasks[taskIdx].cover.img = url
+
+
+            boardService.saveGroup(group, boardId)
+            return board
+        } catch (err) {
+            console.log('couldn\'t remove task attachment', err);
+            throw err
+        }
+
+    }
+
+    async function removeCover(boardId, groupId, taskId) {
+        try {
+            const board = await boardService.getById(boardId)
+            const group = board.groups.find(group => group.id === groupId)
+            const groupIdx = board.groups.findIndex(group => group.id === groupId)
+            const taskIdx = group.tasks.findIndex(task => task.id === taskId)
+
+            board.groups[groupIdx].tasks[taskIdx].cover.img = ''
+
+
+            boardService.saveGroup(board.groups[groupIdx], boardId)
+            return board
+        } catch (err) {
+            console.log('couldn\'t remove task attachment', err);
+            throw err
+        }
+
+    }
+
+    async function removeDueDate(boardId, groupId, taskId) {
+        try {
+            const board = await boardService.getById(boardId)
+            const group = board.groups.find(group => group.id === groupId)
+            const groupIdx = board.groups.findIndex(group => group.id === groupId)
+            const task = group.tasks.find(task => task.id === taskId)
+            const taskIdx = group.tasks.findIndex(task => task.id === taskId)
+            const newTask = { ...task, dueDate: null }
+            board.groups[groupIdx].tasks[taskIdx] = newTask
+
+            boardService.saveGroup(group, boardId)
+            return board
+        } catch (err) {
+            console.log('couldn\'t remove task due date', err);
+            throw err
+        }
+
+    }
+
+    async function addMember(boardId, groupId, taskId, memberId) {
+        // console.log('task service', memberId);
+        try {
+            let newTask
+            console.log('GET FROM ADD MEMBER IN TASK SERVICE=>');
+            const board = await boardService.getById(boardId)
+            const group = board.groups.find(group => group.id === groupId)
+            const groupIdx = board.groups.findIndex(group => group.id === groupId)
+            const task = group.tasks.find(task => task.id === taskId)
+            const taskIdx = group.tasks.findIndex(task => task.id === taskId)
+            const memberIdx = task.memberIds.findIndex(id => id === memberId)
+
+            // console.log('task.memberIds before', task.memberIds);
+            // console.log('Idx:', memberIdx);
+            if (memberIdx === -1) {
+                // console.log('if');
+                newTask = { ...task, memberIds: [...task.memberIds, memberId] }
+            } else {
+                // console.log('else');
+                const updatedMembers = [...task.memberIds]
+                updatedMembers.splice(memberIdx, 1)
+                // console.log('updated Members in if:', updatedMembers);
+                newTask = { ...task, memberIds: updatedMembers }
+            }
+
+            // newTask =         
+            // console.log('task.memberIds after', newTask.memberIds);
+
+            // console.log('task after:', newTask);
+            board.groups[groupIdx].tasks[taskIdx] = newTask
+
+            boardService.saveGroup(group, boardId)
+            return { board, newTask }
+        } catch (err) {
+            console.log('couldn\'t add member to task', err);
+            throw err
+        }
+    }
+
+
+
+    //DONT DELETE - SAHAR
+
+    // async function getTodoToChange(boardId, groupId, taskId, todoId, key){
+    //     const board = await boardService.getById(boardId);
+    //     const groupIdx = board.groups.findIndex(group => group.id === groupId);
+    //     const group = board.groups[groupIdx];
+    //     const taskIdx = group.tasks.findIndex(task => task.id === taskId);
+    //     const checklists = group.tasks[taskIdx].checklists;
+    //     let todoIdx, checklistIdx;
+    //     for (const [index, checklist] of checklists.entries()) {
+    //         todoIdx = checklist.todos.findIndex(todo => todo.id === todoId);
+    //         if (todoIdx !== -1) {
+    //             checklistIdx = index;
+    //             break;
+    //         }
+    //     }
+    //     if (typeof checklistIdx === "undefined" || typeof todoIdx === "undefined") {
+    //         throw new Error("Todo or Checklist not found");
+    //     }
+    //     return board.groups[groupIdx].tasks[taskIdx].checklists[checklistIdx].todos[todoIdx];
+    // }
+
+    // export async function updateTodoIsDone(boardId, groupId, taskId, todoId, state) {
+    //     console.log('state: from task service', state)
+    //     try {
+    //         const todo = getTodoToChange(boardId, groupId, taskId, todoId )
+    //         await boardService.saveGroup(group, boardId);
+    //         return board;
+    //     } catch (err) {
+    //         console.log('cannot update todo isDone status', err);
+    //         throw err;
+    //     }
+    // }
+
+
+
+    function getEmptyTask() {
+        return {
+            id: utilService.makeId(),
+            title: '',
+            archivedAt: null,
+            labelIds: [],
+            dueDate: '',
+            byMember: {
+                _id: '',
+                username: '',
+                fullname: '',
+                imgUrl: '',
+            },
+            memberIds: [],
+            comments: [],
+            style: {},
+            attachments: [],
+            checklists: [],
+            isDone: false,
+            style: {}
+        }
     }
 }
-
-
-
-//DONT DELETE - SAHAR
-
-// async function getTodoToChange(boardId, groupId, taskId, todoId, key){
-//     const board = await boardService.getById(boardId);
-//     const groupIdx = board.groups.findIndex(group => group.id === groupId);
-//     const group = board.groups[groupIdx];
-//     const taskIdx = group.tasks.findIndex(task => task.id === taskId);
-//     const checklists = group.tasks[taskIdx].checklists;
-//     let todoIdx, checklistIdx;
-//     for (const [index, checklist] of checklists.entries()) {
-//         todoIdx = checklist.todos.findIndex(todo => todo.id === todoId);
-//         if (todoIdx !== -1) {
-//             checklistIdx = index;
-//             break;
-//         }
-//     }
-//     if (typeof checklistIdx === "undefined" || typeof todoIdx === "undefined") {
-//         throw new Error("Todo or Checklist not found");
-//     }
-//     return board.groups[groupIdx].tasks[taskIdx].checklists[checklistIdx].todos[todoIdx];
-// }
-
-// export async function updateTodoIsDone(boardId, groupId, taskId, todoId, state) {
-//     console.log('state: from task service', state)
-//     try {
-//         const todo = getTodoToChange(boardId, groupId, taskId, todoId )
-//         await boardService.saveGroup(group, boardId);
-//         return board;
-//     } catch (err) {
-//         console.log('cannot update todo isDone status', err);
-//         throw err;
-//     }
-// }

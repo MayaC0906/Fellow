@@ -5,11 +5,12 @@ import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 
 export function TaskList({ tasks, labels, members, isLabelsShown, setIsLabelsShown, groupId }) {
-    const { boardId } = useParams()
 
+    const { boardId } = useParams()
+    if (!tasks) return <div>Loading...</div>
     return (
         <section className="task-list">
-            {tasks.map(task => {
+            {tasks && tasks.map(task => {
                 const taskLabels = boardService.getLabels(task.labelIds, labels) || null
                 const taskMembers = boardService.getMembers(task.memberIds, members) || null
                 const taskChecklist = task.checklists.length ? boardService.getCheckListStatus(task.checklists) : ''

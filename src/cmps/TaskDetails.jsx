@@ -6,32 +6,34 @@ import { TaskTitle } from "./TaskTitle"
 import { TaskDescription } from "./TaskDescription"
 import { TaskDetailsSideNav } from "./TaskDetailsSideNav"
 import { taskSvg } from "./Svgs"
+import { TaskAttachments } from "./TaskAttachments"
+
+
 import { TaskCheckList } from "./TaskChecklist-list"
 import { TaskDate } from "./TaskDate"
 import { TaskMember } from "./TaskMember"
 
 export function TaskDetails() {
-
     const { boardId, groupId, taskId } = useParams()
     const [task, setTask] = useState(null)
     let [editName, setEditName] = useState('')
-
 
     useEffect(() => {
         onLoadTask(boardId, groupId, taskId)
     }, [])
 
     async function onLoadTask(boardId, groupId, taskId) {
+        console.log('loadTask');
         try {
-            const task = await loadTask(boardId, groupId, taskId)
-            setTask(task)
+            const newTask = await loadTask(boardId, groupId, taskId)
+            console.log('newTask', newTask);
+            setTask({ ...newTask })
         } catch (err) {
             console.log('Can\'t load board', err);
             throw err
         }
     }
 
-    // console.log('task.memberIds', task.memberIds);
 
     if (!task) return <div>Loading</div>
     return (
@@ -63,24 +65,30 @@ export function TaskDetails() {
                     <section className="task-main">
                         <section className="task-info">
                             <TaskDescription taskDescription={task.description} />
+                            <TaskAttachments
+                                setEditName={setEditName}
+                                taskAttachments={task.attachments}
+                                cover={task.cover}
+                                setTask={setTask}
+                            />
                         </section>
 
 
 
                         <section className="edit-task-nav">
                             <TaskDetailsSideNav setTask={setTask} editName={editName} setEditName={setEditName} />
-                        </section>
+                        </section >
 
 
 
                         <section>
                             <TaskCheckList checklists={task.checklists} />
                         </section>
-                    </section>
+                    </section >
 
-                </article>
-            </section>
-        </div>
+                </article >
+            </section >
+        </div >
     )
 
 }

@@ -26,9 +26,9 @@ export function TaskTitle({ taskTitle }) {
     async function onBlurSaveTitle() {
         try {
             saveTitle()
-            console.log('Task title changed successfully');
-        } catch (err) {
-            console.log('Cannot change task title', err);
+            console.log('Task title changed successfully')
+        } catch (err){
+            console.log('Cannot change task title', err)
         }
     }
 

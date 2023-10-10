@@ -8,6 +8,8 @@ import { boardService } from "../services/board.service.local.js";
 import { SET_BOARD } from '../store/reducers/board.reducer.js'
 import { GroupHeader } from "../cmps/GroupHeader.jsx"
 import { BoardSidebar } from "../cmps/BoardSidebar.jsx";
+
+
 export function BoardDetails() {
     const dispatch = useDispatch();
     const { boardId } = useParams();
@@ -22,6 +24,7 @@ export function BoardDetails() {
         try {
             const board = await loadBoard(boardId)
             dispatch({ type: SET_BOARD, board })
+            console.log('board loaded');
         } catch(err) {
             console.log('cant set board', err);
             throw err
@@ -32,11 +35,14 @@ export function BoardDetails() {
 
 
     return (
-        <div className="board-details-container">
-            <GroupHeader />
-            <Outlet/>
-            <GroupList boardId={boardId}/>
-        </div>
+        <>
+            <BoardSidebar />
+            <div className="board-details-container">
+                <GroupHeader />
+                <Outlet/>
+                <GroupList boardId={boardId}/>
+            </div>
+        </>
     )
 }
 

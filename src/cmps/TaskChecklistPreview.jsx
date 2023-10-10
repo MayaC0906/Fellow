@@ -150,6 +150,7 @@ export function TaskChecklistPreview({onAddTodo, onUpdateListTitle, onDeleteTodo
                          autoFocus
                          defaultValue={list.title}
                          onChange={handleTextChange}
+                         minRows={2}
                           />
                          <section className='add-controls'>
                              <Button type="submit" onClick={() => updateListTitle(list.id,txt)} >Save</Button>

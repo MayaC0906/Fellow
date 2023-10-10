@@ -8,7 +8,8 @@ export const utilService = {
     loadFromStorage,
     getAssetSrc,
     formatTimestamp,
-    getFileNameFromUrl
+    getFileNameFromUrl,
+    formatImgTime
 }
 
 function makeId(length = 6) {
@@ -91,11 +92,37 @@ function formatTimestamp(timestamp) {
 }
 
 function getFileNameFromUrl(url) {
-    const match = url.match(/\/([^/]+\.(jpg|png|jpeg))$/i);
+    try {
+        const urlArr = url.split('.')
+        const imgFormat = urlArr.pop()
+        const urlLeft = urlArr.join().split(/[,|;_%//]/);
+        const urlName = urlLeft.pop()
 
-    if (match && match[1]) {
-        return match[1];
+        const fileName = `${urlName}.${imgFormat}`
+        return fileName;
+    }
+    catch (error) {
+        console.error('Error parsing URL:', error);
+    }
+}
+// Return the original URL if parsing fails or no filename found
+
+
+function formatImgTime(timestamp) {
+    const now = new Date().getTime();
+    const differenceInMilliseconds = now - timestamp;
+    const differenceInSeconds = Math.floor(differenceInMilliseconds / 1000);
+    const differenceInMinutes = Math.floor(differenceInSeconds / 60);
+    const differenceInHours = Math.floor(differenceInMinutes / 60);
+    const differenceInDays = Math.floor(differenceInHours / 24);
+
+    if (differenceInMinutes < 1) {
+        return "just now";
+    } else if (differenceInMinutes < 60) {
+        return differenceInMinutes + " min ago";
+    } else if (differenceInHours < 24) {
+        return differenceInHours + " hours ago";
     } else {
-        return null;
+        return differenceInDays + " days ago";
     }
 }
