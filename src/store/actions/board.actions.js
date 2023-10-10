@@ -19,7 +19,7 @@ export function getActionAddBoard(board) {
 }
 export function getActionUpdateBoard(board) {
     return {
-        type: UPDATE_BOARD,
+        type: SET_BOARD,
         board
     }
 }
@@ -159,6 +159,7 @@ export async function settingIsStarred(boardId) {
 export async function loadTask(boardId, groupId, taskId) {
     try {
         const task = await taskService.getById(boardId, groupId, taskId)
+        console.log('task: from action', task)
         return task
     } catch (err) {
         throw err
@@ -195,10 +196,10 @@ export async function saveTaskDescription(boardId, groupId, taskId, newDescripti
     }
 }
 
-export async function updateTodoIsDone(boardId, groupId, taskId, todoId, isDone) {
+export async function updateTodoIsDone(boardId, groupId, taskId, listId,todoId, isDone) {
     console.log('isDone: from action', isDone)
     try {
-        const board = await taskService.updateTodoIsDone(boardId, groupId, taskId, todoId, isDone)
+        const board = await taskService.updateTodoIsDone(boardId, groupId, taskId, listId,todoId, isDone)
         console.log('board:', board)
         store.dispatch(getActionUpdateBoard(board))
     } catch (err) {
@@ -207,9 +208,9 @@ export async function updateTodoIsDone(boardId, groupId, taskId, todoId, isDone)
     }
 }
 
-export async function deleteTodo(boardId, groupId, taskId, todoId) {
+export async function deleteTodo(boardId, groupId, taskId, listId, todoId) {
     try {
-        const board = await taskService.deleteTodo(boardId, groupId, taskId, todoId)
+        const board = await taskService.deleteTodo(boardId, groupId, taskId, listId, todoId)
         store.dispatch(getActionUpdateBoard(board))
     } catch (err) {
         console.log('cannot delete todo');
@@ -217,10 +218,10 @@ export async function deleteTodo(boardId, groupId, taskId, todoId) {
     }
 }
 
-export async function updateTodoTitle(boardId, groupId, taskId, todoId, txt) {
+export async function updateTodoTitle(boardId, groupId, taskId, listId,todoId, txt) {
     console.log('txt:', txt)
     try {
-        const board = await taskService.updateTodoTitle(boardId, groupId, taskId, todoId, txt)
+        const board = await taskService.updateTodoTitle(boardId, groupId, taskId, listId,todoId, txt)
         store.dispatch(getActionUpdateBoard(board))
     } catch (err) {
         console.log('cant update todo title', err)
