@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service';
 
 
-export function GroupPreview({ onEditGroup, isLabelsShown, setIsLabelsShown, group, members, labels, onRemoveGroup, onDuplicateGroup }) {
+export function GroupPreview({ handleDrag,onEditGroup, isLabelsShown, setIsLabelsShown, group, members, labels, onRemoveGroup, onDuplicateGroup }) {
 	// console.log('members from groupPreview', members);
 	const [toggleGroupMenu, setToggleGroupMenu] = useState(false)
 	const [isInputExpand, setInputExpand] = useState(false)
@@ -84,6 +84,7 @@ export function GroupPreview({ onEditGroup, isLabelsShown, setIsLabelsShown, gro
 					members={members} labels={labels}
 					tasks={group.tasks}
 					groupId={group.id}
+					handleDrag={handleDrag}
 				/>
 			</section>
 			<section className='footer-wrapper'>

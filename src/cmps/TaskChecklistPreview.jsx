@@ -120,7 +120,6 @@ export function TaskChecklistPreview({ onAddTodo, onUpdateListTitle, onDeleteTod
         setProgressbarCalc(progressForEachList);
     }
 
-    console.log('bar calc', progressbarCalc);
     return (
         <section>
             {localChecklists.map((list, idx) => (
@@ -147,7 +146,7 @@ export function TaskChecklistPreview({ onAddTodo, onUpdateListTitle, onDeleteTod
                     }
 
                     <div className='progress-bar'>
-                        <span>{progressbarCalc[idx] ? progressbarCalc[idx] : 0}%</span>
+                        <span>{progressbarCalc[idx] ? progressbarCalc[idx].toFixed() : 0}%</span>
                         <div className='progress-bar-container'>
                             <div className="fill" style={{ width: `${progressbarCalc[idx] ? progressbarCalc[idx] : 0}%` }}></div>
                         </div>
