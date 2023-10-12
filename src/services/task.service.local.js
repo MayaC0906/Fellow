@@ -17,6 +17,7 @@ export const taskService = {
     removeDueDate,
     toggleMemberOrLabel,
     getEmptyTask,
+    addChecklist,
     deleteLabel
 }
 
@@ -53,15 +54,13 @@ async function updateTodoProperty(boardId, groupId, taskId, listId, todoId, key,
         const checklistIdx = group.tasks[taskIdx].checklists.findIndex(list => list.id === listId)
         if (checklistIdx === -1) {
             throw new Error("checklist isn't found!")
-        }
-        console.log('hhereeeeeeee', group.tasks[taskIdx].checklists[checklistIdx].todos);
+        }    
 
         const todoIdx = group.tasks[taskIdx].checklists[checklistIdx].todos.findIndex(todo => todo.id === todoId)
         if (todoIdx === -1) {
             throw new Error("todo isn't found!")
         }
-        if (key === 'delete') {
-            console.log('board: from delete', board.groups[groupIdx].tasks[taskIdx].checklists[checklistIdx])
+        if (key === 'delete'){
             board.groups[groupIdx].tasks[taskIdx].checklists[checklistIdx].todos.splice(todoIdx, 1)
             await boardService.saveGroup(group, boardId)
             return board
@@ -71,7 +70,6 @@ async function updateTodoProperty(boardId, groupId, taskId, listId, todoId, key,
         }
 
         board.groups[groupIdx].tasks[taskIdx].checklists[checklistIdx].todos[todoIdx][key] = value
-        console.log('board: after change', board)
 
         await boardService.saveGroup(group, boardId)
         return board;
@@ -85,7 +83,6 @@ async function updateTodoProperty(boardId, groupId, taskId, listId, todoId, key,
 
 
 async function deleteTodo(boardId, groupId, taskId, listId, todoId) {
-    console.log('todoId:', todoId)
     try {
         return updateTodoProperty(boardId, groupId, taskId, listId, todoId, 'delete', null);
     } catch (err) {
@@ -112,6 +109,26 @@ async function updateTodoTitle(boardId, groupId, taskId, listId, todoId, txt) {
         throw err;
     }
 }
+async function addChecklist(boardId, groupId,taskId,title){
+    try {
+        const board = await boardService.getById(boardId)
+        const groupIdx = board.groups.findIndex(group => group.id === groupId)
+        const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
+        // const checklists= ;
+        
+        // if (checklistIdx === -1) {
+        //     throw new Error("checklist isn't found!");
+        // }
+        const checklistToAdd = getEmptyChecklist(title)
+        console.log('checklistToAdd:', checklistToAdd)
+        board.groups[groupIdx].tasks[taskIdx].checklists.push(checklistToAdd)
+        await boardService.saveGroup(board.groups[groupIdx], boardId)
+        return board;
+    } catch (err) {
+        console.log('cannot update list title', err);
+        throw err;
+    }
+}
 
 async function updateListTitle(boardId, groupId, taskId, listId, title) {
     try {
@@ -133,7 +150,7 @@ async function updateListTitle(boardId, groupId, taskId, listId, title) {
     }
 }
 
-async function addTodo(boardId, groupId, taskId, listId, txt) {
+async function addTodo(boardId, groupId, taskId, listId, newTodo) {
 
     try {
         const board = await boardService.getById(boardId);
@@ -145,13 +162,9 @@ async function addTodo(boardId, groupId, taskId, listId, txt) {
             throw new Error("checklist isn't found!");
         }
 
-        console.log('list: before change', board.groups[groupIdx].tasks[taskIdx].checklists[checklistIdx]);
-
-        const newTodo = getDefaultTodo(txt);
+        
         board.groups[groupIdx].tasks[taskIdx].checklists[checklistIdx].todos.push(newTodo);
-
-        console.log('list: after change', board.groups[groupIdx].tasks[taskIdx].checklists[checklistIdx]);
-
+        
         await boardService.saveGroup(board.groups[groupIdx], boardId);
         return board;
     } catch (err) {
@@ -165,6 +178,7 @@ async function addTodo(boardId, groupId, taskId, listId, txt) {
 
 function getDefaultTodo(txt) {
     return {
+        id: utilService.makeId(),
         title: txt,
         isDone: false
     }
@@ -312,6 +326,10 @@ async function removeDueDate(boardId, groupId, taskId) {
     }
 
 }
+
+
+
+
 
 async function toggleMemberOrLabel(boardId, groupId, taskId, itemToAdd, isLabel) {
     console.log('islabel', isLabel);
@@ -464,4 +482,12 @@ function getEmptyTask() {
         style: {}
     }
 }
+function getEmptyChecklist(title) {
+	return {
+		id: utilService.makeId(),
+		title,
+		todos: [],
+	}
+}
+
 

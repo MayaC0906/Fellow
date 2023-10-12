@@ -40,6 +40,7 @@ export function MemberEdit({ editName, onCloseEditTask, setTask }) {
         }
     }
 
+
     return (
         <section className="edit-modal">
             <div className="title-container">

@@ -239,10 +239,9 @@ export async function updateTodoTitle(boardId, groupId, taskId, listId, todoId, 
     }
 }
 
-export async function addTodo(boardId, groupId, taskId, listId, txt) {
-    console.log('listId,txt,taskId:', listId, txt, taskId)
+export async function addTodo(boardId, groupId, taskId, listId, newTodo) {
     try {
-        const board = await taskService.addTodo(boardId, groupId, taskId, listId, txt)
+        const board = await taskService.addTodo(boardId, groupId, taskId, listId, newTodo)
         store.dispatch(getActionUpdateBoard(board))
     } catch (err) {
         console.log('cannot add todo')
@@ -297,7 +296,19 @@ export async function removeCover(boardId, groupId, taskId) {
     }
 }
 
+
+
+export async function addChecklist(boardId, groupId, taskId, title){
+    try {
+        const board = await taskService.addChecklist(boardId, groupId, taskId, title)
+        store.dispatch({type: SET_BOARD, board})
+    } catch (err) {
+        console.log('cant add checklist', err)
+        throw err
+    }
+}
 export async function toggleMemberOrLabel(boardId, groupId, taskId, itemToAdd, isLabel) {
+
     try {
         const board = await taskService.toggleMemberOrLabel(boardId, groupId, taskId, itemToAdd, isLabel)
         // store.dispatch(getActionUpdateBoard(board))
@@ -305,8 +316,8 @@ export async function toggleMemberOrLabel(boardId, groupId, taskId, itemToAdd, i
     } catch (err) {
         throw err
     }
-
 }
+
 export async function addCoverImg(boardId, groupId, taskId, url) {
     try {
         const board = await taskService.addCoverImg(boardId, groupId, taskId, url)
