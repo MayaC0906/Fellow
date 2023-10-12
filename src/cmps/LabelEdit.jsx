@@ -52,7 +52,7 @@ export function LabelEdit({ editName, onCloseEditTask, setTask }) {
     }
 
     return isLabelEdit ? (
-        <AddLabel onCloseEditTask={onCloseEditTask} onAddLabel={onAddLabel} labelToEdit={labelToEdit} onToggleLabelToTask={onToggleLabelToTask} setTask={setTask} />) : (
+        <AddLabel onCloseEditTask={onCloseEditTask} onAddLabel={onAddLabel} labelToEdit={labelToEdit} onToggleLabelToTask={onToggleLabelToTask} setTask={setTask} isLabel={isLabel} />) : (
 
         <section className="edit-modal">
             <div className="title-container">

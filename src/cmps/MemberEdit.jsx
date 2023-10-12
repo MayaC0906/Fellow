@@ -1,6 +1,6 @@
 import { Textarea } from '@mui/joy';
-import { additionTaskSvg } from './Svgs'
-import { useState } from 'react';
+import { additionTaskSvg, taskSvg } from './Svgs'
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { useSelector } from 'react-redux';
 import { loadTask, toggleMemberOrLabel } from '../store/actions/board.actions';
@@ -10,8 +10,17 @@ import { store } from '../store/store';
 export function MemberEdit({ editName, onCloseEditTask, setTask }) {
     const board = useSelector(storeState => storeState.boardModule.board)
     const [members, setMembers] = useState(board.members)
-    // const [isChoose, setIsChoose] = useState(false)
+    const [connectMembers, setConnectMembers] = useState([])
     const { boardId, groupId, taskId } = useParams()
+
+    useEffect(() => {
+        loadConectedMembers()
+    }, [])
+
+    async function loadConectedMembers() {
+        const task = await loadTask(boardId, groupId, taskId)
+        setConnectMembers(task.memberIds)
+    }
 
     function onMemberSearch({ target }) {
         const filteredMembers = board.members.filter(member =>
@@ -25,12 +34,11 @@ export function MemberEdit({ editName, onCloseEditTask, setTask }) {
             await toggleMemberOrLabel(boardId, groupId, taskId, memberId)
             const task = await loadTask(boardId, groupId, taskId)
             setTask(prevTask => ({ ...prevTask, memberIds: task.memberIds }))
+            setConnectMembers(task.memberIds)
         } catch (err) {
             console.log('Could not save date =>', err)
         }
     }
-
-    console.log('board inside comp', board);
 
     return (
         <section className="edit-modal">
@@ -48,12 +56,16 @@ export function MemberEdit({ editName, onCloseEditTask, setTask }) {
                         <div className='member-detail' onClick={() => onToggleMemberToTask(member._id, board)}>
                             <img src={member.imgUrl} alt="" />
                             {member.fullname}
-                            {/* {isChoose && (<span>✔️</span>)} */}
+                            {connectMembers.map(connected => {
+                                if (connected === member._id) {
+                                    return (<span>{taskSvg.check}</span>)
+                                }
+                            })}
                         </div>
                     </section>)
                     )}
                 </div>
-            </section>
-        </section>
+            </section >
+        </section >
     )
 }

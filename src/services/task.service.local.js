@@ -352,7 +352,8 @@ async function toggleMemberOrLabel(boardId, groupId, taskId, itemToAdd, isLabel)
     }
 }
 
-async function deleteLabel(boardId, groupId, taskId, labelToEditId) {
+async function deleteLabel(boardId, groupId, taskId, labelToEditId, isLabel) {
+    console.log(isLabel);
     try {
         const board = await boardService.getById(boardId)
         const group = board.groups.find(group => group.id === groupId)
@@ -360,8 +361,13 @@ async function deleteLabel(boardId, groupId, taskId, labelToEditId) {
         const task = group.tasks.find(task => task.id === taskId)
         const taskIdx = group.tasks.findIndex(task => task.id === taskId)
 
-        const updatedLabels = task.labelIds.filter(label => label.id !== labelToEditId)
-        board.groups[groupIdx].tasks[taskIdx].labelIds = updatedLabels
+        if (isLabel) {
+            const updatedLabels = task.labelIds.filter(label => label !== labelToEditId)
+            board.groups[groupIdx].tasks[taskIdx].labelIds = updatedLabels
+        } else {
+            const updatedMembers = task.memberIds.filter(member => member !== labelToEditId)
+            board.groups[groupIdx].tasks[taskIdx].memberIds = updatedMembers
+        }
 
         await boardService.saveGroup(group, boardId)
         return board
