@@ -1,8 +1,8 @@
-import { useState } from "react";
 import { additionTaskEdiSvg, taskSvg } from "./Svgs";
 import { DynamicTaskEdit } from "./DynamicTaskEdit";
 
 export function TaskDetailsSideNav({ editName, setEditName, setTask }) {
+
     function onOpenEditTask(name) {
         setEditName(name)
     }

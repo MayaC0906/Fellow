@@ -1,0 +1,30 @@
+.edit-modal {
+
+    .title-container {
+        .back-arrow {
+            grid-column: 1/2;
+            // display: flex;
+            align-self: center;
+            border: none;
+            background-color: white;
+            cursor: pointer;
+            padding: 6px;
+            margin: 0;
+        }
+
+        .close-modal {
+            &.label {
+                align-self: center;
+            }
+        }
+    }
+
+    .color-platte {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+
+        button {
+            border: none;
+        }
+    }
+}

@@ -3,7 +3,7 @@ import { additionTaskSvg } from './Svgs'
 import { useState } from 'react';
 import { useParams } from 'react-router';
 import { useSelector } from 'react-redux';
-import { addMemberToTask, loadTask } from '../store/actions/board.actions';
+import { loadTask, toggleMemberOrLabel } from '../store/actions/board.actions';
 import { taskService } from '../services/task.service.local';
 import { store } from '../store/store';
 
@@ -13,8 +13,6 @@ export function MemberEdit({ editName, onCloseEditTask, setTask }) {
     // const [isChoose, setIsChoose] = useState(false)
     const { boardId, groupId, taskId } = useParams()
 
-
-
     function onMemberSearch({ target }) {
         const filteredMembers = board.members.filter(member =>
             member.fullname.toLowerCase().includes(target.value.toLowerCase())
@@ -22,17 +20,11 @@ export function MemberEdit({ editName, onCloseEditTask, setTask }) {
         setMembers(filteredMembers)
     }
 
-    async function onAddMemberToTask(memberId) {
+    async function onToggleMemberToTask(memberId) {
         try {
-            await addMemberToTask(boardId, groupId, taskId, memberId)
-            // const state = store.getState()
-            // const board = state.boardModule.board
-            // console.log('state:', state.boardModule.board)
-            // console.log('updated task in comp:', updatedTask.memberIds)
-            // console.log('board inside comp func', board)
+            await toggleMemberOrLabel(boardId, groupId, taskId, memberId)
             const task = await loadTask(boardId, groupId, taskId)
             setTask(prevTask => ({ ...prevTask, memberIds: task.memberIds }))
-            // setIsChoose(!isChoose)
         } catch (err) {
             console.log('Could not save date =>', err)
         }
@@ -52,7 +44,7 @@ export function MemberEdit({ editName, onCloseEditTask, setTask }) {
                 <div className='content'>
                     {members.map(member =>
                     (<section className="member-list" key={member._id}>
-                        <div className='member-detail' onClick={() => onAddMemberToTask(member._id, board)}>
+                        <div className='member-detail' onClick={() => onToggleMemberToTask(member._id, board)}>
                             <img src={member.imgUrl} alt="" />
                             {member.fullname}
                             {/* {isChoose && (<span>✔️</span>)} */}

@@ -17,7 +17,10 @@ export const boardService = {
     getEmptyGroup,
     saveGroup,
     removeGroup,
-    getGroupById
+    getGroupById,
+    getEmptyLabel,
+    saveLabel,
+    deleteLabel
 }
 window.bs = boardService
 
@@ -104,23 +107,21 @@ function getEmptyGroup() {
 }
 
 async function getGroupById(groupId, boardId) {
-	try {
-		const groups = await queryGroups(boardId)
-		const group = groups.find((grp) => {
-			return grp.id === groupId
-		})
-		return group
-	} catch (err) {
-		console.log('Failed to get group', err)
-		throw err
-	}
+    try {
+        const groups = await queryGroups(boardId)
+        const group = groups.find((grp) => {
+            return grp.id === groupId
+        })
+        return group
+    } catch (err) {
+        console.log('Failed to get group', err)
+        throw err
+    }
 }
 
 async function saveGroup(group, boardId) {
     try {
-        console.log('GET FROM SAVE GROUP');
         let board = await getById(boardId)
-        // console.log('board from group:', board);
         if (group.id) {
             const idx = board.groups.findIndex((currGroup) => currGroup.id === group.id)
             board.groups.splice(idx, 1, group)
@@ -149,6 +150,43 @@ async function removeGroup(groupId, boardId) {
     }
 }
 
+function getEmptyLabel() {
+    return {
+        id: utilService.makeId(),
+        title: '',
+        color: ''
+    }
+}
+
+async function saveLabel(boardId, savedLabel) {
+    try {
+        const board = await getById(boardId)
+        const labelIdx = board.labels.findIndex(labels => labels.id === savedLabel.id)
+        if (labelIdx === -1) {
+            board.labels = [...board.labels, savedLabel]
+        } else {
+            board.labels.splice(labelIdx, 1, savedLabel)
+        }
+        return save(board)
+    } catch (err) {
+        console.log('Failed to save labels', err)
+        throw err
+    }
+
+}
+
+async function deleteLabel(boardId, labelId) {
+    try {
+        const board = await getById(boardId)
+        const updatedLabels = board.labels.filter(label => label.id !== labelId)
+        board.labels = updatedLabels
+        return save(board)
+    } catch (err) {
+        console.log('Failed to remove labels', err)
+        throw err
+    }
+}
+
 const board = [
     {
         _id: "b101",
@@ -169,18 +207,33 @@ const board = [
             {
                 "id": "l101",
                 "title": "Urgent",
-                "color": "#f87462"
+                "color": "#4BCE97"
             },
             {
                 "id": "l102",
                 "title": "Tasks",
-                "color": "#b8acf6"
+                "color": "#F5CD47"
             },
             {
                 "id": "l103",
                 "title": "Data",
-                "color": "#c1f0f5"
-            }
+                "color": "#FEA362"
+            },
+            {
+                "id": "l104",
+                "title": "",
+                "color": "#F87168"
+            },
+            {
+                "id": "l105",
+                "title": "",
+                "color": "#9F8FEF"
+            },
+            {
+                "id": "l106",
+                "title": "",
+                "color": "#579DFF"
+            },
         ],
         members: [
             {
@@ -865,18 +918,33 @@ const board = [
             {
                 "id": "l101",
                 "title": "Urgent",
-                "color": "#f87462"
+                "color": "#4BCE97"
             },
             {
                 "id": "l102",
                 "title": "Tasks",
-                "color": "#b8acf6"
+                "color": "#F5CD47"
             },
             {
                 "id": "l103",
                 "title": "Data",
-                "color": "#c1f0f5"
-            }
+                "color": "#FEA362"
+            },
+            {
+                "id": "l104",
+                "title": "",
+                "color": "#F87168"
+            },
+            {
+                "id": "l105",
+                "title": "",
+                "color": "#9F8FEF"
+            },
+            {
+                "id": "l106",
+                "title": "",
+                "color": "#579DFF"
+            },
         ],
         members: [
             {

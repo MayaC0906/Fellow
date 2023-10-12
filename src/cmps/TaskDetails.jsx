@@ -13,20 +13,19 @@ import { useSelector } from 'react-redux'
 import { TaskCheckList } from "./TaskChecklist-list"
 import { TaskDate } from "./TaskDate"
 import { TaskMember } from "./TaskMember"
+import { TaskLabel } from "./TaskLabel"
 
 export function TaskDetails() {
     const board = useSelector((storeState) => storeState.boardModule.board)
     const { boardId, groupId, taskId } = useParams()
     const [task, setTask] = useState('')
     let [editName, setEditName] = useState('')
-    
+
     useEffect(() => {
-        console.log('boardid,groupId,taskid', boardId,groupId,taskId);
         onLoadTask(boardId, groupId, taskId)
     }, [])
 
     async function onLoadTask(boardId, groupId, taskId) {
-        console.log('loadTask');
         try {
             const newTask = await loadTask(boardId, groupId, taskId)
             console.log('newTask', newTask);
@@ -37,7 +36,8 @@ export function TaskDetails() {
         }
     }
 
-    console.log(board);
+    // console.log('task from task details:', task);
+
     if (!task) return <div>Loading</div>
     return (
         <div className="task-details">
@@ -59,6 +59,7 @@ export function TaskDetails() {
 
                     {<section className="task-member">
                         <TaskMember taskMembersId={task.memberIds} setEditName={setEditName} />
+                        <TaskLabel taskLabelsId={task.labelIds} setEditName={setEditName} />
                     </section>}
 
                     <section className="task-date">
