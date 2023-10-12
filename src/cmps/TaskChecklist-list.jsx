@@ -8,7 +8,7 @@ import {updateTodoIsDone, updateTodoTitle, deleteTodo, addTodo, updateListTitle}
 
 
 
-export function TaskCheckList({checklists}){
+export function TaskCheckList({setEditName, setTask, checklists}){
     const { boardId, groupId, taskId } = useParams()
     
     // console.log(toggleTodo);
@@ -31,9 +31,9 @@ export function TaskCheckList({checklists}){
         }
     }
 
-    async function onAddTodo(listId, txt){
+    async function onAddTodo(listId, newTodo){
         try {
-            await addTodo(boardId, groupId, taskId, listId, txt)
+            await addTodo(boardId, groupId, taskId, listId, newTodo)
         } catch (err) {
             console.log('cannot add todo')
             throw err
@@ -59,6 +59,6 @@ export function TaskCheckList({checklists}){
     }
     // console.log(checklists);
     return (
-        <TaskChecklistPreview onAddTodo={onAddTodo} onUpdateListTitle={onUpdateListTitle} onDeleteTodo={onDeleteTodo} onUpdateTodoTitle={onUpdateTodoTitle} onToggleDoneTodo={onToggleDoneTodo} checklists={checklists}/>
+        <TaskChecklistPreview setTask={setTask} onAddTodo={onAddTodo} onUpdateListTitle={onUpdateListTitle} onDeleteTodo={onDeleteTodo} onUpdateTodoTitle={onUpdateTodoTitle} onToggleDoneTodo={onToggleDoneTodo} checklists={checklists}/>
     )
 }

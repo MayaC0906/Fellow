@@ -24,16 +24,13 @@ export function MemberEdit({ editName, onCloseEditTask, setTask }) {
 
     async function onAddMemberToTask(memberId) {
         try {
-            console.log('BEFORE ADD MEMBER =>');
             await addMemberToTask(boardId, groupId, taskId, memberId)
             // const state = store.getState()
             // const board = state.boardModule.board
             // console.log('state:', state.boardModule.board)
             // console.log('updated task in comp:', updatedTask.memberIds)
             // console.log('board inside comp func', board)
-            console.log('BEFOR LOAD TASK =>');
             const task = await loadTask(boardId, groupId, taskId)
-            console.log('task from comp func:', task);
             setTask(prevTask => ({ ...prevTask, memberIds: task.memberIds }))
             // setIsChoose(!isChoose)
         } catch (err) {
@@ -41,7 +38,6 @@ export function MemberEdit({ editName, onCloseEditTask, setTask }) {
         }
     }
 
-    console.log('board inside comp', board);
 
     return (
         <section className="edit-modal">

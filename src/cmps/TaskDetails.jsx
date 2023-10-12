@@ -85,7 +85,7 @@ export function TaskDetails() {
 
 
                         <section>
-                            <TaskCheckList checklists={task.checklists} />
+                            <TaskCheckList setTask={setTask} setEditName={setEditName}  checklists={task.checklists} />
                         </section>
                     </section >
 
