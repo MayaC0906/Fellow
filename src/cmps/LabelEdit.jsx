@@ -13,6 +13,7 @@ export function LabelEdit({ editName, onCloseEditTask, setTask }) {
     const [checkedLabelsStart, setCheckedLabelsStart] = useState([])
     const [isLabelEdit, setIsLabelEdit] = useState(false)
     const [labelToEdit, setLabelToEdit] = useState(null)
+
     const { boardId, groupId, taskId } = useParams()
     let isLabel = useRef(false)
 
@@ -52,7 +53,13 @@ export function LabelEdit({ editName, onCloseEditTask, setTask }) {
     }
 
     return isLabelEdit ? (
-        <AddLabel onCloseEditTask={onCloseEditTask} onAddLabel={onAddLabel} labelToEdit={labelToEdit} onToggleLabelToTask={onToggleLabelToTask} setTask={setTask} isLabel={isLabel} />) : (
+        <AddLabel
+            onCloseEditTask={onCloseEditTask}
+            onAddLabel={onAddLabel}
+            labelToEdit={labelToEdit}
+            setTask={setTask}
+            isLabel={isLabel}
+        />) : (
 
         <section className="edit-modal">
             <div className="title-container">
