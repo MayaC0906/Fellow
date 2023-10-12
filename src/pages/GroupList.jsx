@@ -73,23 +73,49 @@ export function GroupList() {
 		}
 	}
 
-    function handleDrag(result){
-        const { destination, source, type } = result
-		const copiedBoard = board
-
-		if (!destination || destination.droppableId === source.droppableId
-             && destination.index === source.index) return
-
-		if (type === 'groups') {
-			const newGroups = [...groups]
-			const [reorderedGroups] = newGroups.splice(source.index, 1)
-			newGroups.splice(destination.index, 0, reorderedGroups)
-
-			copiedBoard.groups = newGroups
-			updateBoard(copiedBoard)
-			return
-		}
+    function handleDrag(result) {
+        const { destination, source, type } = result;
+    
+        if (!destination || (destination.droppableId === source.droppableId && destination.index === source.index)) return;
+    
+        const copiedBoard = { ...board }
+    
+        if (type === 'groups') {
+            const newGroups = [...copiedBoard.groups];
+            const [reorderedGroups] = newGroups.splice(source.index, 1);
+            newGroups.splice(destination.index, 0, reorderedGroups);
+    
+            copiedBoard.groups = newGroups;
+            updateBoard(copiedBoard);
+            return;
+        }
+    
+        if (type === 'tasks') {
+            const sourceGroup = copiedBoard.groups.find(group => group.id === source.droppableId);
+            const destinationGroup = copiedBoard.groups.find(group => group.id === destination.droppableId);
+    
+            if (sourceGroup === destinationGroup) {
+                const newTasks = [...sourceGroup.tasks];
+                const [task] = newTasks.splice(source.index, 1);
+                newTasks.splice(destination.index, 0, task);
+    
+                sourceGroup.tasks = newTasks;
+                updateBoard(copiedBoard);
+                return;
+            } else {
+                const newSourceGroup = [...sourceGroup.tasks];
+                const newDestinationGroup = [...destinationGroup.tasks];
+                const [task] = newSourceGroup.splice(source.index, 1);
+                newDestinationGroup.splice(destination.index, 0, task);
+    
+                sourceGroup.tasks = newSourceGroup;
+                destinationGroup.tasks = newDestinationGroup;
+                updateBoard(copiedBoard);
+                return;
+            }
+        }
     }
+    
 
 
     if(!groups) return <div>Loading..</div>
@@ -126,6 +152,7 @@ export function GroupList() {
                                                 labels={board.labels}
                                                 members={board.members}
                                                 group={group}
+                                                handleDrag={handleDrag}
                                             />
                                         </li>
                                     )}
