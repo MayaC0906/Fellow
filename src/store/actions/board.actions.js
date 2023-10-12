@@ -350,11 +350,11 @@ export async function removeLabelFromBoard(boardId, labelId) {
     }
 }
 
-export async function removeLabelFromTask(boardId, groupId, taskId, labelToEditId) {
+export async function removeLabelFromTask(boardId, groupId, taskId, labelToEditId, isLabel) {
     try {
-        const board = await taskService.deleteLabel(boardId, groupId, taskId, labelToEditId)
+        const board = await taskService.deleteLabel(boardId, groupId, taskId, labelToEditId, isLabel)
         store.dispatch(getActionUpdateBoard(board))
-        // return board
+        console.log(board);
     } catch (err) {
         console.log('Cannot delete label', err)
         throw err

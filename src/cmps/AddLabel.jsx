@@ -7,7 +7,7 @@ import { useParams } from "react-router";
 import { loadTask, removeLabelFromBoard, removeLabelFromTask, saveLabelOnBoard } from '../store/actions/board.actions'
 
 
-export function AddLabel({ onCloseEditTask, onAddLabel, labelToEdit, onToggleLabelToTask, setTask }) {
+export function AddLabel({ onCloseEditTask, onAddLabel, labelToEdit, onToggleLabelToTask, setTask, isLabel }) {
     const labelsColorPickers = ['#baf3db', '#f8e6a0', '#ffe2bd', '#ffd2cc', '#dfd8fd', '#4bce97', '#e2b203', '#faa53d', '#f87462', '#9f8fef', '#1f845a', '#946f00', '#b65c02', '#ca3521', '#6e5dc6', '#cce0ff', '#c1f0f5', '#D3F1A7', '#fdd0ec', '#dcdfe4', '#579dff', '#60c6d2', '#94c748', '#e774bb', '#8590a2', '#0c66e4', '#1d7f8c', '#5b7f24', '#ae4787', '#626f86',]
     const { title, color } = labelToEdit
     const colorStart = color ? color : '#60c6d2'
@@ -41,19 +41,21 @@ export function AddLabel({ onCloseEditTask, onAddLabel, labelToEdit, onToggleLab
     }
 
     async function onDeletingLabel() {
+        isLabel = true
         try {
             const board = await removeLabelFromBoard(boardId, labelToEdit.id)
-            await removeLabelFromTask(boardId, groupId, taskId, labelToEdit.id)
+            await removeLabelFromTask(boardId, groupId, taskId, labelToEdit.id, isLabel)
             const task = await loadTask(boardId, groupId, taskId)
             setTask(prevTask => ({ ...prevTask, labelIds: task.labelIds }))
+            isLabel = false
             onAddLabel('')
         } catch (err) {
             console.log('Cannot remove label', err)
             throw err
         }
-        // console.log(labelToEdit.id);
     }
 
+    console.log(isLabel);
     return (
         <section className="edit-modal">
             <div className="title-container">
