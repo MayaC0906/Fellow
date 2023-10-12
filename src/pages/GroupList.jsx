@@ -74,44 +74,44 @@ export function GroupList() {
 	}
 
     function handleDrag(result) {
-        const { destination, source, type } = result;
-    
-        if (!destination || (destination.droppableId === source.droppableId && destination.index === source.index)) return;
-    
-        const copiedBoard = { ...board }
-    
+        const { destination, source, type } = result
+
+        if (!destination || (destination.droppableId === source.droppableId && destination.index === source.index)) return
+ 
+        const clonedBoard = { ...board }
+      
         if (type === 'groups') {
-            const newGroups = [...copiedBoard.groups];
-            const [reorderedGroups] = newGroups.splice(source.index, 1);
-            newGroups.splice(destination.index, 0, reorderedGroups);
-    
-            copiedBoard.groups = newGroups;
-            updateBoard(copiedBoard);
+            const updatedGroups = [...clonedBoard.groups]
+            const [movedGroup] = updatedGroups.splice(source.index, 1)
+            updatedGroups.splice(destination.index, 0, movedGroup)
+      
+            clonedBoard.groups = updatedGroups;
+            updateBoard(clonedBoard);
             return;
         }
-    
+      
         if (type === 'tasks') {
-            const sourceGroup = copiedBoard.groups.find(group => group.id === source.droppableId);
-            const destinationGroup = copiedBoard.groups.find(group => group.id === destination.droppableId);
-    
-            if (sourceGroup === destinationGroup) {
-                const newTasks = [...sourceGroup.tasks];
-                const [task] = newTasks.splice(source.index, 1);
-                newTasks.splice(destination.index, 0, task);
-    
-                sourceGroup.tasks = newTasks;
-                updateBoard(copiedBoard);
-                return;
+            const originalGroup = clonedBoard.groups.find(group => group.id === source.droppableId)
+            const targetGroup = clonedBoard.groups.find(group => group.id === destination.droppableId)
+      
+            if (originalGroup === targetGroup) {
+                const updatedTasks = [...originalGroup.tasks]
+                const [movedTask] = updatedTasks.splice(source.index, 1)
+                updatedTasks.splice(destination.index, 0, movedTask)
+      
+                originalGroup.tasks = updatedTasks
+                updateBoard(clonedBoard)
+                return
             } else {
-                const newSourceGroup = [...sourceGroup.tasks];
-                const newDestinationGroup = [...destinationGroup.tasks];
-                const [task] = newSourceGroup.splice(source.index, 1);
-                newDestinationGroup.splice(destination.index, 0, task);
-    
-                sourceGroup.tasks = newSourceGroup;
-                destinationGroup.tasks = newDestinationGroup;
-                updateBoard(copiedBoard);
-                return;
+                const tasksFromOriginalGroup = [...originalGroup.tasks]
+                const tasksForTargetGroup = [...targetGroup.tasks]
+                const [movedTask] = tasksFromOriginalGroup.splice(source.index, 1)
+                tasksForTargetGroup.splice(destination.index, 0, movedTask)
+      
+                originalGroup.tasks = tasksFromOriginalGroup
+                targetGroup.tasks = tasksForTargetGroup
+                updateBoard(clonedBoard)
+                return
             }
         }
     }
