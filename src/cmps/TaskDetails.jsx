@@ -28,7 +28,6 @@ export function TaskDetails() {
     async function onLoadTask(boardId, groupId, taskId) {
         try {
             const newTask = await loadTask(boardId, groupId, taskId)
-            console.log('newTask', newTask);
             setTask(newTask)
         } catch (err) {
             console.log('Can\'t load board', err);
@@ -86,7 +85,7 @@ export function TaskDetails() {
 
 
                         <section>
-                            <TaskCheckList setTask={setTask} setEditName={setEditName}  checklists={task.checklists} />
+                            <TaskCheckList setTask={setTask} setEditName={setEditName} checklists={task.checklists} />
                         </section>
                     </section >
 

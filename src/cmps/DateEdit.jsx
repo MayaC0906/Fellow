@@ -11,7 +11,7 @@ import { BasicDateField } from './DueDate'
 import { BasicTimeField } from './DueTime'
 import { useParams } from 'react-router'
 import { Button } from '@mui/joy'
-import { loadDueDate, removeDueDate, saveTaskDueDate } from '../store/actions/board.actions'
+import { loadTask, removeDueDate, saveTaskDueDate } from '../store/actions/board.actions'
 import { boardService } from '../services/board.service.local'
 
 
@@ -20,23 +20,22 @@ export function DateEdit({ editName, onCloseEditTask, setTask }) {
     const [selectedDate, setSelectedDate] = useState(null)
     const { boardId, groupId, taskId } = useParams()
 
-    //
     useEffect(() => {
         onLoadDueDate(boardId, groupId, taskId)
     }, [])
 
     async function onLoadDueDate(boardId, groupId, taskId) {
         try {
-            const dueDate = await loadDueDate(boardId, groupId, taskId)
-            // if (dueDate) {
-            //     const formattedDueDate = dayjs(dueDate, 'MMM DD, YYYY [at] h:mm A').toDate();
-            //     setSelectedDate(dueDate);
-            // }
+            const task = await loadTask(boardId, groupId, taskId)
+            const dueDate = task.dueDate
+            if (dueDate) {
+                const formattedDate = dayjs(dueDate, 'MMM D, YYYY [at] h:mm A')
+                setSelectedDate(formattedDate);
+            }
         } catch (err) {
             console.log('Can not load due date', err)
         }
     }
-    ///
 
     async function onSaveDate() {
         if (selectedDate === null) return
@@ -45,7 +44,7 @@ export function DateEdit({ editName, onCloseEditTask, setTask }) {
             await saveTaskDueDate(boardId, groupId, taskId, formatedDate)
             setTask(prevTask => ({ ...prevTask, dueDate: formatedDate }))
             setSelectedDate(selectedDate)
-            onCloseEditTask()
+            onCloseEditTask('')
         } catch (err) {
             console.log('Could not save date =>', err)
         }
@@ -53,14 +52,13 @@ export function DateEdit({ editName, onCloseEditTask, setTask }) {
 
     async function onRemoveDate() {
         try {
-            await removeDueDate(boardId, groupId, taskId, formatedDate)
+            await removeDueDate(boardId, groupId, taskId)
+            setTask(prevTask => ({ ...prevTask, dueDate: null }))
             onCloseEditTask('')
         } catch (err) {
             console.log('Cannot remove due date', err)
         }
     }
-
-    console.log('selectedDate', selectedDate);
 
     return (
         <section className="edit-modal">

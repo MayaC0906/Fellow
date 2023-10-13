@@ -259,10 +259,13 @@ export async function updateListTitle(boardId, groupId, taskId, listId, txt) {
     }
 }
 
-export async function removeDueDate(boardId, groupId, taskId, formatedDate) {
-
-    // try {
-    //     const board = await taskService.removeDueDate(boardId, groupId, taskId, attachmentId)
+export async function removeDueDate(boardId, groupId, taskId) {
+    try {
+        const board = await taskService.removeDueDate(boardId, groupId, taskId)
+        store.dispatch(getActionUpdateBoard(board))
+    } catch (err) {
+        throw err
+    }
 }
 
 
@@ -275,15 +278,6 @@ export async function removeAttachment(boardId, groupId, taskId, attachmentId) {
         throw err
     }
 
-}
-
-export async function loadDueDate(boardId, groupId, taskId) {
-    try {
-        const task = await taskService.getById(boardId, groupId, taskId)
-        return task.dueDate
-    } catch (err) {
-        throw err
-    }
 }
 
 export async function removeCover(boardId, groupId, taskId) {

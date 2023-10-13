@@ -313,12 +313,12 @@ async function removeDueDate(boardId, groupId, taskId) {
         const board = await boardService.getById(boardId)
         const group = board.groups.find(group => group.id === groupId)
         const groupIdx = board.groups.findIndex(group => group.id === groupId)
-        const task = group.tasks.find(task => task.id === taskId)
+        // const task = group.tasks.find(task => task.id === taskId)
         const taskIdx = group.tasks.findIndex(task => task.id === taskId)
-        const newTask = { ...task, dueDate: null }
-        board.groups[groupIdx].tasks[taskIdx] = newTask
+        // const newTask = { ...task, dueDate: null }
+        board.groups[groupIdx].tasks[taskIdx].dueDate = null
 
-        boardService.saveGroup(group, boardId)
+        await boardService.saveGroup(group, boardId)
         return board
     } catch (err) {
         console.log('couldn\'t remove task due date', err);

@@ -5,6 +5,8 @@ import { taskService } from "../services/task.service.local";
 import { appHeaderSvg } from "./Svgs";
 
 export function TaskDate({ taskDate, setEditName }) {
+    const [isDateCompleted, SetIsDateCompleted] = useState(false)
+    const [isOpenningDate, setIsOpenningDate] = useState(false)
     const { boardId, groupId, taskId } = useParams()
 
 
@@ -19,7 +21,12 @@ export function TaskDate({ taskDate, setEditName }) {
 
     // console.log(taskDate);
     function onCompleteDueDate() {
-        console.log('done')
+        SetIsDateCompleted(!isDateCompleted)
+    }
+
+    function toggleOpenningDate() {
+        setIsOpenningDate(!isOpenningDate);
+        setEditName(isOpenningDate ? 'Dates' : '');
     }
 
     return (
@@ -30,7 +37,10 @@ export function TaskDate({ taskDate, setEditName }) {
                 <div className='checkbox'>
                     <Checkbox sx={{ '& .MuiSvgIcon-root': { fontSize: 16 } }} onClick={onCompleteDueDate} />
                 </div>
-                <p onClick={() => setEditName('Dates')}> <span>{taskDate}</span> {appHeaderSvg.arrowDown}</p>
+                <p onClick={toggleOpenningDate}>
+                    <span>{taskDate}</span>
+                    {isDateCompleted && (<span>completed</span>)}
+                    {appHeaderSvg.arrowDown}</p>
             </section>
         )
     )

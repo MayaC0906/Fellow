@@ -1,14 +1,16 @@
+import dayjs from "dayjs";
 import { utilService } from "../services/util.service";
 import { taskSvg } from "./Svgs";
 
 export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels, taskMembers, taskChecklist }) {
 
-    // console.log('memebrs from taskPreview comp:', taskMembers);
     function onLabelOpen(ev) {
         ev.preventDefault()
         setIsLabelsShown(!isLabelsShown)
     }
     if (!task) return <div>Loading...</div>
+
+    console.log('task.dueDate', task.dueDate);
     return (
         <article key={task.id} className="task">
             <button>{taskSvg.edit}</button>
@@ -26,9 +28,9 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
                 <h3>{task?.title}</h3>
                 <section className="task-badges">
                     {task.watching && <div className="task-badge">{taskSvg.watch}</div>}
-                    {/* {task.dueDate && <div className="task-badge">{taskSvg.clock}<span>{utilService.formatTimestamp(task.dueDate)}</span></div>} */}
-                    {/* {task.dueDate && <div className="task-badge">{taskSvg.clock} <span>{task.dueDate.match(/[A-Za-z]+\s\d{1,2},\s\d{4}/)}</span></div>} */}
-                    {task.dueDate && <div className="task-badge">{taskSvg.clock} <span>{task.dueDate}</span></div>}
+                    {/* {task.dueDate && <div className="task-badge">{taskSvg.clock} <span>{task.dueDate.format('MMM D, YYYY ')}</span></div>} */}
+                    {task.dueDate && <div className="task-badge">{taskSvg.clock} <span>{dayjs(task.dueDate).format('MMM D, YYYY')}
+                    </span></div>}
                     {task.description && <div className="task-badge">{taskSvg.description}</div>}
                     {task.comments?.length > 0 && <div className="task-badge">{taskSvg.comment} <span>{task.comments.length}</span></div>}
                     {task.attachments?.length > 0 && <div className="task-badge">{taskSvg.attatchment} <span>{task.attachments.length}</span></div>}
