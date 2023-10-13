@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 import { useState } from 'react'
 import hero from '../assets/img/hero.png'
-import hs1 from '../assets//img/hs1.png'
+import hs1 from '../assets/img/hs1.png'
 import hs2 from '../assets//img/hs2.png'
 import hs3 from '../assets//img/hs3.png'
 export function HomePage() {
