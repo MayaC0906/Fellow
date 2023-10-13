@@ -16,20 +16,20 @@
         background-color: #574f7d;;
         color: #ffff;
         padding: 8em;
-        height:100vh;
+        height:80vh;
         // width: 100%;
         display: flex;
         flex-wrap: wrap;
-        // background: url(../../img/whitewave.svg) center bottom -0.5px / 100% 14% no-repeat scroll padding-box border-box, linear-gradient(60deg, rgb(82, 67, 170), rgb(237, 80, 180)) 0% 0% / auto repeat scroll padding-box border-box rgb(82, 67, 170);
+        background: url(https://images.ctfassets.net/rz1oowkt5gyp/7lTGeXbBRNRLaVk2MdBjtJ/99c266ed4cb8cc63bd0c388071f01ff6/white-wave-bg.svg) center bottom -0.5px / 100% 14% no-repeat scroll padding-box border-box, linear-gradient(60deg, rgb(82, 67, 170), rgb(237, 80, 180)) 0% 0% / auto repeat scroll padding-box border-box rgb(82, 67, 170);
         // background-image: url("/whitewave.svg"), linear-gradient(60deg, #5243aa, #ed50b4);
 
-        background-image: url(../../../assets/img/whitewave.svg), linear-gradient(60deg, #5243aa, #ed50b4);
-        background-position: center bottom;
-        background-size: 100% 14%, auto;
-        background-repeat: no-repeat;
-        background-origin: padding-box border-box;
-        background-clip: padding-box border-box;
-        background-color: #5243aa;
+        // background-image: url(https://images.ctfassets.net/rz1oowkt5gyp/7lTGeXbBRNRLaVk2MdBjtJ/99c266ed4cb8cc63bd0c388071f01ff6/white-wave-bg.svg), linear-gradient(60deg, #5243aa, #ed50b4);
+        // background-position: center bottom;
+        // background-size: 100% 14%, auto;
+        // background-repeat: no-repeat;
+        // background-origin: padding-box border-box;
+        // background-clip: padding-box border-box;
+        // background-color: #5243aa;
         
         // background-image: linear-gradient(60deg, rgb(82, 67, 170), rgb(237, 80, 180));
         // justify-content: space-between;
@@ -87,7 +87,7 @@
     }
 
     .app-desc {
-        padding: 2rem 6rem;
+        padding: 2rem 9rem;
         display: flex;
         align-items: flex-start;
 
@@ -152,7 +152,127 @@
         }
 
     }
+
+    footer{
+        display: flex;
+        flex-direction: column;
+        -webkit-box-flex: 0;
+        flex-grow: 0;
+        flex-shrink: 0;
+        width: 100%;
+        background-color: rgb(23, 43, 77);
+        color: rgb(255, 255, 255);
+        height: rem(230px);
+        .upper-section{
+            display: flex;
+            border-bottom: 1px solid rgba(211, 211, 211, 0.325);
+            align-items: center;
+            justify-content: space-between;
+            margin-left: 190px;
+            margin-right: 190px;
+            // h3{
+            //     font
+            // }
+            height: 130px;
+            div{
+                // width: 200px;
+                display: flex;
+                flex-direction: column;
+                
+                // align-items: center;
+                // align-content: center;
+                // justify-content: space-between;
+                // text-align: left;
+            }
+            img{
+                // margin-left: 20px;
+                height: 40px;
+                width: 100px;
+            }
+            article{
+                margin-top: 18px;
+                width: 180px;
+                display: flex;
+                flex-direction: column;
+                span{
+                    font-size: 18px;
+                }
+                p{
+                    font-size: rem(14px);
+                }
+
+                &:hover{
+                    background-color: lighten(rgba(23, 43, 77, 0.541), 70%);
+                    // opacity: 0.5;
+                    // background-color: ;
+                    cursor: pointer;
+                }
+            }
+            
+           
+        }
+
+        .lower-section{
+            margin-left: 190px;
+            margin-right: 190px;
+            display: flex;
+            height: 40px;
+            justify-content: space-between;
+            align-items: center;
+            section {
+                fill:white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                a{
+                    display: flex;
+                    align-self: center;
+                }
+            }
+
+            .policies{
+                font-size: 12px;
+                // gap: 20px;
+                display: flex;
+                gap: 30px;
+                margin-left: 20px;
+                // margin-left: ;
+                // gap:30px;
+            }
+
+            .social-links{
+                fill: white;
+                display: flex;
+                gap: 20px;
+                // align-items: center;
+
+                
+                a{
+                    border: 1px solid white;
+                    height: 26px;
+                    width: 26px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    &:hover{
+                        scale: 0.9;
+                        cursor: pointer;
+                        transition: scale 0.4s;
+                    }
+                }
+            }
+        }
+    }
 }
+
+
+
+
+
+
+
 
 // .main-container {
 //     display: grid;

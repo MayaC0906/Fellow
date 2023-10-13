@@ -92,7 +92,7 @@ export function GroupPreview({ handleDrag,onEditGroup, isLabelsShown, setIsLabel
 					{!isInputExpand ?
 						<div className='add-group-msg' onClick={() => setInputExpand(!isInputExpand)}>+ Add new card</div> :
 						<div className='add-group-input-expanded'>
-							<Textarea name="title"
+							<textarea name="title"
 								placeholder="Enter card title..."
 								autoFocus
 								minRows={2}
@@ -101,7 +101,7 @@ export function GroupPreview({ handleDrag,onEditGroup, isLabelsShown, setIsLabel
 							/>
 							<section className='add-controls'>
 								<Button type="submit" onClick={onSaveNewTask} >Add Card</Button>
-								<button className='cancel' onClick={() => setInputExpand(!isInputExpand)}>X</button>
+								<button className='cancel clean-btn' onClick={() => setInputExpand(!isInputExpand)}>X</button>
 							</section>
 						</div>}
 				</footer>
