@@ -8,9 +8,11 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
         ev.preventDefault()
         setIsLabelsShown(!isLabelsShown)
     }
+
     if (!task) return <div>Loading...</div>
 
-    console.log('task.dueDate', task.dueDate);
+    const { dueDate } = task
+
     return (
         <article key={task.id} className="task">
             <button>{taskSvg.edit}</button>
@@ -28,8 +30,7 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
                 <h3>{task?.title}</h3>
                 <section className="task-badges">
                     {task.watching && <div className="task-badge">{taskSvg.watch}</div>}
-                    {/* {task.dueDate && <div className="task-badge">{taskSvg.clock} <span>{task.dueDate.format('MMM D, YYYY ')}</span></div>} */}
-                    {task.dueDate && <div className="task-badge">{taskSvg.clock} <span>{dayjs(task.dueDate).format('MMM D, YYYY')}
+                    {dueDate && <div className="task-badge">{taskSvg.clock} <span>{dayjs(dueDate, 'MMM D, YYYY [at] h:mm A').format('MMM D, YYYY')}
                     </span></div>}
                     {task.description && <div className="task-badge">{taskSvg.description}</div>}
                     {task.comments?.length > 0 && <div className="task-badge">{taskSvg.comment} <span>{task.comments.length}</span></div>}
