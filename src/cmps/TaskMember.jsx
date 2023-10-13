@@ -24,6 +24,7 @@ export function TaskMember({ taskMembersId, setEditName, setTask }) {
     function onSetMemberDetail(member) {
         setMemberDetail(!isMemberDetail)
         setMember(member)
+        setEditName('')
     }
 
     function toggleAddingMember() {
