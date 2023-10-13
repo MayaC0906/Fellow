@@ -1,5 +1,5 @@
 import { useParams } from "react-router";
-import { loadTask, removeLabelFromTask } from "../store/actions/board.actions";
+import { loadTask, removeLabelOrMemberFromTask } from "../store/actions/board.actions";
 import { additionTaskSvg } from "./Svgs";
 
 export function MemberDetail({ member, setTask, setMemberDetail }) {
@@ -8,7 +8,7 @@ export function MemberDetail({ member, setTask, setMemberDetail }) {
 
     async function removeMemberFromTask() {
         try {
-            await removeLabelFromTask(boardId, groupId, taskId, _id)
+            await removeLabelOrMemberFromTask(boardId, groupId, taskId, _id)
             const task = await loadTask(boardId, groupId, taskId)
             setTask(prevTask => ({ ...prevTask, memberIds: task.memberIds }))
             setMemberDetail(false)

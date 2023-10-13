@@ -298,10 +298,10 @@ export async function removeCover(boardId, groupId, taskId) {
 
 
 
-export async function addChecklist(boardId, groupId, taskId, title){
+export async function addChecklist(boardId, groupId, taskId, title) {
     try {
         const board = await taskService.addChecklist(boardId, groupId, taskId, title)
-        store.dispatch({type: SET_BOARD, board})
+        store.dispatch({ type: SET_BOARD, board })
     } catch (err) {
         console.log('cant add checklist', err)
         throw err
@@ -332,7 +332,6 @@ export async function saveLabelOnBoard(boardId, savedLabel) {
     try {
         const board = await boardService.saveLabel(boardId, savedLabel)
         store.dispatch(getActionUpdateBoard(board))
-        return board
     } catch (err) {
         console.log('Cannot save label', err)
         throw err
@@ -350,11 +349,10 @@ export async function removeLabelFromBoard(boardId, labelId) {
     }
 }
 
-export async function removeLabelFromTask(boardId, groupId, taskId, labelToEditId, isLabel) {
+export async function removeLabelOrMemberFromTask(boardId, groupId, taskId, labelToEditId, isLabel) {
     try {
-        const board = await taskService.deleteLabel(boardId, groupId, taskId, labelToEditId, isLabel)
+        const board = await taskService.deleteLabelOrMember(boardId, groupId, taskId, labelToEditId, isLabel)
         store.dispatch(getActionUpdateBoard(board))
-        console.log(board);
     } catch (err) {
         console.log('Cannot delete label', err)
         throw err
