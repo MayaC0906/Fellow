@@ -354,3 +354,13 @@ export async function removeLabelOrMemberFromTask(boardId, groupId, taskId, labe
     }
 }
 
+export async function deleteList(boardId, groupId, taskId, listId) {
+    try{
+        const board = await taskService.deleteList(boardId, groupId, taskId, listId)
+        store.dispatch(getActionUpdateBoard(board))
+    } catch (err) {
+        // console.log('can');
+        throw err
+    }
+}
+

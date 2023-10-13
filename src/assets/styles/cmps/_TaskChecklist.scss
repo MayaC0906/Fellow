@@ -9,19 +9,36 @@
     // //     position: absolute;
     // }
     .task-checklist{
+
+
+
+
+
         .checklist-svg{
             position: absolute;
             left: 25px;
         }
-        .header{
+        .list-title{
             display: flex;
         align-items: center;
+
+            .title{
+                margin: 0 0 4px 40px;
+                padding: 8px 0;
+                position: relative;
+            }
         }
-        .title{
-            margin: 0 0 4px 40px;
-            padding: 8px 0;
-            position: relative;
+        header{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;  
         }
+
+        .header-btns{
+            display: flex;
+            gap: 10px;
+        }
+        
     }
     
     .checklist-item{

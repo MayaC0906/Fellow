@@ -6,12 +6,12 @@ import Button from '@mui/joy/Button'
 import { checkedSvg } from './Svgs'
 import { taskService } from '../services/task.service.local'
 
-export function TaskChecklistPreview({ onAddTodo, onUpdateListTitle, onDeleteTodo, checklists, onToggleDoneTodo, onUpdateTodoTitle }) {
+export function TaskChecklistPreview({onDeleteList, onAddTodo, onUpdateListTitle, onDeleteTodo, checklists, onToggleDoneTodo, onUpdateTodoTitle }) {
     const [localChecklists, setLocalChecklists] = useState(checklists)
     const [expandedTodo, setExpandedTodo] = useState({ listId: null, todoId: null })
     const [expandedListId, setExpandedListId] = useState(null)
     const [expandedAddTodoListId, setExpandedAddTodoListId] = useState(null)
-
+    const [hideChecked, setHideChecked] = useState(false);
     const [txt, setTxt] = useState('')
     const [progressbarCalc, setProgressbarCalc] = useState(0)
 
@@ -96,7 +96,6 @@ export function TaskChecklistPreview({ onAddTodo, onUpdateListTitle, onDeleteTod
     }
 
     async function deleteTodo(listId, todoId) {
-        console.log('listId',listId, 'todoId', todoId)
         try {
             await onDeleteTodo(listId, todoId)
             const updatedChecklists = localChecklists.map(list => ({
@@ -120,15 +119,37 @@ export function TaskChecklistPreview({ onAddTodo, onUpdateListTitle, onDeleteTod
         setProgressbarCalc(progressForEachList)
     }
 
+    async function deleteList(listId){
+        try{
+            await onDeleteList(listId)
+             const updatedChecklists = localChecklists.filter(list => list.id !== listId);
+            calculateDoneTodos(updatedChecklists)
+            setLocalChecklists(updatedChecklists)
+        } catch (err) {
+            console.log('cant delete list');
+            throw err
+        }
+    }
+
     return (
         <section>
             {localChecklists.map((list, idx) => (
                 <ul key={list.id} className="task-checklist clean-list">
                     {expandedListId !== list.id ?
-                        <span className='header' onClick={() => setExpandedListId(list.id)}>
-                            <span className='checklist-svg'>{checkedSvg.check}</span>
-                            <span className='title'>{list.title}</span>
-                        </span> :
+                        <header>
+                            <span className='list-title' onClick={() => setExpandedListId(list.id)}>
+                                <span className='checklist-svg'>{checkedSvg.check}</span>
+                                <span className='title'>{list.title}</span>
+                            </span> 
+                            <div className='header-btns'>
+
+                                <button className='clean-btn task-btn' onClick={() => setHideChecked(prev => !prev)}>
+                                    {hideChecked ? "Show Checked Items" : "Hide Checked Items"}
+                                </button>
+
+                                <button onClick={() => deleteList(list.id)} className='clean-btn task-btn'>Delete</button>
+                            </div>
+                        </header> :
                         <div className='add-group-input-expanded'>
                             <Textarea
                                 sx={{ border: 'none'}}
@@ -152,7 +173,8 @@ export function TaskChecklistPreview({ onAddTodo, onUpdateListTitle, onDeleteTod
                         </div>
                     </div>
 
-                    {list.todos.map(todo => (
+                    {list.todos.filter(todo => !hideChecked || !todo.isDone).map(todo => (
+
                         <li key={todo.id} className={`checklist-item ${todo.isDone ? 'done' : ''}`}>
                             <div className='checkbox'>
                                 <Checkbox sx={{ '& .MuiSvgIcon-root': { fontSize: 16 } }} checked={todo.isDone} onClick={(event) => {
