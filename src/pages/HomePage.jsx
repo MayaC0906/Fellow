@@ -8,6 +8,8 @@ import hero from '../assets/img/hero.png'
 import hs1 from '../assets/img/hs1.png'
 import hs2 from '../assets//img/hs2.png'
 import hs3 from '../assets//img/hs3.png'
+// import logo from '../assets/img/logo.png'
+import { homePage } from '../cmps/Svgs'
 export function HomePage() {
     const [img, setImg] = useState(hs2)
 
@@ -70,6 +72,61 @@ export function HomePage() {
                     <img src={img} alt="" />
                 </div>
             </div>
+
+
+
+            <footer>
+                <section className='upper-section'>
+                    <div>
+                        <img src="https://res.cloudinary.com/dehxwadkk/image/upload/v1696466880/logo_transparent_dz6ld4.png" alt="" />
+                        <button className='clean-btn'>Log in</button>
+                    </div>
+                    {/* <div</div> */}
+                    <article>
+                        {/* <button className='clean-btn'></button> */}
+                        <span>About Fellow</span>
+                        <p>What's behind the boards</p>
+                    </article>
+                    <article>
+                        <span>Jobs</span>
+                        <p>Learn about open roles on the Fellow team</p>
+                    </article>
+                    <article>
+                        <span>Apps</span>
+                        <p>
+                            Download the Fellow App for your 
+                            Desktop or Mobile devices.
+                        </p>
+                    </article>
+                    <article>
+                        <span>Contact us</span>
+                        <p>
+                            Need anything? 
+                            Get in touch and we can help
+                        </p>
+                    </article>
+                </section>
+                <section className='lower-section'>
+                    <section>
+                        <a >{homePage.globe}</a>
+                        <span>English</span>
+                    </section>
+                    <div className='policies'>
+                        <button className='clean-btn'>Privacy policy</button>
+                        <button className='clean-btn'>Terms</button>
+                        {/* <button className='clean-btn'>Copy</button> */}
+                        {/* <article></article> */}
+                        <span>&copy; 2023 Fellow</span>
+                    </div>
+                    <div className='social-links'>
+                        <a >{homePage.instagram}</a>
+                        <a >{homePage.facebook}</a>
+                        <a >{homePage.linkedin}</a>
+                        <a >{homePage.twitter}</a>
+                        <a >{homePage.youtube}</a>
+                    </div>
+                </section>
+            </footer>
         </section >
     )
 }
