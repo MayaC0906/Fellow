@@ -17,6 +17,7 @@ export function getActionAddBoard(board) {
         board
     }
 }
+
 export function getActionUpdateBoard(board) {
     return {
         type: SET_BOARD,

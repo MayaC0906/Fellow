@@ -3,11 +3,13 @@ import { loadBoards } from "../store/actions/board.actions"
 import { useSelector } from "react-redux"
 import { BoardList } from "../cmps/BoardList"
 import { workspaceSvg } from "../cmps/Svgs"
-import { } from "../cmps/TaskDetailsSideNav"
+// import { } from "../cmps/TaskDetailsSideNav"
+import { AddBoard } from "../cmps/AddBoard"
 
 export function Workspace() {
     const boards = useSelector(storeState => storeState.boardModule.boards)
     const [starredBoard, setStarredBoard] = useState([])
+    const [isBoardAdded, setIsBoardAdded] = useState(false)
 
     useEffect(() => {
         onLoadBoards()
@@ -28,6 +30,8 @@ export function Workspace() {
         }
     }
 
+    console.log('isBoardAdded', isBoardAdded);
+
     if (!boards || !boards.length) return <div>loading</div>
     return (
         <>
@@ -44,6 +48,8 @@ export function Workspace() {
                     <section className="board-container">
                         <h2> {workspaceSvg.clock} <span>Recently viewed</span></h2>
                         <BoardList boards={boards} setStarredBoard={setStarredBoard} />
+                        <section className="board-add" onClick={() => setIsBoardAdded(!isBoardAdded)}>Create new board</section>
+                        {isBoardAdded && <AddBoard setIsBoardAdded={setIsBoardAdded} />}
                     </section>
                 </section>
             </section>

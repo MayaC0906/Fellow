@@ -20,7 +20,8 @@ export const boardService = {
     getGroupById,
     getEmptyLabel,
     saveLabel,
-    deleteLabel
+    deleteLabel,
+    getEmptyBoard
 }
 window.bs = boardService
 
@@ -77,7 +78,7 @@ async function save(board) {
         savedBoard = await storageService.put(STORAGE_KEY, board)
     } else {
         // Later, owner is set by the backend
-        board.owner = userService.getLoggedinUser()
+        // board.owner = userService.getLoggedinUser()
         savedBoard = await storageService.post(STORAGE_KEY, board)
     }
     return savedBoard
@@ -136,8 +137,6 @@ async function saveGroup(group, boardId) {
     }
 }
 
-
-
 async function removeGroup(groupId, boardId) {
     try {
         const board = await getById(boardId)
@@ -187,13 +186,83 @@ async function deleteLabel(boardId, labelId) {
     }
 }
 
+function getEmptyBoard() {
+    return {
+        title: '',
+        isStarred: false,
+        archivedAt: Date.now(),
+        createdBy: {
+            "_id": "u103",
+            "fullname": "Sahar Machpud",
+            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
+        },
+        style: {
+            backgroundImage: "",
+            backgroundColor: ""
+        },
+        labels: [
+            {
+                "id": "l101",
+                "title": "Urgent",
+                "color": "#4BCE97"
+            },
+            {
+                "id": "l102",
+                "title": "Tasks",
+                "color": "#F5CD47"
+            },
+            {
+                "id": "l103",
+                "title": "Data",
+                "color": "#FEA362"
+            },
+            {
+                "id": "l104",
+                "title": "",
+                "color": "#F87168"
+            },
+            {
+                "id": "l105",
+                "title": "",
+                "color": "#9F8FEF"
+            },
+            {
+                "id": "l106",
+                "title": "",
+                "color": "#579DFF"
+            },
+        ],
+        members: [
+            {
+                "_id": "u101",
+                "fullname": "Maya Cohen",
+                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
+            },
+            {
+                "_id": "u102",
+                "fullname": "Reut Edry",
+                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+            },
+            {
+                "_id": "u103",
+                "fullname": "Sahar Machpud",
+                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
+            }
+        ],
+        groups: [
+            { id: utilService.makeId(), title: 'To do', tasks: [], style: {} }
+        ],
+        activities: [],
+        cmpsOrder: ["StatusPicker", "MemberPicker", "DatePicker"]
+    }
+}
+
 const board = [
     {
         _id: "b101",
         title: "Final-project",
         isStarred: false,
         archivedAt: 1589983468418,
-        isStarred: false,
         createdBy: {
             "_id": "u103",
             "fullname": "Sahar Machpud",
@@ -904,7 +973,6 @@ const board = [
         title: "Test",
         isStarred: false,
         archivedAt: 1589983468418,
-        isStarred: true,
         createdBy: {
             "_id": "u103",
             "fullname": "Sahar Machpud",
@@ -1304,14 +1372,13 @@ const board = [
 
 
 
-///////////// REAL DEMO DATA
+    ///////////// REAL DEMO DATA
 
     {
         _id: "b106",
         title: "Final-project - demo data for D&D",  //need it for tasks D&D(using makeId())
         isStarred: false,
         archivedAt: 1589983468418,
-        isStarred: false,
         createdBy: {
             "_id": "u103",
             "fullname": "Sahar Machpud",
@@ -1725,7 +1792,7 @@ const board = [
                         "labelIds": ["l101"],
                         "dueDate": null,
                         "watching": true
-                    },{
+                    }, {
                         "id": utilService.makeId(),
                         "title": "Socket services",
                         "description": null,
@@ -1844,7 +1911,7 @@ const board = [
                         "dueDate": null,
                         "watching": false
                     },
-                    
+
                 ],
                 "style": {}
             },
@@ -1909,7 +1976,7 @@ const board = [
                                 }
                             }
                         ]
-                    },{
+                    }, {
                         "id": utilService.makeId(),
                         "title": "Spell check",
                         "description": null,
@@ -1975,7 +2042,7 @@ const board = [
                             "createdAt": 1696332780
                         },
                         "attachments": [
-                           
+
                         ],
                         "byMember": {
                             "_id": "u102",
@@ -2021,7 +2088,7 @@ const board = [
 
 
                 ],
-                
+
                 "style": {}
             },
             {
@@ -2199,7 +2266,7 @@ const board = [
 
 
                 ],
-                
+
                 "style": {}
             }
 

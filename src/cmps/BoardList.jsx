@@ -18,10 +18,13 @@ export function BoardList({ boards, setStarredBoard }) {
         }
     }
 
+
+
     return (
         <section className="board-list">
             {boards.map(board =>
                 <>
+                    {console.log(board)}
                     <ul style={board.style} className="board-preview" key={board._id}>
                         <Link to={`/board/${board._id}`}>
                             <BoardPreview onStarredBoard={onStarredBoard} board={board} />
@@ -30,5 +33,6 @@ export function BoardList({ boards, setStarredBoard }) {
                 </>
             )}
         </section>
+
     )
 } 
