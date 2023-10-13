@@ -9,8 +9,6 @@ export const boardService = {
     getById,
     save,
     remove,
-    // getEmptyBaba,
-    // addBabaMsg,
     getLabels,
     getCheckListStatus,
     getMembers,

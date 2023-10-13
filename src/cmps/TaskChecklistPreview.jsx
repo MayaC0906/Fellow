@@ -1,23 +1,23 @@
-import * as React from 'react';
-import Checkbox from '@mui/material/Checkbox';
-import { useState, useEffect } from 'react';
-import Textarea from '@mui/joy/Textarea';
-import Button from '@mui/joy/Button';
-import { checkedSvg } from './Svgs';
-import { taskService } from '../services/task.service.local';
+import * as React from 'react'
+import Checkbox from '@mui/material/Checkbox'
+import { useState, useEffect } from 'react'
+import Textarea from '@mui/joy/Textarea'
+import Button from '@mui/joy/Button'
+import { checkedSvg } from './Svgs'
+import { taskService } from '../services/task.service.local'
 
 export function TaskChecklistPreview({ onAddTodo, onUpdateListTitle, onDeleteTodo, checklists, onToggleDoneTodo, onUpdateTodoTitle }) {
-    const [localChecklists, setLocalChecklists] = useState(checklists);
-    const [expandedTodo, setExpandedTodo] = useState({ listId: null, todoId: null });
-    const [expandedListId, setExpandedListId] = useState(null);
-    const [expandedAddTodoListId, setExpandedAddTodoListId] = useState(null);
+    const [localChecklists, setLocalChecklists] = useState(checklists)
+    const [expandedTodo, setExpandedTodo] = useState({ listId: null, todoId: null })
+    const [expandedListId, setExpandedListId] = useState(null)
+    const [expandedAddTodoListId, setExpandedAddTodoListId] = useState(null)
 
-    const [txt, setTxt] = useState('');
-    const [progressbarCalc, setProgressbarCalc] = useState(0);
+    const [txt, setTxt] = useState('')
+    const [progressbarCalc, setProgressbarCalc] = useState(0)
 
     useEffect(() => {
-        setLocalChecklists(checklists);
-        calculateDoneTodos(checklists);
+        setLocalChecklists(checklists)
+        calculateDoneTodos(checklists)
     }, [checklists]);
 
 
@@ -27,18 +27,18 @@ export function TaskChecklistPreview({ onAddTodo, onUpdateListTitle, onDeleteTod
     async function handleToggle(listId, todoId, isDone,ev) {
         ev.stopPropagation();
         try {
-            await onToggleDoneTodo(listId, todoId, isDone);
+            await onToggleDoneTodo(listId, todoId, isDone)
             const updatedChecklists = localChecklists.map(list => ({
                 ...list,
                 todos: list.todos.map(todo =>
                     todo.id === todoId ? { ...todo, isDone } : todo
                 )
-            }));
+            }))
             calculateDoneTodos(updatedChecklists)
             setLocalChecklists(updatedChecklists)
         } catch (err) {
-            console.error('Cannot toggle todo', err);
-            throw err;
+            console.error('Cannot toggle todo', err)
+            throw err
         }
     }
 
@@ -83,41 +83,41 @@ export function TaskChecklistPreview({ onAddTodo, onUpdateListTitle, onDeleteTod
         if (!txt) return;
         try {
             const newTodo = taskService.getDefaultTodo(txt)
-            await onAddTodo(listId, newTodo);
+            await onAddTodo(listId, newTodo)
             const updatedChecklists = localChecklists.map(list =>
                 list.id === listId ? { ...list, todos: [...list.todos, newTodo] } : list
             );
-            setLocalChecklists(updatedChecklists);
-            setExpandedTodo({ listId: null, todoId: null });
+            setLocalChecklists(updatedChecklists)
+            setExpandedTodo({ listId: null, todoId: null })
         } catch (err) {
-            console.error('Cannot add todo', err);
-            throw err;
+            console.error('Cannot add todo', err)
+            throw err
         }
     }
 
     async function deleteTodo(listId, todoId) {
-        console.log('listId',listId, 'todoId', todoId);
+        console.log('listId',listId, 'todoId', todoId)
         try {
-            await onDeleteTodo(listId, todoId);
+            await onDeleteTodo(listId, todoId)
             const updatedChecklists = localChecklists.map(list => ({
                 ...list,
                 todos: list.todos.filter(todo => todo.id !== todoId)
             }));
             calculateDoneTodos(updatedChecklists)
-            setLocalChecklists(updatedChecklists);
+            setLocalChecklists(updatedChecklists)
         } catch (err) {
-            console.error('Cannot delete todo', err);
+            console.error('Cannot delete todo', err)
             throw err;
         }
     }
 
     function calculateDoneTodos(checklistsToUse) {
         const progressForEachList = checklistsToUse.map(list => {
-            const totalTodos = list.todos.length;
-            const doneTodos = list.todos.filter(todo => todo.isDone).length;
-            return totalTodos === 0 ? 0 : (doneTodos / totalTodos) * 100;
+            const totalTodos = list.todos.length
+            const doneTodos = list.todos.filter(todo => todo.isDone).length
+            return totalTodos === 0 ? 0 : (doneTodos / totalTodos) * 100
         });
-        setProgressbarCalc(progressForEachList);
+        setProgressbarCalc(progressForEachList)
     }
 
     return (
