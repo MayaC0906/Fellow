@@ -73,6 +73,7 @@ export function GroupPreview({ handleDrag,onEditGroup, isLabelsShown, setIsLabel
 						group={group}
 						setToggleGroupMenu={setToggleGroupMenu}
 						// groupId={group.id}
+						setInputExpand={setInputExpand}
 						onRemoveGroup={onRemoveGroup}
 						onDuplicateGroup={onDuplicateGroup}
 					/>}

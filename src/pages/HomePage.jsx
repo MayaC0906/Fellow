@@ -41,6 +41,7 @@ export function HomePage() {
 
             <div className='app-desc'>
                 <section className='desc'>
+                    <span>Fellow 101</span>
                     <h2>A productivity powerhouse</h2>
                     <h3>Simple, flexible, and powerful. All it takes are boards,
                         lists, and cards to get a clear view of who’s doing

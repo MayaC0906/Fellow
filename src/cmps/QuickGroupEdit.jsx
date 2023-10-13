@@ -1,4 +1,4 @@
-export function QuickGroupEdit({onDuplicateGroup,group,onRemoveGroup,setToggleGroupMenu }){
+export function QuickGroupEdit({setInputExpand,onDuplicateGroup,group,onRemoveGroup,setToggleGroupMenu }){
     return (
         <section className="group-edit-modal">
                 <header>
@@ -9,7 +9,7 @@ export function QuickGroupEdit({onDuplicateGroup,group,onRemoveGroup,setToggleGr
 
                 <li onClick={() => onRemoveGroup(group.id)}>Delete</li>
                 <li onClick={() => onDuplicateGroup(group)}>Copy list</li>
-                <li>Add card...</li>
+                <li onClick={() => setInputExpand(true)}>Add card...</li>
                 </ul>
                 {/* <span>Copy list...</span>
                 <span>Move list...</span>
