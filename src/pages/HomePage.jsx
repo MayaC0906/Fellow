@@ -74,6 +74,44 @@ export function HomePage() {
                 </div>
             </div>
 
+            <section className='discover'>
+                    <h2>See work in a whole new way</h2>
+                    <p>
+                        View your team's projects from every angle
+                        and bring a fresh perspective to the
+                        tash at hand 
+                    </p>
+                    <button className='clean-btn task-btn'>Discover all Fellow views</button>
+                    <div className='sqaure-info sq1'>
+                        <article>
+                            <span>HIT DEADLINES EVERY TIME</span>
+                            <p>From weekly sprints to annual planning,
+                                timeline view keeps all tasks on track.
+                                Quickly get a glimpse of what's coming down
+                                the pipeline and identify any gaps that might
+                                impede your team's progress.
+                            </p>
+                            <a>Learn more</a>
+                        </article>
+                        {/* <img src="" alt="" /> */}
+                    </div>
+                    <div className='square-info sq2'>
+                        <article>
+                            <span>
+                                STAY ON TOP OF TASKS
+                            </span>
+                            <p>
+                                Start each day without any surprises. 
+                                Wheter scheduling an editorail calender
+                                or staying on top of to-dos, calender view 
+                                is like a crystal ball giving you a clear 
+                                vision of what work lies ahead
+                            </p>
+                            <a >Learn more</a>
+                        </article>
+                        {/* <img src="" alt="" /> */}
+                    </div>
+            </section>        
 
 
             <footer>
