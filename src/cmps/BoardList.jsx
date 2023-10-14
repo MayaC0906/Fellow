@@ -17,15 +17,11 @@ export function BoardList({ boards, setStarredBoard }) {
             console.log('could not star the board', err)
         }
     }
-
-
-
     return (
         <section className="board-list">
             {boards.map(board =>
                 <>
-                    {console.log(board)}
-                    <ul style={board.style} className="board-preview" key={board._id}>
+                    <ul style={{ backgroundImage: `url(${board.style.backgroundImage})`, backgroundColor: board.style.backgroundColor }} className="board-preview" key={board._id}>
                         <Link to={`/board/${board._id}`}>
                             <BoardPreview onStarredBoard={onStarredBoard} board={board} />
                         </Link>

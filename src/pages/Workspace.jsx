@@ -30,8 +30,6 @@ export function Workspace() {
         }
     }
 
-    console.log('isBoardAdded', isBoardAdded);
-
     if (!boards || !boards.length) return <div>loading</div>
     return (
         <>
