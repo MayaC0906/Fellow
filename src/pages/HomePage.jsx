@@ -2,7 +2,8 @@
 
 import React from 'react'
 import { Link } from 'react-router-dom'
-
+import { Textarea } from '@mui/joy'
+import { Button } from '@mui/joy'
 import { useState } from 'react'
 import hero from '../assets/img/hero.png'
 import hs1 from '../assets/img/hs1.png'
@@ -160,7 +161,13 @@ export function HomePage() {
                         </article>
                     </div>
             </section>        
-
+            <section className='signup'>
+                <h2>Get started with Fellow today</h2>
+                <form action="">
+                <Textarea size="md" name="Size" placeholder="Email" />
+                    <Button>Sign up - it's free!</Button>
+                </form>
+            </section>        
             <footer>
                 <section className='upper-section'>
                     <div>

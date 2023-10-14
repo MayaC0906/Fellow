@@ -108,6 +108,7 @@
         display: flex;
         flex-wrap: wrap;
         padding: 2em 6em;
+        
         // gap: 50px;
         justify-content: center;
         font-size: 16px;
@@ -163,10 +164,12 @@
         gap: 30px;
         align-items: center;
         justify-content: center;
+        
         header{
             // margin-left: 16.6667%;
             // display: block;
             // flex: 0 0 auto;
+            margin-top: 100px;
             color: #ffffff;
             width: 66.6667%;
             display: flex;
@@ -177,8 +180,9 @@
         .square-info{
             // height: 300px;
             // width: 700px;
-            margin-right: 11rem;
-            margin-left: 11rem;
+            max-width: rem(1140px);
+            // margin-right: 11rem;
+            // margin-left: 11rem;
             background-color: #ffffff;    
             align-items: center;
             justify-content: center;
@@ -217,6 +221,7 @@
             }          
         }
         .sq1{
+            margin-bottom: 80px;
             svg{
                 fill: #574f7d;
             }
@@ -233,31 +238,93 @@
     .intuitive-features{
         display: flex;
         flex-direction: column;
+        // justify-content: center;
+        // max-width: rem(1140px);
+        // align-items: center;
         justify-content: center;
+        // align-content: center;
+        margin: 0 auto;
+        height: 800px;
+        max-width: 1140px;
+        header{
+            display: flex;
+            flex-direction: column;
+            align-self: baseline;
+            // margin-left: rem(260px);
+        }
         .cards {
             display: flex;
             gap: 20px;
-            max-width: rem(1140px);
+            // width: 1140px;
+            
+            // max-width: rem(1140px);
             // justify-content: center;
             // align-content: center;
             // align-items: center;
-            align-self: center;
+            // align-self: center;
+            // justify-self: center;
             .card{
                 padding: 1.5rem;
-                height: 100%;
-                background-color: rgb(211, 211, 211);
+                margin-left: 0%;
+                // display: block;
+                flex: 0 0 auto;
+                max-width: 350px;
+                background-color: rgb(250, 251, 252);
                 color: rgb(9, 30, 66);
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                    //   align-content: space-between;
             }
             
             img {
                 height: 80px;
                 width: 80px;
             }
+
+            button{
+                user-select: none;
+                -webkit-box-align: center;
+                align-items: center;
+                border-radius: 0.3rem;
+                cursor: pointer;
+                display: inline-flex;
+                text-align: center;
+                transition: all 250ms ease-out 0s;
+                text-decoration: none;
+                background-color: rgb(255, 255, 255);
+                border: 1px solid rgb(0, 101, 255);
+                font-size: 1rem;
+                padding: 0.7rem 1rem 0.8rem;
+                color: rgb(23, 43, 77) !important;
+                width: max-content;
+          
+            }
         }
         
     }
         
+    .signup{
         
+        height: 260px;
+        background: url(https://images.ctfassets.net/rz1oowkt5gyp/6Q4l8SJeMZGSu1m6W9vAjL/1021a10f6940ce44c50d0ffaefec223e/BigSwingFooterHeroGraphic__Left.svg) left center / contain no-repeat scroll padding-box border-box, url(https://images.ctfassets.net/rz1oowkt5gyp/7KsuX6srvRqJVzeAIdIzIb/da1a3319c278d251ecbd078fcffdcd23/BigSwingFooterHeroGraphic__Right.svg) right center / contain no-repeat scroll padding-box border-box, linear-gradient(60deg, rgb(82, 67, 170), rgb(237, 80, 180)) 0% 0% / auto repeat scroll padding-box border-box rgb(82, 67, 170);
+        background-blend-mode: normal, normal, normal;
+        color: rgb(255, 255, 255);
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        form{
+            display: flex;
+            gap: 20px;
+            height: 70px;
+            justify-content: center;
+            align-items: center;
+            // input{
+            //     width: 200px;
+            // }
+        }
+    }    
         
 
 
