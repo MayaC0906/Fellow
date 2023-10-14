@@ -77,6 +77,10 @@
     transition-property: background-color,border-color,box-shadow;
     transition-timing-function: ease;
     white-space: normal;
+
+    &:hover{
+        background-color: #091e423c;
+    }
 }
 
 .done {

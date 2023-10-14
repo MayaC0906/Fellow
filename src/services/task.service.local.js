@@ -18,7 +18,8 @@ export const taskService = {
     toggleMemberOrLabel,
     getEmptyTask,
     addChecklist,
-    deleteLabelOrMember
+    deleteLabelOrMember,
+    deleteList
 }
 
 async function getById(boardId, groupId, taskId) {
@@ -146,6 +147,26 @@ async function updateListTitle(boardId, groupId, taskId, listId, title) {
         return board;
     } catch (err) {
         console.log('cannot update list title', err);
+        throw err;
+    }
+}
+
+async function deleteList(boardId, groupId, taskId,listId){
+    try{
+        const board = await boardService.getById(boardId);
+        const groupIdx = board.groups.findIndex(group => group.id === groupId);
+        const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId);
+        const checklistIdx = board.groups[groupIdx].tasks[taskIdx].checklists.findIndex(list => list.id === listId);
+
+        if (checklistIdx === -1) {
+            throw new Error("checklist isn't found!");
+        }
+
+        board.groups[groupIdx].tasks[taskIdx].checklists.splice(checklistIdx, 1);
+        await boardService.saveGroup(board.groups[groupIdx], boardId);
+        return board;
+    }catch (err) {
+        console.log('cannot delete list', err);
         throw err;
     }
 }

@@ -4,7 +4,7 @@ import { useParams } from 'react-router';
 import { TaskChecklistPreview } from './TaskChecklistPreview';
 // import {updateTodoIsDone} from ''
 
-import {updateTodoIsDone, updateTodoTitle, deleteTodo, addTodo, updateListTitle} from '../store/actions/board.actions.js'
+import {updateTodoIsDone, updateTodoTitle, deleteTodo, addTodo, updateListTitle, deleteList} from '../store/actions/board.actions.js'
 
 
 
@@ -21,6 +21,15 @@ export function TaskCheckList({setEditName, setTask, checklists}){
             throw err
         }
     } 
+
+    async function onDeleteList(listId) {
+        try{
+             await deleteList(boardId, groupId, taskId, listId)
+        } catch (err) {
+            console.log('cant delete list');
+            throw err
+        }
+    }
 
     async function onUpdateTodoTitle(listId,todoId, txt){
         try {
@@ -59,6 +68,15 @@ export function TaskCheckList({setEditName, setTask, checklists}){
     }
     // console.log(checklists);
     return (
-        <TaskChecklistPreview setTask={setTask} onAddTodo={onAddTodo} onUpdateListTitle={onUpdateListTitle} onDeleteTodo={onDeleteTodo} onUpdateTodoTitle={onUpdateTodoTitle} onToggleDoneTodo={onToggleDoneTodo} checklists={checklists}/>
+        <TaskChecklistPreview
+            onDeleteList={onDeleteList}
+            setTask={setTask}
+            onAddTodo={onAddTodo}
+            onUpdateListTitle={onUpdateListTitle}
+            onDeleteTodo={onDeleteTodo}
+            onUpdateTodoTitle={onUpdateTodoTitle}
+            onToggleDoneTodo={onToggleDoneTodo}
+            checklists={checklists}
+        />
     )
 }
