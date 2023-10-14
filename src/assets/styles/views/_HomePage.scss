@@ -157,8 +157,111 @@
         height: 100%;
         background:  url("//images.ctfassets.net/rz1oowkt5gyp/7KgS3XVFhGu3TiclJKloEp/c10aad15fb171a6c245db9cb7910247d/ViewsBackground_Left_Narrow.svg") left center / contain no-repeat scroll padding-box border-box, url("//images.ctfassets.net/rz1oowkt5gyp/2HisRmboWIdXSYaaUSDzon/dadecff4be8a39bf2cf3cc537bd4d9c1/ViewsBackground_Right_Narrow.svg") right center / contain no-repeat scroll padding-box border-box, linear-gradient(240deg, rgb(0, 184, 217), rgb(0, 101, 255)) 0% 0% / auto repeat scroll padding-box border-box rgb(0, 101, 255);
         background-blend-mode: normal, normal, normal;
-        color: rgb(255, 255, 255);
+        color: rgb(82, 82, 82);
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        align-items: center;
+        justify-content: center;
+        header{
+            // margin-left: 16.6667%;
+            // display: block;
+            // flex: 0 0 auto;
+            color: #ffffff;
+            width: 66.6667%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .square-info{
+            // height: 300px;
+            // width: 700px;
+            margin-right: 11rem;
+            margin-left: 11rem;
+            background-color: #ffffff;    
+            align-items: center;
+            justify-content: center;
+            color: rgb(9, 30, 66);
+            -webkit-box-align: center;
+            align-items: center;
+            border-radius: 0.5rem;
+            box-shadow: rgb(9 30 66 / 15%) 0px 0.5rem 1rem 0px;
+            display: flex;
+            // gap: 2rem;
+            justify-content: space-between;
+            padding: 1.5rem;
+            text-align: left;
+            margin-bottom: 0px;
+            // padding-bottom: 3rem; 
+            article{
+                padding: 0px 2rem;
+                width: 45%;
+                span{
+                    -webkit-box-align: center;
+                    align-items: center;
+                    display: flex;
+                    gap: 1rem;
+                    margin-bottom: 1.5rem;
+                }
+                svg{
+                    // fill: #574f7d;
+                    height: 32px;
+                    width: 32px;
+                    
+                }
+            }
+            img{
+                height: 300px;
+                width: 550px;
+            }          
+        }
+        .sq1{
+            svg{
+                fill: #574f7d;
+            }
+
+        }
+
+        .sq2{
+            svg{
+                fill: aqua;
+            }           
+        }
     }
+
+    .intuitive-features{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        .cards {
+            display: flex;
+            gap: 20px;
+            max-width: rem(1140px);
+            // justify-content: center;
+            // align-content: center;
+            // align-items: center;
+            align-self: center;
+            .card{
+                padding: 1.5rem;
+                height: 100%;
+                background-color: rgb(211, 211, 211);
+                color: rgb(9, 30, 66);
+            }
+            
+            img {
+                height: 80px;
+                width: 80px;
+            }
+        }
+        
+    }
+        
+        
+        
+
+
+
 
     footer{
         display: flex;
@@ -182,17 +285,10 @@
             // }
             height: 130px;
             div{
-                // width: 200px;
                 display: flex;
                 flex-direction: column;
-                
-                // align-items: center;
-                // align-content: center;
-                // justify-content: space-between;
-                // text-align: left;
             }
             img{
-                // margin-left: 20px;
                 height: 40px;
                 width: 100px;
             }
@@ -280,6 +376,11 @@
 
 
 
+
+
+
+
+//OLD HP
 
 // .main-container {
 //     display: grid;
