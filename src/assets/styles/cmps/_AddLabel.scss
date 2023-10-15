@@ -19,20 +19,31 @@
         }
 
         .back-arrow {
-            grid-column: 1/2;
+            grid-column: 1;
             display: flex;
             align-self: center;
+            align-items: center;
+            justify-content: center;
             border: none;
             background-color: white;
             cursor: pointer;
             padding: 6px;
             margin: 0;
-            width: 50px;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+
+            &:hover {
+                background-color: rgba(9, 30, 66, .141);
+            }
+
+            &:active {
+                background-color: #091E424F;
+            }
 
             svg {
                 width: 16px;
                 height: 16px;
-                // padding: 8px;
             }
         }
     }

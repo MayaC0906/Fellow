@@ -15,6 +15,10 @@
             &:hover {
                 background-color: rgba(9, 30, 66, .141);
             }
+
+            &:active {
+                background-color: #091E424F;
+            }
         }
 
         &-detail {
@@ -28,6 +32,7 @@
                 margin-inline-start: rem(8px);
                 font-size: rem(14px);
                 font-weight: 400;
+                margin-block: 8px;
             }
 
             span {
