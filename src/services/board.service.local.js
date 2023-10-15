@@ -1384,7 +1384,7 @@ const board = [
         },
         style: {
             backgroundImage: "",
-            backgroundColor: "rgb(230, 165, 165)"
+            backgroundColor: "center bottom -0.5px / 100% 14% no-repeat scroll padding-box border-box, linear-gradient(60deg, rgb(82, 67, 170), rgb(237, 80, 180)) 0% 0% / auto repeat scroll padding-box border-box rgb(82, 67, 170)"
         },
         labels: [
             {
