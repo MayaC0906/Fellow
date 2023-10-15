@@ -16,8 +16,9 @@
         display: flex;
         gap: 8px;
         align-items: center;
-        // background-color: rgba(9, 30, 66, 0.276);
-        background-color: #ebecef;
+        // background-color: rgba(9, 30, 66, .059);
+        background-color: #091e420f;
+        // background-color: rgba(9, 30, 66, 0.140);
         border-radius: 3px;
         border: none;
         padding: 6px 12px;
@@ -30,6 +31,7 @@
             width: 16px;
             height: 16px;
             font-size: rem(16px);
+            font-weight: 500;
         }
 
         span {
@@ -41,7 +43,7 @@
         }
 
         >* {
-            // font-weight: 500;
+            font-weight: 500;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", Ubuntu, "Droid Sans", "Helvetica Neue", sans-serif;
         }
 
