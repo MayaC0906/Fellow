@@ -1,11 +1,31 @@
 // Font Sizes
-.fs12 { font-size: rem(12px); }
-.fs14 { font-size: rem(14px); }
-.fs18 { font-size: rem(18px); }
-.fs20 { font-size: rem(20px); }
-.fs24 { font-size: rem(24px); }
-.fs28 { font-size: rem(28px); }
-.fs30 { font-size: rem(30px); }
+.fs12 {
+    font-size: rem(12px);
+}
+
+.fs14 {
+    font-size: rem(14px);
+}
+
+.fs18 {
+    font-size: rem(18px);
+}
+
+.fs20 {
+    font-size: rem(20px);
+}
+
+.fs24 {
+    font-size: rem(24px);
+}
+
+.fs28 {
+    font-size: rem(28px);
+}
+
+.fs30 {
+    font-size: rem(30px);
+}
 
 // flex helpers
 
@@ -13,27 +33,34 @@
 
     display: flex;
 
-    > *.full {
+    >*.full {
         flex: 1;
     }
+
     &.column {
         flex-direction: column;
     }
+
     &.justify-center {
         justify-content: center;
     }
+
     &.align-center {
         align-items: center;
     }
+
+    &.space-between {
+        justify-content: space-between;
+    }
 }
 
-.expand{
-    
+.expand {
+
     width: 250px;
     transition: .3s ease-in-out;
 }
 
-.unexpand{
+.unexpand {
     width: 15px;
     transition: .3s ease-in-out;
 }
@@ -57,15 +84,15 @@
 .task-btn {
     margin-top: 8px;
     align-items: center;
-    background-color:#091e420f;
+    background-color: #091e420f;
     border: none;
     border-radius: 3px;
     box-shadow: none;
     box-sizing: border-box;
-    color:#172b4d;
+    color: #172b4d;
     cursor: pointer;
     display: inline-flex;
-    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Droid Sans,Helvetica Neue,sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
     font-size: 14px;
     font-weight: 400;
     font-weight: 500;
@@ -74,11 +101,11 @@
     padding: 6px 12px;
     text-decoration: none;
     transition-duration: 85ms;
-    transition-property: background-color,border-color,box-shadow;
+    transition-property: background-color, border-color, box-shadow;
     transition-timing-function: ease;
     white-space: normal;
 
-    &:hover{
+    &:hover {
         background-color: #091e423c;
     }
 }
@@ -87,6 +114,7 @@
     text-decoration: line-through;
     color: #44546f;
 }
+
 .close-btn {
     background: none;
     border: none;
@@ -110,11 +138,11 @@
 .square-ratio {
     @include aspect-ratio(1, 1);
 }
+
 .video-ratio {
     @include aspect-ratio(16, 9);
 }
+
 .portrait-ratio {
     @include aspect-ratio(9, 16);
 }
-
-

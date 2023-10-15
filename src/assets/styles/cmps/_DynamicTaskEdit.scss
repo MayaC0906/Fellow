@@ -11,27 +11,32 @@
 
 
 
-    .content {
-        padding: 0 12px 12px;
+    &-content {
+        // width: 280px;
+        padding: 0 12px 12px 12px;
     }
 
     .title-container {
         display: grid;
         grid-template-columns: 32px 1fr 32px;
         padding: 4px 8px;
-        align-items: center;
+        // align-items: center;
         text-align: center;
+        height: rem(40px);
+        margin-block-end: 4px;
 
         p {
             grid-column: 2/3;
             place-self: center;
             margin: 0;
+            font-size: rem(14px);
+            font-weight: 600;
         }
 
         .close-modal {
             grid-column: 3/4;
             display: flex;
-            align-self: flex-end;
+            align-self: center;
             border: none;
             background-color: white;
             cursor: pointer;
