@@ -74,7 +74,7 @@ export function AddLabel({ onCloseEditTask, onAddLabel, labelToEdit, setTask, is
                     <ul className="color-platte clean-list">
                         {labelsColorPickers.map(colorPicker => (
                             <li key={colorPicker}>
-                                <button className="color-display" style={{ backgroundColor: colorPicker, width: '50px', height: '30px' }} onClick={() => setColorSelected(colorPicker)}></button>
+                                <button className="color-display" style={{ backgroundColor: colorPicker }} onClick={() => setColorSelected(colorPicker)}></button>
                             </li>
                         ))}
                     </ul>
