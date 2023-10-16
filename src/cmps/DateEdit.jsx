@@ -27,8 +27,9 @@ export function DateEdit({ editName, onCloseEditTask, setTask }) {
         try {
             const task = await loadTask(boardId, groupId, taskId)
             const dueDate = task.dueDate
+            console.log('duedate', dueDate);
             if (dueDate) {
-                const formattedDate = dayjs(dueDate, 'MMM D, YYYY [at] h:mm A')
+                const formattedDate = dayjs(dueDate, 'MMM D [at] h:mm A')
                 setSelectedDate(formattedDate)
                 lastDate.current = formattedDate
                 setIsDateSelected(true)

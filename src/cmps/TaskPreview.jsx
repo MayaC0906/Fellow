@@ -30,7 +30,7 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
                 <h3>{task?.title}</h3>
                 <section className="task-badges">
                     {task.watching && <div className="task-badge">{taskSvg.watch}</div>}
-                    {dueDate && <div className="task-badge">{taskSvg.clock} <span>{dayjs(dueDate, 'MMM D, YYYY [at] h:mm A').format('MMM D, YYYY')}
+                    {dueDate && <div className="task-badge">{taskSvg.clock} <span>{dayjs(dueDate, 'MMM D [at] h:mm A').format('MMM D, YYYY')}
                     </span></div>}
                     {task.description && <div className="task-badge">{taskSvg.description}</div>}
                     {task.comments?.length > 0 && <div className="task-badge">{taskSvg.comment} <span>{task.comments.length}</span></div>}
