@@ -11,7 +11,7 @@ export function TaskChecklistPreview({onDeleteList, onAddTodo, onUpdateListTitle
     const [expandedTodo, setExpandedTodo] = useState({ listId: null, todoId: null })
     const [expandedListId, setExpandedListId] = useState(null)
     const [expandedAddTodoListId, setExpandedAddTodoListId] = useState(null)
-    const [hideChecked, setHideChecked] = useState(false);
+    const [hideChecked, setHideChecked] = useState(checklists.map(() => false))
     const [txt, setTxt] = useState('')
     const [progressbarCalc, setProgressbarCalc] = useState(0)
 
@@ -119,6 +119,12 @@ export function TaskChecklistPreview({onDeleteList, onAddTodo, onUpdateListTitle
         setProgressbarCalc(progressForEachList)
     }
 
+    function toggleHideChecked(index) {
+        const newHideChecked = [...hideChecked];
+        newHideChecked[index] = !newHideChecked[index];
+        setHideChecked(newHideChecked);
+      }
+
     async function deleteList(listId){
         try{
             await onDeleteList(listId)
@@ -143,8 +149,8 @@ export function TaskChecklistPreview({onDeleteList, onAddTodo, onUpdateListTitle
                             </span> 
                             <div className='header-btns'>
 
-                                <button className='clean-btn task-btn' onClick={() => setHideChecked(prev => !prev)}>
-                                    {hideChecked ? "Show Checked Items" : "Hide Checked Items"}
+                                <button className='clean-btn task-btn' onClick={() => toggleHideChecked(idx)}>
+                                    {hideChecked[idx] ? "Show Checked Items" : "Hide Checked Items"}
                                 </button>
 
                                 <button onClick={() => deleteList(list.id)} className='clean-btn task-btn'>Delete</button>
@@ -173,7 +179,7 @@ export function TaskChecklistPreview({onDeleteList, onAddTodo, onUpdateListTitle
                         </div>
                     </div>
 
-                    {list.todos.filter(todo => !hideChecked || !todo.isDone).map(todo => (
+                    {list.todos.filter(todo => !hideChecked[idx] || !todo.isDone).map(todo => (
 
                         <li key={todo.id} className={`checklist-item ${todo.isDone ? 'done' : ''}`}>
                             <div className='checkbox'>
