@@ -21,9 +21,6 @@ export function TaskChecklistPreview({onDeleteList, onAddTodo, onUpdateListTitle
     }, [checklists]);
 
 
-
-    
-
     async function handleToggle(listId, todoId, isDone,ev) {
         ev.stopPropagation();
         try {
@@ -120,15 +117,15 @@ export function TaskChecklistPreview({onDeleteList, onAddTodo, onUpdateListTitle
     }
 
     function toggleHideChecked(index) {
-        const newHideChecked = [...hideChecked];
-        newHideChecked[index] = !newHideChecked[index];
-        setHideChecked(newHideChecked);
+        const newHideChecked = [...hideChecked]
+        newHideChecked[index] = !newHideChecked[index]
+        setHideChecked(newHideChecked)
       }
 
     async function deleteList(listId){
         try{
             await onDeleteList(listId)
-             const updatedChecklists = localChecklists.filter(list => list.id !== listId);
+             const updatedChecklists = localChecklists.filter(list => list.id !== listId)
             calculateDoneTodos(updatedChecklists)
             setLocalChecklists(updatedChecklists)
         } catch (err) {

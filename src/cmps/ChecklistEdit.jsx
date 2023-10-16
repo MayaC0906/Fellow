@@ -39,17 +39,19 @@ export function ChecklistEdit({  onCloseEditTask, setTask }) {
                 <button onClick={onCloseEditTask} className="close-modal">{additionTaskSvg.close}</button>
             </div>
             <section className="edit-modal-content">
-                        <Textarea 
-                                 sx={{ border:'none'}}
-                                 name="title"
-                                 autoFocus
-                                 maxRows={1}
-                                //  ={'Add an item'}
-                                 onChange={handleTextChange}
-                        />
-                        <div>
-                            <Button type='submit'  onClick={onSaveCheckList}>Save</Button>
-                            <button className='cancel task-btn' onClick={onSaveCheckList}>Cancel</button>
+                        <div className='edit-modal-checklist'>
+                            <label >Title</label>
+                            <Textarea 
+                                    sx={{ border:'none'}}
+                                    name="title"
+                                    autoFocus
+                                    maxRows={1}
+                                    onChange={handleTextChange}
+                                    defaultValue='Checklist'
+                                    />
+                            <div>
+                                <button className='task-btn'  onClick={onSaveCheckList}>Add</button>
+                            </div>
                         </div>
                         </section>
             </section>
