@@ -35,29 +35,44 @@ export function AddBoard({ setIsBoardAdded }) {
         }
     }
 
-    // console.log('isboard added:', isBoardAdded);
-
+    console.log('title:', boardTitle);
     return (
-        <section style={{ border: '1px solid black', bottom: '400px' }} className="edit-modal">
+        <section style={{ bottom: '290px' }} className="edit-modal">
             <div className="title-container">
-                <p>Create board</p>
+                <p className="add-board-title">Create board</p>
                 <button onClick={() => setIsBoardAdded(false)} className="close-modal">{additionTaskSvg.close}</button>
             </div>
             <section className="edit-modal-content">
                 <div className="content">
-                    <section style={{ "background-image": `url(${backGroundgImg})` }} className="board-display">
-                        <img src='https://res.cloudinary.com/duvatj8kg/image/upload/v1697199257/14cda5dc635d1f13bc48_l2c80b_1_mlqvif.svg' alt="" />
-                    </section>
-                    <section className="board-design">
-                        <p>Background</p>
-                        {imgUrls.map(imgUrl =>
-                            (<img style={{ width: '70px', height: '70px' }} src={imgUrl} alt="" onClick={() => setBackGroundImg(imgUrl)} />)
-                        )}
-                        <section className="board-title-input">
-                            <p>title</p>
-                            <Textarea required placeholder="Board title" onChange={onSetBoardTtile} />
+                    <div className="add-board-display flex justify-center">
+
+                        <section style={{ "background-image": backGroundgImg ? `url(${backGroundgImg})` : `url('https://res.cloudinary.com/duvatj8kg/image/upload/v1697200986/1_qmyhwb.jpg')` }} className="display-container flex align-center justify-center">
+                            <img className="display-img" src='https://res.cloudinary.com/duvatj8kg/image/upload/v1697199257/14cda5dc635d1f13bc48_l2c80b_1_mlqvif.svg' alt="" />
                         </section>
-                        <Button variant="contained" onClick={onSaveNewBoard}>Contained</Button>
+                    </div>
+                    <section className="board-design">
+                        <p className="title">Background</p>
+                        <div className="img-option">
+                            {imgUrls.map(imgUrl =>
+                                (<img src={imgUrl} alt="" onClick={() => setBackGroundImg(imgUrl)} />)
+                            )}
+                        </div>
+                        <section className="board-title-input">
+                            <p className="title input">Board title <span>*</span></p>
+                            <Textarea required onChange={onSetBoardTtile}
+                                sx={{
+                                    width: 280, p: '8px 12px', height: 36, fontSize: 12, mb: 1.5, borderRadius: '3px',
+                                    boxShadow: 'none',
+                                    '&:hover': {
+                                        boxShadow: !boardTitle ? 'inset 0 0 0 2px #e34935' : '',
+                                    },
+                                    '&:active &:focus': {
+                                        boxShadow: !boardTitle ? 'inset 0 0 0 2px #388bff' : '',
+                                    },
+                                }}
+                            />
+                        </section>
+                        <button className={`create-board clean-btn ${boardTitle ? '' : 'boardTileCheck'}`} onClick={onSaveNewBoard}>Create</button>
                     </section>
                 </div>
             </section>

@@ -36,7 +36,7 @@
 @import "cmps/UserMsg.scss";
 @import "cmps/TaskDetailsSideNav.scss";
 @import "cmps/DynamicTaskEdit.scss";
-@import "cmps/_TaskAttachments.scss";
+@import "cmps/TaskAttachments.scss";
 @import "cmps/TaskChecklist";
 @import "cmps/Dates";
 @import "cmps/TaskMembers";
@@ -50,4 +50,5 @@
 @import "cmps/MemberEdit";
 @import "cmps/TaskDate";
 @import "cmps/TaskDetailsHeader";
-@import "cmps/TaskLabels"
+@import "cmps/TaskLabels";
+@import "cmps/AddBoard";
