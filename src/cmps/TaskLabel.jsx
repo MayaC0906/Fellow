@@ -26,13 +26,13 @@ export function TaskLabel({ taskLabelsId, setEditName }) {
 
     return (
         labels.length > 0 &&
-        (<section className="members">
-            <p>Labels</p>
-            <div className="members-detail">
+        (<section className="labels">
+            <p className="members-headline">Labels</p>
+            <div className="labels-detail flex align-center">
                 {labels.map(label => (
-                    <button style={{ backgroundColor: label.color, width: 'max-content', height: '25px' }} onClick={toggleAddingMember}>{label.title}</button>
+                    <button className="labels-display" style={{ backgroundColor: label.color }} onClick={toggleAddingMember}>{label.title}</button>
                 ))}
-                <button onClick={toggleAddingMember}>{taskSvg.add}</button>
+                <button className="labels-add clean-btn flex align-center" onClick={toggleAddingMember}>{taskSvg.add}</button>
             </div>
         </section>)
     )

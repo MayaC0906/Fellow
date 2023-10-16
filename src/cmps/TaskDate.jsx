@@ -1,7 +1,6 @@
 import { Checkbox } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router";
-import { taskService } from "../services/task.service.local";
 import { appHeaderSvg } from "./Svgs";
 
 export function TaskDate({ taskDate, setEditName }) {
@@ -29,7 +28,6 @@ export function TaskDate({ taskDate, setEditName }) {
                         <Checkbox sx={{ '& .MuiSvgIcon-root': { fontSize: 20 }, p: 0, mr: 0.2 }} onClick={onCompleteDueDate} />
                     </div>
                     <div className={`task-date flex align-center ${isDateCompleted ? 'complete-open' : ''}`} onClick={toggleOpenningDate}>
-                        {/* <div className="task-date flex align-center" onClick={toggleOpenningDate}> */}
                         <span className="task-date-data">{taskDate}</span>
                         {isDateCompleted && (<span className="task-date-complete flex align-center">Complete</span>)}
                         {appHeaderSvg.arrowDown}
