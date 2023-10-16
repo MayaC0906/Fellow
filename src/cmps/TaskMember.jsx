@@ -35,13 +35,13 @@ export function TaskMember({ taskMembersId, setEditName, setTask }) {
     return (
         members.length > 0 &&
         (<section className="members">
-            <p>Members</p>
-            <div className="members-detail">
+            <p className="members-headline">Members</p>
+            <div className="members-detail flex align-center">
                 {members.map(member => (
                     <img key={member._id} src={member.imgUrl} alt="" onClick={() => onSetMemberDetail(member)} />
                 ))}
                 {isMemberDetail && <MemberDetail member={member} setTask={setTask} setMemberDetail={setMemberDetail} />}
-                <button onClick={toggleAddingMember}>{taskSvg.add}</button>
+                <button className="members-btn clean-btn flex align-center justify-center" onClick={toggleAddingMember}>{taskSvg.add}</button>
             </div>
         </section>)
     )
