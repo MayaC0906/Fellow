@@ -15,7 +15,7 @@ import { Checkbox } from '@mui/material'
 
 export function DateEdit({ editName, onCloseEditTask, setTask }) {
     const [selectedDate, setSelectedDate] = useState(null)
-    const [isDateSelected, setIsDateSelected] = useState(false) // New state variable
+    const [isDateSelected, setIsDateSelected] = useState(false)
     const { boardId, groupId, taskId } = useParams()
     let lastDate = useRef(null)
 
@@ -30,6 +30,7 @@ export function DateEdit({ editName, onCloseEditTask, setTask }) {
             if (dueDate) {
                 const formattedDate = dayjs(dueDate, 'MMM D, YYYY [at] h:mm A')
                 setSelectedDate(formattedDate)
+                lastDate.current = formattedDate
                 setIsDateSelected(true)
             } else {
                 setIsDateSelected(false)
@@ -47,7 +48,7 @@ export function DateEdit({ editName, onCloseEditTask, setTask }) {
 
     async function onSaveDate() {
         if (selectedDate === null) return
-        const formatedDate = selectedDate.format('MMM D, YYYY [at] h:mm A')
+        const formatedDate = selectedDate.format('MMM D [at] h:mm A')
         try {
             await saveTaskDueDate(boardId, groupId, taskId, formatedDate)
             setTask(prevTask => ({ ...prevTask, dueDate: formatedDate }))
@@ -75,12 +76,14 @@ export function DateEdit({ editName, onCloseEditTask, setTask }) {
             setIsDateSelected(false)
             setSelectedDate(null)
         } else {
-
             setIsDateSelected(true)
             setSelectedDate(lastDate.current)
         }
     }
 
+    console.log('lastDate', lastDate);
+    console.log('isDateSelected', isDateSelected);
+    console.log('selectedDate', selectedDate);
     return (
         <section className="edit-modal">
             <div className="title-container">
@@ -124,7 +127,6 @@ export function DateEdit({ editName, onCloseEditTask, setTask }) {
                         <div className='due-date'>
                             <p style={isDateSelected ? { color: '#0c66e4' } : {}}>Due date</p>
                             <section className='due-date-details flex align-center'>
-
                                 <Checkbox checked={isDateSelected} onChange={onToggleChecked}
                                     sx={{
                                         p: 0, mr: 1, fontSize: 12, width: 16, height: 16,

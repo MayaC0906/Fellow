@@ -56,12 +56,12 @@ export function TaskDetails() {
 
                     <TaskTitle taskTitle={task.title} />
 
-                    {<section className="task-member">
+                    <section className="task-items-display flex align-center">
                         <TaskMember taskMembersId={task.memberIds} setEditName={setEditName} setTask={setTask} />
                         <TaskLabel taskLabelsId={task.labelIds} setEditName={setEditName} />
-                    </section>}
+                    </section>
 
-                    <section className="task-date">
+                    <section className="task-show">
                         <TaskDate taskDate={task.dueDate} setEditName={setEditName} />
                     </section>
 

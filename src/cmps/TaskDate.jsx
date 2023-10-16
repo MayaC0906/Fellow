@@ -9,17 +9,6 @@ export function TaskDate({ taskDate, setEditName }) {
     const [isOpenningDate, setIsOpenningDate] = useState(false)
     const { boardId, groupId, taskId } = useParams()
 
-
-    // useEffect(() => {
-    //     onLoadTask()
-    // }, [open])
-
-    // async function onLoadTask() {
-    //     const task = await taskService.getById(boardId, groupId, taskId)
-    //     console.log(task);
-    // }
-
-    // console.log(taskDate);
     function onCompleteDueDate() {
         SetIsDateCompleted(!isDateCompleted)
     }
@@ -32,15 +21,20 @@ export function TaskDate({ taskDate, setEditName }) {
     return (
 
         taskDate && (
-            <section>
-                <p>Due date</p>
-                <div className='checkbox'>
-                    <Checkbox sx={{ '& .MuiSvgIcon-root': { fontSize: 16 } }} onClick={onCompleteDueDate} />
-                </div>
-                <p onClick={toggleOpenningDate}>
-                    <span>{taskDate}</span>
-                    {isDateCompleted && (<span>completed</span>)}
-                    {appHeaderSvg.arrowDown}</p>
+            <section className="task-display">
+                <h2 className="task-date-title">Due date</h2>
+                <section className="task-display flex align-center">
+
+                    <div className='checkbox'>
+                        <Checkbox sx={{ '& .MuiSvgIcon-root': { fontSize: 20 }, p: 0, mr: 0.2 }} onClick={onCompleteDueDate} />
+                    </div>
+                    <div className={`task-date flex align-center ${isDateCompleted ? 'complete-open' : ''}`} onClick={toggleOpenningDate}>
+                        {/* <div className="task-date flex align-center" onClick={toggleOpenningDate}> */}
+                        <span className="task-date-data">{taskDate}</span>
+                        {isDateCompleted && (<span className="task-date-complete flex align-center">Complete</span>)}
+                        {appHeaderSvg.arrowDown}
+                    </div>
+                </section>
             </section>
         )
     )
