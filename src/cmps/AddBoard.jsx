@@ -8,7 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 export function AddBoard({ setIsBoardAdded }) {
     const imgUrls = ['https://res.cloudinary.com/duvatj8kg/image/upload/v1697200986/1_qmyhwb.jpg', 'https://res.cloudinary.com/duvatj8kg/image/upload/v1696367896/samples/balloons.jpg', 'https://res.cloudinary.com/duvatj8kg/image/upload/v1696367882/samples/landscapes/nature-mountains.jpg', 'https://res.cloudinary.com/duvatj8kg/image/upload/v1697201095/2_ie2xym.jpg', 'https://res.cloudinary.com/duvatj8kg/image/upload/v1697201606/a7c521b94eb153008f2d_okvnhu.svg', 'https://res.cloudinary.com/duvatj8kg/image/upload/v1697202495/aec98becb6d15a5fc95e_dseafo.svg', 'https://res.cloudinary.com/duvatj8kg/image/upload/v1697202522/8ab3b35f3a786bb6cdac_ci3ilc.svg', 'https://res.cloudinary.com/duvatj8kg/image/upload/v1697202531/707f35bc691220846678_bdydef.svg', 'https://res.cloudinary.com/duvatj8kg/image/upload/v1697202537/d106776cb297f000b1f4_kroicr.svg']
-    const [backGroundgImg, setBackGroundImg] = useState(null)
+    const [backGroundgImg, setBackGroundImg] = useState('https://res.cloudinary.com/duvatj8kg/image/upload/v1697200986/1_qmyhwb.jpg')
     const [boardTitle, setBoardTtile] = useState('')
     const [newBoard, setNewBoard] = useState(boardService.getEmptyBoard)
     const [savedBoard, setSavedBoard] = useState({})
@@ -35,7 +35,6 @@ export function AddBoard({ setIsBoardAdded }) {
         }
     }
 
-    console.log('title:', boardTitle);
     return (
         <section style={{ bottom: '290px' }} className="edit-modal">
             <div className="title-container">
@@ -46,7 +45,7 @@ export function AddBoard({ setIsBoardAdded }) {
                 <div className="content">
                     <div className="add-board-display flex justify-center">
 
-                        <section style={{ "background-image": backGroundgImg ? `url(${backGroundgImg})` : `url('https://res.cloudinary.com/duvatj8kg/image/upload/v1697200986/1_qmyhwb.jpg')` }} className="display-container flex align-center justify-center">
+                        <section style={{ "background-image": `url(${backGroundgImg})` }} className="display-container flex align-center justify-center">
                             <img className="display-img" src='https://res.cloudinary.com/duvatj8kg/image/upload/v1697199257/14cda5dc635d1f13bc48_l2c80b_1_mlqvif.svg' alt="" />
                         </section>
                     </div>

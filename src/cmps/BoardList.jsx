@@ -1,13 +1,21 @@
 import { Link } from "react-router-dom";
 import { BoardPreview } from "./BoardPreview";
 import { settingIsStarred } from "../store/actions/board.actions";
+import { AddBoard } from "./AddBoard";
+import { useEffect, useState } from "react";
 
-export function BoardList({ boards, setStarredBoard }) {
+export function BoardList({ boards, setStarredBoard, onLoadBoards }) {
+    const [isStar, setIsStar] = useState('')
+
+    // useEffect(() => {
+    // }, [isStar])
 
     async function onStarredBoard(event, boardId) {
         event.preventDefault()
         try {
             const board = await settingIsStarred(boardId)
+            setIsStar(board.isStarred)
+            // onLoadBoards()
             if (board.isStarred) {
                 setStarredBoard(prevBoard => [...prevBoard, board])
             } else {
@@ -17,18 +25,18 @@ export function BoardList({ boards, setStarredBoard }) {
             console.log('could not star the board', err)
         }
     }
+
     return (
-        <section className="board-list">
-            {boards.map(board =>
-                <>
-                    <ul style={{ backgroundImage: `url(${board.style.backgroundImage})`, backgroundColor: board.style.backgroundColor }} className="board-preview" key={board._id}>
+        <>
+            <ul className="board-list clean-list flex">
+                {boards.map(board =>
+                    <li style={{ backgroundImage: `url(${board.style.backgroundImage})`, backgroundColor: board.style.backgroundColor }} className="board-preview" key={board._id}>
                         <Link to={`/board/${board._id}`}>
                             <BoardPreview onStarredBoard={onStarredBoard} board={board} />
                         </Link>
-                    </ul>
-                </>
-            )}
-        </section>
-
+                    </li>
+                )}
+            </ul>
+        </>
     )
-} 
+}

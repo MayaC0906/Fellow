@@ -1,13 +1,15 @@
 import { workspaceSvg } from "./Svgs"
 
 export function BoardPreview({ board, onStarredBoard }) {
-    const { title, _id } = board
+    const { title, _id, isStarred } = board
+
     return (
-        <li className="board-preview-detail">
-            <section className="details">
-                <h2>{title}</h2>
-                <div onClick={(event) => onStarredBoard(event, _id)} className="star-svg">{workspaceSvg.star}</div>
-            </section>
-        </li>
+        <>
+            <section className="details flex">
+                <h2 className="title">{title}</h2>
+                {isStarred ? <span onClick={(event) => onStarredBoard(event, _id)} className="star-svg-full" >{workspaceSvg.fullStar}</span> : <span onClick={(event) => onStarredBoard(event, _id)} className="star-svg flex">{workspaceSvg.star}</span>}
+                {/* <span onClick={(event) => onStarredBoard(event, _id)} className="star-svg flex">{workspaceSvg.star}</span> */}
+            </section >
+        </>
     )
 }
