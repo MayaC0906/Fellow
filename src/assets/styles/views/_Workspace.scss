@@ -1,7 +1,13 @@
 .workspace-container {
-    margin: rem(40px) calc((100% - 51.5rem)/2) 0 calc((100% - 51.5rem)/2);
-    justify-content: center;
+    // margin: rem(40px) calc((100% - 51.5rem)/2) 0 calc((100% - 51.5rem)/2);
+    margin: auto;
+    // padding: rem(40px) rem(50px) 0 rem(50px);
+    margin-block-start: rem(40px);
     max-width: rem(825px);
+    min-width: rem(290px);
+
+
+    // for nav
     // nav {
     //     flex-direction: column;
     //     gap: 4px;

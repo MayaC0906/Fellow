@@ -28,12 +28,10 @@ export function getActionUpdateBoard(board) {
 export async function loadBoards() {
     try {
         const boards = await boardService.query()
-        // console.log('Boards from DB:', boards)
         store.dispatch({
             type: SET_BOARDS,
             boards
         })
-
         return boards
     } catch (err) {
         console.log('Cannot load boards', err)
@@ -141,14 +139,10 @@ export async function saveGroup(group, boardId) {
 //         })
 // }
 
-// const type = board.isStarred ? UNSTARRED_BOARD : STARRED_BOARD
-// store.dispatch({ type, board })
-// if (board.isStarred) boardService.savingStarredBoards(board)
 export async function settingIsStarred(boardId) {
     try {
-        const board = await boardService.getById(boardId)
-        board.isStarred = !board.isStarred
-        await boardService.save(board)
+        const board = await boardService.changeIsStarred(boardId)
+        store.dispatch({ type: UPDATE_BOARD, board })
         return board
     } catch (err) {
         console.log('Cannot add board', err)
@@ -354,7 +348,7 @@ export async function removeLabelOrMemberFromTask(boardId, groupId, taskId, labe
 }
 
 export async function deleteList(boardId, groupId, taskId, listId) {
-    try{
+    try {
         const board = await taskService.deleteList(boardId, groupId, taskId, listId)
         store.dispatch(getActionUpdateBoard(board))
     } catch (err) {

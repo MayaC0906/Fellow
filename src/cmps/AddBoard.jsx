@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 import { additionTaskSvg, workspaceSvg } from "./Svgs";
-import { Textarea } from "@mui/joy";
-import { Button } from "@mui/base";
+
 import { boardService } from "../services/board.service.local";
 import { addBoard } from "../store/actions/board.actions";
 import { Link, useNavigate } from "react-router-dom";
@@ -21,6 +20,7 @@ export function AddBoard({ setIsBoardAdded }) {
     }
 
     async function onSaveNewBoard() {
+        if (!boardTitle) return
         let savedBoard = { ...newBoard, title: boardTitle }
         if (backGroundgImg) {
             savedBoard.style.backgroundImage = backGroundgImg
@@ -58,17 +58,7 @@ export function AddBoard({ setIsBoardAdded }) {
                         </div>
                         <section className="board-title-input">
                             <p className="title input">Board title <span>*</span></p>
-                            <Textarea required onChange={onSetBoardTtile}
-                                sx={{
-                                    width: 280, height: 36, fontSize: 14, mb: 1.5, borderRadius: '3px',
-                                    boxShadow: 'none',
-                                    '&:hover': {
-                                        boxShadow: !boardTitle ? 'inset 0 0 0 2px #e34935' : '',
-                                    },
-                                    '&:active &:focus': {
-                                        boxShadow: !boardTitle ? 'inset 0 0 0 2px #388bff' : '',
-                                    },
-                                }}
+                            <input className={boardTitle ? 'fill-text' : 'none-text'} required id="addBoardTitle" type="text" value={boardTitle} onChange={onSetBoardTtile}
                             />
                         </section>
                         <button className={`create-board clean-btn ${boardTitle ? '' : 'boardTileCheck'}`} onClick={onSaveNewBoard}>Create</button>
