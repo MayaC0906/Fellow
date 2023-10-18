@@ -60,7 +60,7 @@ export function AddBoard({ setIsBoardAdded }) {
                             <p className="title input">Board title <span>*</span></p>
                             <Textarea required onChange={onSetBoardTtile}
                                 sx={{
-                                    width: 280, p: '8px 12px', height: 36, fontSize: 12, mb: 1.5, borderRadius: '3px',
+                                    width: 280, height: 36, fontSize: 14, mb: 1.5, borderRadius: '3px',
                                     boxShadow: 'none',
                                     '&:hover': {
                                         boxShadow: !boardTitle ? 'inset 0 0 0 2px #e34935' : '',
