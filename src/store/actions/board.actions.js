@@ -17,9 +17,10 @@ export function getActionAddBoard(board) {
         board
     }
 }
+
 export function getActionUpdateBoard(board) {
     return {
-        type: UPDATE_BOARD,
+        type: SET_BOARD,
         board
     }
 }
@@ -27,12 +28,10 @@ export function getActionUpdateBoard(board) {
 export async function loadBoards() {
     try {
         const boards = await boardService.query()
-        // console.log('Boards from DB:', boards)
         store.dispatch({
             type: SET_BOARDS,
             boards
         })
-
         return boards
     } catch (err) {
         console.log('Cannot load boards', err)
@@ -65,7 +64,6 @@ export async function removeBoard(boardId) {
 export async function addBoard(board) {
     try {
         const savedBoard = await boardService.save(board)
-        console.log('Added Board', savedBoard)
         store.dispatch(getActionAddBoard(savedBoard))
         return savedBoard
     } catch (err) {
@@ -80,10 +78,10 @@ export async function updateBoard(board) {
         console.log('Updated Board:', savedBoard)
         store.dispatch(getActionUpdateBoard(savedBoard))
         return savedBoard
-    } catch(err) {
+    } catch (err) {
         console.log('Cannot save board', err)
         throw err
-        }       
+    }
 }
 
 export async function removeGroup(groupId, boardId) {
@@ -97,8 +95,8 @@ export async function removeGroup(groupId, boardId) {
     }
 }
 
-export async function saveNewTask(group, boardId){
-    try{
+export async function saveNewTask(group, boardId) {
+    try {
         const board = await boardService.saveGroup(group, boardId)
         store.dispatch(getActionUpdateBoard(board))
         return group
@@ -141,14 +139,10 @@ export async function saveGroup(group, boardId) {
 //         })
 // }
 
-// const type = board.isStarred ? UNSTARRED_BOARD : STARRED_BOARD
-// store.dispatch({ type, board })
-// if (board.isStarred) boardService.savingStarredBoards(board)
 export async function settingIsStarred(boardId) {
     try {
-        const board = await boardService.getById(boardId)
-        board.isStarred = !board.isStarred
-        await boardService.save(board)
+        const board = await boardService.changeIsStarred(boardId)
+        store.dispatch({ type: UPDATE_BOARD, board })
         return board
     } catch (err) {
         console.log('Cannot add board', err)
@@ -195,10 +189,21 @@ export async function saveTaskDescription(boardId, groupId, taskId, newDescripti
     }
 }
 
-export async function updateTodoIsDone(boardId, groupId, taskId, todoId, isDone) {
+export async function saveTaskDueDate(boardId, groupId, taskId, formatedDate) {
+    try {
+        const board = await taskService.saveTaskDueDateTime(boardId, groupId, taskId, formatedDate)
+        store.dispatch(getActionUpdateBoard(board))
+        console.log('after:', board)
+    } catch (err) {
+        console.log('can not save due date:', err)
+        throw err
+    }
+}
+
+export async function updateTodoIsDone(boardId, groupId, taskId, listId, todoId, isDone) {
     console.log('isDone: from action', isDone)
     try {
-        const board = await taskService.updateTodoIsDone(boardId, groupId, taskId, todoId, isDone)
+        const board = await taskService.updateTodoIsDone(boardId, groupId, taskId, listId, todoId, isDone)
         console.log('board:', board)
         store.dispatch(getActionUpdateBoard(board))
     } catch (err) {
@@ -207,9 +212,9 @@ export async function updateTodoIsDone(boardId, groupId, taskId, todoId, isDone)
     }
 }
 
-export async function deleteTodo(boardId, groupId, taskId, todoId) {
+export async function deleteTodo(boardId, groupId, taskId, listId, todoId) {
     try {
-        const board = await taskService.deleteTodo(boardId, groupId, taskId, todoId)
+        const board = await taskService.deleteTodo(boardId, groupId, taskId, listId, todoId)
         store.dispatch(getActionUpdateBoard(board))
     } catch (err) {
         console.log('cannot delete todo');
@@ -217,10 +222,10 @@ export async function deleteTodo(boardId, groupId, taskId, todoId) {
     }
 }
 
-export async function updateTodoTitle(boardId, groupId, taskId, todoId, txt) {
+export async function updateTodoTitle(boardId, groupId, taskId, listId, todoId, txt) {
     console.log('txt:', txt)
     try {
-        const board = await taskService.updateTodoTitle(boardId, groupId, taskId, todoId, txt)
+        const board = await taskService.updateTodoTitle(boardId, groupId, taskId, listId, todoId, txt)
         store.dispatch(getActionUpdateBoard(board))
     } catch (err) {
         console.log('cant update todo title', err)
@@ -228,10 +233,9 @@ export async function updateTodoTitle(boardId, groupId, taskId, todoId, txt) {
     }
 }
 
-export async function addTodo(boardId, groupId, taskId, listId, txt) {
-    console.log('listId,txt,taskId:', listId, txt, taskId)
+export async function addTodo(boardId, groupId, taskId, listId, newTodo) {
     try {
-        const board = await taskService.addTodo(boardId, groupId, taskId, listId, txt)
+        const board = await taskService.addTodo(boardId, groupId, taskId, listId, newTodo)
         store.dispatch(getActionUpdateBoard(board))
     } catch (err) {
         console.log('cannot add todo')
@@ -249,6 +253,15 @@ export async function updateListTitle(boardId, groupId, taskId, listId, txt) {
     }
 }
 
+export async function removeDueDate(boardId, groupId, taskId) {
+    try {
+        const board = await taskService.removeDueDate(boardId, groupId, taskId)
+        store.dispatch(getActionUpdateBoard(board))
+    } catch (err) {
+        throw err
+    }
+}
+
 
 export async function removeAttachment(boardId, groupId, taskId, attachmentId) {
     try {
@@ -258,6 +271,7 @@ export async function removeAttachment(boardId, groupId, taskId, attachmentId) {
     } catch (err) {
         throw err
     }
+
 }
 
 export async function removeCover(boardId, groupId, taskId) {
@@ -270,12 +284,75 @@ export async function removeCover(boardId, groupId, taskId) {
     }
 }
 
-export async function addCoverImg (boardId, groupId, taskId, url) {
+
+
+export async function addChecklist(boardId, groupId, taskId, title) {
     try {
-        const board = await taskService.addCoverImg (boardId, groupId, taskId, url)
+        const board = await taskService.addChecklist(boardId, groupId, taskId, title)
+        store.dispatch({ type: SET_BOARD, board })
+    } catch (err) {
+        console.log('cant add checklist', err)
+        throw err
+    }
+}
+export async function toggleMemberOrLabel(boardId, groupId, taskId, itemToAdd, isLabel) {
+
+    try {
+        const board = await taskService.toggleMemberOrLabel(boardId, groupId, taskId, itemToAdd, isLabel)
+        // store.dispatch(getActionUpdateBoard(board))
+        store.dispatch({ type: SET_BOARD, board })
+    } catch (err) {
+        throw err
+    }
+}
+
+export async function addCoverImg(boardId, groupId, taskId, url) {
+    try {
+        const board = await taskService.addCoverImg(boardId, groupId, taskId, url)
         store.dispatch(getActionUpdateBoard(board))
         return board
     } catch (err) {
+        throw err
+    }
+}
+
+export async function saveLabelOnBoard(boardId, savedLabel) {
+    try {
+        const board = await boardService.saveLabel(boardId, savedLabel)
+        store.dispatch(getActionUpdateBoard(board))
+    } catch (err) {
+        console.log('Cannot save label', err)
+        throw err
+    }
+}
+
+export async function removeLabelFromBoard(boardId, labelId) {
+    try {
+        const board = await boardService.deleteLabel(boardId, labelId)
+        store.dispatch(getActionUpdateBoard(board))
+        return board
+    } catch (err) {
+        console.log('Cannot delete label', err)
+        throw err
+    }
+}
+
+export async function removeLabelOrMemberFromTask(boardId, groupId, taskId, labelToEditId, isLabel) {
+    try {
+        const board = await taskService.deleteLabelOrMember(boardId, groupId, taskId, labelToEditId, isLabel)
+        store.dispatch(getActionUpdateBoard(board))
+    } catch (err) {
+        console.log('Cannot delete label', err)
+        throw err
+    }
+}
+
+export async function deleteList(boardId, groupId, taskId, listId) {
+    try {
+        const board = await taskService.deleteList(boardId, groupId, taskId, listId)
+        store.dispatch(getActionUpdateBoard(board))
+    } catch (err) {
+        // console.log('can');
         throw err
     }
 }

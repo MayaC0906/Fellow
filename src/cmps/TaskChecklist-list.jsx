@@ -4,47 +4,54 @@ import { useParams } from 'react-router';
 import { TaskChecklistPreview } from './TaskChecklistPreview';
 // import {updateTodoIsDone} from ''
 
-import {updateTodoIsDone, updateTodoTitle, deleteTodo, addTodo, updateListTitle} from '../store/actions/board.actions.js'
+import {updateTodoIsDone, updateTodoTitle, deleteTodo, addTodo, updateListTitle, deleteList} from '../store/actions/board.actions.js'
 
 
 
-export function TaskCheckList({checklists}){
+export function TaskCheckList({setEditName, setTask, checklists}){
     const { boardId, groupId, taskId } = useParams()
     
     // console.log(toggleTodo);
 
-    async function onToggleDoneTodo(todoId,isDone){
-        console.log(isDone);
-        console.log(todoId);
+    async function onToggleDoneTodo(listId,todoId,isDone){
         try{
-            await updateTodoIsDone(boardId, groupId, taskId, todoId,isDone)
+            await updateTodoIsDone(boardId, groupId, taskId, listId,todoId,isDone)
         } catch (err) {
             console.log('cannot toggle todo done');
             throw err
         }
     } 
 
-    async function onUpdateTodoTitle(todoId, txt){
+    async function onDeleteList(listId) {
+        try{
+             await deleteList(boardId, groupId, taskId, listId)
+        } catch (err) {
+            console.log('cant delete list');
+            throw err
+        }
+    }
+
+    async function onUpdateTodoTitle(listId,todoId, txt){
         try {
-            await updateTodoTitle(boardId,groupId,taskId,todoId,txt)
+            await updateTodoTitle(boardId,groupId,taskId,listId,todoId,txt)
         } catch (err) {
             console.log('cannot save todo title')
             throw err
         }
     }
 
-    async function onAddTodo(listId, txt){
+    async function onAddTodo(listId, newTodo){
         try {
-            await addTodo(boardId, groupId, taskId, listId, txt)
+            await addTodo(boardId, groupId, taskId, listId, newTodo)
         } catch (err) {
             console.log('cannot add todo')
             throw err
         }
     }
 
-    async function onDeleteTodo(todoId){
+    async function onDeleteTodo(listId, todoId){
         try {
-            await deleteTodo(boardId, groupId, taskId, todoId)
+            await deleteTodo(boardId, groupId, taskId,listId, todoId)
         } catch (err) {
             console.log('cannot delete todo')
             throw err
@@ -61,6 +68,15 @@ export function TaskCheckList({checklists}){
     }
     // console.log(checklists);
     return (
-        <TaskChecklistPreview onAddTodo={onAddTodo} onUpdateListTitle={onUpdateListTitle} onDeleteTodo={onDeleteTodo} onUpdateTodoTitle={onUpdateTodoTitle} onToggleDoneTodo={onToggleDoneTodo} checklists={checklists}/>
+        <TaskChecklistPreview
+            onDeleteList={onDeleteList}
+            setTask={setTask}
+            onAddTodo={onAddTodo}
+            onUpdateListTitle={onUpdateListTitle}
+            onDeleteTodo={onDeleteTodo}
+            onUpdateTodoTitle={onUpdateTodoTitle}
+            onToggleDoneTodo={onToggleDoneTodo}
+            checklists={checklists}
+        />
     )
 }

@@ -4,7 +4,7 @@ import { addCoverImg, loadAttachments, removeAttachment, removeCover } from "../
 import { useEffect, useState } from "react";
 import { taskSvg } from "./Svgs";
 
-export function TaskAttachments({ taskAttachments, setTask, cover, setEditName}) {
+export function TaskAttachments({ taskAttachments, setTask, cover, setEditName }) {
 
     const { boardId, groupId, taskId } = useParams()
     const [attachments, setAttachments] = useState(taskAttachments)
@@ -17,7 +17,6 @@ export function TaskAttachments({ taskAttachments, setTask, cover, setEditName})
         try {
             const attachments = await loadAttachments(boardId, groupId, taskId)
             setAttachments(attachments)
-            console.log('Attachments loaded successfully')
         } catch (err) {
             console.log('Cannot load attachments', err)
         }
@@ -65,8 +64,8 @@ export function TaskAttachments({ taskAttachments, setTask, cover, setEditName})
             <header>
                 <div>
                     {taskSvg.attatchment}
-                    Attachments 
-                    <button onClick= {()=>setEditName('Attachment')}>Add</button>
+                    Attachments
+                    <button onClick={() => setEditName('Attachment')}>Add</button>
                 </div>
             </header>
 

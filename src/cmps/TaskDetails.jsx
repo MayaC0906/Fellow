@@ -7,13 +7,18 @@ import { TaskDescription } from "./TaskDescription"
 import { TaskDetailsSideNav } from "./TaskDetailsSideNav"
 import { taskSvg } from "./Svgs"
 import { TaskAttachments } from "./TaskAttachments"
+import { useSelector } from 'react-redux'
 
 
 import { TaskCheckList } from "./TaskChecklist-list"
 import { TaskDate } from "./TaskDate"
+import { TaskMember } from "./TaskMember"
+import { TaskLabel } from "./TaskLabel"
+
 export function TaskDetails() {
+    const board = useSelector((storeState) => storeState.boardModule.board)
     const { boardId, groupId, taskId } = useParams()
-    const [task, setTask] = useState(null)
+    const [task, setTask] = useState('')
     let [editName, setEditName] = useState('')
 
     useEffect(() => {
@@ -21,17 +26,16 @@ export function TaskDetails() {
     }, [])
 
     async function onLoadTask(boardId, groupId, taskId) {
-        console.log('loadTask');
         try {
             const newTask = await loadTask(boardId, groupId, taskId)
-            console.log('newTask', newTask);
-            setTask({ ...newTask })
+            setTask(newTask)
         } catch (err) {
             console.log('Can\'t load board', err);
             throw err
         }
     }
 
+    // console.log('task from task details:', task);
 
     if (!task) return <div>Loading</div>
     return (
@@ -52,6 +56,15 @@ export function TaskDetails() {
 
                     <TaskTitle taskTitle={task.title} />
 
+                    <section className="task-items-display flex align-center">
+                        <TaskMember taskMembersId={task.memberIds} setEditName={setEditName} setTask={setTask} />
+                        <TaskLabel taskLabelsId={task.labelIds} setEditName={setEditName} />
+                    </section>
+
+                    <section className="task-show">
+                        <TaskDate taskDate={task.dueDate} setEditName={setEditName} />
+                    </section>
+
                     <section className="task-main">
                         <section className="task-info">
                             <TaskDescription taskDescription={task.description} />
@@ -66,21 +79,19 @@ export function TaskDetails() {
 
 
                         <section className="edit-task-nav">
-                            <TaskDetailsSideNav editName={editName} setEditName={setEditName} />
-                        </section>
+                            <TaskDetailsSideNav setTask={setTask} editName={editName} setEditName={setEditName} />
+                        </section >
 
-                        {/* <section className="task-date">
-                            <TaskDate />
-                        </section> */}
+
 
                         <section>
-                            <TaskCheckList checklists={task.checklists} />
+                            <TaskCheckList setTask={setTask} setEditName={setEditName} checklists={task.checklists} />
                         </section>
-                    </section>
+                    </section >
 
-                </article>
-            </section>
-        </div>
+                </article >
+            </section >
+        </div >
     )
 
 }

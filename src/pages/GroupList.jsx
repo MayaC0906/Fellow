@@ -73,23 +73,49 @@ export function GroupList() {
 		}
 	}
 
-    function handleDrag(result){
+    function handleDrag(result) {
         const { destination, source, type } = result
-		const copiedBoard = board
 
-		if (!destination || destination.droppableId === source.droppableId
-             && destination.index === source.index) return
-
-		if (type === 'groups') {
-			const newGroups = [...groups]
-			const [reorderedGroups] = newGroups.splice(source.index, 1)
-			newGroups.splice(destination.index, 0, reorderedGroups)
-
-			copiedBoard.groups = newGroups
-			updateBoard(copiedBoard)
-			return
-		}
+        if (!destination || (destination.droppableId === source.droppableId && destination.index === source.index)) return
+ 
+        const clonedBoard = { ...board }
+      
+        if (type === 'groups') {
+            const updatedGroups = [...clonedBoard.groups]
+            const [movedGroup] = updatedGroups.splice(source.index, 1)
+            updatedGroups.splice(destination.index, 0, movedGroup)
+      
+            clonedBoard.groups = updatedGroups;
+            updateBoard(clonedBoard);
+            return;
+        }
+      
+        if (type === 'tasks') {
+            const originalGroup = clonedBoard.groups.find(group => group.id === source.droppableId)
+            const targetGroup = clonedBoard.groups.find(group => group.id === destination.droppableId)
+      
+            if (originalGroup === targetGroup) {
+                const updatedTasks = [...originalGroup.tasks]
+                const [movedTask] = updatedTasks.splice(source.index, 1)
+                updatedTasks.splice(destination.index, 0, movedTask)
+      
+                originalGroup.tasks = updatedTasks
+                updateBoard(clonedBoard)
+                return
+            } else {
+                const tasksFromOriginalGroup = [...originalGroup.tasks]
+                const tasksForTargetGroup = [...targetGroup.tasks]
+                const [movedTask] = tasksFromOriginalGroup.splice(source.index, 1)
+                tasksForTargetGroup.splice(destination.index, 0, movedTask)
+      
+                originalGroup.tasks = tasksFromOriginalGroup
+                targetGroup.tasks = tasksForTargetGroup
+                updateBoard(clonedBoard)
+                return
+            }
+        }
     }
+    
 
 
     if(!groups) return <div>Loading..</div>
@@ -126,6 +152,7 @@ export function GroupList() {
                                                 labels={board.labels}
                                                 members={board.members}
                                                 group={group}
+                                                handleDrag={handleDrag}
                                             />
                                         </li>
                                     )}

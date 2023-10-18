@@ -9,14 +9,19 @@ export const boardService = {
     getById,
     save,
     remove,
-    // getEmptyBaba,
-    // addBabaMsg,
     getLabels,
     getCheckListStatus,
     getMembers,
     getEmptyGroup,
     saveGroup,
     removeGroup,
+    getGroupById,
+    getEmptyLabel,
+    saveLabel,
+    deleteLabel,
+    getEmptyBoard,
+    changeIsStarred
+
 }
 window.bs = boardService
 
@@ -54,7 +59,6 @@ async function query() {
     // if (filterBy.price) {
     //     boards = boards.filter(board => board.price <= filterBy.price)
     // }
-    console.log('boards from:', boards)
     return boards
 }
 
@@ -74,7 +78,7 @@ async function save(board) {
         savedBoard = await storageService.put(STORAGE_KEY, board)
     } else {
         // Later, owner is set by the backend
-        board.owner = userService.getLoggedinUser()
+        // board.owner = userService.getLoggedinUser()
         savedBoard = await storageService.post(STORAGE_KEY, board)
     }
     return savedBoard
@@ -103,6 +107,19 @@ function getEmptyGroup() {
     }
 }
 
+async function getGroupById(groupId, boardId) {
+    try {
+        const groups = await queryGroups(boardId)
+        const group = groups.find((grp) => {
+            return grp.id === groupId
+        })
+        return group
+    } catch (err) {
+        console.log('Failed to get group', err)
+        throw err
+    }
+}
+
 async function saveGroup(group, boardId) {
     try {
         let board = await getById(boardId)
@@ -120,8 +137,6 @@ async function saveGroup(group, boardId) {
     }
 }
 
-
-
 async function removeGroup(groupId, boardId) {
     try {
         const board = await getById(boardId)
@@ -134,13 +149,48 @@ async function removeGroup(groupId, boardId) {
     }
 }
 
-const board = [
-    {
-        _id: "b101",
-        title: "Final-project",
+function getEmptyLabel() {
+    return {
+        id: utilService.makeId(),
+        title: '',
+        color: ''
+    }
+}
+
+async function saveLabel(boardId, savedLabel) {
+    try {
+        const board = await getById(boardId)
+        const labelIdx = board.labels.findIndex(labels => labels.id === savedLabel.id)
+        if (labelIdx === -1) {
+            board.labels = [...board.labels, savedLabel]
+        } else {
+            board.labels.splice(labelIdx, 1, savedLabel)
+        }
+        return save(board)
+    } catch (err) {
+        console.log('Failed to save labels', err)
+        throw err
+    }
+
+}
+
+async function deleteLabel(boardId, labelId) {
+    try {
+        const board = await getById(boardId)
+        const updatedLabels = board.labels.filter(label => label.id !== labelId)
+        board.labels = updatedLabels
+        return save(board)
+    } catch (err) {
+        console.log('Failed to remove labels', err)
+        throw err
+    }
+}
+
+function getEmptyBoard() {
+    return {
+        title: '',
         isStarred: false,
-        archivedAt: 1589983468418,
-        isStarred: false,
+        archivedAt: Date.now(),
         createdBy: {
             "_id": "u103",
             "fullname": "Sahar Machpud",
@@ -148,24 +198,117 @@ const board = [
         },
         style: {
             backgroundImage: "",
-            backgroundColor: "rgb(230, 165, 165)"
+            backgroundColor: ""
         },
         labels: [
             {
                 "id": "l101",
                 "title": "Urgent",
-                "color": "#f87462"
+                "color": "#4BCE97"
             },
             {
                 "id": "l102",
                 "title": "Tasks",
-                "color": "#b8acf6"
+                "color": "#F5CD47"
             },
             {
                 "id": "l103",
                 "title": "Data",
-                "color": "#c1f0f5"
+                "color": "#FEA362"
+            },
+            {
+                "id": "l104",
+                "title": "",
+                "color": "#F87168"
+            },
+            {
+                "id": "l105",
+                "title": "",
+                "color": "#9F8FEF"
+            },
+            {
+                "id": "l106",
+                "title": "",
+                "color": "#579DFF"
+            },
+        ],
+        members: [
+            {
+                "_id": "u101",
+                "fullname": "Maya Cohen",
+                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
+            },
+            {
+                "_id": "u102",
+                "fullname": "Reut Edry",
+                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+            },
+            {
+                "_id": "u103",
+                "fullname": "Sahar Machpud",
+                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
             }
+        ],
+        groups: [
+            { id: utilService.makeId(), title: '', tasks: [], style: {} }
+        ],
+        activities: [],
+        cmpsOrder: ["StatusPicker", "MemberPicker", "DatePicker"]
+    }
+}
+
+async function changeIsStarred(boardId) {
+    const board = await boardService.getById(boardId)
+    board.isStarred = !board.isStarred
+    return save(board)
+}
+
+const board = [
+    {
+        _id: "b106",
+        title: "Final-project-dropping",  //need it for tasks D&D(using makeId())
+        isStarred: true,
+        archivedAt: 1589983468418,
+        createdBy: {
+            "_id": "u103",
+            "fullname": "Sahar Machpud",
+            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
+        },
+        style: {
+            backgroundImage: "https://res.cloudinary.com/duvatj8kg/image/upload/v1697200986/1_qmyhwb.jpg",
+            backgroundColor: ""
+        },
+        labels: [
+            {
+                "id": "l101",
+                "title": "Urgent",
+                "color": "#4BCE97"
+            },
+            {
+                "id": "l102",
+                "title": "Tasks",
+                "color": "#F5CD47"
+            },
+            {
+                "id": "l103",
+                "title": "Data",
+                "color": "#FEA362"
+            },
+            {
+                "id": "l104",
+                "title": "",
+                "color": "#F87168"
+            },
+            {
+                "id": "l105",
+                "title": "",
+                "color": "#9F8FEF"
+            },
+            {
+                "id": "l106",
+                "title": "",
+                "color": "#579DFF"
+            },
         ],
         members: [
             {
@@ -186,11 +329,11 @@ const board = [
         ],
         groups: [
             {
-                "id": "g101",
+                "id": utilService.makeId(),
                 "title": "Backlog-server",
                 "tasks": [
                     {
-                        "id": "c103",
+                        "id": utilService.makeId(),
                         "title": "Demo data",
                         "description": null,
                         "cover": {
@@ -200,7 +343,7 @@ const board = [
                         },
                         "attachments": [
                             {
-                                "id": "123abc",
+                                "id": utilService.makeId(),
                                 "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696368347/%D7%A6%D7%99%D7%9C%D7%95%D7%9D_%D7%9E%D7%A1%D7%9A_2023-07-20_131912_zfdlhz.png"
                             }
                         ],
@@ -213,19 +356,19 @@ const board = [
                         "labelIds": ["l101", "l102", "l103"],
                         "memberIds": ["u101", "u102", "u103"],
                         "watching": true,
-                        "dueDate": 1696764840,
+                        "dueDate": null,
                         "checklists": [
                             {
-                                "id": "YEhmF",
+                                "id": utilService.makeId(),
                                 "title": "Checklist",
                                 "todos": [
                                     {
-                                        "id": "212jX",
+                                        "id": utilService.makeId(),
                                         "title": "Finishing untill 16:30",
                                         "isDone": true
                                     },
                                     {
-                                        "id": "212je",
+                                        "id": utilService.makeId(),
                                         "title": "Successing",
                                         "isDone": false
                                     }
@@ -234,7 +377,7 @@ const board = [
                         ],
                         "comments": [
                             {
-                                "id": "ZdPnm",
+                                "id": utilService.makeId(),
                                 "txt": "Important",
                                 "createdAt": 1696334520,
                                 "byMember": {
@@ -246,7 +389,7 @@ const board = [
                         ],
                     },
                     {
-                        "id": "c104",
+                        "id": utilService.makeId(),
                         "title": "Connect to Mongo",
                         "description": null,
                         "archivedAt": null,
@@ -261,7 +404,7 @@ const board = [
                         },
                         "attachments": [
                             {
-                                "id": "123abg",
+                                "id": utilService.makeId(),
                                 "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
                                 'createdAt': 1696333740,
                             },
@@ -274,7 +417,7 @@ const board = [
                         "watching": false
                     },
                     {
-                        "id": "c1045",
+                        "id": utilService.makeId(),
                         "title": "Adding npm packages",
                         "description": null,
                         "archivedAt": null,
@@ -289,7 +432,7 @@ const board = [
                         },
                         "attachments": [
                             {
-                                "id": "123abger",
+                                "id": utilService.makeId(),
                                 "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696371749/npm_zfi8q9.png",
                                 'createdAt': 1696348680,
                             },
@@ -305,21 +448,21 @@ const board = [
                 "style": {}
             },
             {
-                "id": "g102",
-                "title": "Group 2",
+                "id": utilService.makeId(),
+                "title": "Backlog-client",
                 "tasks": [
                     {
-                        "id": "c103",
-                        "title": "Demo data",
+                        "id": utilService.makeId(),
+                        "title": "Add react-beautiful-dnd library",
                         "description": null,
                         "cover": {
                             "backgroundColor": "",
-                            "img": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696368347/%D7%A6%D7%99%D7%9C%D7%95%D7%9D_%D7%9E%D7%A1%D7%9A_2023-07-20_131912_zfdlhz.png",
+                            "img": "https://trello.com/1/cards/651c0842cf5946d21802327d/attachments/651c09552a41a0070e0715a1/previews/651c09552a41a0070e071635/download/rbdpng.png",
                             "createdAt": 1696332780
                         },
                         "attachments": [
                             {
-                                "id": "123abc",
+                                "id": utilService.makeId(),
                                 "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696368347/%D7%A6%D7%99%D7%9C%D7%95%D7%9D_%D7%9E%D7%A1%D7%9A_2023-07-20_131912_zfdlhz.png"
                             }
                         ],
@@ -332,19 +475,19 @@ const board = [
                         "labelIds": ["l101", "l102", "l103"],
                         "memberIds": ["u101", "u102", "u103"],
                         "watching": true,
-                        "dueDate": 1696764840,
+                        "dueDate": null,
                         "checklists": [
                             {
-                                "id": "YEhmF",
+                                "id": utilService.makeId(),
                                 "title": "Checklist",
                                 "todos": [
                                     {
-                                        "id": "212jX",
+                                        "id": utilService.makeId(),
                                         "title": "Finishing untill 16:30",
                                         "isDone": true
                                     },
                                     {
-                                        "id": "212je",
+                                        "id": utilService.makeId(),
                                         "title": "Successing",
                                         "isDone": false
                                     }
@@ -353,7 +496,7 @@ const board = [
                         ],
                         "comments": [
                             {
-                                "id": "ZdPnm",
+                                "id": utilService.makeId(),
                                 "txt": "Important",
                                 "createdAt": 1696334520,
                                 "byMember": {
@@ -365,13 +508,13 @@ const board = [
                         ],
                     },
                     {
-                        "id": "c104",
-                        "title": "Connect to Mongo",
+                        "id": utilService.makeId(),
+                        "title": "Project planning",
                         "description": null,
                         "archivedAt": null,
                         "cover": {
                             "backgroundColor": "",
-                            "img": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696368598/1_1_tasfsz.png"
+                            "img": "https://trello.com/1/cards/651bebdea9a06da3b2b0cc78/attachments/651bfeba9907c9d50218de36/previews/651bfebc9907c9d50218e1d7/download/BUild-idea.jpg"
                         },
                         "byMember": {
                             "_id": "u103",
@@ -380,7 +523,7 @@ const board = [
                         },
                         "attachments": [
                             {
-                                "id": "123abg",
+                                "id": utilService.makeId(),
                                 "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
                                 'createdAt': 1696333740,
                             },
@@ -393,13 +536,13 @@ const board = [
                         "watching": false
                     },
                     {
-                        "id": "c1045",
+                        "id": utilService.makeId(),
                         "title": "Adding npm packages",
                         "description": null,
                         "archivedAt": null,
                         "cover": {
                             "backgroundColor": "",
-                            "img": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696371749/npm_zfi8q9.png"
+                            "img": "https://trello.com/1/cards/651c0a337b39c5cdc0951338/attachments/651c3bbdee02e018d2d7b412/previews/651c3bbeee02e018d2d7b45f/download/npm2.png"
                         },
                         "byMember": {
                             "_id": "u102",
@@ -425,21 +568,21 @@ const board = [
             },
             ///////////////
             {
-                "id": "g10222",
+                "id": utilService.makeId(),
                 "title": "in-development",
                 "tasks": [
                     {
-                        "id": "c103",
-                        "title": "Demo data",
+                        "id": utilService.makeId(),
+                        "title": "Add user auth",
                         "description": null,
                         "cover": {
                             "backgroundColor": "",
-                            "img": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696368347/%D7%A6%D7%99%D7%9C%D7%95%D7%9D_%D7%9E%D7%A1%D7%9A_2023-07-20_131912_zfdlhz.png",
+                            "img": "",
                             "createdAt": 1696332780
                         },
                         "attachments": [
                             {
-                                "id": "123abc",
+                                "id": utilService.makeId(),
                                 "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696368347/%D7%A6%D7%99%D7%9C%D7%95%D7%9D_%D7%9E%D7%A1%D7%9A_2023-07-20_131912_zfdlhz.png"
                             }
                         ],
@@ -452,19 +595,19 @@ const board = [
                         "labelIds": ["l101", "l102", "l103"],
                         "memberIds": ["u101", "u102", "u103"],
                         "watching": true,
-                        "dueDate": 1696764840,
+                        "dueDate": null,
                         "checklists": [
                             {
-                                "id": "YEhmF",
+                                "id": utilService.makeId(),
                                 "title": "Checklist",
                                 "todos": [
                                     {
-                                        "id": "212jX",
+                                        "id": utilService.makeId(),
                                         "title": "Finishing untill 16:30",
                                         "isDone": true
                                     },
                                     {
-                                        "id": "212je",
+                                        "id": utilService.makeId(),
                                         "title": "Successing",
                                         "isDone": false
                                     }
@@ -473,7 +616,7 @@ const board = [
                         ],
                         "comments": [
                             {
-                                "id": "ZdPnm",
+                                "id": utilService.makeId(),
                                 "txt": "Important",
                                 "createdAt": 1696334520,
                                 "byMember": {
@@ -485,13 +628,13 @@ const board = [
                         ],
                     },
                     {
-                        "id": "c104",
-                        "title": "Connect to Mongo",
+                        "id": utilService.makeId(),
+                        "title": "Adding backend services",
                         "description": null,
                         "archivedAt": null,
                         "cover": {
-                            "backgroundColor": "",
-                            "img": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696368598/1_1_tasfsz.png"
+                            "backgroundColor": "yellow",
+                            "img": ""
                         },
                         "byMember": {
                             "_id": "u103",
@@ -500,7 +643,7 @@ const board = [
                         },
                         "attachments": [
                             {
-                                "id": "123abg",
+                                "id": utilService.makeId(),
                                 "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
                                 'createdAt': 1696333740,
                             },
@@ -513,13 +656,13 @@ const board = [
                         "watching": false
                     },
                     {
-                        "id": "c1045",
-                        "title": "Adding npm packages",
+                        "id": utilService.makeId(),
+                        "title": "SCSS Architecture",
                         "description": null,
                         "archivedAt": null,
                         "cover": {
                             "backgroundColor": "",
-                            "img": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696371749/npm_zfi8q9.png"
+                            "img": "https://trello.com/1/cards/651bfda2b36856a0f1584811/attachments/651c05005a8ec24441d587b0/previews/651c05015a8ec24441d58821/download/SCSS.webp"
                         },
                         "byMember": {
                             "_id": "u102",
@@ -528,7 +671,7 @@ const board = [
                         },
                         "attachments": [
                             {
-                                "id": "123abger",
+                                "id": utilService.makeId(),
                                 "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696371749/npm_zfi8q9.png",
                                 'createdAt': 1696348680,
                             },
@@ -539,26 +682,53 @@ const board = [
                         "labelIds": ["l101"],
                         "dueDate": null,
                         "watching": true
+                    }, {
+                        "id": utilService.makeId(),
+                        "title": "Socket services",
+                        "description": null,
+                        "archivedAt": null,
+                        "cover": {
+                            "backgroundColor": "yellow",
+                            "img": "https://trello.com/1/cards/651c013b277d997329feec74/attachments/651c01446984182bc136bbb5/previews/651c01446984182bc136bc50/download/socketsImg.png"
+                        },
+                        "byMember": {
+                            "_id": "u103",
+                            "fullname": "Sahar Machpud",
+                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
+                        },
+                        "attachments": [
+                            {
+                                "id": utilService.makeId(),
+                                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
+                                'createdAt': 1696333740,
+                            },
+                        ],
+                        "comments": [],
+                        "checklists": [],
+                        "memberIds": ["u102"],
+                        "labelIds": ["l101"],
+                        "dueDate": null,
+                        "watching": false
                     }
                 ],
                 "style": {}
             },
             {
-                "id": "g101112",
+                "id": utilService.makeId(),
                 "title": "QA",
                 "tasks": [
                     {
-                        "id": "c103w",
-                        "title": "Demo data",
+                        "id": utilService.makeId(),
+                        "title": "Bugs search",
                         "description": null,
                         "cover": {
                             "backgroundColor": "",
-                            "img": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696368347/%D7%A6%D7%99%D7%9C%D7%95%D7%9D_%D7%9E%D7%A1%D7%9A_2023-07-20_131912_zfdlhz.png",
+                            "img": "https://trello.com/1/cards/651c064b620e619a028eb825/attachments/651c3cb49a7657692aea99c3/previews/651c3cb59a7657692aea99d9/download/bug.png.jpg",
                             "createdAt": 1696332780
                         },
                         "attachments": [
                             {
-                                "id": "123abc",
+                                "id": utilService.makeId(),
                                 "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696368347/%D7%A6%D7%99%D7%9C%D7%95%D7%9D_%D7%9E%D7%A1%D7%9A_2023-07-20_131912_zfdlhz.png"
                             }
                         ],
@@ -571,14 +741,14 @@ const board = [
                         "labelIds": ["l101", "l102", "l103"],
                         "memberIds": ["u101", "u102", "u103"],
                         "watching": true,
-                        "dueDate": 1696764840,
+                        "dueDate": null,
                         "checklists": [
                             {
-                                "id": "YEhmF",
+                                "id": utilService.makeId(),
                                 "title": "Checklist",
                                 "todos": [
                                     {
-                                        "id": "212jX",
+                                        "id": utilService.makeId(),
                                         "title": "Finishing untill 16:30",
                                         "isDone": true
                                     },
@@ -592,7 +762,7 @@ const board = [
                         ],
                         "comments": [
                             {
-                                "id": "ZdPnm",
+                                "id": utilService.makeId(),
                                 "txt": "Important",
                                 "createdAt": 1696334520,
                                 "byMember": {
@@ -604,13 +774,13 @@ const board = [
                         ],
                     },
                     {
-                        "id": "c104",
-                        "title": "Connect to Mongo",
+                        "id": utilService.makeId(),
+                        "title": "Check user auth",
                         "description": null,
                         "archivedAt": null,
                         "cover": {
-                            "backgroundColor": "",
-                            "img": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696368598/1_1_tasfsz.png"
+                            "backgroundColor": "lightcyan",
+                            "img": ""
                         },
                         "byMember": {
                             "_id": "u103",
@@ -619,7 +789,7 @@ const board = [
                         },
                         "attachments": [
                             {
-                                "id": "123abg",
+                                "id": utilService.makeId(),
                                 "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
                                 'createdAt': 1696333740,
                             },
@@ -631,55 +801,28 @@ const board = [
                         "dueDate": null,
                         "watching": false
                     },
-                    {
-                        "id": "c1045",
-                        "title": "Adding npm packages",
-                        "description": null,
-                        "archivedAt": null,
-                        "cover": {
-                            "backgroundColor": "",
-                            "img": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696371749/npm_zfi8q9.png"
-                        },
-                        "byMember": {
-                            "_id": "u102",
-                            "fullname": "Reut Edry",
-                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
-                        },
-                        "attachments": [
-                            {
-                                "id": "123abger",
-                                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696371749/npm_zfi8q9.png",
-                                'createdAt': 1696348680,
-                            },
-                        ],
-                        "comments": [],
-                        "checklists": [],
-                        "memberIds": ["u102"],
-                        "labelIds": ["l101"],
-                        "dueDate": null,
-                        "watching": true
-                    }
+
                 ],
                 "style": {}
             },
 
             ///////////////
             {
-                "id": "g10123",
-                "title": "Done",
+                "id": utilService.makeId(),
+                "title": "QA-Done",
                 "tasks": [
                     {
-                        "id": "c103",
-                        "title": "Demo data",
+                        "id": utilService.makeId(),
+                        "title": "Regression testing",
                         "description": null,
                         "cover": {
-                            "backgroundColor": "",
-                            "img": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696368347/%D7%A6%D7%99%D7%9C%D7%95%D7%9D_%D7%9E%D7%A1%D7%9A_2023-07-20_131912_zfdlhz.png",
+                            "backgroundColor": "orange",
+                            "img": "",
                             "createdAt": 1696332780
                         },
                         "attachments": [
                             {
-                                "id": "123abc",
+                                "id": utilService.makeId(),
                                 "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696368347/%D7%A6%D7%99%D7%9C%D7%95%D7%9D_%D7%9E%D7%A1%D7%9A_2023-07-20_131912_zfdlhz.png"
                             }
                         ],
@@ -689,22 +832,22 @@ const board = [
                             "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
                         },
                         "archivedAt": null,
-                        "labelIds": ["l101", "l102", "l103"],
-                        "memberIds": ["u101", "u102", "u103"],
+                        "labelIds": ["l101"],
+                        "memberIds": ["u101"],
                         "watching": true,
-                        "dueDate": 1696764840,
+                        "dueDate": null,
                         "checklists": [
                             {
-                                "id": "YEhmF",
+                                "id": utilService.makeId(),
                                 "title": "Checklist",
                                 "todos": [
                                     {
-                                        "id": "212jX",
+                                        "id": utilService.makeId(),
                                         "title": "Finishing untill 16:30",
                                         "isDone": true
                                     },
                                     {
-                                        "id": "212je",
+                                        "id": utilService.makeId(),
                                         "title": "Successing",
                                         "isDone": false
                                     }
@@ -713,7 +856,115 @@ const board = [
                         ],
                         "comments": [
                             {
-                                "id": "ZdPnm",
+                                "id": utilService.makeId(),
+                                "txt": "Important",
+                                "createdAt": 1696334520,
+                                "byMember": {
+                                    "_id": "u101",
+                                    "fullname": "Maya Cohen",
+                                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
+                                }
+                            }
+                        ]
+                    }, {
+                        "id": utilService.makeId(),
+                        "title": "Spell check",
+                        "description": null,
+                        "cover": {
+                            "backgroundColor": "",
+                            "img": "",
+                            "createdAt": 1696332780
+                        },
+                        "attachments": [
+                            {
+                                "id": utilService.makeId(),
+                                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696368347/%D7%A6%D7%99%D7%9C%D7%95%D7%9D_%D7%9E%D7%A1%D7%9A_2023-07-20_131912_zfdlhz.png"
+                            }
+                        ],
+                        "byMember": {
+                            "_id": "u102",
+                            "fullname": "Reut Edry",
+                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+                        },
+                        "archivedAt": null,
+                        "labelIds": ["l101"],
+                        "memberIds": ["u101"],
+                        "watching": true,
+                        "dueDate": null,
+                        "checklists": [
+                            {
+                                "id": utilService.makeId(),
+                                "title": "Checklist",
+                                "todos": [
+                                    {
+                                        "id": utilService.makeId(),
+                                        "title": "Finishing untill 16:30",
+                                        "isDone": true
+                                    },
+                                    {
+                                        "id": utilService.makeId(),
+                                        "title": "Successing",
+                                        "isDone": false
+                                    }
+                                ]
+                            }
+                        ],
+                        "comments": [
+                            {
+                                "id": utilService.makeId(),
+                                "txt": "Important",
+                                "createdAt": 1696334520,
+                                "byMember": {
+                                    "_id": "u101",
+                                    "fullname": "Maya Cohen",
+                                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": utilService.makeId(),
+                        "title": "A/B Testing",
+                        "description": null,
+                        "cover": {
+                            "backgroundColor": "green",
+                            "img": "",
+                            "createdAt": 1696332780
+                        },
+                        "attachments": [
+
+                        ],
+                        "byMember": {
+                            "_id": "u102",
+                            "fullname": "Reut Edry",
+                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+                        },
+                        "archivedAt": null,
+                        "labelIds": ["l101"],
+                        "memberIds": ["u101"],
+                        "watching": true,
+                        "dueDate": null,
+                        "checklists": [
+                            {
+                                "id": utilService.makeId(),
+                                "title": "Checklist",
+                                "todos": [
+                                    {
+                                        "id": utilService.makeId(),
+                                        "title": "Finishing untill 16:30",
+                                        "isDone": true
+                                    },
+                                    {
+                                        "id": utilService.makeId(),
+                                        "title": "Successing",
+                                        "isDone": false
+                                    }
+                                ]
+                            }
+                        ],
+                        "comments": [
+                            {
+                                "id": utilService.makeId(),
                                 "txt": "Important",
                                 "createdAt": 1696334520,
                                 "byMember": {
@@ -727,8 +978,188 @@ const board = [
 
 
                 ],
+
+                "style": {}
+            },
+            {
+                "id": utilService.makeId(),
+                "title": "Ready for production",
+                "tasks": [
+                    {
+                        "id": utilService.makeId(),
+                        "title": "Deployment",
+                        "description": null,
+                        "cover": {
+                            "backgroundColor": "",
+                            "img": "https://trello.com/1/cards/651c07991b3e73159882ad29/attachments/651c08eb8236c4a95c479066/previews/651c08ec8236c4a95c4790d2/download/Cloud-computing-deployment-models-1000x503.jpg",
+                            "createdAt": 1696332780
+                        },
+                        "attachments": [
+                            {
+                                "id": utilService.makeId(),
+                                "imgUrl": "https://trello.com/1/cards/651c07991b3e73159882ad29/attachments/651c08eb8236c4a95c479066/previews/651c08ec8236c4a95c4790d2/download/Cloud-computing-deployment-models-1000x503.jpg"
+                            }
+                        ],
+                        "byMember": {
+                            "_id": "u102",
+                            "fullname": "Reut Edry",
+                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+                        },
+                        "archivedAt": null,
+                        "labelIds": ["l101", "l102", "l103"],
+                        "memberIds": ["u101", "u102", "u103"],
+                        "watching": true,
+                        "dueDate": null,
+                        "checklists": [
+                            {
+                                "id": utilService.makeId(),
+                                "title": "Checklist",
+                                "todos": [
+                                    {
+                                        "id": utilService.makeId(),
+                                        "title": "Finishing untill 16:30",
+                                        "isDone": true
+                                    },
+                                    {
+                                        "id": utilService.makeId(),
+                                        "title": "Successing",
+                                        "isDone": false
+                                    }
+                                ]
+                            }
+                        ],
+                        "comments": [
+                            {
+                                "id": utilService.makeId(),
+                                "txt": "Important",
+                                "createdAt": 1696334520,
+                                "byMember": {
+                                    "_id": "u101",
+                                    "fullname": "Maya Cohen",
+                                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": utilService.makeId(),
+                        "title": "Documentation",
+                        "description": null,
+                        "cover": {
+                            "backgroundColor": "gray",
+                            "img": "",
+                            "createdAt": 1696332780
+                        },
+                        "attachments": [
+                            {
+                                "id": utilService.makeId(),
+                                "imgUrl": ""
+                            }
+                        ],
+                        "byMember": {
+                            "_id": "u102",
+                            "fullname": "Reut Edry",
+                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+                        },
+                        "archivedAt": null,
+                        "labelIds": ["l101", "l102", "l103"],
+                        "memberIds": ["u101", "u102", "u103"],
+                        "watching": true,
+                        "dueDate": null,
+                        "checklists": [
+                            {
+                                "id": utilService.makeId(),
+                                "title": "Checklist",
+                                "todos": [
+                                    {
+                                        "id": utilService.makeId(),
+                                        "title": "Finishing untill 16:30",
+                                        "isDone": true
+                                    },
+                                    {
+                                        "id": utilService.makeId(),
+                                        "title": "Successing",
+                                        "isDone": false
+                                    }
+                                ]
+                            }
+                        ],
+                        "comments": [
+                            {
+                                "id": utilService.makeId(),
+                                "txt": "Important",
+                                "createdAt": 1696334520,
+                                "byMember": {
+                                    "_id": "u101",
+                                    "fullname": "Maya Cohen",
+                                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": utilService.makeId(),
+                        "title": "Test data",
+                        "description": null,
+                        "cover": {
+                            "backgroundColor": "lightblue",
+                            "img": "",
+                            "createdAt": 1696355446
+                        },
+                        "attachments": [
+                            {
+                                "id": utilService.makeId(),
+                                "imgUrl": ""
+                            }
+                        ],
+                        "byMember": {
+                            "_id": "u102",
+                            "fullname": "Reut Edry",
+                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+                        },
+                        "archivedAt": null,
+                        "labelIds": ["l103"],
+                        "memberIds": ["u101", "u102", "u103"],
+                        "watching": true,
+                        "dueDate": null,
+                        "checklists": [
+                            {
+                                "id": utilService.makeId(),
+                                "title": "Checklist",
+                                "todos": [
+                                    {
+                                        "id": utilService.makeId(),
+                                        "title": "Finishing untill 16:30",
+                                        "isDone": true
+                                    },
+                                    {
+                                        "id": utilService.makeId(),
+                                        "title": "Successing",
+                                        "isDone": false
+                                    }
+                                ]
+                            }
+                        ],
+                        "comments": [
+                            {
+                                "id": utilService.makeId(),
+                                "txt": "Important",
+                                "createdAt": 1696334520,
+                                "byMember": {
+                                    "_id": "u101",
+                                    "fullname": "Maya Cohen",
+                                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
+                                }
+                            }
+                        ]
+                    },
+
+
+                ],
+
                 "style": {}
             }
+
 
 
 
@@ -791,7 +1222,7 @@ const board = [
         ],
         activities: [
             {
-                "id": "a101",
+                "id": utilService.makeId(),
                 "txt": "marked the due date incomplete",
                 "createdAt": 1696368960,
                 "byMember": {
@@ -800,16 +1231,16 @@ const board = [
                     "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
                 },
                 "group": {
-                    "id": "g101",
+                    "id": utilService.makeId(),
                     "title": "Backlog-server"
                 },
                 "task": {
-                    "id": "c103",
+                    "id": utilService.makeId(),
                     "title": "Demo data"
                 }
             },
             {
-                "id": "b102",
+                "id": utilService.makeId(),
                 "txt": "left this card",
                 "createdAt": 1696333780,
                 "byMember": {
@@ -818,11 +1249,11 @@ const board = [
                     "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
                 },
                 "group": {
-                    "id": "g101",
+                    "id": utilService.makeId(),
                     "title": "Backlog-server"
                 },
                 "task": {
-                    "id": "c104",
+                    "id": utilService.makeId(),
                     "title": "Connect to Mongo"
                 }
             }
@@ -831,392 +1262,5 @@ const board = [
 
         cmpsOrder: ["StatusPicker", "MemberPicker", "DatePicker"]
     },
-    {
-        _id: "b102",
-        title: "Test",
-        isStarred: false,
-        archivedAt: 1589983468418,
-        isStarred: true,
-        createdBy: {
-            "_id": "u103",
-            "fullname": "Sahar Machpud",
-            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
-        },
-        style: {
-            backgroundImage: "",
-            backgroundColor: "rgb(225, 98, 98)"
-        },
-        labels: [
-            {
-                "id": "l101",
-                "title": "Urgent",
-                "color": "#f87462"
-            },
-            {
-                "id": "l102",
-                "title": "Tasks",
-                "color": "#b8acf6"
-            },
-            {
-                "id": "l103",
-                "title": "Data",
-                "color": "#c1f0f5"
-            }
-        ],
-        members: [
-            {
-                "_id": "u101",
-                "fullname": "Maya Cohen",
-                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
-            },
-            {
-                "_id": "u102",
-                "fullname": "Reut Edry",
-                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
-            },
-            {
-                "_id": "u103",
-                "fullname": "Sahar Machpud",
-                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
-            }
-        ],
-        groups: [
-            {
-                "id": "g101",
-                "title": "Backlog-server",
-                "tasks": [
-                    {
-                        "id": "c103",
-                        "title": "Demo data",
-                        "description": null,
-                        "cover": {
-                            "backgroundColor": "",
-                            "img": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696368347/%D7%A6%D7%99%D7%9C%D7%95%D7%9D_%D7%9E%D7%A1%D7%9A_2023-07-20_131912_zfdlhz.png",
-                            "createdAt": 1696332780
-                        },
-                        "attachments": [
-                            {
-                                "id": "123abc",
-                                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696368347/%D7%A6%D7%99%D7%9C%D7%95%D7%9D_%D7%9E%D7%A1%D7%9A_2023-07-20_131912_zfdlhz.png"
-                            }
-                        ],
-                        "byMember": {
-                            "_id": "u102",
-                            "fullname": "Reut Edry",
-                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
-                        },
-                        "archivedAt": null,
-                        "labelIds": ["l101", "l102", "l103"],
-                        "memberIds": ["u101", "u102", "u103"],
-                        "watching": true,
-                        "dueDate": 1696764840,
-                        "checklists": [
-                            {
-                                "id": "YEhmF",
-                                "title": "Checklist",
-                                "todos": [
-                                    {
-                                        "id": "212jX",
-                                        "title": "Finishing untill 16:30",
-                                        "isDone": true
-                                    },
-                                    {
-                                        "id": "212je",
-                                        "title": "Successing",
-                                        "isDone": false
-                                    }
-                                ]
-                            }
-                        ],
-                        "comments": [
-                            {
-                                "id": "ZdPnm",
-                                "txt": "Important",
-                                "createdAt": 1696334520,
-                                "byMember": {
-                                    "_id": "u101",
-                                    "fullname": "Maya Cohen",
-                                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
-                                }
-                            }
-                        ],
-                    },
-                    {
-                        "id": "c104",
-                        "title": "Connect to Mongo",
-                        "description": null,
-                        "archivedAt": null,
-                        "cover": {
-                            "backgroundColor": "",
-                            "img": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696368598/1_1_tasfsz.png"
-                        },
-                        "byMember": {
-                            "_id": "u103",
-                            "fullname": "Sahar Machpud",
-                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
-                        },
-                        "attachments": [
-                            {
-                                "id": "123abg",
-                                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
-                                'createdAt': 1696333740,
-                            },
-                        ],
-                        "comments": [],
-                        "checklists": [],
-                        "memberIds": ["u102"],
-                        "labelIds": ["l101"],
-                        "dueDate": null,
-                        "watching": false
-                    },
-                    {
-                        "id": "c1045",
-                        "title": "Adding npm packages",
-                        "description": null,
-                        "archivedAt": null,
-                        "cover": {
-                            "backgroundColor": "",
-                            "img": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696371749/npm_zfi8q9.png"
-                        },
-                        "byMember": {
-                            "_id": "u102",
-                            "fullname": "Reut Edry",
-                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
-                        },
-                        "attachments": [
-                            {
-                                "id": "123abger",
-                                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696371749/npm_zfi8q9.png",
-                                'createdAt': 1696348680,
-                            },
-                        ],
-                        "comments": [],
-                        "checklists": [],
-                        "memberIds": ["u102"],
-                        "labelIds": ["l101"],
-                        "dueDate": null,
-                        "watching": true
-                    }
-                ],
-                "style": {}
-            },
-            {
-                "id": "g102",
-                "title": "Group 2",
-                "tasks": [
-                    {
-                        "id": "c103",
-                        "title": "Demo data",
-                        "description": null,
-                        "cover": {
-                            "backgroundColor": "",
-                            "img": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696368347/%D7%A6%D7%99%D7%9C%D7%95%D7%9D_%D7%9E%D7%A1%D7%9A_2023-07-20_131912_zfdlhz.png",
-                            "createdAt": 1696332780
-                        },
-                        "attachments": [
-                            {
-                                "id": "123abc",
-                                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696368347/%D7%A6%D7%99%D7%9C%D7%95%D7%9D_%D7%9E%D7%A1%D7%9A_2023-07-20_131912_zfdlhz.png"
-                            }
-                        ],
-                        "byMember": {
-                            "_id": "u102",
-                            "fullname": "Reut Edry",
-                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
-                        },
-                        "archivedAt": null,
-                        "labelIds": ["l101", "l102", "l103"],
-                        "memberIds": ["u101", "u102", "u103"],
-                        "watching": true,
-                        "dueDate": 1696764840,
-                        "checklists": [
-                            {
-                                "id": "YEhmF",
-                                "title": "Checklist",
-                                "todos": [
-                                    {
-                                        "id": "212jX",
-                                        "title": "Finishing untill 16:30",
-                                        "isDone": true
-                                    },
-                                    {
-                                        "id": "212je",
-                                        "title": "Successing",
-                                        "isDone": false
-                                    }
-                                ]
-                            }
-                        ],
-                        "comments": [
-                            {
-                                "id": "ZdPnm",
-                                "txt": "Important",
-                                "createdAt": 1696334520,
-                                "byMember": {
-                                    "_id": "u101",
-                                    "fullname": "Maya Cohen",
-                                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
-                                }
-                            }
-                        ],
-                    },
-                    {
-                        "id": "c104",
-                        "title": "Connect to Mongo",
-                        "description": null,
-                        "archivedAt": null,
-                        "cover": {
-                            "backgroundColor": "",
-                            "img": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696368598/1_1_tasfsz.png"
-                        },
-                        "byMember": {
-                            "_id": "u103",
-                            "fullname": "Sahar Machpud",
-                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
-                        },
-                        "attachments": [
-                            {
-                                "id": "123abg",
-                                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
-                                'createdAt': 1696333740,
-                            },
-                        ],
-                        "comments": [],
-                        "checklists": [],
-                        "memberIds": ["u102"],
-                        "labelIds": ["l101"],
-                        "dueDate": null,
-                        "watching": false
-                    },
-                    {
-                        "id": "c1045",
-                        "title": "Adding npm packages",
-                        "description": null,
-                        "archivedAt": null,
-                        "cover": {
-                            "backgroundColor": "",
-                            "img": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696371749/npm_zfi8q9.png"
-                        },
-                        "byMember": {
-                            "_id": "u102",
-                            "fullname": "Reut Edry",
-                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
-                        },
-                        "attachments": [
-                            {
-                                "id": "123abger",
-                                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696371749/npm_zfi8q9.png",
-                                'createdAt': 1696348680,
-                            },
-                        ],
-                        "comments": [],
-                        "checklists": [],
-                        "memberIds": ["u102"],
-                        "labelIds": ["l101"],
-                        "dueDate": null,
-                        "watching": true
-                    }
-                ],
-                "style": {}
-            },
-            // {
-            //     "id": "g103",
-            //     "title": "Group 3",
-            //     "tasks": [
-            //         {
-            //             "id": "c103",
-            //             "title": "Do that",
-            //             "archivedAt": 1589983468418,
-            //         },
-            //         {
-            //             "id": "c104",
-            //             "title": "Help me",
-            //             "priority": null,
-            //             "description": "description",
-            //             "comments": [
-            //                 {
-            //                     "id": "ZdPnm",
-            //                     "txt": "also @yaronb please CR this",
-            //                     "createdAt": 1590999817436,
-            //                     "byMember": {
-            //                         "_id": "u101",
-            //                         "fullname": "Tal Tarablus",
-            //                         "imgUrl": "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
-            //                     }
-            //                 }
-            //             ],
-            //             "checklists": [
-            //                 {
-            //                     "id": "YEhmF",
-            //                     "title": "Checklist",
-            //                     "todos": [
-            //                         {
-            //                             "id": "212jX",
-            //                             "title": "To Do 1",
-            //                             "isDone": false
-            //                         }
-            //                     ]
-            //                 }
-            //             ],
-            //             "memberIds": ["u101"],
-            //             "labelIds": ["l101", "l102"],
-            //             "dueDate": 16156215211,
-            //             "byMember": {
-            //                 "_id": "u101",
-            //                 "username": "Tal",
-            //                 "fullname": "Tal Tarablus",
-            //                 "imgUrl": "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
-            //             },
-            //             "style": {
-            //                 "backgroundColor": "#26de81"
-            //             }
-            //         }
-            //     ],
-            //     "style": {}
-            // }
-        ],
-        activities: [
-            {
-                "id": "a101",
-                "txt": "marked the due date incomplete",
-                "createdAt": 1696368960,
-                "byMember": {
-                    "_id": "u102",
-                    "fullname": "Reut Edry",
-                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
-                },
-                "group": {
-                    "id": "g101",
-                    "title": "Backlog-server"
-                },
-                "task": {
-                    "id": "c103",
-                    "title": "Demo data"
-                }
-            },
-            {
-                "id": "b102",
-                "txt": "left this card",
-                "createdAt": 1696333780,
-                "byMember": {
-                    "_id": "u103",
-                    "fullname": "Sahar Machpud",
-                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
-                },
-                "group": {
-                    "id": "g101",
-                    "title": "Backlog-server"
-                },
-                "task": {
-                    "id": "c104",
-                    "title": "Connect to Mongo"
-                }
-            }
-
-        ],
-
-        cmpsOrder: ["StatusPicker", "MemberPicker", "DatePicker"]
-    }
-
 ]
 

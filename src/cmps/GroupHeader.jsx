@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { appHeaderSvg, groupHeaderSvg, workspaceSvg } from "./Svgs";
+import { useSelector } from "react-redux";
 
 
 export function GroupHeader() {
+    const board = useSelector(storeState => storeState.boardModule.board)
     const [inputWidth, SetInputWidth] = useState('110px')
 
     function handleIputLength(event) {
@@ -15,7 +17,7 @@ export function GroupHeader() {
         <header className="group-header">
             <section className="visibility">
                 <section className="header-title">
-                    <input type="text" onChange={handleIputLength} value='Final-Project' style={{ width: inputWidth }} />
+                    <input type="text" onChange={handleIputLength} value={board.title} style={{ width: inputWidth }} />
                 </section>
                 <section className="group-visbility group-header">
                     <button className="group-header-btn svg star">{workspaceSvg.star}</button>

@@ -11,8 +11,11 @@ import { BoardSidebar } from "../cmps/BoardSidebar.jsx";
 
 
 export function BoardDetails() {
-    const dispatch = useDispatch();
-    const { boardId } = useParams();
+    const dispatch = useDispatch()
+    const { boardId } = useParams()
+    // const [boardToDisplay, setBoard] = useState([])
+    const board = useSelector(storeState => storeState.boardModule.board)
+
     
     useEffect(() => {
         loadBoards()
@@ -23,20 +26,20 @@ export function BoardDetails() {
    async function onLoadBoard(){
         try {
             const board = await loadBoard(boardId)
-            console.log('board loaded');
+            dispatch({ type: SET_BOARD, board })
+            console.log('board loaded')
+            // setBoard(board)
         } catch(err) {
             console.log('cant set board', err);
             throw err
         }     
     }
 
-    
-
-
+    if (!Object.keys(board).length) return <div>loading</div>
     return (
         <>
             <BoardSidebar />
-            <div className="board-details-container">
+            <div className="board-details-container" style={{ backgroundImage: `url(${board.style.backgroundImage})`, backgroundColor: board.style.backgroundColor }} >
                 <GroupHeader />
                 <Outlet/>
                 <GroupList boardId={boardId}/>

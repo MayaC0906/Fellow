@@ -1,67 +1,87 @@
 .board {
+
     &-list {
-        display: flex;
+        gap: rem(17px);
         flex-wrap: wrap;
-        justify-content: flex-start;
-        gap: 16px;
     }
 
     &-preview {
-        list-style: none;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        margin: 0;
-        padding: 0px;
+
         width: 190px;
+        height: 96px;
         border-radius: 3px;
+        background-position: center center;
+        background-size: cover;
+        position: relative;
+
+
+
+        &:hover {
+            filter: brightness(0.9);
+
+            .details span {
+                right: 8px;
+                opacity: 1;
+            }
+
+            a {
+                text-decoration: none;
+            }
+        }
+
+
+
+        a {
+            display: flex;
+            height: 100%;
+            width: 100%;
+        }
 
         .details {
             padding: 8px;
-            display: flex;
             flex-direction: column;
-            height: 100px;
             justify-content: space-between;
-            // position: relative;
+            width: 100%;
 
-            div {
-                position: relative;
-                width: 100%;
+            h2 {
+                font-size: rem(16px);
+                font-weight: 700;
+                color: #fff;
                 height: 20px;
-
-                svg {
-                    position: absolute;
-                    bottom: 0;
-                    right: 3px;
-                    width: 16px;
-                    height: 16px;
-                    // transform: translate(150%);
-                    opacity: 1;
-                    // transition: opacity .2s;
-                }
-
-                // &:hover {
-                //     opacity: 1;
-                //     right: 21px;
-                // }
+                line-height: 20px;
+                margin: 0;
+                // mix-blend-mode: color-dodge;
+                // text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
             }
 
+            span {
+                position: absolute;
+                align-self: end;
+                // mix-blend-mode: color-dodge;
+                right: -20px;
+                top: 70px;
+                transition: right .2s, opacity .2s;
+                opacity: 0;
+                // mix-blend-mode: color-dodge;
 
+                // text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+
+                &:hover {
+                    scale: 1.2;
+                }
+
+                svg {
+                    font-size: rem(14px);
+                    font-weight: 700;
+                    color: #fff;
+                    height: 18px;
+                }
+            }
+
+            .star-svg-full {
+                opacity: 1;
+                right: 8px;
+            }
         }
     }
-
-    &-container {
-        margin-block-end: 52px;
-
-        h2 {
-            font-size: rem(16px);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            // align-items: flex-end;
-            gap: 8px;
-            margin-block-end: 20px;
-        }
-    }
-
 }

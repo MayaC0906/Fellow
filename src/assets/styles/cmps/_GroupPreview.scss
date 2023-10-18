@@ -36,19 +36,78 @@
             align-content: center;
             font-family: Arial,Helvetica,sans-serif;
             font-size: 14px;
-            
         }
         footer{
             border-radius: 8px;
             color: #44546F;
             display: block;
             flex: 1 0 auto;
-            margin: 8px 0 8px 8px;
+            // margin: 0 0 4px 0;
             padding: 4px 8px 4px 6px;
             position: relative;
             text-decoration: none;
             -webkit-user-select: none;
             user-select: none;
+            textarea{
+                background-color: #ffffff;
+                box-shadow: 0px 1px 1px #091e4240, 0px 0px 1px #091e424f;
+                border-radius: 8px;
+                border: none;
+                height: 74px;
+                width: 100%;
+                height: auto;
+                margin: 0;
+                max-height: 162px;
+                min-height: 54px;
+                overflow: hidden;
+                overflow-wrap: break-word;
+                overflow-y: auto;
+                padding: 8px 12px;
+                resize: none;
+            }
+
+
+            .add-group-task {
+                background-color: transparent;
+                border-radius: 8px;
+                color: #44546f;
+                padding: 8px 12px 8px 8px;
+                text-decoration: none;
+                -webkit-user-select: none;
+                user-select: none;
+                display: flex;
+                align-items: center;
+                // justify-content: flex-start;
+                // flex-grow: 1;
+                // margin: 0;
+                justify-content: space-between;
+                section {
+                    display: flex;
+                    gap: 10px;
+                    justify-content: center;
+                    align-items: center;
+                    font-weight: 400;
+                    font-family: -apple-system, "system-ui", "Segoe UI", Roboto, "Noto Sans", Ubuntu, "Droid Sans", "Helvetica Neue", sans-serif;
+                    svg{
+                        height: 16px;
+                        width: 16px;
+                    }
+                }
+                svg{
+                    height: 18px;
+                    width: 18px;
+                }
+            }
+            .cancel{
+                margin-left: 10px;
+                // margin-top: ;
+                font-size: 18px;
+                padding: 3px 10px;
+                &:hover{
+                    cursor: pointer;
+                    background-color: #BFC4CE;
+                }
+            }
         }
 
         .task-list-container {
@@ -115,10 +174,20 @@
         }
     }
     input {
+        font-family: -apple-system, "system-ui", "Segoe UI", Roboto, "Noto Sans", Ubuntu, "Droid Sans", "Helvetica Neue", sans-serif;
+        cursor: pointer;
         border: none;
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 20px;
+        margin: 0;
+        padding: 6px 8px 6px 12px;
         &:focus-visible {
             outline: none;
         }
+
+        
 
         &:focus {
             border: none;
@@ -137,3 +206,10 @@
     }
     
 }
+
+
+
+
+
+
+//

@@ -21,7 +21,6 @@ export function App() {
                     </Route>
                     <Route path="/login" element={<LoginSignup />} />
                 </Routes>
-
             </main>
         </div>
     )
