@@ -10,6 +10,7 @@
         &-preview {
             cursor: pointer;
             margin-block-end: 2px;
+            border-radius: 3px;
 
 
             &:hover {
@@ -22,10 +23,17 @@
         }
 
         &-detail {
+            padding-inline-start: 4px;
+
             img {
                 width: 32px;
                 height: 32px;
                 border-radius: 50%;
+                object-fit: cover;
+
+                &:hover {
+                    filter: contrast(70%) brightness(120%);
+                }
             }
 
             h2 {
@@ -33,6 +41,7 @@
                 font-size: rem(14px);
                 font-weight: 400;
                 margin-block: 8px;
+                color: rgb(23, 43, 77);
             }
 
             span {

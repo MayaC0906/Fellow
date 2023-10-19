@@ -1,8 +1,11 @@
 import { useParams } from "react-router";
 import { loadTask, removeLabelOrMemberFromTask } from "../store/actions/board.actions";
 import { additionTaskSvg } from "./Svgs";
+import { useState } from "react";
+import { MemberImage } from "./MemberImage";
 
 export function MemberDetail({ member, setTask, setMemberDetail }) {
+    const [isMemberImageOpen, setIsMemberImageOpen] = useState(false)
     const { fullname, _id, imgUrl } = member
     const { boardId, groupId, taskId } = useParams()
 
@@ -17,16 +20,24 @@ export function MemberDetail({ member, setTask, setMemberDetail }) {
             throw err
         }
     }
-    return (
-        <section className="edit-modal member-detail">
-            <div className="title-container">
-                <p>{fullname}</p>
-                <button onClick={() => setMemberDetail(false)} className="close-modal">{additionTaskSvg.close}</button>
-            </div>
-            <img src={imgUrl} alt="" />
-            <section className="edit-modal-content">
-                <button className="content" onClick={removeMemberFromTask}>Remove from cards</button>
+    return isMemberImageOpen ? (
+        <MemberImage
+            member={member}
+            setIsMemberImageOpen={setIsMemberImageOpen}
+            setMemberDetail={setMemberDetail}
+        />
+    ) : (
+        <section className="specific-member">
+            <section className="specific-member-display flex">
+                <button onClick={() => setMemberDetail(false)} className="specific-member-close flex">{additionTaskSvg.close}</button>
+                <img src={imgUrl} alt="" onClick={() => setIsMemberImageOpen(true)} />
+                <div className="flex">
+                    <h2 className="full-name">{fullname}</h2>
+                    <h2 className="user-name">@userName - further</h2>
+                </div>
             </section>
+            <hr />
+            <button className="remove clean-btn" onClick={removeMemberFromTask}>Remove from cards</button>
         </section>
     )
 }
