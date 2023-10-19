@@ -49,7 +49,13 @@ export function MemberEdit({ editName, onCloseEditTask, setTask }) {
             </div>
             <section className="edit-modal-content">
                 <div className="search">
-                    <Textarea placeholder="Search members" onChange={onMemberSearch} sx={{ fontSize: 14, fontWeight: 'medium', borderRadius: '3px', boxShadow: 'inset 0 0 0 1px #091e4224', bgcolor: 'white' }}></Textarea>
+                    <Textarea placeholder="Search members" onChange={onMemberSearch} sx={{
+                        fontSize: 14, fontWeight: 'medium', borderRadius: '3px', boxShadow: 'inset 0 0 0 1px #091e4224', bgcolor: 'white',
+                        outline: 'none',
+                        '&:focus': {
+                            boxShadow: 'inset 0 0 0 2px #388bff'
+                        }
+                    }}></Textarea>
                 </div>
                 <div className='content'>
                     <p className='member-list-headline'>Board members</p>

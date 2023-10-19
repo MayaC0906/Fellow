@@ -69,7 +69,10 @@ export function AddLabel({ onCloseEditTask, onAddLabel, labelToEdit, setTask, is
                 <div className="content">
                     <p className="content-headline">Title</p>
 
-                    <Textarea onChange={onSetTitle} value={labelTitle} sx={{ fontSize: 14, fontWeight: 'medium', borderRadius: '3px', boxShadow: 'inset 0 0 0 1px #091e4224', bgcolor: 'white' }}></Textarea>
+                    <Textarea onChange={onSetTitle} value={labelTitle} sx={{
+                        fontSize: 14, fontWeight: 'medium', borderRadius: '3px', boxShadow: 'inset 0 0 0 1px #091e4224', bgcolor: 'white',
+                        // input: { '&::placeholder': { color: 'rgb(98, 111, 134)' } }
+                    }}></Textarea>
                     <p className="content-headline">Select a color</p>
                     <ul className="color-platte clean-list">
                         {labelsColorPickers.map(colorPicker => (
@@ -82,7 +85,7 @@ export function AddLabel({ onCloseEditTask, onAddLabel, labelToEdit, setTask, is
                 <hr />
                 <section className="btn-section">
                     {labelToEdit ? (
-                        <section className="flex">
+                        <section className="flex space-between">
                             <button className="label-btn-create clean-btn" onClick={onSaveLabel}>Save</button>
                             <button className="label-btn-create delete clean-btn" onClick={onDeletingLabel}>Delete</button>
                         </section>
