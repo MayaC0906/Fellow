@@ -5,10 +5,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    // margin: 0 4px;
     height: rem(56px);
-    backdrop-filter: blur(4px);
-    // background: hsla(0, 0%, 100%, .239);
+
+    &.bgc {
+        backdrop-filter: blur(4px);
+
+        background: #0000001b;
+    }
 
     .visibility {
         margin-left: 20px;
@@ -17,25 +20,36 @@
     }
 
     .header-title {
+        width: 125px;
+        height: 32px;
+        border-radius: 3px;
+
         &:hover {
             cursor: pointer;
-            background-color: lighten(rgb(173, 170, 170), 5%);
+            // background-color: lighten(rgb(173, 170, 170), 5%);
+            // background-color: #FFFFFF;
+            // background-color: rgba(166, 197, 226, 0.16);
+            background: hsla(0, 0%, 100%, .239);
+
         }
     }
 
     input {
         font-size: 18px;
-        // width: 107px;
         border: none;
-        background-color: inherit;
+        font-weight: 700;
+        line-height: 32px;
+        // background-color: inherit;
+        background: none;
         outline: none;
         color: white;
         border-radius: 3px;
         cursor: pointer;
+        padding: 0 10px;
 
         &:focus {
             background-color: white;
-            height: 32px;
+            // height: 32px;
             border: 1.8px solid #0c66e4;
             padding: 0 10px;
             color: black;
@@ -63,7 +77,8 @@
 
         &:hover {
             cursor: pointer;
-            background-color: lighten(rgb(173, 170, 170), 5%);
+            // background-color: lighten(rgb(173, 170, 170), 5%);
+            background: hsla(0, 0%, 100%, .239);
         }
     }
 
@@ -78,8 +93,10 @@
             background-color: #DFE1E6;
             color: black;
             font-weight: 400;
-            // gap: 4px;
-            // margin-left: 4px;
+
+            &:hover {
+                background: #FFFFFF;
+            }
         }
     }
 
@@ -93,6 +110,11 @@
             height: 28px;
             border-radius: 50%;
             left: 40px;
+            cursor: pointer;
+
+            &:hover {
+                filter: contrast(70%) brightness(120%);
+            }
         }
     }
 
@@ -101,4 +123,9 @@
         color: white;
     }
 
+    .separate-line {
+        width: 1px;
+        color: hsla(0, 0%, 100%, .31);
+        margin-inline: 8px 6px;
+    }
 }
