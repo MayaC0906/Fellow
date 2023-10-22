@@ -98,11 +98,11 @@ export function GroupPreview({ handleDrag,onEditGroup, isLabelsShown, setIsLabel
 							</section>
 							{groupPreview.copy}
 							</div> :
-						<div className='add-group-input-expanded'>
-							<textarea name="title"
+						<div>
+							<textarea  name="title"
 								placeholder="Enter card title..."
-								autoFocus
-								minRows={2}
+								// autoFocus
+								rows={4}
 								// value={newGroup.title}
 								onChange={handleChange}
 							/>
