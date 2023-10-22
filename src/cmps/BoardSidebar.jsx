@@ -2,18 +2,28 @@ import { useState } from "react";
 import { useSelector, useDispatch } from 'react-redux'
 import { sideBar } from "./Svgs";
 import { Link } from "react-router-dom";
+import { Brightness1 } from "@mui/icons-material";
+import { lighten } from 'polished';
 
 export function BoardSidebar() {
     const [isSidebarExpand, setSidebarExpand] = useState(false);
 
     const boards = useSelector((storeState) => storeState.boardModule.boards)
     const board = useSelector((storeState) => storeState.boardModule.board)
+
     return (
-        <section className='board-sidebar'>
+        <section
+            className='board-sidebar'
+            style={{
+                backgroundColor: `${lighten(0.02, `rgba(${board.style.dominantColor.rgb}, 0.9)`)}`
+            }}
+        >
             <ul className={`${isSidebarExpand ? 'expand' : 'unexpand'}`}>
                 {
                     !isSidebarExpand
-                        ? <div className='expand-btn' onClick={() => setSidebarExpand(!isSidebarExpand)}>
+                        ? <div className='expand-btn' style={{
+                            backgroundColor: `${lighten(0.02, `rgba(${board.style.dominantColor.rgb}, 0.9)`)}`
+                        }}  onClick={() => setSidebarExpand(!isSidebarExpand)}>
 
                             <span>{sideBar.rightArr}</span>
                         </div>
