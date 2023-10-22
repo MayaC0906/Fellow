@@ -212,7 +212,12 @@
             section{
                 display: flex;
                 padding: 2px 10px;
-                height: 28px;
+                // height: 28px;
+                gap: 10px;
+                img {
+                    height: 26px;
+                    width: 26px;
+                }
                 div{
                     display: flex;
                     flex-direction: row;

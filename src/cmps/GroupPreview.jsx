@@ -17,7 +17,7 @@ export function GroupPreview({ handleDrag,onEditGroup, isLabelsShown, setIsLabel
 	const [txt, setTxt] = useState('')
 	const [newTask, setNewTask] = useState(taskService.getEmptyTask())
 	const board = useSelector((storeState) => storeState.boardModule.board)
-	const groupHeaderRef = useRef(null);
+	const groupHeaderRef = useRef(null); //SPECIFIC GROUP HEADER
 
 	function getGroupHeaderPosition() {
 		if (groupHeaderRef.current) {
