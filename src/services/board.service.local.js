@@ -198,7 +198,9 @@ function getEmptyBoard() {
         },
         style: {
             backgroundImage: "",
-            backgroundColor: ""
+            backgroundColor: "",
+            dominantColor: {},
+            isBright: null
         },
         labels: [
             {
@@ -275,8 +277,10 @@ const board = [
             "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
         },
         style: {
-            backgroundImage: "https://res.cloudinary.com/duvatj8kg/image/upload/v1697200986/1_qmyhwb.jpg",
-            backgroundColor: ""
+            backgroundImage: "https://images.unsplash.com/photo-1696384036025-c7d7b7f6584d?auto=format&fit=crop&q=80&w=1964&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            backgroundColor: "",
+            dominantColor: {rgb: '18,27,42'},
+            isBright: false
         },
         labels: [
             {

@@ -4,6 +4,7 @@ import { additionTaskSvg, workspaceSvg } from "./Svgs";
 import { boardService } from "../services/board.service.local";
 import { addBoard } from "../store/actions/board.actions";
 import { Link, useNavigate } from "react-router-dom";
+import { utilService } from "../services/util.service";
 
 export function AddBoard({ setIsBoardAdded }) {
     const imgUrls = ['https://res.cloudinary.com/duvatj8kg/image/upload/v1697200986/1_qmyhwb.jpg', 'https://res.cloudinary.com/duvatj8kg/image/upload/v1696367896/samples/balloons.jpg', 'https://res.cloudinary.com/duvatj8kg/image/upload/v1696367882/samples/landscapes/nature-mountains.jpg', 'https://res.cloudinary.com/duvatj8kg/image/upload/v1697201095/2_ie2xym.jpg', 'https://res.cloudinary.com/duvatj8kg/image/upload/v1697201606/a7c521b94eb153008f2d_okvnhu.svg', 'https://res.cloudinary.com/duvatj8kg/image/upload/v1697202495/aec98becb6d15a5fc95e_dseafo.svg', 'https://res.cloudinary.com/duvatj8kg/image/upload/v1697202522/8ab3b35f3a786bb6cdac_ci3ilc.svg', 'https://res.cloudinary.com/duvatj8kg/image/upload/v1697202531/707f35bc691220846678_bdydef.svg', 'https://res.cloudinary.com/duvatj8kg/image/upload/v1697202537/d106776cb297f000b1f4_kroicr.svg']
@@ -23,7 +24,14 @@ export function AddBoard({ setIsBoardAdded }) {
         if (!boardTitle) return
         let savedBoard = { ...newBoard, title: boardTitle }
         if (backGroundgImg) {
-            savedBoard.style.backgroundImage = backGroundgImg
+            savedBoard.style.backgroundImage = backGroundgImg 
+            try {
+                let dominantColor = await utilService.getDominantColor(backGroundgImg)
+                savedBoard.style.dominantColor = dominantColor
+                savedBoard.style.isBright = utilService.isRgbBright(dominantColor.rgb)
+            } catch (err) {
+                console.log('Could not get dominant color');
+            }
         }
         try {
             const addedBoard = await addBoard(savedBoard)
