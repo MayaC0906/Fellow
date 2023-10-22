@@ -3,14 +3,14 @@
 
 
 .group-edit-modal {
-    position: sticky;
+    // position: sticky;
     background-color: #fff;
-    left: 259px; //TODO need to adjust it by screen size(?)
-    top: 139px;
+    // left: 259px; //TODO need to adjust it by screen size(?)
+    // top: 139px;
     border-radius: 3px;
     box-shadow: 0 8px 16px -4px rgb(9 30 66 / 25%), 0 0 0 1px rgb(9 30 66 / 8%);
     min-width: 304px;
-    position: fixed;
+    // position: fixed;
     z-index: 100;
     header {
         align-items: center;

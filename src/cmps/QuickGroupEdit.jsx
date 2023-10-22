@@ -1,6 +1,14 @@
-export function QuickGroupEdit({setInputExpand,onDuplicateGroup,group,onRemoveGroup,setToggleGroupMenu }){
+export function QuickGroupEdit({setInputExpand,onDuplicateGroup,group,onRemoveGroup,setToggleGroupMenu, groupHeaderPosition }){
+
+
+    const style = {
+        position: 'fixed',
+        top: groupHeaderPosition.top + 'px',
+        left: groupHeaderPosition.left + 'px',
+      };
+    
     return (
-        <section className="group-edit-modal">
+        <section className="group-edit-modal" style={style}>
                 <header>
                     <div>List action</div>
                     <button onClick={() => setToggleGroupMenu(false)} className="close-btn">X</button>
