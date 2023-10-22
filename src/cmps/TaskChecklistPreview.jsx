@@ -185,9 +185,9 @@ export function TaskChecklistPreview({onDeleteList, onAddTodo, onUpdateListTitle
                             </div>
 
                             {expandedTodo.listId === list.id && expandedTodo.todoId === todo.id ? 
-                                <div className='add-group-input-expanded'>
-                                    <Textarea 
-                                        sx={{ border:'none'}}
+                                <form >
+                                    <textarea 
+                                        rows={2}
                                         name="title"
                                         autoFocus
                                         defaultValue={todo.title}
@@ -203,7 +203,7 @@ export function TaskChecklistPreview({onDeleteList, onAddTodo, onUpdateListTitle
                                         <button className='cancel' onClick={() => setExpandedTodo({ listId: null, todoId: null })}>X</button>
                                         <button className='delete' onClick={() => deleteTodo(list.id, todo.id)}>Delete</button>
                                     </section>
-                                </div> :
+                                </form> :
                                 <span onClick={() => {
                                     console.log("Trying to expand:", list.id, todo.id);
                                     setExpandedTodo({ listId: list.id, todoId: todo.id });

@@ -80,8 +80,12 @@
                 // justify-content: flex-start;
                 // flex-grow: 1;
                 // margin: 0;
+
                 justify-content: space-between;
                 section {
+                    // padding: 8px 6px 0 6px;
+                    // width: 100%;
+                    
                     display: flex;
                     gap: 10px;
                     justify-content: center;
@@ -91,12 +95,26 @@
                     svg{
                         height: 16px;
                         width: 16px;
+                      
+                    }
+
+                    &:hover {
+                        cursor: pointer;
+                        // background: lightgray;
+                        // border-radius: 3px;   
                     }
                 }
                 svg{
                     height: 18px;
                     width: 18px;
+                    &:hover {
+                        cursor: pointer;
+                        background: lightgray;
+                        border-radius: 3px;
+                    }
                 }
+
+               
             }
             .cancel{
                 margin-left: 10px;

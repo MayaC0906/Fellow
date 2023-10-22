@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState,useRef } from 'react'
 import { TaskList } from './TaskList'
 // import { TextInputs } from './TextInputs'
 import { QuickGroupEdit } from './QuickGroupEdit'
@@ -17,8 +17,18 @@ export function GroupPreview({ handleDrag,onEditGroup, isLabelsShown, setIsLabel
 	const [txt, setTxt] = useState('')
 	const [newTask, setNewTask] = useState(taskService.getEmptyTask())
 	const board = useSelector((storeState) => storeState.boardModule.board)
+	const groupHeaderRef = useRef(null); //SPECIFIC GROUP HEADER
 
-
+	function getGroupHeaderPosition() {
+		if (groupHeaderRef.current) {
+		  const rect = groupHeaderRef.current.getBoundingClientRect()
+		  return {
+			top: rect.top + window.scrollY,
+			left: rect.left + window.scrollX,
+		  }
+		}
+		return { top: 0, left: 0 }
+	  }
 
 	function handleChange(ev) {
 		let { value, name: field } = ev.target
@@ -73,6 +83,7 @@ export function GroupPreview({ handleDrag,onEditGroup, isLabelsShown, setIsLabel
 						group={group}
 						setToggleGroupMenu={setToggleGroupMenu}
 						// groupId={group.id}
+						groupHeaderPosition={() => getGroupHeaderPosition()}
 						setInputExpand={setInputExpand}
 						onRemoveGroup={onRemoveGroup}
 						onDuplicateGroup={onDuplicateGroup}

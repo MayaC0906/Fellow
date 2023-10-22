@@ -1,6 +1,9 @@
 .board-sidebar{
     display: flex;
-    background: hsl(250,47.9%,40.7%);
+    // background-color: blue;
+    // filter: brightness(90%);
+    // background: darken($color: rgba(${board.style.dominantColor.rgb},0.9), $amount: 0.2);
+    // background-color: darken(rgb(71, 54, 153),20%);
     // align-items: cent;
     // align-content: center;
     // width: 250px;
@@ -209,7 +212,12 @@
             section{
                 display: flex;
                 padding: 2px 10px;
-                height: 28px;
+                // height: 28px;
+                gap: 10px;
+                img {
+                    height: 26px;
+                    width: 26px;
+                }
                 div{
                     display: flex;
                     flex-direction: row;

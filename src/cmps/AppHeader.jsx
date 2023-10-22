@@ -6,6 +6,8 @@ import { LoginSignup } from '../pages/LoginSignup'
 import { appHeaderSvg } from './Svgs'
 //check
 export function AppHeader() {
+    const boardStyle = useSelector((storeState) => storeState.boardModule.board.style)
+   
 
     // async function onLogin(credentials) {
     //     try {
@@ -31,9 +33,9 @@ export function AppHeader() {
     //         showErrorMsg('Cannot logout')
     //     }
     // }
-
+if (!boardStyle) return <div>loading</div>
     return (
-        <header className='app-header'>
+        <header className='app-header' style={{ backgroundColor: `rgb(${boardStyle.dominantColor.rgb})`}}>
             <section className='nav-links'>
                 <button className='app-header-btn nav-link-btn menu'>{appHeaderSvg.menu}</button>
                 <div className='logo'>
