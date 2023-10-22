@@ -10,7 +10,7 @@
     &.bgc {
         backdrop-filter: blur(4px);
 
-        background: #0000001b;
+        background: rgba(0, 0, 0, 0.24);
     }
 
     .visibility {
@@ -20,26 +20,18 @@
     }
 
     .header-title {
-        width: 125px;
-        height: 32px;
-        border-radius: 3px;
+        // width: max-content;
+        // width: 100%;
 
-        &:hover {
-            cursor: pointer;
-            // background-color: lighten(rgb(173, 170, 170), 5%);
-            // background-color: #FFFFFF;
-            // background-color: rgba(166, 197, 226, 0.16);
-            background: hsla(0, 0%, 100%, .239);
 
-        }
     }
 
     input {
+        border-radius: 3px;
         font-size: 18px;
         border: none;
         font-weight: 700;
         line-height: 32px;
-        // background-color: inherit;
         background: none;
         outline: none;
         color: white;
@@ -47,9 +39,13 @@
         cursor: pointer;
         padding: 0 10px;
 
+        &:hover {
+            cursor: pointer;
+            background: hsla(0, 0%, 100%, .239);
+        }
+
         &:focus {
             background-color: white;
-            // height: 32px;
             border: 1.8px solid #0c66e4;
             padding: 0 10px;
             color: black;
@@ -78,7 +74,7 @@
         &:hover {
             cursor: pointer;
             // background-color: lighten(rgb(173, 170, 170), 5%);
-            background: hsla(0, 0%, 100%, .239);
+            background-color: rgba(166, 197, 226, 0.16);
         }
     }
 
@@ -88,17 +84,29 @@
         padding: 6px 10px 6px 12px;
         // /
 
-        &.bars,
-        &.additional {
-            background-color: #DFE1E6;
-            color: black;
-            font-weight: 400;
+        &.brightColor {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-weight: 500;
 
             &:hover {
-                background: #FFFFFF;
+                background-color: rgba(0, 0, 0, 0.6);
+            }
+
+        }
+
+        &.darkColor {
+            background-color: #DFE1E6;
+            color: rgb(23, 43, 77);
+            font-weight: 500;
+
+            &:hover {
+                background-color: #FFFFFF;
             }
         }
     }
+
+
 
     .img {
 

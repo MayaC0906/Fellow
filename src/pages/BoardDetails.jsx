@@ -40,7 +40,7 @@ export function BoardDetails() {
         <>
             <BoardSidebar />
             <div className="board-details-container" style={{ backgroundImage: `url(${board.style.backgroundImage})`, backgroundColor: board.style.backgroundColor }} >
-                <GroupHeader />
+                <GroupHeader board={board} />
                 <Outlet/>
                 <GroupList boardId={boardId}/>
             </div>
