@@ -282,7 +282,7 @@ async function removeAttachment(boardId, groupId, taskId, attachmentId) {
         board.groups[groupIdx].tasks[taskIdx].cover.img = ''
 
         console.log(group, 'group to send');
-        boardService.saveGroup(group, boardId)
+        await boardService.saveGroup(group, boardId)
         return board
     } catch (err) {
         console.log('couldn\'t remove task attachment', err);
