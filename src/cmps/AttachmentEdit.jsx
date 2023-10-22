@@ -9,7 +9,17 @@ export function AttachmentEdit({ editName, onCloseEditTask }) {
                 <button onClick={onCloseEditTask} className="close-modal">{additionTaskSvg.close}</button>
             </div>
             <section className="edit-modal-content">
-                <div className="content">render here contene</div>
+                <div className="content">
+                    <div className='add-attachment'>
+                        <h2>Attach a file from your computer</h2>
+                        <h3>You can also drag and drop files to upload them.</h3>
+                        <button>Choose a file</button>
+                    </div>
+                    <div className='attachment-actions'>
+                        <button onClick={onCloseEditTask}>Cancel</button>
+                        <button>Insert</button>
+                    </div>
+                </div>
             </section>
         </section>
     )

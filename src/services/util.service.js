@@ -9,7 +9,9 @@ export const utilService = {
     getAssetSrc,
     formatTimestamp,
     getFileNameFromUrl,
-    formatImgTime
+    formatImgTime,
+    getDominantColor,
+    isRgbBright
 }
 
 function makeId(length = 6) {
@@ -125,4 +127,56 @@ function formatImgTime(timestamp) {
     } else {
         return differenceInDays + " days ago";
     }
+}
+
+function getDominantColor(imageUrl) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = "Anonymous";
+        img.onload = function () {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = this.naturalWidth;
+            canvas.height = this.naturalHeight;
+            ctx.drawImage(this, 0, 0);
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const pixelArray = imageData.data;
+
+            const colorMap = {};
+            let maxCount = 0;
+            let dominantColor = null;
+
+            for (let i = 0; i < pixelArray.length / 4; i += 4) {
+                const rgba = `${pixelArray[i]},${pixelArray[i + 1]},${pixelArray[i + 2]}`;
+                colorMap[rgba] = (colorMap[rgba] || 0) + 1;
+                if (colorMap[rgba] > maxCount) {
+                    maxCount = colorMap[rgba];
+                    dominantColor = rgba;
+                }
+            }
+
+            const [r, g, b] = dominantColor.split(',').map(Number);
+            resolve({ rgb: `${r},${g},${b}` });
+        };
+        img.onerror = function () {
+            reject("Failed to load image");
+        };
+        img.src = imageUrl;
+    });
+}
+
+function isRgbBright(rgb) {
+    let rgbColor = `rgb(${rgb})`
+    const colorValues = rgbColor.match(/\d+/g);
+    const r = parseInt(colorValues[0]);
+    const g = parseInt(colorValues[1]);
+    const b = parseInt(colorValues[2]);
+
+    // Calculate the brightness of the color
+    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+
+    // Return the result based on brightness
+   const res = brightness >= 128 ? true : false;
+   console.log('colorRes', res);
+   return res
 }
