@@ -12,6 +12,7 @@
     &-checklist {
         display: flex;
         flex-direction: column;
+
         label {
             margin-top: 4px;
             color: #44546f;
@@ -32,10 +33,11 @@
             box-shadow: none;
             color: #fff;
         }
-       
-          
-        
+
+
+
     }
+
     &-content {
         // width: 280px;
         padding: 0 12px 12px 12px;
@@ -56,12 +58,12 @@
             margin: 0;
             font-size: rem(14px);
             font-weight: 600;
+            color: #44546f;
         }
 
         .close-modal {
             grid-column: 3;
             display: flex;
-            align-self: center;
             align-items: center;
             justify-content: center;
             border: none;
@@ -72,6 +74,7 @@
             width: 32px;
             height: 32px;
             border-radius: 8px;
+            color: rgb(98, 111, 134);
 
             &:hover {
                 background-color: rgba(9, 30, 66, .141);

@@ -15,8 +15,12 @@
         border: none;
         cursor: pointer;
 
+        &:hover {
+            filter: brightness(0.9);
+        }
+
         &:focus {
-            outline: -webkit-focus-ring-color auto 5px;
+            outline: auto 5px;
         }
     }
 
