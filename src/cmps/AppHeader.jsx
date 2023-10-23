@@ -33,6 +33,7 @@ export function AppHeader() {
     //         showErrorMsg('Cannot logout')
     //     }
     // }
+    
     return (
         <header className='app-header' style={{ backgroundColor: `rgb(${boardStyle?.dominantColor.rgb})` || 'white'}}>
             <section className='nav-links'>

@@ -86,8 +86,7 @@ export function TaskDetails() {
                         <section className="task-info">
                             <TaskDescription
                             onSaveTask={onSaveTask}
-                            task={task}
-                            taskDescription={task.description} />
+                            task={task} />
                             <TaskAttachments
                                 setEditName={setEditName}
                                 taskAttachments={task.attachments}
