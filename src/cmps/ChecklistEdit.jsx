@@ -47,7 +47,7 @@ export function ChecklistEdit({ onSaveTask,  onCloseEditTask, setTask, task }) {
                                     autoFocus
                                     maxRows={1}
                                     onChange={handleTextChange}
-                                    defaultValue='Checklist'
+                                    placeholder='Checklist'
                                     />
                             <div>
                                 <button className='task-btn'  onClick={onSaveCheckList}>Add</button>

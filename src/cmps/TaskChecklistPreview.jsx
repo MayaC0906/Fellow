@@ -191,7 +191,7 @@ export function TaskChecklistPreview({onDeleteList, onAddTodo, onUpdateListTitle
                             name="title"
                             autoFocus
                             minRows={2}
-                            defaultValue={'Add an item'}
+                            placeholder={'Add an item'}
                             onChange={handleTextChange}
                         />
                         <div>
