@@ -1,0 +1,82 @@
+.add-attachment-container {
+        h2 {
+        color: rgb(68, 84, 111);
+        font-size: rem(14px);
+        margin: 0;
+    }
+
+.add-attachment {
+    h3 {
+        color: rgb(98, 111, 134);
+        font-size: rem(12px);
+        margin: 8px 0 12px;
+        padding: 2px;
+    }
+
+    button {
+        width: 280px;
+        height: 32px;
+        border: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: rgb(23, 43, 77);
+        font-size: rem(14px);
+        background-color: rgba(9, 30, 66, 0.06);
+        border-radius: 3px;
+        margin: 12px 0 15px;
+        padding: 6px 12px;
+        &:hover {
+            background-color: #091e4224;
+            cursor: pointer;
+        }
+    }
+}
+
+input {
+    border: 2px solid #DFE1E6;
+    border-radius: 3px;
+    padding: 8px 6px;
+    font-size: rem(14px);
+    width: 276px;
+    height: 36px;
+    &:focus {
+        border-color: #2684FF;
+        outline: none;
+    }
+    &:hover {
+        background-color:#EBECF0;
+    }
+}
+
+.attachment-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 4px;
+    margin-block-start: 16px;
+    button {
+        border: none;
+        width: 60px;
+        height: 32px;
+        padding: none;
+        border-radius: 3px;
+        font-size: rem(14px);
+        &.cancel-btn {
+            background: none;
+            color:rgb(23, 43, 77);
+            &:hover{
+                background-color: rgba(9, 30, 66, 0.08);
+                cursor: pointer;
+            }
+        }
+        &.insert-btn {
+            background-color: #0052CC;
+            color: #FFFFFF;
+            &:hover {
+                background-color: #0065FF;
+                cursor: pointer;
+            }
+        }
+    }
+}
+}
