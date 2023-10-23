@@ -110,9 +110,7 @@ function getEmptyGroup() {
 async function getGroupById(groupId, boardId) {
     try {
         const groups = await queryGroups(boardId)
-        const group = groups.find((grp) => {
-            return grp.id === groupId
-        })
+        const group = groups.find(group => { group.id === groupId})
         return group
     } catch (err) {
         console.log('Failed to get group', err)

@@ -24,8 +24,7 @@ export const taskService = {
 
 async function getById(boardId, groupId, taskId) {
     try {
-        const board = await boardService.getById(boardId)
-        const group = board.groups.find(group => group.id === groupId)
+        const group = await boardService.getGroupById(groupId, boardId)
         const task = group.tasks.find(task => task.id === taskId)
         return task
     } catch (err) {
@@ -34,17 +33,38 @@ async function getById(boardId, groupId, taskId) {
     }
 }
 
+async function saveTask(boardId, groupId, newTask) {
+        try {
+            let group = await boardService.getGroupById(groupId, boardId)
+            if (newTask.id) {
+                const taskIdx = group.tasks.findIndex(task => task.id === newTask.id)
+                group.tasks[taskIdx] = newTask
+            } else {
+                newTask.id = utilService.makeId()
+                group.tasks.push(newTask)
+            }
+            return await boardService.saveGroup(group, boardId)
+        } catch (err) {
+            console.log('couldn\'t save task', err);
+            throw err
+        }
+}
 
-// async function getTaskById(taskId, groupId, boardId) {
-// 	try {
-// 		const tasks = await queryTasks(groupId, boardId)
-// 		const task = tasks.find((task) => task.id === taskId)
-// 		return task
-// 	} catch (err) {
-// 		console.log('Failed to get task', err)
-// 		throw err
-// 	}
-// }
+
+async function deleteTask(boardId, groupId, taskId) {
+    try {
+        const group = await boardService.getGroupById(groupId, boardId)
+        const taskIdx = group.tasks.findIndex(task => task.id === taskId)
+        group.tasks.splice(taskIdx, 1)
+
+        return await boardService.saveGroup(group, boardId)
+    } catch (err) {
+        console.log('couldn\'t delete task', err);
+        throw err
+    }
+}
+
+
 async function updateTodoProperty(boardId, groupId, taskId, listId, todoId, key, value) {
 
     try {
@@ -151,8 +171,8 @@ async function updateListTitle(boardId, groupId, taskId, listId, title) {
     }
 }
 
-async function deleteList(boardId, groupId, taskId,listId){
-    try{
+async function deleteList(boardId, groupId, taskId, listId) {
+    try {
         const board = await boardService.getById(boardId);
         const groupIdx = board.groups.findIndex(group => group.id === groupId);
         const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId);
@@ -165,7 +185,7 @@ async function deleteList(boardId, groupId, taskId,listId){
         board.groups[groupIdx].tasks[taskIdx].checklists.splice(checklistIdx, 1);
         await boardService.saveGroup(board.groups[groupIdx], boardId);
         return board;
-    }catch (err) {
+    } catch (err) {
         console.log('cannot delete list', err);
         throw err;
     }
