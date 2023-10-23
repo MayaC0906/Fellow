@@ -75,7 +75,6 @@ export async function addBoard(board) {
 export async function updateBoard(board) {
     try {
         const savedBoard = await boardService.save(board)
-        console.log('Updated Board:', savedBoard)
         store.dispatch(getActionUpdateBoard(savedBoard))
         return savedBoard
     } catch (err) {
@@ -153,66 +152,5 @@ export async function loadTask(boardId, groupId, taskId) {
 }
 
 
-export async function saveTaskDueDate(boardId, groupId, taskId, formatedDate) {
-    try {
-        const board = await taskService.saveTaskDueDateTime(boardId, groupId, taskId, formatedDate)
-        store.dispatch(getActionUpdateBoard(board))
-        console.log('after:', board)
-    } catch (err) {
-        console.log('can not save due date:', err)
-        throw err
-    }
-}
 
-
-export async function removeDueDate(boardId, groupId, taskId) {
-    try {
-        const board = await taskService.removeDueDate(boardId, groupId, taskId)
-        store.dispatch(getActionUpdateBoard(board))
-    } catch (err) {
-        throw err
-    }
-}
-
-export async function toggleMemberOrLabel(boardId, groupId, taskId, itemToAdd, isLabel) {
-
-    try {
-        const board = await taskService.toggleMemberOrLabel(boardId, groupId, taskId, itemToAdd, isLabel)
-        // store.dispatch(getActionUpdateBoard(board))
-        store.dispatch({ type: SET_BOARD, board })
-    } catch (err) {
-        throw err
-    }
-}
-
-export async function saveLabelOnBoard(boardId, savedLabel) {
-    try {
-        const board = await boardService.saveLabel(boardId, savedLabel)
-        store.dispatch(getActionUpdateBoard(board))
-    } catch (err) {
-        console.log('Cannot save label', err)
-        throw err
-    }
-}
-
-export async function removeLabelFromBoard(boardId, labelId) {
-    try {
-        const board = await boardService.deleteLabel(boardId, labelId)
-        store.dispatch(getActionUpdateBoard(board))
-        return board
-    } catch (err) {
-        console.log('Cannot delete label', err)
-        throw err
-    }
-}
-
-export async function removeLabelOrMemberFromTask(boardId, groupId, taskId, labelToEditId, isLabel) {
-    try {
-        const board = await taskService.deleteLabelOrMember(boardId, groupId, taskId, labelToEditId, isLabel)
-        store.dispatch(getActionUpdateBoard(board))
-    } catch (err) {
-        console.log('Cannot delete label', err)
-        throw err
-    }
-}
 

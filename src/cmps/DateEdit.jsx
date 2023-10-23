@@ -8,12 +8,12 @@ import { BasicDateField } from './DueDate'
 import { BasicTimeField } from './DueTime'
 import { useParams } from 'react-router'
 import { Button } from '@mui/joy'
-import { loadTask, removeDueDate, saveTaskDueDate } from '../store/actions/board.actions'
+import { loadTask } from '../store/actions/board.actions'
 import { Checkbox } from '@mui/material'
 
 
 
-export function DateEdit({ editName, onCloseEditTask, setTask }) {
+export function DateEdit({ editName, onCloseEditTask, onSaveTask, task }) {
     const [selectedDate, setSelectedDate] = useState(null)
     const [isDateSelected, setIsDateSelected] = useState(false)
     const { boardId, groupId, taskId } = useParams()
@@ -49,9 +49,9 @@ export function DateEdit({ editName, onCloseEditTask, setTask }) {
     async function onSaveDate() {
         if (selectedDate === null) return
         const formatedDate = selectedDate.format('MMM D [at] h:mm A')
+        task.dueDate = formatedDate
         try {
-            await saveTaskDueDate(boardId, groupId, taskId, formatedDate)
-            setTask(prevTask => ({ ...prevTask, dueDate: formatedDate }))
+            onSaveTask(task)
             setSelectedDate(selectedDate)
             setIsDateSelected(true)
             onCloseEditTask('')
@@ -62,8 +62,8 @@ export function DateEdit({ editName, onCloseEditTask, setTask }) {
 
     async function onRemoveDate() {
         try {
-            await removeDueDate(boardId, groupId, taskId)
-            setTask(prevTask => ({ ...prevTask, dueDate: null }))
+            task.dueDate = null
+            onSaveTask(task)
             setIsDateSelected(false)
             onCloseEditTask('')
         } catch (err) {

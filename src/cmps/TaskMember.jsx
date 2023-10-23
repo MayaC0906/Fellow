@@ -5,11 +5,11 @@ import { boardService } from "../services/board.service.local";
 import { MemberDetail } from "./MemberDetail";
 
 
-export function TaskMember({ taskMembersId, setEditName, setTask }) {
+export function TaskMember({ taskMembersId, setEditName, onSaveTask, task }) {
     const board = useSelector(storeState => storeState.boardModule.board)
+    const [isMemberDetail, setMemberDetail] = useState(false)
     const [members, setMembers] = useState([])
     const [member, setMember] = useState([])
-    const [isMemberDetail, setMemberDetail] = useState(false)
     const [isAddingMember, setIsAddingMember] = useState(false)
 
     useEffect(() => {
@@ -40,7 +40,7 @@ export function TaskMember({ taskMembersId, setEditName, setTask }) {
                 {members.map(member => (
                     <img key={member._id} src={member.imgUrl} alt="" onClick={() => onSetMemberDetail(member)} />
                 ))}
-                {isMemberDetail && <MemberDetail member={member} setTask={setTask} setMemberDetail={setMemberDetail} />}
+                {isMemberDetail && <MemberDetail member={member} setMemberDetail={setMemberDetail} onSaveTask={onSaveTask} task={task} />}
                 <button className="members-btn clean-btn flex align-center justify-center" onClick={toggleAddingMember}>{taskSvg.add}</button>
             </div>
         </section>)

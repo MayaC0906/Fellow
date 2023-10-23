@@ -17,8 +17,6 @@ export const boardService = {
     removeGroup,
     getGroupById,
     getEmptyLabel,
-    saveLabel,
-    deleteLabel,
     getEmptyBoard,
 }
 
@@ -151,35 +149,6 @@ function getEmptyLabel() {
         id: utilService.makeId(),
         title: '',
         color: ''
-    }
-}
-
-async function saveLabel(boardId, savedLabel) {
-    try {
-        const board = await getById(boardId)
-        const labelIdx = board.labels.findIndex(labels => labels.id === savedLabel.id)
-        if (labelIdx === -1) {
-            board.labels = [...board.labels, savedLabel]
-        } else {
-            board.labels.splice(labelIdx, 1, savedLabel)
-        }
-        return save(board)
-    } catch (err) {
-        console.log('Failed to save labels', err)
-        throw err
-    }
-
-}
-
-async function deleteLabel(boardId, labelId) {
-    try {
-        const board = await getById(boardId)
-        const updatedLabels = board.labels.filter(label => label.id !== labelId)
-        board.labels = updatedLabels
-        return save(board)
-    } catch (err) {
-        console.log('Failed to remove labels', err)
-        throw err
     }
 }
 

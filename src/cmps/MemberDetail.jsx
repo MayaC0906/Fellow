@@ -1,19 +1,16 @@
-import { useParams } from "react-router";
-import { loadTask, removeLabelOrMemberFromTask } from "../store/actions/board.actions";
 import { additionTaskSvg } from "./Svgs";
 import { useState } from "react";
 import { MemberImage } from "./MemberImage";
 
-export function MemberDetail({ member, setTask, setMemberDetail }) {
+export function MemberDetail({ member, setMemberDetail, onSaveTask, task }) {
     const [isMemberImageOpen, setIsMemberImageOpen] = useState(false)
     const { fullname, _id, imgUrl } = member
-    const { boardId, groupId, taskId } = useParams()
 
     async function removeMemberFromTask() {
         try {
-            await removeLabelOrMemberFromTask(boardId, groupId, taskId, _id)
-            const task = await loadTask(boardId, groupId, taskId)
-            setTask(prevTask => ({ ...prevTask, memberIds: task.memberIds }))
+            const updatedMembers = task.memberIds.filter(member => member !== _id)
+            task.memberIds = updatedMembers
+            onSaveTask(task)
             setMemberDetail(false)
         } catch (err) {
             console.log('Cannot remove member', err)

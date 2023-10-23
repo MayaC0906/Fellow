@@ -3,11 +3,10 @@ import { additionTaskSvg, taskSvg } from './Svgs'
 import { Checkbox } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
 import { AddLabel } from './AddLabel'
-import { loadTask, toggleMemberOrLabel } from '../store/actions/board.actions'
 import { useParams } from 'react-router'
 import { Textarea } from '@mui/joy'
 
-export function LabelEdit({ editName, onCloseEditTask, setTask }) {
+export function LabelEdit({ editName, onCloseEditTask, setTask, onSaveTask, task }) {
     const board = useSelector(storeState => storeState.boardModule.board)
     const [labels, setLabels] = useState(board.labels)
     const [checkedLabelsStart, setCheckedLabelsStart] = useState([])
@@ -23,7 +22,7 @@ export function LabelEdit({ editName, onCloseEditTask, setTask }) {
     }, [board.labels])
 
     async function loadCheckedLabels() {
-        const task = await loadTask(boardId, groupId, taskId)
+        // const task = await loadTask(boardId, groupId, taskId)
         setCheckedLabelsStart(task.labelIds)
     }
 
@@ -32,13 +31,22 @@ export function LabelEdit({ editName, onCloseEditTask, setTask }) {
         setLabelToEdit(label)
     }
 
+
+
     async function onToggleLabelToTask(labelId) {
+        let newTask
         isLabel = true
         try {
-            await toggleMemberOrLabel(boardId, groupId, taskId, labelId, isLabel)
-            const task = await loadTask(boardId, groupId, taskId)
-            setTask(prevTask => ({ ...prevTask, labelIds: task.labelIds }))
-            setCheckedLabelsStart(task.labelIds)
+            const LabelIdx = task.labelIds.findIndex(id => id === labelId)
+            if (LabelIdx === -1) {
+                newTask = { ...task, labelIds: [...task.labelIds, labelId] }
+            } else {
+                const updatedLabels = [...task.labelIds]
+                updatedLabels.splice(LabelIdx, 1)
+                newTask = { ...task, labelIds: updatedLabels }
+            }
+            onSaveTask(newTask)
+            setCheckedLabelsStart(newTask.labelIds)
             isLabel = false
         } catch (err) {
             console.log('Could not save date =>', err)
@@ -59,6 +67,8 @@ export function LabelEdit({ editName, onCloseEditTask, setTask }) {
             labelToEdit={labelToEdit}
             setTask={setTask}
             isLabel={isLabel}
+            onSaveTask={onSaveTask}
+            task={task}
         />) : (
 
         <section className="edit-modal">

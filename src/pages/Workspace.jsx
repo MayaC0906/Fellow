@@ -32,6 +32,8 @@ export function Workspace() {
         }
     }
 
+
+
     if (!boards || !boards.length) return <div>loading</div>
     return (
         <section className="workspace-container flex">
@@ -46,14 +48,20 @@ export function Workspace() {
                             <span className="svg flex align-center justify-center">{workspaceSvg.star}</span>
                             <span className="title">Starred boards</span>
                         </div>
-                        <BoardList boards={starredBoards} onStarredBoard={onStarredBoard} />
+                        <BoardList
+                            boards={starredBoards}
+                            onStarredBoard={onStarredBoard}
+                        />
                     </section>}
                 <section className="boards-workspace-container">
                     <div className="flex align-center">
                         <span className="svg flex align-center justify-center">{workspaceSvg.clock}</span>
                         <span className="title">Recently viewed</span>
                     </div>
-                    <BoardList boards={boards} onStarredBoard={onStarredBoard} />
+                    <BoardList
+                        boards={boards}
+                        onStarredBoard={onStarredBoard}
+                    />
                     <section className="boards-add flex align-center justify-center" onClick={() => setIsBoardAdded(!isBoardAdded)}>Create new board</section>
                     {isBoardAdded && <AddBoard setIsBoardAdded={setIsBoardAdded} />}
                 </section>

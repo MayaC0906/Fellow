@@ -3,7 +3,7 @@ import { additionTaskSvg, workspaceSvg } from "./Svgs";
 
 import { boardService } from "../services/board.service.local";
 import { addBoard } from "../store/actions/board.actions";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { utilService } from "../services/util.service";
 
 export function AddBoard({ setIsBoardAdded }) {
@@ -65,6 +65,12 @@ export function AddBoard({ setIsBoardAdded }) {
                             <p className="title input">Board title <span>*</span></p>
                             <input className={boardTitle ? 'fill-text' : 'none-text'} required id="addBoardTitle" type="text" value={boardTitle} onChange={onSetBoardTtile}
                             />
+                            {!boardTitle && (
+                                <section className="required-title flex">
+                                    <span>👋</span>
+                                    <p>Board title is required</p>
+                                </section>
+                            )}
                         </section>
                         <button className={`create-board clean-btn ${boardTitle ? '' : 'boardTileCheck'}`} onClick={onSaveNewBoard}>Create</button>
                     </section>

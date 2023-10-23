@@ -2,11 +2,12 @@ import { Textarea } from "@mui/joy";
 import { additionTaskSvg, taskSvg } from "./Svgs";
 import { useState } from "react";
 import { boardService } from "../services/board.service.local";
-import { useParams } from "react-router";
-import { loadTask, removeLabelFromBoard, removeLabelOrMemberFromTask, saveLabelOnBoard } from '../store/actions/board.actions'
+import { updateBoard } from '../store/actions/board.actions'
+import { useSelector } from "react-redux";
 
 
-export function AddLabel({ onCloseEditTask, onAddLabel, labelToEdit, setTask, isLabel }) {
+export function AddLabel({ onCloseEditTask, onAddLabel, labelToEdit, isLabel, onSaveTask, task }) {
+    const board = useSelector((storeState) => storeState.boardModule.board)
     const labelsColorPickers = ['#baf3db', '#f8e6a0', '#ffe2bd', '#ffd2cc', '#dfd8fd', '#4bce97', '#e2b203', '#faa53d', '#f87462', '#9f8fef', '#1f845a', '#946f00', '#b65c02', '#ca3521', '#6e5dc6', '#cce0ff', '#c1f0f5', '#D3F1A7', '#fdd0ec', '#dcdfe4', '#579dff', '#60c6d2', '#94c748', '#e774bb', '#8590a2', '#0c66e4', '#1d7f8c', '#5b7f24', '#ae4787', '#626f86',]
     const { title, color } = labelToEdit
     const colorStart = color ? color : '#60c6d2'
@@ -14,7 +15,6 @@ export function AddLabel({ onCloseEditTask, onAddLabel, labelToEdit, setTask, is
     const [colorSelected, setColorSelected] = useState(colorStart)
     const [newLabel, setNewLabel] = useState(boardService.getEmptyLabel())
     const [labelTitle, setTitle] = useState(titleStart)
-    const { boardId, groupId, taskId } = useParams()
 
     function onSetTitle() {
         let value = event.target.value
@@ -28,10 +28,19 @@ export function AddLabel({ onCloseEditTask, onAddLabel, labelToEdit, setTask, is
         } else {
             savedLabel = { ...newLabel, color: colorSelected, title: labelTitle }
         }
+
+        console.log(task.labelIds);
+        task.labelIds = [...task.labelIds, savedLabel]
+
         try {
-            await saveLabelOnBoard(boardId, savedLabel)
-            const task = await loadTask(boardId, groupId, taskId)
-            setTask(prevTask => ({ ...prevTask, labelIds: task.labelIds }))
+            const labelIdx = board.labels.findIndex(labels => labels.id === savedLabel.id)
+            if (labelIdx === -1) {
+                board.labels = [...board.labels, savedLabel]
+            } else {
+                board.labels.splice(labelIdx, 1, savedLabel)
+            }
+            await updateBoard(board)
+            await onSaveTask(task)
             onAddLabel('')
         } catch (err) {
             console.log('Cannot save label', err)
@@ -43,10 +52,12 @@ export function AddLabel({ onCloseEditTask, onAddLabel, labelToEdit, setTask, is
     async function onDeletingLabel() {
         isLabel = true
         try {
-            const board = await removeLabelFromBoard(boardId, labelToEdit.id)
-            await removeLabelOrMemberFromTask(boardId, groupId, taskId, labelToEdit.id, isLabel)
-            const task = await loadTask(boardId, groupId, taskId)
-            setTask(prevTask => ({ ...prevTask, labelIds: task.labelIds }))
+            const updatedLabelsIBoard = board.labels.filter(label => label.id !== labelToEdit.id)
+            board.labels = updatedLabelsIBoard
+            await updateBoard(board)
+            const updatedLabelsInTask = task.labelIds.filter(label => label !== labelToEdit.id)
+            task.labelIds = updatedLabelsInTask
+            await onSaveTask(task)
             isLabel = false
             onAddLabel('')
         } catch (err) {
