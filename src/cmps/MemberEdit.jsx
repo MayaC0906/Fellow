@@ -1,38 +1,33 @@
 import { Textarea } from '@mui/joy';
 import { additionTaskSvg, taskSvg } from './Svgs'
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { loadTask, toggleMemberOrLabel } from '../store/actions/board.actions';
 
-export function MemberEdit({ editName, onCloseEditTask, setTask }) {
+export function MemberEdit({ editName, onCloseEditTask, onSaveTask, task }) {
     const board = useSelector(storeState => storeState.boardModule.board)
-    const [members, setMembers] = useState(board.members)
-    const [connectMembers, setConnectMembers] = useState([])
-    const { boardId, groupId, taskId } = useParams()
-
-    useEffect(() => {
-        loadConectedMembers()
-    }, [])
-
-    async function loadConectedMembers() {
-        const task = await loadTask(boardId, groupId, taskId)
-        setConnectMembers(task.memberIds)
-    }
+    const [filterMembers, setFilterdMembers] = useState(board.members)
+    const [connectMembers, setConnectMembers] = useState([task.memberIds])
 
     function onMemberSearch({ target }) {
         const filteredMembers = board.members.filter(member =>
             member.fullname.toLowerCase().includes(target.value.toLowerCase())
         )
-        setMembers(filteredMembers)
+        setFilterdMembers(filteredMembers)
     }
 
     async function onToggleMemberToTask(memberId) {
+        let newTask
         try {
-            await toggleMemberOrLabel(boardId, groupId, taskId, memberId)
-            const task = await loadTask(boardId, groupId, taskId)
-            setTask(prevTask => ({ ...prevTask, memberIds: task.memberIds }))
-            setConnectMembers(task.memberIds)
+            const memberIdx = task.memberIds.findIndex(id => id === memberId)
+            if (memberIdx === -1) {
+                newTask = { ...task, memberIds: [...task.memberIds, memberId] }
+            } else {
+                const updatedMembers = [...task.memberIds]
+                updatedMembers.splice(memberIdx, 1)
+                newTask = { ...task, memberIds: updatedMembers }
+            }
+            onSaveTask(newTask)
+            setConnectMembers(newTask.memberIds)
         } catch (err) {
             console.log('Could not save date =>', err)
         }
@@ -60,7 +55,7 @@ export function MemberEdit({ editName, onCloseEditTask, setTask }) {
                 <div className='content'>
                     <p className='member-list-headline'>Board members</p>
                     <ul className='member-list clean-list'>
-                        {members.map(member =>
+                        {filterMembers.map(member =>
                         (<li className="member-preview" key={member._id}>
                             <section className='member-detail flex align-center' onClick={() => onToggleMemberToTask(member._id, board)}>
                                 <img src={member.imgUrl} alt="" />

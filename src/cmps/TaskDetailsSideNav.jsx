@@ -1,8 +1,9 @@
 import { additionTaskEdiSvg, taskSvg } from "./Svgs";
 import { DynamicTaskEdit } from "./DynamicTaskEdit";
 
-export function TaskDetailsSideNav({ editName, setEditName, setTask }) {
+export function TaskDetailsSideNav({ editName, setEditName, setTask, onSaveTask, task }) {
 
+    console.log('editname:', editName);
     function onOpenEditTask(name) {
         setEditName(name)
     }
@@ -14,7 +15,7 @@ export function TaskDetailsSideNav({ editName, setEditName, setTask }) {
     return (
         <section className="add-container">
             <h3>Add to card</h3>
-            <DynamicTaskEdit editName={editName} onCloseEditTask={onCloseEditTask} setTask={setTask} />
+            <DynamicTaskEdit editName={editName} onCloseEditTask={onCloseEditTask} setTask={setTask} onSaveTask={onSaveTask} task={task} />
             <button onClick={() => onOpenEditTask('Member')} className="btn">{additionTaskEdiSvg.member} <span>Members</span></button>
             <button onClick={() => onOpenEditTask('Label')} className="btn">{additionTaskEdiSvg.label} <span>Labels</span></button>
             <button onClick={() => onOpenEditTask('Checklist')} className="btn">{taskSvg.checklist} <span>Checklist</span></button>
