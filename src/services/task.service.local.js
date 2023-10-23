@@ -259,9 +259,15 @@ function getEmptyTask() {
         attachments: [],
         checklists: [],
         isDone: false,
-        style: {}
+        style: {},
+        cover: {
+            backgroundColor: '',
+            img: '',
+            createdAt: null
+        }
     }
 }
+
 function getEmptyChecklist(title) {
     return {
         id: utilService.makeId(),
