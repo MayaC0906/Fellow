@@ -20,7 +20,6 @@ export const boardService = {
     saveLabel,
     deleteLabel,
     getEmptyBoard,
-    changeIsStarred
 }
 
 window.bs = boardService
@@ -255,12 +254,6 @@ function getEmptyBoard() {
         activities: [],
         cmpsOrder: ["StatusPicker", "MemberPicker", "DatePicker"]
     }
-}
-
-async function changeIsStarred(boardId) {
-    const board = await boardService.getById(boardId)
-    board.isStarred = !board.isStarred
-    return save(board)
 }
 
 const board = [

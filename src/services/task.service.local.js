@@ -3,6 +3,9 @@ import { utilService } from "./util.service"
 export const taskService = {
     getById,
     saveTask,
+    removeAttachment,
+    addCoverImg,
+    removeCover,
     updateTodoIsDone,
     updateTodoTitle,
     deleteTodo,
@@ -269,6 +272,10 @@ async function removeDueDate(boardId, groupId, taskId) {
     }
 
 }
+
+
+
+
 
 async function toggleMemberOrLabel(boardId, groupId, taskId, itemToAdd, isLabel) {
     try {
