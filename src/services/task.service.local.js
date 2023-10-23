@@ -2,6 +2,7 @@ import { boardService } from "./board.service.local"
 import { utilService } from "./util.service"
 export const taskService = {
     getById,
+    saveTask,
     saveTaskTitle,
     saveTaskDescription,
     removeAttachment,
@@ -34,12 +35,17 @@ async function getById(boardId, groupId, taskId) {
 }
 
 async function saveTask(boardId, groupId, newTask) {
+    console.log(boardId, groupId, newTask);
         try {
             let group = await boardService.getGroupById(groupId, boardId)
+            console.log('group', group);
             if (newTask.id) {
                 const taskIdx = group.tasks.findIndex(task => task.id === newTask.id)
+                console.log('taskIdx',  taskIdx);
                 group.tasks[taskIdx] = newTask
+                console.log('task',  group.tasks[taskIdx]);
             } else {
+                console.log('hi');
                 newTask.id = utilService.makeId()
                 group.tasks.push(newTask)
             }
@@ -501,7 +507,6 @@ async function deleteLabelOrMember(boardId, groupId, taskId, labelToEditId, isLa
 
 function getEmptyTask() {
     return {
-        id: utilService.makeId(),
         title: '',
         archivedAt: null,
         labelIds: [],

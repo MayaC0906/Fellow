@@ -3,18 +3,16 @@ import { TaskList } from './TaskList'
 // import { TextInputs } from './TextInputs'
 import { QuickGroupEdit } from './QuickGroupEdit'
 import { taskService } from '../services/task.service.local';
-import { saveGroup, saveNewTask } from '../store/actions/board.actions';
-import Textarea from '@mui/joy/Textarea';
 import Button from '@mui/joy/Button';
 import { useSelector, useDispatch } from 'react-redux'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service';
 import { groupPreview } from './Svgs';
+import { saveNewTask } from '../store/actions/board.actions';
 
 export function GroupPreview({ handleDrag,onEditGroup, isLabelsShown, setIsLabelsShown, group, members, labels, onRemoveGroup, onDuplicateGroup }) {
 	// console.log('members from groupPreview', members);
 	const [toggleGroupMenu, setToggleGroupMenu] = useState(false)
 	const [isInputExpand, setInputExpand] = useState(false)
-	const [txt, setTxt] = useState('')
 	const [newTask, setNewTask] = useState(taskService.getEmptyTask())
 	const board = useSelector((storeState) => storeState.boardModule.board)
 	const groupHeaderRef = useRef(null); //SPECIFIC GROUP HEADER
@@ -33,7 +31,6 @@ export function GroupPreview({ handleDrag,onEditGroup, isLabelsShown, setIsLabel
 	function handleChange(ev) {
 		let { value, name: field } = ev.target
 		setNewTask((prevGroup) => ({ ...prevGroup, [field]: value }))
-		console.log(newTask);
 	}
 
 
@@ -41,11 +38,7 @@ export function GroupPreview({ handleDrag,onEditGroup, isLabelsShown, setIsLabel
 		ev.preventDefault();
 		if (!newTask.title) return;
 		try {
-			console.log('before', group);
-			const newGroup = { ...group, tasks: [...group.tasks, newTask] }
-
-			console.log('after', newGroup);
-			await saveNewTask(newGroup, board._id)
+			await saveNewTask(board._id , group.id, newTask)
 			setNewTask(taskService.getEmptyTask())
 			setInputExpand(!isInputExpand)
 			showSuccessMsg('New task added')
