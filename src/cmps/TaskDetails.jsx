@@ -66,7 +66,13 @@ export function TaskDetails() {
                     <TaskTitle taskTitle={task.title} />
 
                     <section className="task-items-display flex align-center">
-                        <TaskMember taskMembersId={task.memberIds} setEditName={setEditName} setTask={setTask} />
+                        <TaskMember
+                        taskMembersId={task.memberIds}
+                        setEditName={setEditName}
+                        setTask={setTask}
+                        onSaveTask={onSaveTask}
+                        task={task}
+                        />
                         <TaskLabel taskLabelsId={task.labelIds} setEditName={setEditName} />
                     </section>
 
@@ -78,25 +84,42 @@ export function TaskDetails() {
 
                     <section className="task-main">
                         <section className="task-info">
-                            <TaskDescription taskDescription={task.description} />
+                            <TaskDescription
+                            onSaveTask={onSaveTask}
+                            task={task}
+                            taskDescription={task.description} />
                             <TaskAttachments
                                 setEditName={setEditName}
                                 taskAttachments={task.attachments}
                                 cover={task.cover}
                                 setTask={setTask}
+                                onSaveTask={onSaveTask}
+                                task={task}
                             />
                         </section>
 
 
 
                         <section className="edit-task-nav">
-                            <TaskDetailsSideNav setTask={setTask} editName={editName} setEditName={setEditName} />
+                            <TaskDetailsSideNav
+                            setTask={setTask}
+                            editName={editName}
+                            setEditName={setEditName}
+                            onSaveTask={onSaveTask}
+                            task={task}
+                            />
                         </section >
 
 
 
                         <section>
-                            <TaskCheckList setTask={setTask} setEditName={setEditName} checklists={task.checklists} />
+                            <TaskCheckList
+                            setTask={setTask} 
+                            setEditName={setEditName} 
+                            checklists={task.checklists}
+                            onSaveTask={onSaveTask}
+                            task={task} 
+                            />
                         </section>
                     </section >
 

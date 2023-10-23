@@ -21,10 +21,9 @@ export const boardService = {
     deleteLabel,
     getEmptyBoard,
     changeIsStarred
-
 }
-window.bs = boardService
 
+window.bs = boardService
 
 function getLabels(labelsIds, boardLabels) {
     return boardLabels.filter(label => labelsIds.includes(label.id))
