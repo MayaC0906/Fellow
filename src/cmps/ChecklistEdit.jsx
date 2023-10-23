@@ -1,16 +1,14 @@
 import { additionTaskSvg } from './Svgs'
 import { Button } from '@mui/material';
-import {addChecklist} from '../store/actions/board.actions.js'
 import { useParams } from "react-router";
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { Textarea } from '@mui/joy';
-// import Button from '@mui/material';
 import { loadTask } from '../store/actions/board.actions.js';
-export function ChecklistEdit({  onCloseEditTask, setTask }) {
-    const { boardId, groupId, taskId } = useParams()
-    const board = useSelector(storeState => storeState.boardModule.board)
+import { taskService } from '../services/task.service.local';
+export function ChecklistEdit({ onSaveTask,  onCloseEditTask, setTask, task }) {
     const [txt, setTxt] = useState('')
+    const {checklists} = task
 
 
 
@@ -20,10 +18,12 @@ export function ChecklistEdit({  onCloseEditTask, setTask }) {
 
     async function onSaveCheckList(){
         try{
-            await addChecklist(boardId, groupId, taskId, txt)
-            const task = await loadTask(boardId, groupId, taskId)
-            console.log('task from comp func:', task);
-            setTask(prevTask => ({ ...prevTask, checklists: task.checklists }))
+            let checklistsToSave = checklists
+            const newList = taskService.getEmptyChecklist(txt)
+            checklistsToSave.push(newList)
+            const newTask = {...task, checklists: checklistsToSave }
+            // setTask(newTask)
+            onSaveTask(newTask)
             onCloseEditTask()
         } catch (err) {
             console.log('cant save checklist', err);
@@ -47,7 +47,7 @@ export function ChecklistEdit({  onCloseEditTask, setTask }) {
                                     autoFocus
                                     maxRows={1}
                                     onChange={handleTextChange}
-                                    defaultValue='Checklist'
+                                    placeholder='Checklist'
                                     />
                             <div>
                                 <button className='task-btn'  onClick={onSaveCheckList}>Add</button>

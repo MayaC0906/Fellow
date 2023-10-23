@@ -1,35 +1,15 @@
-import { useParams } from "react-router"
 import { utilService } from "../services/util.service"
-import { addCoverImg, loadAttachments, removeAttachment, removeCover } from "../store/actions/board.actions";
-import { useEffect, useState } from "react";
 import { taskSvg } from "./Svgs";
 
-export function TaskAttachments({ taskAttachments, setTask, cover, setEditName }) {
-
-    const { boardId, groupId, taskId } = useParams()
-    const [attachments, setAttachments] = useState(taskAttachments)
-
-    useEffect(() => {
-        onLoadAttachments(boardId, groupId, taskId)
-    }, [])
-
-    async function onLoadAttachments(boardId, groupId, taskId) {
-        try {
-            const attachments = await loadAttachments(boardId, groupId, taskId)
-            setAttachments(attachments)
-        } catch (err) {
-            console.log('Cannot load attachments', err)
-        }
-    }
+export function TaskAttachments({ task, setEditName, onSaveTask }) {
 
     async function onRemoveAttachment(attachmentId) {
         try {
-            await removeAttachment(boardId, groupId, taskId, attachmentId)
-            setAttachments(prevAttachments => ({
-                ...prevAttachments,
-                attachments: prevAttachments.filter(attachment => attachment.id !== attachmentId)
-            }))
-            setTask(prevTask => ({ ...prevTask, cover: { ...cover, img: '' } }))
+            const attachmentIdx = task.attachments.findIndex(attachment => attachment.id === attachmentId)
+            task.attachments.splice(attachmentIdx, 1)
+            const newTask = { ...task, attachments: task.attachments }
+            onSaveTask(newTask)
+
         } catch (err) {
             console.log('Cannot remove task attachment', err)
         }
@@ -38,15 +18,15 @@ export function TaskAttachments({ taskAttachments, setTask, cover, setEditName }
     async function onToggleAttachmentCover({ isAttachmentCover, url }) {
         if (isAttachmentCover) {
             try {
-                await removeCover(boardId, groupId, taskId)
-                setTask(prevTask => ({ ...prevTask, cover: { ...cover, img: '' } }))
+                const newTask = {...task, cover: {...task.cover, img: ''}}
+                onSaveTask(newTask)
             } catch (err) {
                 console.log('Cannot remove cover', err)
             }
         } else {
             try {
-                await addCoverImg(boardId, groupId, taskId, url)
-                setTask(prevTask => ({ ...prevTask, cover: { ...cover, img: url } }))
+                const newTask = {...task, cover: {...task.cover, img: url}}
+                onSaveTask(newTask)
             } catch (err) {
                 console.log('Cannot add cover', err)
             }
@@ -54,10 +34,10 @@ export function TaskAttachments({ taskAttachments, setTask, cover, setEditName }
     }
 
     function checkIsAttachmentCover(imgUrl) {
-        return (cover.img === imgUrl)
+        return (task.cover.img === imgUrl)
     }
 
-    if (!attachments.length) return
+    if (!task.attachments.length) return
     return (
         <section className="task-attachments">
 
@@ -69,7 +49,7 @@ export function TaskAttachments({ taskAttachments, setTask, cover, setEditName }
                 </div>
             </header>
 
-            {attachments.map(attachment => {
+            {task.attachments.map(attachment => {
                 const isAttachmentCover = checkIsAttachmentCover(attachment.imgUrl)
 
                 return (< section key={attachment.id} className="task-attachment" >

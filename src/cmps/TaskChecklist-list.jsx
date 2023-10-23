@@ -1,21 +1,21 @@
-// import react from '@vitejs/plugin-react-swc';
 import { useParams } from 'react-router';
-// import { useState } from 'react';
 import { TaskChecklistPreview } from './TaskChecklistPreview';
-// import {updateTodoIsDone} from ''
-
-import {updateTodoIsDone, updateTodoTitle, deleteTodo, addTodo, updateListTitle, deleteList} from '../store/actions/board.actions.js'
 
 
-
-export function TaskCheckList({setEditName, setTask, checklists}){
-    const { boardId, groupId, taskId } = useParams()
-    
-    // console.log(toggleTodo);
+export function TaskCheckList({setEditName, setTask, onSaveTask, task}){
+    const { checklists } = task
 
     async function onToggleDoneTodo(listId,todoId,isDone){
         try{
-            await updateTodoIsDone(boardId, groupId, taskId, listId,todoId,isDone)
+            const updatedChecklists = checklists.map(list => 
+                list.id === listId ? ({
+                ...list,
+                todos: list.todos.map(todo =>
+                    todo.id === todoId ? { ...todo, isDone } : todo
+                )
+            }) : list)
+            const newTask = {...task, checklists: updatedChecklists}
+            onSaveTask(newTask)
         } catch (err) {
             console.log('cannot toggle todo done');
             throw err
@@ -24,16 +24,41 @@ export function TaskCheckList({setEditName, setTask, checklists}){
 
     async function onDeleteList(listId) {
         try{
-             await deleteList(boardId, groupId, taskId, listId)
+            const newChecklists = checklists.filter(list => list.id !== listId)
+            const newTask = {...task, checklists: newChecklists}
+            onSaveTask(newTask)
         } catch (err) {
             console.log('cant delete list');
             throw err
         }
     }
 
-    async function onUpdateTodoTitle(listId,todoId, txt){
+
+
+    async function onUpdateListTitle(listId, title){
         try {
-            await updateTodoTitle(boardId,groupId,taskId,listId,todoId,txt)
+            const updatedChecklists = checklists.map(list =>
+                list.id === listId ? { ...list, title } : list
+            )
+            const newTask = { ...task, checklists: updatedChecklists }
+            onSaveTask(newTask)
+        } catch (err) {
+            console.log('cannot update list title')
+            throw err
+        }
+    }
+
+    async function onUpdateTodoTitle(listId,todoId, title){
+        try {
+            const updatedChecklists = checklists.map(list => 
+                list.id === listId ? ({
+                ...list,
+                todos: list.todos.map(todo =>
+                    todo.id === todoId ? { ...todo, title } : todo
+                )
+            }) : list)
+            const newTask = { ...task, checklists: updatedChecklists }
+            onSaveTask(newTask)
         } catch (err) {
             console.log('cannot save todo title')
             throw err
@@ -42,7 +67,11 @@ export function TaskCheckList({setEditName, setTask, checklists}){
 
     async function onAddTodo(listId, newTodo){
         try {
-            await addTodo(boardId, groupId, taskId, listId, newTodo)
+            const updatedChecklists = checklists.map(list =>
+                list.id === listId ? { ...list, todos: [...list.todos, newTodo] } : list
+            );
+            const newTask = { ...task, checklists: updatedChecklists }
+            onSaveTask(newTask)
         } catch (err) {
             console.log('cannot add todo')
             throw err
@@ -51,22 +80,19 @@ export function TaskCheckList({setEditName, setTask, checklists}){
 
     async function onDeleteTodo(listId, todoId){
         try {
-            await deleteTodo(boardId, groupId, taskId,listId, todoId)
+            const updatedChecklists = checklists.map(list => 
+                list.id === listId ? ({
+                ...list,
+                todos: list.todos.filter(todo => todo.id !== todoId)
+            }) : list)
+            const newTask = { ...task, checklists: updatedChecklists }
+            onSaveTask(newTask)
         } catch (err) {
             console.log('cannot delete todo')
             throw err
         }
     }
 
-    async function onUpdateListTitle(listId, txt){
-        try {
-            await updateListTitle(boardId, groupId ,taskId,listId, txt)
-        } catch (err) {
-            console.log('cannot update list title')
-            throw err
-        }
-    }
-    // console.log(checklists);
     return (
         <TaskChecklistPreview
             onDeleteList={onDeleteList}
