@@ -15,7 +15,7 @@ export function TaskCheckList({setEditName, setTask, onSaveTask, task}){
                 )
             }) : list)
             const newTask = {...task, checklists: updatedChecklists}
-            setTask(newTask)
+            // setTask(newTask)
             onSaveTask(newTask)
         } catch (err) {
             console.log('cannot toggle todo done');
@@ -27,7 +27,7 @@ export function TaskCheckList({setEditName, setTask, onSaveTask, task}){
         try{
             const newChecklists = checklists.filter(list => list.id !== listId)
             const newTask = {...task, checklists: newChecklists}
-            setTask(newTask)
+            // setTask(newTask)
             onSaveTask(newTask)
         } catch (err) {
             console.log('cant delete list');
@@ -43,7 +43,7 @@ export function TaskCheckList({setEditName, setTask, onSaveTask, task}){
                 list.id === listId ? { ...list, title } : list
             )
             const newTask = { ...task, checklists: updatedChecklists }
-            setTask(newTask)
+            // setTask(newTask)
             onSaveTask(newTask)
         } catch (err) {
             console.log('cannot update list title')
@@ -61,7 +61,7 @@ export function TaskCheckList({setEditName, setTask, onSaveTask, task}){
                 )
             }) : list)
             const newTask = { ...task, checklists: updatedChecklists }
-            setTask(newTask)
+            // setTask(newTask)
             onSaveTask(newTask)
         } catch (err) {
             console.log('cannot save todo title')
@@ -75,7 +75,7 @@ export function TaskCheckList({setEditName, setTask, onSaveTask, task}){
                 list.id === listId ? { ...list, todos: [...list.todos, newTodo] } : list
             );
             const newTask = { ...task, checklists: updatedChecklists }
-            setTask(newTask)
+            // setTask(newTask)
             onSaveTask(newTask)
         } catch (err) {
             console.log('cannot add todo')
@@ -91,7 +91,7 @@ export function TaskCheckList({setEditName, setTask, onSaveTask, task}){
                 todos: list.todos.filter(todo => todo.id !== todoId)
             }) : list)
             const newTask = { ...task, checklists: updatedChecklists }
-            setTask(newTask)
+            // setTask(newTask)
             onSaveTask(newTask)
         } catch (err) {
             console.log('cannot delete todo')

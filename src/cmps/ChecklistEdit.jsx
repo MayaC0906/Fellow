@@ -22,7 +22,7 @@ export function ChecklistEdit({ onSaveTask,  onCloseEditTask, setTask, task }) {
             const newList = taskService.getEmptyChecklist(txt)
             checklistsToSave.push(newList)
             const newTask = {...task, checklists: checklistsToSave }
-            setTask(newTask)
+            // setTask(newTask)
             onSaveTask(newTask)
             onCloseEditTask()
         } catch (err) {
