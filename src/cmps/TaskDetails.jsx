@@ -115,7 +115,7 @@ export function TaskDetails() {
                             <TaskCheckList
                             setTask={setTask} 
                             setEditName={setEditName} 
-                            checklists={task.checklists}
+                            // checklists={task.checklists}
                             onSaveTask={onSaveTask}
                             task={task} 
                             />
