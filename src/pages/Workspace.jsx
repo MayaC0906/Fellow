@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { loadBoards } from "../store/actions/board.actions"
+import { loadBoards, updateBoard } from "../store/actions/board.actions"
 import { useSelector } from "react-redux"
 import { BoardList } from "../cmps/BoardList"
 import { workspaceSvg } from "../cmps/Svgs"
@@ -7,24 +7,28 @@ import { AddBoard } from "../cmps/AddBoard"
 
 export function Workspace() {
     const boards = useSelector(storeState => storeState.boardModule.boards)
-    const [starredBoard, setStarredBoard] = useState([])
     const [isBoardAdded, setIsBoardAdded] = useState(false)
-    const [isStar, setIsStar] = useState('')
-
 
     useEffect(() => {
+        loadBoards()
+    }, [])
 
-        onLoadBoards()
-    }, [isStar])
+    let starredBoards = getStarredBoards()
 
-    async function onLoadBoards() {
+    function getStarredBoards() {
+        if (!boards || !boards.length) return
+        return boards.filter(board => board.isStarred)
+    }
+
+    async function onStarredBoard(event, boardToChange) {
+        event.preventDefault()
+        boardToChange.isStarred = !boardToChange.isStarred
         try {
-            const boards = await loadBoards()
-            if (!boards || !boards.length) return
-            const starredBoards = boards.filter(board => board.isStarred)
-            setStarredBoard(starredBoards)
+            await updateBoard(boardToChange)
+            await loadBoards()
+            getStarredBoards()
         } catch (err) {
-            console.log('cannot load boards => ', err)
+            console.log('could not star the board', err)
         }
     }
 
@@ -36,20 +40,20 @@ export function Workspace() {
                 <button className=""> {workspaceSvg.template} <span>Template</span></button>
             </nav> */}
             <section className="boards flex">
-                {starredBoard.length > 0 &&
+                {starredBoards.length > 0 &&
                     <section className="boards-workspace-container">
                         <div className="flex align-center">
                             <span className="svg flex align-center justify-center">{workspaceSvg.star}</span>
                             <span className="title">Starred boards</span>
                         </div>
-                        <BoardList setIsStar={setIsStar} boards={starredBoard} setStarredBoard={setStarredBoard} />
+                        <BoardList boards={starredBoards} onStarredBoard={onStarredBoard} />
                     </section>}
                 <section className="boards-workspace-container">
                     <div className="flex align-center">
                         <span className="svg flex align-center justify-center">{workspaceSvg.clock}</span>
                         <span className="title">Recently viewed</span>
                     </div>
-                    <BoardList setIsStar={setIsStar} boards={boards} setStarredBoard={setStarredBoard} />
+                    <BoardList boards={boards} onStarredBoard={onStarredBoard} />
                     <section className="boards-add flex align-center justify-center" onClick={() => setIsBoardAdded(!isBoardAdded)}>Create new board</section>
                     {isBoardAdded && <AddBoard setIsBoardAdded={setIsBoardAdded} />}
                 </section>

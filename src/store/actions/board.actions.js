@@ -84,6 +84,7 @@ export async function updateBoard(board) {
     }
 }
 
+
 export async function removeGroup(groupId, boardId) {
     try {
         const savedBoard = await boardService.removeGroup(groupId, boardId)
@@ -140,16 +141,7 @@ export async function saveGroup(group, boardId) {
 //         })
 // }
 
-export async function settingIsStarred(boardId) {
-    try {
-        const board = await boardService.changeIsStarred(boardId)
-        store.dispatch({ type: UPDATE_BOARD, board })
-        return board
-    } catch (err) {
-        console.log('Cannot add board', err)
-        throw err
-    }
-}
+
 
 export async function loadTask(boardId, groupId, taskId) {
     try {
