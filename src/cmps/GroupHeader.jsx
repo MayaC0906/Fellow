@@ -6,7 +6,6 @@ export function GroupHeader({ board }) {
     const [boardTitle, setBoardTitle] = useState('')
 
     useEffect(() => {
-        console.log('effect');
         setBoardTitle(board.title)
     }, [board.title])
 
@@ -16,7 +15,6 @@ export function GroupHeader({ board }) {
     }
 
     const { isBright } = board.style
-    console.log(isBright);
 
     return (
         <header className="group-header bgc">

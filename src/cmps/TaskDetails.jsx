@@ -61,9 +61,11 @@ export function TaskDetails() {
                         <TaskLabel taskLabelsId={task.labelIds} setEditName={setEditName} />
                     </section>
 
-                    <section className="task-show">
-                        <TaskDate taskDate={task.dueDate} setEditName={setEditName} />
-                    </section>
+                    {task.dueDate && (
+                        <section className="task-date-show">
+                            <TaskDate taskDate={task.dueDate} setEditName={setEditName} />
+                        </section>
+                    )}
 
                     <section className="task-main">
                         <section className="task-info">

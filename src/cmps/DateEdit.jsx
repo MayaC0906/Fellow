@@ -27,7 +27,6 @@ export function DateEdit({ editName, onCloseEditTask, setTask }) {
         try {
             const task = await loadTask(boardId, groupId, taskId)
             const dueDate = task.dueDate
-            console.log('duedate', dueDate);
             if (dueDate) {
                 const formattedDate = dayjs(dueDate, 'MMM D [at] h:mm A')
                 setSelectedDate(formattedDate)
@@ -82,9 +81,6 @@ export function DateEdit({ editName, onCloseEditTask, setTask }) {
         }
     }
 
-    console.log('lastDate', lastDate);
-    console.log('isDateSelected', isDateSelected);
-    console.log('selectedDate', selectedDate);
     return (
         <section className="edit-modal">
             <div className="title-container">

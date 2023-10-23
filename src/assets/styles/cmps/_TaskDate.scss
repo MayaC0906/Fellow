@@ -1,8 +1,8 @@
 .task {
-    &-show {
+    &-date-show {
         width: 264px;
         height: 65px;
-        margin: 0 8px 8px 0;
+        margin: 0 8px 8px 56px;
     }
 
     &-date-title {
@@ -51,14 +51,21 @@
 
         &-complete {
             height: 16px;
-            width: ren(53px);
+            width: rem(53px);
             padding: 0 rem(4px);
             font-size: rem(12px);
             font-weight: 500;
+            line-height: 16px;
             background-color: #1f845a;
             color: white;
             border-radius: 3px;
             margin: auto rem(4px) auto rem(4px);
+
+            &.overdue {
+                width: rem(46px);
+                background-color: rgb(255, 236, 235);
+                color: rgb(174, 46, 36);
+            }
         }
 
     }

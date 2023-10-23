@@ -1,6 +1,8 @@
 .task {
     &-items-display {
         gap: rem(8px);
+        margin-inline-start: rem(56px);
+        margin-block: 8px;
     }
 }
 
