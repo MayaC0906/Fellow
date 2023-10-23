@@ -1,6 +1,5 @@
 import { useState } from "react"
 import { taskSvg } from "./Svgs"
-import { saveTaskTitle } from "../store/actions/board.actions"
 import Textarea from '@mui/joy/Textarea';
 import { useRef } from "react";
 

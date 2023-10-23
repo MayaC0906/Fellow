@@ -89,9 +89,6 @@ export function TaskDetails() {
                             task={task} />
                             <TaskAttachments
                                 setEditName={setEditName}
-                                taskAttachments={task.attachments}
-                                cover={task.cover}
-                                setTask={setTask}
                                 onSaveTask={onSaveTask}
                                 task={task}
                             />

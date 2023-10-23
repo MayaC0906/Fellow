@@ -170,26 +170,6 @@ export async function loadAttachments(boardId, groupId, taskId) {
 }
 
 
-export async function saveTaskTitle(boardId, groupId, taskId, newTitle) {
-    try {
-        const board = await taskService.saveTaskTitle(boardId, groupId, taskId, newTitle)
-        store.dispatch(getActionUpdateBoard(board))
-    } catch (err) {
-        console.log('cannot save task', err)
-        throw err
-    }
-}
-
-export async function saveTaskDescription(boardId, groupId, taskId, newDescription) {
-    try {
-        const board = await taskService.saveTaskDescription(boardId, groupId, taskId, newDescription)
-        store.dispatch(getActionUpdateBoard(board))
-    } catch (err) {
-        console.log('cant save description', err)
-        throw err
-    }
-}
-
 export async function saveTaskDueDate(boardId, groupId, taskId, formatedDate) {
     try {
         const board = await taskService.saveTaskDueDateTime(boardId, groupId, taskId, formatedDate)
@@ -264,29 +244,6 @@ export async function removeDueDate(boardId, groupId, taskId) {
 }
 
 
-export async function removeAttachment(boardId, groupId, taskId, attachmentId) {
-    try {
-        const board = await taskService.removeAttachment(boardId, groupId, taskId, attachmentId)
-        console.log('board before save', board);
-        store.dispatch(getActionUpdateBoard(board))
-    } catch (err) {
-        throw err
-    }
-
-}
-
-export async function removeCover(boardId, groupId, taskId) {
-    try {
-        const board = await taskService.removeCover(boardId, groupId, taskId)
-        store.dispatch(getActionUpdateBoard(board))
-        return board
-    } catch (err) {
-        throw err
-    }
-}
-
-
-
 export async function addChecklist(boardId, groupId, taskId, title) {
     try {
         const board = await taskService.addChecklist(boardId, groupId, taskId, title)
@@ -302,16 +259,6 @@ export async function toggleMemberOrLabel(boardId, groupId, taskId, itemToAdd, i
         const board = await taskService.toggleMemberOrLabel(boardId, groupId, taskId, itemToAdd, isLabel)
         // store.dispatch(getActionUpdateBoard(board))
         store.dispatch({ type: SET_BOARD, board })
-    } catch (err) {
-        throw err
-    }
-}
-
-export async function addCoverImg(boardId, groupId, taskId, url) {
-    try {
-        const board = await taskService.addCoverImg(boardId, groupId, taskId, url)
-        store.dispatch(getActionUpdateBoard(board))
-        return board
     } catch (err) {
         throw err
     }
