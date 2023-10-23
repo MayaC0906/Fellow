@@ -11,16 +11,13 @@ import FormatBold from '@mui/icons-material/FormatBold';
 import FormatItalic from '@mui/icons-material/FormatItalic';
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
 import Check from '@mui/icons-material/Check';
-import { useParams } from 'react-router';
-import { saveTaskDescription } from '../store/actions/board.actions';
 import { useState } from 'react';
 import { taskSvg } from './Svgs';
 
-export function TaskDescription({ taskDescription }) {
+export function TaskDescription({onSaveTask, task}) {
 
     const [isDescExpand, setIsDescExpand] = useState(false)
-    const [description, setDescription] = useState(taskDescription)
-    const { boardId, groupId, taskId } = useParams()
+    const [description, setDescription] = useState(task.description)
 
     const [italic, setItalic] = useState(false);
     const [fontWeight, setFontWeight] = useState('normal');
@@ -32,19 +29,17 @@ export function TaskDescription({ taskDescription }) {
 
     async function onSaveDesscription(ev) {
         ev.preventDefault()
+        const newTask = {...task, description: description}
         try {
-            const description = await saveTaskDescription(boardId, groupId, taskId, description)
-            onToggleDescription()
-            console.log('Task description changed successfully')
+           await onSaveTask(newTask)
+           onToggleDescription()
+           console.log('Task description changed successfully')
         } catch (err) {
             console.log('Cannot save description title', err);
         }
-        console.log('I want to save', description);
     }
 
     return (
-
-
         <section className="task-descriptoin">
             <div className='description-title'>
                 {taskSvg.description}

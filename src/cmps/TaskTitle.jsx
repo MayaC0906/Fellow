@@ -1,13 +1,11 @@
 import { useState } from "react"
 import { taskSvg } from "./Svgs"
-import { useParams } from "react-router"
 import { saveTaskTitle } from "../store/actions/board.actions"
 import Textarea from '@mui/joy/Textarea';
 import { useRef } from "react";
 
-export function TaskTitle({ taskTitle }) {
-    const [titleToEdit, setTitleToEdit] = useState(taskTitle)
-    const { boardId, groupId, taskId } = useParams()
+export function TaskTitle({ onSaveTask, task }) {
+    const [titleToEdit, setTitleToEdit] = useState(task.title)
     const textareaRef = useRef(null);
 
     async function onEnterSaveTitle(ev) {
@@ -27,14 +25,14 @@ export function TaskTitle({ taskTitle }) {
         try {
             saveTitle()
             console.log('Task title changed successfully')
-        } catch (err){
+        } catch (err) {
             console.log('Cannot change task title', err)
         }
     }
 
     async function saveTitle() {
-        const task = await saveTaskTitle(boardId, groupId, taskId, titleToEdit)
-        return task
+        const newTask = { ...task, title: titleToEdit }
+        onSaveTask(newTask)
     }
 
     function handleChange(event) {

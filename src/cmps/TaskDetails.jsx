@@ -63,7 +63,7 @@ export function TaskDetails() {
                         </div>}
 
 
-                    <TaskTitle taskTitle={task.title} />
+                    <TaskTitle onSaveTask={onSaveTask} task={task}/>
 
                     <section className="task-items-display flex align-center">
                         <TaskMember
@@ -86,8 +86,7 @@ export function TaskDetails() {
                         <section className="task-info">
                             <TaskDescription
                             onSaveTask={onSaveTask}
-                            task={task}
-                            taskDescription={task.description} />
+                            task={task} />
                             <TaskAttachments
                                 setEditName={setEditName}
                                 taskAttachments={task.attachments}
