@@ -152,15 +152,6 @@ export async function loadTask(boardId, groupId, taskId) {
     }
 }
 
-export async function loadAttachments(boardId, groupId, taskId) {
-    try {
-        const task = await taskService.getById(boardId, groupId, taskId)
-        return task.attachments
-    } catch (err) {
-        throw err
-    }
-}
-
 
 export async function saveTaskDueDate(boardId, groupId, taskId, formatedDate) {
     try {
