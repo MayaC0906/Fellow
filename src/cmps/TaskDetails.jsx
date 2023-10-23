@@ -8,7 +8,7 @@ import { TaskDetailsSideNav } from "./TaskDetailsSideNav"
 import { taskSvg } from "./Svgs"
 import { TaskAttachments } from "./TaskAttachments"
 import { useSelector } from 'react-redux'
-
+import { saveNewTask } from "../store/actions/board.actions"
 
 import { TaskCheckList } from "./TaskChecklist-list"
 import { TaskDate } from "./TaskDate"
@@ -32,6 +32,15 @@ export function TaskDetails() {
         } catch (err) {
             console.log('Can\'t load board', err);
             throw err
+        }
+    }
+
+    async function onSaveTask(updatedTask){
+        try {
+            setTask(updatedTask)
+		    await saveNewTask( boardId, groupId, updatedTask)
+        } catch (err) {
+            console.log('cant save task');
         }
     }
 
