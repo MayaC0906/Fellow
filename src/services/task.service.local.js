@@ -8,19 +8,13 @@ export const taskService = {
     removeAttachment,
     addCoverImg,
     removeCover,
-    updateTodoIsDone,
-    updateTodoTitle,
-    deleteTodo,
-    addTodo,
     getDefaultTodo,
-    updateListTitle,
     saveTaskDueDateTime,
     removeDueDate,
     toggleMemberOrLabel,
     getEmptyTask,
-    addChecklist,
     deleteLabelOrMember,
-    deleteList
+    getEmptyChecklist
 }
 
 async function getById(boardId, groupId, taskId) {
@@ -70,156 +64,6 @@ async function deleteTask(boardId, groupId, taskId) {
     }
 }
 
-
-async function updateTodoProperty(boardId, groupId, taskId, listId, todoId, key, value) {
-
-    try {
-        const board = await boardService.getById(boardId)
-        const groupIdx = board.groups.findIndex(group => group.id === groupId)
-        const group = board.groups[groupIdx]
-        const taskIdx = group.tasks.findIndex(task => task.id === taskId)
-        const checklistIdx = group.tasks[taskIdx].checklists.findIndex(list => list.id === listId)
-        if (checklistIdx === -1) {
-            throw new Error("checklist isn't found!")
-        }
-
-        const todoIdx = group.tasks[taskIdx].checklists[checklistIdx].todos.findIndex(todo => todo.id === todoId)
-        if (todoIdx === -1) {
-            throw new Error("todo isn't found!")
-        }
-        if (key === 'delete') {
-            board.groups[groupIdx].tasks[taskIdx].checklists[checklistIdx].todos.splice(todoIdx, 1)
-            await boardService.saveGroup(group, boardId)
-            return board
-        }
-        if (!board.groups[groupIdx].tasks[taskIdx].checklists[checklistIdx].todos[todoIdx].hasOwnProperty(key)) {
-            throw new Error("The provided key doesn't exist on the todo")
-        }
-
-        board.groups[groupIdx].tasks[taskIdx].checklists[checklistIdx].todos[todoIdx][key] = value
-
-        await boardService.saveGroup(group, boardId)
-        return board;
-    } catch (err) {
-        console.log(`cannot update todo's ${key}`, err)
-        throw err
-    }
-}
-
-
-
-
-async function deleteTodo(boardId, groupId, taskId, listId, todoId) {
-    try {
-        return updateTodoProperty(boardId, groupId, taskId, listId, todoId, 'delete', null);
-    } catch (err) {
-        console.log('cannot delete todo', err);
-        throw err;
-    }
-}
-
-
-async function updateTodoIsDone(boardId, groupId, taskId, listId, todoId, state) {
-    try {
-        return updateTodoProperty(boardId, groupId, taskId, listId, todoId, 'isDone', state);
-    } catch (err) {
-        console.log('cannot update todo isDone status', err);
-        throw err;
-    }
-}
-
-async function updateTodoTitle(boardId, groupId, taskId, listId, todoId, txt) {
-    try {
-        return updateTodoProperty(boardId, groupId, taskId, listId, todoId, 'title', txt)
-    } catch (err) {
-        console.log('cannot update todo title', err);
-        throw err;
-    }
-}
-async function addChecklist(boardId, groupId, taskId, title) {
-    try {
-        const board = await boardService.getById(boardId)
-        const groupIdx = board.groups.findIndex(group => group.id === groupId)
-        const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
-        // const checklists= ;
-
-        // if (checklistIdx === -1) {
-        //     throw new Error("checklist isn't found!");
-        // }
-        const checklistToAdd = getEmptyChecklist(title)
-        console.log('checklistToAdd:', checklistToAdd)
-        board.groups[groupIdx].tasks[taskIdx].checklists.push(checklistToAdd)
-        await boardService.saveGroup(board.groups[groupIdx], boardId)
-        return board;
-    } catch (err) {
-        console.log('cannot update list title', err);
-        throw err;
-    }
-}
-
-async function updateListTitle(boardId, groupId, taskId, listId, title) {
-    try {
-        const board = await boardService.getById(boardId);
-        const groupIdx = board.groups.findIndex(group => group.id === groupId);
-        const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId);
-        const checklistIdx = board.groups[groupIdx].tasks[taskIdx].checklists.findIndex(list => list.id === listId);
-
-        if (checklistIdx === -1) {
-            throw new Error("checklist isn't found!");
-        }
-
-        board.groups[groupIdx].tasks[taskIdx].checklists[checklistIdx].title = title;
-        await boardService.saveGroup(board.groups[groupIdx], boardId);
-        return board;
-    } catch (err) {
-        console.log('cannot update list title', err);
-        throw err;
-    }
-}
-
-async function deleteList(boardId, groupId, taskId, listId) {
-    try {
-        const board = await boardService.getById(boardId);
-        const groupIdx = board.groups.findIndex(group => group.id === groupId);
-        const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId);
-        const checklistIdx = board.groups[groupIdx].tasks[taskIdx].checklists.findIndex(list => list.id === listId);
-
-        if (checklistIdx === -1) {
-            throw new Error("checklist isn't found!");
-        }
-
-        board.groups[groupIdx].tasks[taskIdx].checklists.splice(checklistIdx, 1);
-        await boardService.saveGroup(board.groups[groupIdx], boardId);
-        return board;
-    } catch (err) {
-        console.log('cannot delete list', err);
-        throw err;
-    }
-}
-
-async function addTodo(boardId, groupId, taskId, listId, newTodo) {
-
-    try {
-        const board = await boardService.getById(boardId);
-        const groupIdx = board.groups.findIndex(group => group.id === groupId);
-        const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId);
-        const checklistIdx = board.groups[groupIdx].tasks[taskIdx].checklists.findIndex(list => list.id === listId);
-
-        if (checklistIdx === -1) {
-            throw new Error("checklist isn't found!");
-        }
-
-
-        board.groups[groupIdx].tasks[taskIdx].checklists[checklistIdx].todos.push(newTodo);
-
-        await boardService.saveGroup(board.groups[groupIdx], boardId);
-        return board;
-    } catch (err) {
-        console.log('cannot add todo', err);
-        throw err;
-    }
-
-}
 
 // export async function update
 

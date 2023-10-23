@@ -25,14 +25,6 @@ export function TaskChecklistPreview({onDeleteList, onAddTodo, onUpdateListTitle
         ev.stopPropagation();
         try {
             await onToggleDoneTodo(listId, todoId, isDone)
-            const updatedChecklists = localChecklists.map(list => ({
-                ...list,
-                todos: list.todos.map(todo =>
-                    todo.id === todoId ? { ...todo, isDone } : todo
-                )
-            }))
-            calculateDoneTodos(updatedChecklists)
-            setLocalChecklists(updatedChecklists)
         } catch (err) {
             console.error('Cannot toggle todo', err)
             throw err
@@ -46,13 +38,6 @@ export function TaskChecklistPreview({onDeleteList, onAddTodo, onUpdateListTitle
     async function updateTodoTitle(listId, todoId, title) {
         try {
             await onUpdateTodoTitle(listId, todoId, title);
-            const updatedChecklists = localChecklists.map(list => ({
-                ...list,
-                todos: list.todos.map(todo =>
-                    todo.id === todoId ? { ...todo, title } : todo
-                )
-            }));
-            setLocalChecklists(updatedChecklists);
             setExpandedTodo({ listId: null, todoId: null });
             setTxt('');
         } catch (err) {
@@ -64,10 +49,6 @@ export function TaskChecklistPreview({onDeleteList, onAddTodo, onUpdateListTitle
     async function updateListTitle(listId, title) {
         try {
             await onUpdateListTitle(listId, title);
-            const updatedChecklists = localChecklists.map(list =>
-                list.id === listId ? { ...list, title } : list
-            );
-            setLocalChecklists(updatedChecklists);
             setExpandedListId(null);
             setTxt('');
         } catch (err) {
@@ -76,15 +57,11 @@ export function TaskChecklistPreview({onDeleteList, onAddTodo, onUpdateListTitle
         }
     }
 
-    async function addTodo(listId, txt) {
+    async function addTodo(listId) {
         if (!txt) return;
         try {
             const newTodo = taskService.getDefaultTodo(txt)
             await onAddTodo(listId, newTodo)
-            const updatedChecklists = localChecklists.map(list =>
-                list.id === listId ? { ...list, todos: [...list.todos, newTodo] } : list
-            );
-            setLocalChecklists(updatedChecklists)
             setExpandedTodo({ listId: null, todoId: null })
         } catch (err) {
             console.error('Cannot add todo', err)
@@ -95,12 +72,7 @@ export function TaskChecklistPreview({onDeleteList, onAddTodo, onUpdateListTitle
     async function deleteTodo(listId, todoId) {
         try {
             await onDeleteTodo(listId, todoId)
-            const updatedChecklists = localChecklists.map(list => ({
-                ...list,
-                todos: list.todos.filter(todo => todo.id !== todoId)
-            }));
-            calculateDoneTodos(updatedChecklists)
-            setLocalChecklists(updatedChecklists)
+            calculateDoneTodos(checklists)
         } catch (err) {
             console.error('Cannot delete todo', err)
             throw err;
@@ -125,9 +97,7 @@ export function TaskChecklistPreview({onDeleteList, onAddTodo, onUpdateListTitle
     async function deleteList(listId){
         try{
             await onDeleteList(listId)
-             const updatedChecklists = localChecklists.filter(list => list.id !== listId)
-            calculateDoneTodos(updatedChecklists)
-            setLocalChecklists(updatedChecklists)
+            calculateDoneTodos(checklists)
         } catch (err) {
             console.log('cant delete list');
             throw err
