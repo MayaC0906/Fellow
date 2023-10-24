@@ -9,9 +9,7 @@ export const boardService = {
     getById,
     save,
     remove,
-    getLabels,
     getCheckListStatus,
-    getMembers,
     getEmptyGroup,
     saveGroup,
     removeGroup,
@@ -21,14 +19,6 @@ export const boardService = {
 }
 
 window.bs = boardService
-
-function getLabels(labelsIds, boardLabels) {
-    return boardLabels.filter(label => labelsIds.includes(label.id))
-}
-
-function getMembers(memberIds, boardMembers) {
-    return boardMembers.filter(member => memberIds.includes(member._id))
-}
 
 function getCheckListStatus(checkLists) {
     const checkListStatus = { done: 0, all: 0 }

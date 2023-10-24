@@ -22,8 +22,8 @@ export function TaskList({handleDrag, tasks, labels, members, isLabelsShown, set
                 {(provided) => (
                     <section className="task-list" ref={provided.innerRef} {...provided.droppableProps}>
                         {tasks.map((task, index) => {
-                            const taskLabels = boardService.getLabels(task.labelIds, labels) || null;
-                            const taskMembers = boardService.getMembers(task.memberIds, members) || null;
+                            const taskLabels = labels.filter(label => task.labelIds.includes(label.id)) || null
+                            const taskMembers = members.filter(member => task.memberIds.includes(member._id)) || null
                             const taskChecklist = task.checklists.length ? boardService.getCheckListStatus(task.checklists) : '';
 
                             return (

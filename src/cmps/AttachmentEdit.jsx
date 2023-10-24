@@ -16,10 +16,12 @@ export function AttachmentEdit({ editName, onCloseEditTask, task, onSaveTask }) 
         FORM_DATA.append('upload_preset', UPLOAD_PRESET)
 
         try {
+            console.log('uploading');
             const res = await fetch(UPLOAD_URL, {
                 method: 'POST',
                 body: FORM_DATA,
             })
+            console.log('uploaded');
             const { url } = await res.json()
             setUploadedUrl(url)
         } catch (err) {
