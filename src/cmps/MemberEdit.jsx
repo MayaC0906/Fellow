@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 export function MemberEdit({ editName, onCloseEditTask, onSaveTask, task }) {
     const board = useSelector(storeState => storeState.boardModule.board)
     const [filterMembers, setFilterdMembers] = useState(board.members)
-    const [connectMembers, setConnectMembers] = useState([task.memberIds])
+    const [connectMembers, setConnectMembers] = useState(task.memberIds)
 
     function onMemberSearch({ target }) {
         const filteredMembers = board.members.filter(member =>
@@ -32,7 +32,6 @@ export function MemberEdit({ editName, onCloseEditTask, onSaveTask, task }) {
             console.log('Could not save date =>', err)
         }
     }
-
 
     return (
         <section className="edit-modal">

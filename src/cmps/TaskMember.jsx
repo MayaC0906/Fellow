@@ -1,35 +1,47 @@
 import { useEffect, useState } from "react";
 import { taskSvg } from "./Svgs";
 import { useSelector } from "react-redux";
-import { boardService } from "../services/board.service.local";
+// import { boardService } from "../services/board.service.local";
 import { MemberDetail } from "./MemberDetail";
 
 
-export function TaskMember({ taskMembersId, setEditName, onSaveTask, task }) {
+export function TaskMember({ taskMembersId, setEditName, editName, onSaveTask, task }) {
     const board = useSelector(storeState => storeState.boardModule.board)
-    const [isMemberDetail, setMemberDetail] = useState(false)
+    const [isMemberDetailOpen, setMemberDetailOpen] = useState(false)
     const [members, setMembers] = useState([])
     const [member, setMember] = useState([])
-    const [isAddingMember, setIsAddingMember] = useState(false)
 
     useEffect(() => {
         onLoadMembers(taskMembersId)
     }, [taskMembersId])
 
     async function onLoadMembers(taskMembersId) {
-        const taskMembers = boardService.getMembers(taskMembersId, board.members)
+        // const taskMembers = boardService.getMembers(taskMembersId, board.members)
+        const taskMembers = board.members.filter(member => taskMembersId.includes(member._id))
         setMembers(taskMembers)
     }
 
     function onSetMemberDetail(member) {
-        setMemberDetail(!isMemberDetail)
+        setMemberDetailOpen(!isMemberDetailOpen)
         setMember(member)
         setEditName('')
     }
 
-    function toggleAddingMember() {
-        setIsAddingMember(!isAddingMember);
-        setEditName(isAddingMember ? 'Member' : '');
+    function toggleMemberDisplay() {
+        if (editName === 'Member') setEditName('')
+        else if (editName === '') setEditName('Member')
+    }
+
+    async function removeMemberFromTask() {
+        try {
+            const updatedMembers = task.memberIds.filter(taskMember => taskMember !== member._id)
+            task.memberIds = updatedMembers
+            onSaveTask(task)
+            setMemberDetailOpen(false)
+        } catch (err) {
+            console.log('Cannot remove member', err)
+            throw err
+        }
     }
 
     return (
@@ -40,8 +52,12 @@ export function TaskMember({ taskMembersId, setEditName, onSaveTask, task }) {
                 {members.map(member => (
                     <img key={member._id} src={member.imgUrl} alt="" onClick={() => onSetMemberDetail(member)} />
                 ))}
-                {isMemberDetail && <MemberDetail member={member} setMemberDetail={setMemberDetail} onSaveTask={onSaveTask} task={task} />}
-                <button className="members-btn clean-btn flex align-center justify-center" onClick={toggleAddingMember}>{taskSvg.add}</button>
+                {isMemberDetailOpen && <MemberDetail
+                    member={member}
+                    setMemberDetailOpen={setMemberDetailOpen}
+                    removeMemberFromTask={removeMemberFromTask}
+                />}
+                <button className="members-btn clean-btn flex align-center justify-center" onClick={toggleMemberDisplay}>{taskSvg.add}</button>
             </div>
         </section>)
     )

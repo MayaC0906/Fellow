@@ -1,27 +1,26 @@
 import { useEffect, useState } from "react";
 import { taskSvg } from "./Svgs";
 import { useSelector } from "react-redux";
-import { boardService } from "../services/board.service.local";
+// import { boardService } from "../services/board.service.local";
 
 
-export function TaskLabel({ taskLabelsId, setEditName }) {
+export function TaskLabel({ taskLabelsId, setEditName, editName }) {
     const board = useSelector(storeState => storeState.boardModule.board)
     const [labels, setLabels] = useState([])
-    const [isAddingMember, setIsAddingMember] = useState(false)
-
 
     useEffect(() => {
         onLoadLabels(taskLabelsId)
     }, [taskLabelsId])
 
     async function onLoadLabels(taskLabelsId) {
-        const taskMembers = boardService.getLabels(taskLabelsId, board.labels)
-        setLabels(taskMembers)
+        const taskLabels = board.labels.filter(label => taskLabelsId.includes(label.id))
+        // const taskMembers = boardService.getLabels(taskLabelsId, board.labels)
+        setLabels(taskLabels)
     }
 
-    function toggleAddingMember() {
-        setIsAddingMember(!isAddingMember);
-        setEditName(isAddingMember ? 'Label' : '');
+    function toggleLabelDisplay() {
+        if (editName === 'Label') setEditName('')
+        else if (editName === '') setEditName('Label')
     }
 
     return (
@@ -30,9 +29,9 @@ export function TaskLabel({ taskLabelsId, setEditName }) {
             <p className="members-headline">Labels</p>
             <div className="labels-detail flex align-center">
                 {labels.map(label => (
-                    <button className="labels-display" style={{ backgroundColor: label.color }} onClick={toggleAddingMember}>{label.title}</button>
+                    <button className="labels-display" style={{ backgroundColor: label.color }} onClick={toggleLabelDisplay}>{label.title}</button>
                 ))}
-                <button className="labels-add clean-btn flex align-center" onClick={toggleAddingMember}>{taskSvg.add}</button>
+                <button className="labels-add clean-btn flex align-center" onClick={toggleLabelDisplay}>{taskSvg.add}</button>
             </div>
         </section>)
     )

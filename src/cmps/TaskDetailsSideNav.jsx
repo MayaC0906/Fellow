@@ -3,7 +3,6 @@ import { DynamicTaskEdit } from "./DynamicTaskEdit";
 
 export function TaskDetailsSideNav({ editName, setEditName, setTask, onSaveTask, task }) {
 
-    console.log('editname:', editName);
     function onOpenEditTask(name) {
         setEditName(name)
     }
