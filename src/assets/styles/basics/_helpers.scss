@@ -140,20 +140,33 @@
     color: $clr6;
     font-weight: 500;
     font-size: rem(14px);
-    border-radius: 3px; 
-    &.create-btn{
+    border-radius: 3px;
+
+    &.create-btn {
         background-color: $a-h2-l;
+
         &:hover {
             background-color: $a-h3-l;
         }
     }
-    &.search-input{
+
+    &.search-input {
         background-color: $a-h2-l;
         border: 1px solid $a-h1-l;
+
+        input {
+            color: $clr6;
+        }
+
         &:hover {
             background-color: $a-h4-l;
         }
+
+        &::placeholder {
+            color: $clr6;
+        }
     }
+
     &:hover {
         background-color: $a-h1-l;
         cursor: pointer;
@@ -166,25 +179,39 @@
     color: $a-h-txt;
     font-weight: 500;
     font-size: rem(14px);
-    border-radius: 3px; 
-    &.create-btn{
+    border-radius: 3px;
+
+    &.create-btn {
         background-color: $a-h2-d;
+
         &:hover {
             background-color: $a-h1-d;
         }
     }
-    &.search-input{
+
+    &.search-input {
         background-color: $a-h1-d;
         border: 1px solid $a-bd-d;
+
+        input {
+            color: $a-h-txt;
+        }
+
         &:hover {
             background-color: $a-h2-d;
         }
+
+        &::placeholder {
+            color: $a-h-txt;
+        }
     }
+
     &:hover {
         background-color: $a-h1-d;
         cursor: pointer;
     }
 }
+
 // Media helpers
 
 .square-ratio {
