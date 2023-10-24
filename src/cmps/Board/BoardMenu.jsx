@@ -6,6 +6,12 @@ import { useSelector } from 'react-redux';
 export function BoardMenu({setMenu, isMenuOpen}){
     const board = useSelector((storeState) => storeState.boardModule.board)
 
+    // function getCmp() {
+    //     switch(title) {
+    //         case 'Menu': 
+    //     }
+    // }
+
     return (
         <div className={`board-menu ${isMenuOpen ? 'translate' : ''}`}>
             <div className="board-menu-container">
