@@ -4,7 +4,7 @@
     pointer-events: auto;
     z-index: 50;
     overflow-y: scroll;
-    background-color: rgba(0, 0, 0, 0.475);
+    background-color: $dtl-bgc4;
 
     .modal-container {
         z-index: 60;
@@ -24,7 +24,7 @@
             overflow: hidden;
             grid-area: task-modal;
             z-index: 60;
-            background-color: white;
+            background-color: $clr6;
             min-height: 600px;
             width: 100%;
             max-width: 768px;
@@ -43,13 +43,13 @@
                 border-radius: 50%;
 
                 &:hover {
-                    background-color: #091E4224;
+                    background-color: $dtl-bgc2;
                 }
 
                 svg {
                     width: 20px;
                     height: 20px;
-                    color: #42526e;
+                    color: $dtl-txt1;
                 }
             }
 
@@ -57,6 +57,7 @@
                 justify-content: center;
                 max-height: 160px;
                 display: flex;
+                background-color: $dtl-bgc3;
 
                 img {
                     width: auto;
@@ -92,6 +93,7 @@
                         align-items: center;
                         margin-inline-start: 40px;
                         font-size: rem(16px);
+                        font-weight: 600;
 
                         svg {
                             position: absolute;
@@ -105,10 +107,11 @@
                         width: calc(100% - 40px);
                         
                         &.add-description {
-                            background-color: #091e420f;
+                            font-size: rem(14px);
+                            background-color: $dtl-bgc4;
                             font-weight: 500;
                             border-radius: 3px;
-                            color: #172b4d;
+                            color: $dtl-txt2;
                             margin: 18px 0 0 40px;
                             height: 56px;
                             padding: 8px 12px;
