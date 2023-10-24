@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { appHeaderSvg, groupHeaderSvg, workspaceSvg } from "../Svgs";
 import { useSelector } from "react-redux";
 import { updateBoard } from "../../store/actions/board.actions";
+import { BoardMenu } from "../Board/BoardMenu.jsx"
 
-export function GroupHeader({ board }) {
+export function GroupHeader({ isMenuOpen, setMenu, board }) {
     const [boardTitle, setBoardTitle] = useState('')
 
     useEffect(() => {
@@ -57,7 +58,7 @@ export function GroupHeader({ board }) {
                     <img className="member-img" src="https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg" alt="" />
                     <img className="member-img" src="https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg" alt="" />
                     <button className={`group-header-btn svg additional ${isBright ? 'brightColor' : 'darkColor'}`}>{groupHeaderSvg.addmember} <span>Share</span></button>
-                    <button className="group-header-btn svg dots">{groupHeaderSvg.threeDots}</button>
+                    {!isMenuOpen ? <button onClick={() => setMenu(!isMenuOpen)} className="group-header-btn svg dots">{groupHeaderSvg.threeDots}</button> : ''}
                 </section>
             </section>
         </header>
