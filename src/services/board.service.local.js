@@ -70,22 +70,6 @@ async function save(board) {
     return savedBoard
 }
 
-// async function addBabaMsg(babaId, txt) {
-//     // Later, this is all done by the backend
-//     const baba = await getById(babaId)
-//     if (!baba.msgs) baba.msgs = []
-
-//     const msg = {
-//         id: utilService.makeId(),
-//         by: userService.getLoggedinUser(),
-//         txt
-//     }
-//     baba.msgs.push(msg)
-//     await storageService.put(STORAGE_KEY, baba)
-
-//     return msg
-// }
-
 function getEmptyGroup() {
     return {
         title: '',
