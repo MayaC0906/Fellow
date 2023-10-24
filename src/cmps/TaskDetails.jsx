@@ -35,16 +35,14 @@ export function TaskDetails() {
         }
     }
 
-    async function onSaveTask(updatedTask){
+    async function onSaveTask(updatedTask) {
         try {
             setTask(updatedTask)
-		    await saveNewTask( boardId, groupId, updatedTask)
+            await saveNewTask(boardId, groupId, updatedTask)
         } catch (err) {
             console.log('cant save task');
         }
     }
-
-    // console.log('task from task details:', task);
 
     if (!task) return <div>Loading</div>
     return (
@@ -63,30 +61,38 @@ export function TaskDetails() {
                         </div>}
 
 
-                    <TaskTitle onSaveTask={onSaveTask} task={task}/>
+                    <TaskTitle onSaveTask={onSaveTask} task={task} />
 
                     <section className="task-items-display flex align-center">
                         <TaskMember
-                        taskMembersId={task.memberIds}
-                        setEditName={setEditName}
-                        setTask={setTask}
-                        onSaveTask={onSaveTask}
-                        task={task}
+                            taskMembersId={task.memberIds}
+                            setEditName={setEditName}
+                            editName={editName}
+                            onSaveTask={onSaveTask}
+                            task={task}
                         />
-                        <TaskLabel taskLabelsId={task.labelIds} setEditName={setEditName} />
+                        <TaskLabel
+                            taskLabelsId={task.labelIds}
+                            setEditName={setEditName}
+                            editName={editName}
+                        />
                     </section>
 
                     {task.dueDate && (
                         <section className="task-date-show">
-                            <TaskDate taskDate={task.dueDate} setEditName={setEditName} />
+                            <TaskDate
+                                taskDate={task.dueDate}
+                                setEditName={setEditName}
+                                editName={editName}
+                            />
                         </section>
                     )}
 
                     <section className="task-main">
                         <section className="task-info">
                             <TaskDescription
-                            onSaveTask={onSaveTask}
-                            task={task} />
+                                onSaveTask={onSaveTask}
+                                task={task} />
                             <TaskAttachments
                                 setEditName={setEditName}
                                 onSaveTask={onSaveTask}
@@ -98,11 +104,11 @@ export function TaskDetails() {
 
                         <section className="edit-task-nav">
                             <TaskDetailsSideNav
-                            setTask={setTask}
-                            editName={editName}
-                            setEditName={setEditName}
-                            onSaveTask={onSaveTask}
-                            task={task}
+                                setTask={setTask}
+                                editName={editName}
+                                setEditName={setEditName}
+                                onSaveTask={onSaveTask}
+                                task={task}
                             />
                         </section >
 
@@ -110,11 +116,11 @@ export function TaskDetails() {
 
                         <section>
                             <TaskCheckList
-                            setTask={setTask} 
-                            setEditName={setEditName} 
-                            // checklists={task.checklists}
-                            onSaveTask={onSaveTask}
-                            task={task} 
+                                setTask={setTask}
+                                setEditName={setEditName}
+                                // checklists={task.checklists}
+                                onSaveTask={onSaveTask}
+                                task={task}
                             />
                         </section>
                     </section >

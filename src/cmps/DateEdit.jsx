@@ -1,14 +1,10 @@
-import { DateCalendar, DateField, DatePicker, TimeField } from '@mui/x-date-pickers'
+import { DateCalendar, DateField, TimeField } from '@mui/x-date-pickers'
 import { additionTaskSvg } from './Svgs'
 import dayjs from 'dayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { useEffect, useRef, useState } from 'react'
-import { BasicDateField } from './DueDate'
-import { BasicTimeField } from './DueTime'
-import { useParams } from 'react-router'
 import { Button } from '@mui/joy'
-import { loadTask } from '../store/actions/board.actions'
 import { Checkbox } from '@mui/material'
 
 
@@ -16,16 +12,14 @@ import { Checkbox } from '@mui/material'
 export function DateEdit({ editName, onCloseEditTask, onSaveTask, task }) {
     const [selectedDate, setSelectedDate] = useState(null)
     const [isDateSelected, setIsDateSelected] = useState(false)
-    const { boardId, groupId, taskId } = useParams()
     let lastDate = useRef(null)
 
     useEffect(() => {
-        onLoadDueDate(boardId, groupId, taskId)
+        onLoadDueDate()
     }, [])
 
-    async function onLoadDueDate(boardId, groupId, taskId) {
+    async function onLoadDueDate() {
         try {
-            const task = await loadTask(boardId, groupId, taskId)
             const dueDate = task.dueDate
             if (dueDate) {
                 const formattedDate = dayjs(dueDate, 'MMM D [at] h:mm A')

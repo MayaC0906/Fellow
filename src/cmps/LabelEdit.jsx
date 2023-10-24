@@ -1,41 +1,30 @@
 import { useSelector } from 'react-redux'
 import { additionTaskSvg, taskSvg } from './Svgs'
 import { Checkbox } from '@mui/material'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AddLabel } from './AddLabel'
-import { useParams } from 'react-router'
 import { Textarea } from '@mui/joy'
+import { updateBoard } from '../store/actions/board.actions'
 
-export function LabelEdit({ editName, onCloseEditTask, setTask, onSaveTask, task }) {
+export function LabelEdit({ editName, onCloseEditTask, onSaveTask, task }) {
     const board = useSelector(storeState => storeState.boardModule.board)
     const [labels, setLabels] = useState(board.labels)
-    const [checkedLabelsStart, setCheckedLabelsStart] = useState([])
+    const [checkedLabelsStart, setCheckedLabelsStart] = useState(task.labelIds)
     const [isLabelEdit, setIsLabelEdit] = useState(false)
     const [labelToEdit, setLabelToEdit] = useState(null)
 
-    const { boardId, groupId, taskId } = useParams()
-    let isLabel = useRef(false)
 
     useEffect(() => {
-        loadCheckedLabels()
         setLabels(board.labels)
     }, [board.labels])
-
-    async function loadCheckedLabels() {
-        // const task = await loadTask(boardId, groupId, taskId)
-        setCheckedLabelsStart(task.labelIds)
-    }
 
     function onAddLabel(label) {
         setIsLabelEdit(!isLabelEdit)
         setLabelToEdit(label)
     }
 
-
-
     async function onToggleLabelToTask(labelId) {
         let newTask
-        isLabel = true
         try {
             const LabelIdx = task.labelIds.findIndex(id => id === labelId)
             if (LabelIdx === -1) {
@@ -47,7 +36,6 @@ export function LabelEdit({ editName, onCloseEditTask, setTask, onSaveTask, task
             }
             onSaveTask(newTask)
             setCheckedLabelsStart(newTask.labelIds)
-            isLabel = false
         } catch (err) {
             console.log('Could not save date =>', err)
         }
@@ -60,15 +48,33 @@ export function LabelEdit({ editName, onCloseEditTask, setTask, onSaveTask, task
         setLabels(filteredLabels)
     }
 
+    async function onDeletingLabel() {
+        try {
+            const updatedLabelsIBoard = board.labels.filter(label => label.id !== labelToEdit.id)
+            board.labels = updatedLabelsIBoard
+            await updateBoard(board)
+
+            const updatedLabelsInTask = task.labelIds.filter(label => label !== labelToEdit.id)
+            task.labelIds = updatedLabelsInTask
+            await onSaveTask(task)
+
+            onAddLabel('')
+        } catch (err) {
+            console.log('Cannot remove label', err)
+            throw err
+        }
+    }
+
+
     return isLabelEdit ? (
         <AddLabel
             onCloseEditTask={onCloseEditTask}
             onAddLabel={onAddLabel}
             labelToEdit={labelToEdit}
-            setTask={setTask}
-            isLabel={isLabel}
             onSaveTask={onSaveTask}
             task={task}
+            setCheckedLabelsStart={setCheckedLabelsStart}
+            onDeletingLabel={onDeletingLabel}
         />) : (
 
         <section className="edit-modal">
