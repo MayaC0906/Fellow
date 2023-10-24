@@ -4,6 +4,7 @@ import { utilService } from '../services/util.service.js'
 
 export function AttachmentEdit({ editName, onCloseEditTask, task, onSaveTask }) {
     const [uploadedUrl, setUploadedUrl] = useState('')
+    const [isUploading, setIsUploading] = useState('')
 
     async function uploadImg(ev) {
 
@@ -16,12 +17,13 @@ export function AttachmentEdit({ editName, onCloseEditTask, task, onSaveTask }) 
         FORM_DATA.append('upload_preset', UPLOAD_PRESET)
 
         try {
-            console.log('uploading');
+            setIsUploading('uploading')
             const res = await fetch(UPLOAD_URL, {
                 method: 'POST',
                 body: FORM_DATA,
             })
-            console.log('uploaded');
+            setIsUploading('uploaded')
+            setUploaded()
             const { url } = await res.json()
             setUploadedUrl(url)
         } catch (err) {
@@ -29,14 +31,20 @@ export function AttachmentEdit({ editName, onCloseEditTask, task, onSaveTask }) 
         }
     }
 
+    function setUploaded() {
+        setTimeout(() => {
+            setIsUploading('')
+        }, 2000);
+    }
+
     async function onSaveAttachment() {
-        let newTask = {...task}
+        let newTask = { ...task }
         const newAttachment = ({ id: utilService.makeId(), imgUrl: uploadedUrl, createdAt: Date.now() })
         task.attachments.push(newAttachment)
         if (!task.cover.img && !task.cover.backgroundColor) {
-            newTask = {...task, cover: {...task.cover, img: uploadedUrl}, attachments: task.attachments}
+            newTask = { ...task, cover: { ...task.cover, img: uploadedUrl }, attachments: task.attachments }
         } else {
-            newTask = { ...task, attachments: task.attachments,  }
+            newTask = { ...task, attachments: task.attachments, }
         }
         await onSaveTask(newTask)
         onCloseEditTask()
@@ -66,6 +74,8 @@ export function AttachmentEdit({ editName, onCloseEditTask, task, onSaveTask }) 
                             <button className='cancel-btn' onClick={onCloseEditTask}>Cancel</button>
                             <button onClick={onSaveAttachment} className='insert-btn'>Insert</button>
                         </div>
+                        {(isUploading === 'uploading') && <div>uploading</div>}
+                        {(isUploading === 'uploaded') && <div>uploaded</div>}
                     </section>
                 </div>
             </section>
