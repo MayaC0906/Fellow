@@ -22,35 +22,45 @@
 
 
 // Components
-@import "cmps/AppHeader";
-@import "cmps/AppFooter";
 @import "cmps/UserMsg";
-@import "cmps/ShoppingCart";
-@import "cmps/GroupList";
-@import "cmps/GroupPreview";
-@import "cmps/BoardList";
-@import "cmps/GroupHeader";
-@import "cmps/TaskList";
-@import "cmps/TaskDetails";
-@import "cmps/QuickGroupEdit";
 @import "cmps/UserMsg.scss";
-@import "cmps/TaskDetailsSideNav.scss";
-@import "cmps/DynamicTaskEdit.scss";
-@import "cmps/TaskAttachments.scss";
-@import "cmps/TaskChecklist";
-@import "cmps/Dates";
-@import "cmps/TaskMembers";
-@import "cmps/BoardSidebar";
-@import "cmps/LabelEdit";
-@import "cmps/AddLabel";
-@import "cmps/MemberDetail";
-@import "cmps/HomeProductivity";
-@import "cmps/HomeFeatures";
-@import "cmps/HomeFooter";
-@import "cmps/MemberEdit";
-@import "cmps/TaskDate";
-@import "cmps/TaskDetailsHeader";
-@import "cmps/TaskLabels";
-@import "cmps/AddBoard";
-@import "cmps/MemberImage";
-@import "cmps/AttachmentEdit"
+
+
+// Board
+@import "cmps/Board/AddBoard";
+@import "cmps/Board/BoardList";
+@import "cmps/Board/BoardSidebar";
+
+// Group
+@import "cmps/Group/GroupList";
+@import "cmps/Group/GroupPreview";
+@import "cmps/Group/GroupHeader";
+@import "cmps/Group/GroupMenu";
+
+// Task
+@import "cmps/Task/TaskList";
+@import "cmps/Task/TaskDetails";
+@import "cmps/Task/TaskDetailsSideNav";
+@import "cmps/Task/TaskChecklist";
+@import "cmps/Task/TaskMembers";
+@import "cmps/Task/TaskDate";
+@import "cmps/Task/TaskDetailsHeader";
+@import "cmps/Task/TaskLabels";
+@import "cmps/Task/TaskMemberImage";
+@import "cmps/Task/TaskMemberDetail";
+@import "cmps/Task/TaskAttachments";
+
+// Dynamic
+@import "cmps/Dynamic/DynamicTaskEdit";
+@import "cmps/Dynamic/Dates";
+@import "cmps/Dynamic/LabelEdit";
+@import "cmps/Dynamic/AddLabel";
+@import "cmps/Dynamic/MemberEdit";
+@import "cmps/Dynamic/AttachmentEdit";
+
+// Home
+@import "cmps/Home/HomeFeatures";
+@import "cmps/Home/HomeFooter";
+@import "cmps/Home/HomeProductivity";
+@import "cmps/Home/AppHeader";
+@import "cmps/Home/AppFooter";

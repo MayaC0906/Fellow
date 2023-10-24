@@ -5,7 +5,7 @@ import { HomePage } from './pages/HomePage'
 import { Workspace } from './pages/Workspace'
 import { BoardDetails } from './pages/BoardDetails'
 import { LoginSignup } from './pages/LoginSignup'
-import { TaskDetails } from './cmps/TaskDetails'
+import { TaskDetails } from './cmps/Task/TaskDetails/TaskDetails'
 
 export function App() {
 

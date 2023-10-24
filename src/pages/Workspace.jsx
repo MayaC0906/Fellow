@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
 import { loadBoards, updateBoard } from "../store/actions/board.actions"
 import { useSelector } from "react-redux"
-import { BoardList } from "../cmps/BoardList"
 import { workspaceSvg } from "../cmps/Svgs"
-import { AddBoard } from "../cmps/AddBoard"
+import { AddBoard } from "../cmps/Board/AddBoard"
+import { BoardList } from "../cmps/Board/BoardList"
 
 export function Workspace() {
     const boards = useSelector(storeState => storeState.boardModule.boards)
