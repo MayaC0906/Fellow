@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { additionTaskSvg } from '../../Svgs'
+import { Fragment, useState } from 'react'
+import { additionTaskSvg, taskSvg } from '../../Svgs'
 import { utilService } from '../../../services/util.service.js'
 
 export function AttachmentEdit({ editName, onCloseEditTask, task, onSaveTask }) {
@@ -34,7 +34,7 @@ export function AttachmentEdit({ editName, onCloseEditTask, task, onSaveTask }) 
     function setUploaded() {
         setTimeout(() => {
             setIsUploading('')
-        }, 2000);
+        }, 2500);
     }
 
     async function onSaveAttachment() {
@@ -51,35 +51,38 @@ export function AttachmentEdit({ editName, onCloseEditTask, task, onSaveTask }) 
     }
 
     return (
-        <section className="edit-modal">
-            <div className="title-container">
-                <p>{editName}</p>
-                <button onClick={onCloseEditTask} className="close-modal">{additionTaskSvg.close}</button>
-            </div>
-            <section className="edit-modal-content">
-                <div className="content">
-                    <section className='add-attachment-container'>
-                        <div className='add-attachment'>
-                            <h2>Attach a file from your computer</h2>
-                            <h3>You can also drag and drop files to upload them.</h3>
-                            <input type="file" id="fileInput" onChange={uploadImg} />
-                            <label for="fileInput" className="custom-button">Choose a file</label>
-
-                        </div>
-                        <div className='add-attachment-link'>
-                            <h2>Search or paste a link</h2>
-                            <input type="text" placeholder='Find recent links or paste a new link' />
-                        </div>
-                        <div className='attachment-actions'>
-                            <button className='cancel-btn' onClick={onCloseEditTask}>Cancel</button>
-                            <button onClick={onSaveAttachment} className='insert-btn'>Insert</button>
-                        </div>
-                        {(isUploading === 'uploading') && <div>uploading</div>}
-                        {(isUploading === 'uploaded') && <div>uploaded</div>}
-                    </section>
+        <Fragment>
+            <section className="edit-modal">
+                <div className="title-container">
+                    <p>{editName}</p>
+                    <button onClick={onCloseEditTask} className="close-modal">{additionTaskSvg.close}</button>
                 </div>
+                <section className="edit-modal-content">
+                    <div className="content">
+                        <section className='add-attachment-container'>
+                            <div className='add-attachment'>
+                                <h2>Attach a file from your computer</h2>
+                                <h3>You can also drag and drop files to upload them.</h3>
+                                <input type="file" id="fileInput" onChange={uploadImg} />
+                                <label for="fileInput" className="custom-button">Choose a file</label>
+                            </div>
+                            <hr />
+                            <div className='add-attachment-link'>
+                                <h2>Search or paste a link</h2>
+                                <input type="text" placeholder='Find recent links or paste a new link' />
+                            </div>
+                            <div className='attachment-actions'>
+                                <button className='cancel-btn' onClick={onCloseEditTask}>Cancel</button>
+                                <button onClick={onSaveAttachment} className={isUploading === 'uploading' ? 'disable insert-btn' : 'insert-btn'}
+>Insert</button>
+                            </div>
+                        </section>
+                    </div>
+                </section>
             </section>
-        </section>
+            {(isUploading === 'uploading') && <div className='attachment-uploading'> {taskSvg.info} Uploading file...</div>}
+            {(isUploading === 'uploaded') && <div className='attachment-uploading green' > {taskSvg.checkCircle} Success!</div>}
+        </Fragment>
     )
 }
 
