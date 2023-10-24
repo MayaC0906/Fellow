@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { appHeaderSvg, groupHeaderSvg, workspaceSvg } from "../Svgs";
+import { useSelector } from "react-redux";
+import { updateBoard } from "../../store/actions/board.actions";
 
 export function GroupHeader({ board }) {
     const [boardTitle, setBoardTitle] = useState('')
@@ -13,18 +15,34 @@ export function GroupHeader({ board }) {
         setBoardTitle(value)
     }
 
+    async function onEditBoardTitle({ }) {
+        board.title = boardTitle
+        try {
+            await updateBoard(board)
+        } catch (err) {
+            console.log(err);
+            throw err
+        }
+    }
+
+
     const { isBright } = board.style
 
     return (
         <header className="group-header bgc">
             <section className="visibility">
                 <section className="header-title">
-                    <input type="text" onChange={handleIputLength} value={boardTitle} style={{ width: `${boardTitle.scrollWidth}px` }}
+                    <input
+                        type="text"
+                        onChange={handleIputLength}
+                        value={boardTitle}
+                        style={{ width: `${boardTitle.scrollWidth}px` }}
+                        onBlur={onEditBoardTitle}
                     />
                 </section>
                 <section className="group-visbility group-header">
                     <button className="group-header-btn svg star">{workspaceSvg.star}</button>
-                    <button className="group-header-btn svg members">{groupHeaderSvg.members} <span>Workspace visible</span></button>
+                    <button className="group-header-btn svg members">{groupHeaderSvg.members}<span>Workspace visible</span></button>
                     <button className={`group-header-btn svg bars ${isBright ? 'brightColor' : 'darkColor'}`}>{groupHeaderSvg.bars} <span>Board</span></button>
                     <button className="group-header-btn svg arrowdown">{appHeaderSvg.arrowDown}</button>
                 </section>

@@ -1,5 +1,5 @@
+
 import { useState, useRef } from 'react'
-// import { TextInputs } from './TextInputs'
 import { taskService } from '../../services/task.service.local';
 import Button from '@mui/joy/Button';
 import { useSelector, useDispatch } from 'react-redux'
@@ -10,12 +10,11 @@ import { TaskList } from '../Task/TaskList';
 import { groupPreview } from '../Svgs';
 
 export function GroupPreview({ handleDrag, onEditGroup, isLabelsShown, setIsLabelsShown, group, members, labels, onRemoveGroup, onDuplicateGroup }) {
-	// console.log('members from groupPreview', members);
 	const [toggleGroupMenu, setToggleGroupMenu] = useState(false)
 	const [isInputExpand, setInputExpand] = useState(false)
 	const [newTask, setNewTask] = useState(taskService.getEmptyTask())
 	const board = useSelector((storeState) => storeState.boardModule.board)
-	const groupHeaderRef = useRef(null); //SPECIFIC GROUP HEADER
+	const groupHeaderRef = useRef(null)
 
 	function getGroupHeaderPosition() {
 		if (groupHeaderRef.current) {
@@ -28,6 +27,7 @@ export function GroupPreview({ handleDrag, onEditGroup, isLabelsShown, setIsLabe
 		return { top: 0, left: 0 }
 	}
 
+	
 	function handleChange(ev) {
 		let { value, name: field } = ev.target
 		setNewTask((prevGroup) => ({ ...prevGroup, [field]: value }))
@@ -60,10 +60,7 @@ export function GroupPreview({ handleDrag, onEditGroup, isLabelsShown, setIsLabe
 						defaultValue={group.title}
 						onBlur={(event) => onEditGroup(group.id, event)}
 						onKeyDown={(event) => onEditGroup(group.id, event)}
-					// onChange={(event) => onEditGroup(group.id,event)}
 					// onChange={} TODO
-					// maxRows={1}
-					// sx={{ border: 'none' }}
 					></input>
 					<section>
 						<img onClick={() => setToggleGroupMenu(!toggleGroupMenu)} src="https://res.cloudinary.com/dpwmxprpp/image/upload/v1696437012/asset_14_gltqff.svg" alt="" />
@@ -105,9 +102,7 @@ export function GroupPreview({ handleDrag, onEditGroup, isLabelsShown, setIsLabe
 						<div>
 							<textarea name="title"
 								placeholder="Enter card title..."
-								// autoFocus
 								rows={4}
-								// value={newGroup.title}
 								onChange={handleChange}
 							/>
 							<section className='add-controls'>

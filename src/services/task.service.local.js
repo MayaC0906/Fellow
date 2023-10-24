@@ -24,14 +24,10 @@ async function saveTask(boardId, groupId, newTask) {
     console.log(boardId, groupId, newTask);
     try {
         let group = await boardService.getGroupById(groupId, boardId)
-        console.log('group', group);
         if (newTask.id) {
             const taskIdx = group.tasks.findIndex(task => task.id === newTask.id)
-            console.log('taskIdx', taskIdx);
             group.tasks[taskIdx] = newTask
-            console.log('task', group.tasks[taskIdx]);
         } else {
-            console.log('hi');
             newTask.id = utilService.makeId()
             group.tasks.push(newTask)
         }

@@ -1,18 +1,9 @@
 .group-preview-container{
 
-    // box-sizing: border-box;
-    // display: inline-block;
-    // height: 100%;
-    // margin: 0 4px;
-   
-    // vertical-align: top;
- 
-    // width: 272px;
     .group-preview {
         display: flex;
         flex-direction: column;
         width: 272px;
-        // height: fit-content;
         max-height: 100%;
         overflow: hidden;
         border-radius: 12px;
@@ -26,7 +17,6 @@
             z-index: 10;
             background-color: #ebecf0;
         }
-
         .footer-wrapper {
             position: sticky;
             bottom: 0;
@@ -42,7 +32,6 @@
             color: #44546F;
             display: block;
             flex: 1 0 auto;
-            // margin: 0 0 4px 0;
             padding: 4px 8px 4px 6px;
             position: relative;
             text-decoration: none;
@@ -224,10 +213,3 @@
     }
     
 }
-
-
-
-
-
-
-//
