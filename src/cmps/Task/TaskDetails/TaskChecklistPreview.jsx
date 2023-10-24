@@ -69,7 +69,8 @@ export function TaskChecklistPreview({ onDeleteList, onAddTodo, onUpdateListTitl
         }
     }
 
-    async function deleteTodo(listId, todoId) {
+    async function deleteTodo(ev, listId, todoId) {
+        ev.preventDefault()
         try {
             await onDeleteTodo(listId, todoId)
             calculateDoneTodos(checklists)
@@ -172,7 +173,7 @@ export function TaskChecklistPreview({ onDeleteList, onAddTodo, onUpdateListTitl
                                             Save
                                         </Button>
                                         <button className='cancel' onClick={() => setExpandedTodo({ listId: null, todoId: null })}>X</button>
-                                        <button className='delete' onClick={() => deleteTodo(list.id, todo.id)}>Delete</button>
+                                        <button className='delete' onClick={(event) => deleteTodo(event, list.id, todo.id)}>Delete</button>
                                     </section>
                                 </form> :
                                 <span onClick={() => {
