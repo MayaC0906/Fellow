@@ -80,7 +80,12 @@ function getEmptyTask() {
         attachments: [],
         checklists: [],
         isDone: false,
-        style: {}
+        style: {},
+        cover: {
+            backgroundColor: '',
+            img: '',
+            createdAt: null
+        }
     }
 }
 
