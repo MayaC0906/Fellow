@@ -49,6 +49,24 @@ export function GroupList() {
         }
     }
 
+    async function onSortGroup(group) {
+        try {
+            await saveGroup(group, board._id)
+        } catch (err) {
+            console.log('cant sort group', err);
+            throw err
+        }
+    }
+
+    async function onUpdateBoard(board) {
+        try {
+            await updateBoard(board)
+        } catch (err) {
+            console.log('cant update board from group list', err);
+            throw err
+        }
+    }
+
     function getGroupById(groupId) {
         const group = groups.find(group => group.id === groupId)
         return group
@@ -157,6 +175,8 @@ export function GroupList() {
                                                 handleDrag={handleDrag}
                                                 openMenuGroupId={openMenuGroupId}
                                                 setOpenMenuGroupId={setOpenMenuGroupId}
+                                                onSortGroup={onSortGroup}
+                                                onUpdateBoard={onUpdateBoard}
                                             />
                                         </li>
                                     )}

@@ -6,7 +6,7 @@ import { showSuccessMsg } from '../../services/event-bus.service';
 import { saveNewTask } from '../../store/actions/board.actions';
 import { GroupMenu } from './GroupMenu';
 import { TaskList } from '../Task/TaskList';
-import { groupPreview } from '../Svgs';
+import { checkList, groupPreview } from '../Svgs';
 
 export function GroupPreview({
   handleDrag,
@@ -19,7 +19,9 @@ export function GroupPreview({
   onRemoveGroup,
   onDuplicateGroup,
   openMenuGroupId,
-  setOpenMenuGroupId
+  setOpenMenuGroupId,
+  onSortGroup,
+  onUpdateBoard
 }) {
   const [isInputExpand, setInputExpand] = useState(false);
   const [newTask, setNewTask] = useState(taskService.getEmptyTask());
@@ -98,6 +100,7 @@ export function GroupPreview({
 			{group.id === openMenuGroupId && (
 			<div className="group-menu">
 				<GroupMenu
+				onSortGroup={onSortGroup}
 				group={group}
 				setToggleGroupMenu={toggleGroupMenu}
 				groupMenuPosition={groupMenuPosition}
@@ -106,6 +109,7 @@ export function GroupPreview({
 				onDuplicateGroup={onDuplicateGroup}
 				openMenuGroupId={openMenuGroupId}
 				setOpenMenuGroupId={setOpenMenuGroupId} 
+				onUpdateBoard={onUpdateBoard}
 				/>
 			</div>
 			)}
@@ -143,9 +147,9 @@ export function GroupPreview({
 					<Button type="submit" onClick={onSaveNewTask}>
 					Add Card
 					</Button>
-					<button className="cancel clean-btn" onClick={() => setInputExpand(false)}>
-					X
-					</button>
+					<div className="cancel clean-btn" onClick={() => setInputExpand(false)}>
+					{checkList.x}
+					</div>
 				</section>
 				</div>
 			)}
