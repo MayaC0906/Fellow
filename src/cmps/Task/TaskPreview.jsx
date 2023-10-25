@@ -1,16 +1,29 @@
-import dayjs from "dayjs";
-import { taskSvg } from "../Svgs";
+import dayjs from "dayjs"
+import { taskSvg } from "../Svgs"
+import { saveNewTask } from "../../store/actions/board.actions"
+import { useParams } from "react-router"
 
-export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels, taskMembers, taskChecklist }) {
+export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels, taskMembers, taskChecklist, groupId }) {
+    const { dueDate } = task
+    const { boardId } = useParams()
 
     function onLabelOpen(ev) {
         ev.preventDefault()
         setIsLabelsShown(!isLabelsShown)
     }
 
+    async function onCompleteDueDate(ev) {
+        ev.preventDefault()
+        dueDate.isComplete = !dueDate.isComplete
+        try {
+            await saveNewTask(boardId, groupId, task)
+        } catch (err) {
+            console.log(`Couldn't save task`, err);
+        }
+    }
+
     if (!task) return <div>Loading...</div>
 
-    const { dueDate } = task
 
     return (
         <article key={task.id} className="task">
@@ -30,8 +43,11 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
                 <section className="task-badges">
                     {task.watching && <div className="task-badge">{taskSvg.watch}</div>}
 
-                    {dueDate.date && <div className="task-badge">{taskSvg.clock} {taskSvg.square} <span>{dayjs(dueDate.date, 'MMM D [at] h:mm A').format('MMM D, YYYY')}
-                    </span></div>}
+                    {dueDate.date && <div className={`task-badge duedate ${dueDate.isComplete ? 'complete' : ''} ${dueDate.isOverdue && !dueDate.isComplete ? 'overdue' : ''}`} onClick={(e) => onCompleteDueDate(e)}>
+                        <span className="clock">{taskSvg.clock}</span>
+                        {dueDate.isComplete ? <span className="checklist">{taskSvg.checklist}</span> : <span className="empty-square">{taskSvg.square}</span>}
+                        <span className="date-data">{dayjs(dueDate.date, 'MMM D [at] h:mm A').format('MMM D, YYYY')}</span>
+                    </div>}
 
                     {task.description && <div className="task-badge">{taskSvg.description}</div>}
                     {task.comments?.length > 0 && <div className="task-badge">{taskSvg.comment} <span>{task.comments.length}</span></div>}

@@ -21,7 +21,6 @@ async function getById(boardId, groupId, taskId) {
 }
 
 async function saveTask(boardId, groupId, newTask) {
-    console.log(boardId, groupId, newTask);
     try {
         let group = await boardService.getGroupById(groupId, boardId)
         if (newTask.id) {
