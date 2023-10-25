@@ -19,7 +19,9 @@ export function GroupPreview({
   onRemoveGroup,
   onDuplicateGroup,
   openMenuGroupId,
-  setOpenMenuGroupId
+  setOpenMenuGroupId,
+  onSortGroup,
+  onUpdateBoard
 }) {
   const [isInputExpand, setInputExpand] = useState(false);
   const [newTask, setNewTask] = useState(taskService.getEmptyTask());
@@ -98,6 +100,7 @@ export function GroupPreview({
 			{group.id === openMenuGroupId && (
 			<div className="group-menu">
 				<GroupMenu
+				onSortGroup={onSortGroup}
 				group={group}
 				setToggleGroupMenu={toggleGroupMenu}
 				groupMenuPosition={groupMenuPosition}
@@ -106,6 +109,7 @@ export function GroupPreview({
 				onDuplicateGroup={onDuplicateGroup}
 				openMenuGroupId={openMenuGroupId}
 				setOpenMenuGroupId={setOpenMenuGroupId} 
+				onUpdateBoard={onUpdateBoard}
 				/>
 			</div>
 			)}
