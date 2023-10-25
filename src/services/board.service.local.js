@@ -200,7 +200,7 @@ function getEmptyBoard() {
 
 const board = [
     {
-        _id: "b106",
+        _id: utilService.makeId(),
         title: "Final-project-dropping",  //need it for tasks D&D(using makeId())
         isStarred: true,
         archivedAt: 1589983468418,
@@ -1098,64 +1098,6 @@ const board = [
             }
 
 
-
-
-            ////////////
-            // {
-            //     "id": "g103",
-            //     "title": "Group 3",
-            //     "tasks": [
-            //         {
-            //             "id": "c103",
-            //             "title": "Do that",
-            //             "archivedAt": 1589983468418,
-            //         },
-            //         {
-            //             "id": "c104",
-            //             "title": "Help me",
-            //             "priority": null,
-            //             "description": "description",
-            //             "comments": [
-            //                 {
-            //                     "id": "ZdPnm",
-            //                     "txt": "also @yaronb please CR this",
-            //                     "createdAt": 1590999817436,
-            //                     "byMember": {
-            //                         "_id": "u101",
-            //                         "fullname": "Tal Tarablus",
-            //                         "imgUrl": "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
-            //                     }
-            //                 }
-            //             ],
-            //             "checklists": [
-            //                 {
-            //                     "id": "YEhmF",
-            //                     "title": "Checklist",
-            //                     "todos": [
-            //                         {
-            //                             "id": "212jX",
-            //                             "title": "To Do 1",
-            //                             "isDone": false
-            //                         }
-            //                     ]
-            //                 }
-            //             ],
-            //             "memberIds": ["u101"],
-            //             "labelIds": ["l101", "l102"],
-            //             "dueDate": 16156215211,
-            //             "byMember": {
-            //                 "_id": "u101",
-            //                 "username": "Tal",
-            //                 "fullname": "Tal Tarablus",
-            //                 "imgUrl": "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
-            //             },
-            //             "style": {
-            //                 "backgroundColor": "#26de81"
-            //             }
-            //         }
-            //     ],
-            //     "style": {}
-            // }
         ],
         activities: [
             {
@@ -1199,5 +1141,218 @@ const board = [
 
         cmpsOrder: ["StatusPicker", "MemberPicker", "DatePicker"]
     },
+    {
+        _id: utilService.makeId(),
+        title: 'Wow',
+        isStarred: false,
+        archivedAt: Date.now(),
+        createdBy: {
+            "_id": "u103",
+            "fullname": "Sahar Machpud",
+            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
+        },
+        style: {
+            backgroundImage: "https://images.unsplash.com/photo-1696580436068-f19c26850e8b?auto=format&fit=crop&q=80&w=2071&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            backgroundColor: "",
+            dominantColor: {rgb : '247,234,225'},
+            isBright: null
+        },
+        labels: [
+            {
+                "id": "l101",
+                "title": "Urgent",
+                "color": "#4BCE97"
+            },
+            {
+                "id": "l102",
+                "title": "Tasks",
+                "color": "#F5CD47"
+            },
+            {
+                "id": "l103",
+                "title": "Data",
+                "color": "#FEA362"
+            },
+            {
+                "id": "l104",
+                "title": "",
+                "color": "#F87168"
+            },
+            {
+                "id": "l105",
+                "title": "",
+                "color": "#9F8FEF"
+            },
+            {
+                "id": "l106",
+                "title": "",
+                "color": "#579DFF"
+            },
+        ],
+        members: [
+            {
+                "_id": "u101",
+                "fullname": "Maya Cohen",
+                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
+            },
+            {
+                "_id": "u102",
+                "fullname": "Reut Edry",
+                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+            },
+            {
+                "_id": "u103",
+                "fullname": "Sahar Machpud",
+                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
+            }
+        ],
+        groups: [
+            { id: utilService.makeId(), title: '', tasks: [], style: {} }
+        ],
+        activities: [],
+        cmpsOrder: ["StatusPicker", "MemberPicker", "DatePicker"]
+    },
+    {       
+            _id: utilService.makeId(),
+            title: 'Wow2',
+            isStarred: false,
+            archivedAt: Date.now(),
+            createdBy: {
+                "_id": "u103",
+                "fullname": "Sahar Machpud",
+                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
+            },
+            style: {
+                backgroundImage: "https://res.cloudinary.com/duvatj8kg/image/upload/v1697202495/aec98becb6d15a5fc95e_dseafo.svg",
+                backgroundColor: "",
+                dominantColor: {rgb: "236,109,56"},
+                isBright: null
+            },
+            labels: [
+                {
+                    "id": "l101",
+                    "title": "Urgent",
+                    "color": "#4BCE97"
+                },
+                {
+                    "id": "l102",
+                    "title": "Tasks",
+                    "color": "#F5CD47"
+                },
+                {
+                    "id": "l103",
+                    "title": "Data",
+                    "color": "#FEA362"
+                },
+                {
+                    "id": "l104",
+                    "title": "",
+                    "color": "#F87168"
+                },
+                {
+                    "id": "l105",
+                    "title": "",
+                    "color": "#9F8FEF"
+                },
+                {
+                    "id": "l106",
+                    "title": "",
+                    "color": "#579DFF"
+                },
+            ],
+            members: [
+                {
+                    "_id": "u101",
+                    "fullname": "Maya Cohen",
+                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
+                },
+                {
+                    "_id": "u102",
+                    "fullname": "Reut Edry",
+                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+                },
+                {
+                    "_id": "u103",
+                    "fullname": "Sahar Machpud",
+                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
+                }
+            ],
+            groups: [
+                { id: utilService.makeId(), title: '', tasks: [], style: {} }
+            ],
+            activities: [],
+            cmpsOrder: ["StatusPicker", "MemberPicker", "DatePicker"]
+        },
+        {       
+                _id: utilService.makeId(),
+                title: 'Wow3',
+                isStarred: false,
+                archivedAt: Date.now(),
+                createdBy: {
+                    "_id": "u103",
+                    "fullname": "Sahar Machpud",
+                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
+                },
+                style: {
+                    backgroundImage: "https://images.unsplash.com/photo-1594743896255-be81f8dfec3d?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    backgroundColor: "",
+                    dominantColor: {rgb: '36,31,35'},
+                    isBright: null
+                },
+                labels: [
+                    {
+                        "id": "l101",
+                        "title": "Urgent",
+                        "color": "#4BCE97"
+                    },
+                    {
+                        "id": "l102",
+                        "title": "Tasks",
+                        "color": "#F5CD47"
+                    },
+                    {
+                        "id": "l103",
+                        "title": "Data",
+                        "color": "#FEA362"
+                    },
+                    {
+                        "id": "l104",
+                        "title": "",
+                        "color": "#F87168"
+                    },
+                    {
+                        "id": "l105",
+                        "title": "",
+                        "color": "#9F8FEF"
+                    },
+                    {
+                        "id": "l106",
+                        "title": "",
+                        "color": "#579DFF"
+                    },
+                ],
+                members: [
+                    {
+                        "_id": "u101",
+                        "fullname": "Maya Cohen",
+                        "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
+                    },
+                    {
+                        "_id": "u102",
+                        "fullname": "Reut Edry",
+                        "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+                    },
+                    {
+                        "_id": "u103",
+                        "fullname": "Sahar Machpud",
+                        "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
+                    }
+                ],
+                groups: [
+                    { id: utilService.makeId(), title: '', tasks: [], style: {} }
+                ],
+                activities: [],
+                cmpsOrder: ["StatusPicker", "MemberPicker", "DatePicker"]
+            }
 ]
 
