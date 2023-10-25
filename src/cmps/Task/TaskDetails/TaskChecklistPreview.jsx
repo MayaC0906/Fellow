@@ -5,7 +5,7 @@ import Textarea from '@mui/joy/Textarea'
 import Button from '@mui/joy/Button'
 import { checkedSvg } from '../../Svgs'
 import { taskService } from '../../../services/task.service.local'
-
+import { checkList } from '../../Svgs'
 export function TaskChecklistPreview({ onDeleteList, onAddTodo, onUpdateListTitle, onDeleteTodo, checklists, onToggleDoneTodo, onUpdateTodoTitle }) {
     const [localChecklists, setLocalChecklists] = useState(checklists)
     const [expandedTodo, setExpandedTodo] = useState({ listId: null, todoId: null })
@@ -70,7 +70,7 @@ export function TaskChecklistPreview({ onDeleteList, onAddTodo, onUpdateListTitl
     }
 
     async function deleteTodo(ev, listId, todoId) {
-        ev.preventDefault()
+        ev.stopPropagation()
         try {
             await onDeleteTodo(listId, todoId)
             calculateDoneTodos(checklists)
@@ -109,10 +109,10 @@ export function TaskChecklistPreview({ onDeleteList, onAddTodo, onUpdateListTitl
         <section>
             {localChecklists.map((list, idx) => (
                 <ul key={list.id} className="task-checklist clean-list">
+                    <span className='checklist-svg'>{checkedSvg.check}</span>
                     {expandedListId !== list.id ?
                         <header>
                             <span className='list-title' onClick={() => setExpandedListId(list.id)}>
-                                <span className='checklist-svg'>{checkedSvg.check}</span>
                                 <span className='title'>{list.title}</span>
                             </span>
                             <div className='header-btns'>
@@ -135,7 +135,7 @@ export function TaskChecklistPreview({ onDeleteList, onAddTodo, onUpdateListTitl
                             />
                             <section className='add-controls'>
                                 <Button type="submit" onClick={() => updateListTitle(list.id, txt)}>Save</Button>
-                                <button className='cancel' onClick={() => setExpandedListId(null)}>X</button>
+                                <button className='delete clean-btn' onClick={() => setExpandedListId(null)}>{checkList.x}</button>
                             </section>
                         </div>
                     }
@@ -166,20 +166,25 @@ export function TaskChecklistPreview({ onDeleteList, onAddTodo, onUpdateListTitl
                                         onChange={handleTextChange}
                                     />
                                     <section className='add-controls'>
-                                        <Button type="submit" onClick={() => {
-                                            updateTodoTitle(list.id, todo.id, txt);
-                                            setExpandedTodo({ listId: null, todoId: null });
-                                        }}>
-                                            Save
-                                        </Button>
-                                        <button className='cancel' onClick={() => setExpandedTodo({ listId: null, todoId: null })}>X</button>
-                                        <button className='delete' onClick={(event) => deleteTodo(event, list.id, todo.id)}>Delete</button>
+                                        <section>
+                                            <Button type="submit" onClick={() => {
+                                                updateTodoTitle(list.id, todo.id, txt);
+                                                setExpandedTodo({ listId: null, todoId: null });
+                                            }}>
+                                                Save
+                                            </Button>
+                                            <button className='cancel clean-btn' onClick={() => setExpandedTodo({ listId: null, todoId: null })}>{checkList.x}</button>
+                                        </section>
+                                        <button className='delete clean-btn' onClick={(event) => deleteTodo(event, list.id, todo.id)}>{checkList.garbage}</button>
                                     </section>
                                 </form> :
-                                <span onClick={() => {
+                                <span className='todo-title' onClick={() => {
                                     console.log("Trying to expand:", list.id, todo.id);
                                     setExpandedTodo({ listId: list.id, todoId: todo.id });
-                                }}>{todo.title}</span>
+
+                                }}>{todo.title}
+                                    <button className='delete clean-btn' onClick={(event) => deleteTodo(event, list.id, todo.id)}>{checkList.garbage}</button>
+                                </span>
 
                             }
                         </li>
@@ -187,7 +192,7 @@ export function TaskChecklistPreview({ onDeleteList, onAddTodo, onUpdateListTitl
 
                     {expandedAddTodoListId !== list.id ?
                         <button className='add-todo task-btn' onClick={() => setExpandedAddTodoListId(list.id)}>Add an item</button> :
-                        <section>
+                        <section className='add-todo-container'>
                             <Textarea
                                 sx={{ border: 'none' }}
                                 name="title"
@@ -200,7 +205,7 @@ export function TaskChecklistPreview({ onDeleteList, onAddTodo, onUpdateListTitl
                                 <Button type='submit' onClick={() => {
                                     addTodo(list.id, txt);
                                     setExpandedAddTodoListId(null);
-                                }}>Save</Button>
+                                }}>Add</Button>
                                 <button className='cancel task-btn' onClick={() => setExpandedAddTodoListId(null)}>Cancel</button>
                             </div>
                         </section>

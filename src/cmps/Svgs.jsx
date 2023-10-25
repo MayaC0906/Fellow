@@ -156,11 +156,27 @@ export const boardMenu = {
         </path><path d="M13 8C13 8.55228 12.5523 9 12 9C11.4477 9 11 8.55228
         11 8C11 7.44772 11.4477 7 12 7C12.5523 7 13 7.44772 13 8Z" fill="currentColor"></path></svg>,
     activity: <svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 62.56 43.67"><g id="Layer_1-2" data-name="Layer 1"> <g><path class="cls-1"
-        d="M59.56,6H21.44c-1.66,0-3-1.34-3-3s1.34-3,3-3H59.56c1.66,0,3,1.34,3,3s-1.34,3-3,3Z" />
-        <path class="cls-1" d="M49.94,18.33H21.44c-1.66,0-3-1.34-3-3s1.34-3,3-3h28.5c1.66,0,3,1.34,3,3s-1.34,3-3,3Z" />
-        <path class="cls-1" d="M59.56,30.98H21.44c-1.66,0-3-1.34-3-3s1.34-3,3-3H59.56c1.66,0,3,1.34,3,3s-1.34,3-3,3Z" />
-        <path class="cls-1" d="M49.94,43.67H21.44c-1.66,0-3-1.34-3-3s1.34-3,3-3h28.5c1.66,0,3,1.34,3,3s-1.34,3-3,3Z" />
-        <circle class="cls-1" cx="6" cy="6" r="6" />
-        <circle class="cls-1" cx="6" cy="30.98" r="6" /></g></g>
-    </svg>
+         d="M59.56,6H21.44c-1.66,0-3-1.34-3-3s1.34-3,3-3H59.56c1.66,0,3,1.34,3,3s-1.34,3-3,3Z"/>
+        <path class="cls-1" d="M49.94,18.33H21.44c-1.66,0-3-1.34-3-3s1.34-3,3-3h28.5c1.66,0,3,1.34,3,3s-1.34,3-3,3Z"/>
+        <path class="cls-1" d="M59.56,30.98H21.44c-1.66,0-3-1.34-3-3s1.34-3,3-3H59.56c1.66,0,3,1.34,3,3s-1.34,3-3,3Z"/>
+        <path class="cls-1" d="M49.94,43.67H21.44c-1.66,0-3-1.34-3-3s1.34-3,3-3h28.5c1.66,0,3,1.34,3,3s-1.34,3-3,3Z"/>
+        <circle class="cls-1" cx="6" cy="6" r="6"/>
+        <circle class="cls-1" cx="6" cy="30.98" r="6"/></g></g>
+        </svg>
+}
+
+export const checkList = {
+    garbage: <svg xmlns="http://www.w3.org/2000/svg" height="24"
+        viewBox="0 -960 960 960" width="24"><path d="M280-120q-33
+        0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0
+        33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160
+        0h80v-360h-80v360ZM280-720v520-520Z"/></svg>,
+    x : <svg stroke="currentColor" fill="currentColor"
+     stroke-width="0" viewBox="0 0 24 24" aria-hidden="true"
+      height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" d="M5.47 5.47a.75.75 0 011.06 0L12
+        10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75
+        0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94
+        12 5.47 6.53a.75.75 0 010-1.06z" clip-rule="evenodd">
+        </path></svg>
 }

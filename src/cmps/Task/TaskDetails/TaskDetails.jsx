@@ -66,7 +66,7 @@ export function TaskDetails() {
             <section className="modal-container">
                 <article className="task-modal">
 
-                    <Link to={`/board/${boardId}`}>
+                    <Link className="close-btn" to={`/board/${boardId}`}>
                         {taskSvg.plus}
                     </Link>
 

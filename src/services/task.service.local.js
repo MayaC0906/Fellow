@@ -81,6 +81,8 @@ function getEmptyTask() {
         isDone: false,
         style: {},
         cover: {
+            isDark: false,
+            isFull: false,
             backgroundColor: '',
             img: '',
             createdAt: null
