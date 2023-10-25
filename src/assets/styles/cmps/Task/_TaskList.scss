@@ -4,11 +4,13 @@
     flex-direction: column;
     gap: 7px;
     justify-content: space-between;
-    margin-left: 8px;
-    margin-right: 3px;
+    // margin-left: 8px;
+    // margin-right: 3px;
+    margin: 0 3.5px;
+    padding: 2px 4px;
     min-height: 0;
     z-index: 1;
-
+    -webkit-overflow-scrolling: touch;
     a {
         text-decoration: none;
     }
