@@ -1,23 +1,20 @@
 import { useEffect, useState } from "react";
-import { appHeaderSvg, groupHeaderSvg, workspaceSvg } from "../Svgs";
-import { useSelector } from "react-redux";
+import { groupHeaderSvg, workspaceSvg } from "../Svgs";
 import { updateBoard } from "../../store/actions/board.actions";
-import { BoardMenu } from "../Board/BoardMenu.jsx"
 
 export function GroupHeader({ isMenuOpen, setMenu, board }) {
-    const [boardTitle, setBoardTitle] = useState('')
+    const [isBoardStarred, setIsBoardStarred] = useState(board.isStarred)
+    const [content, setContent] = useState('')
+    let zIndexCount = 10
 
     useEffect(() => {
-        setBoardTitle(board.title)
-    }, [board.title])
+        setContent(board.title)
+    }, [])
 
-    function handleIputLength(event) {
-        let value = event.target.value
-        setBoardTitle(value)
-    }
 
-    async function onEditBoardTitle({ }) {
-        board.title = boardTitle
+    async function onEditBoardTitle() {
+        let value = event.target.textContent
+        board.title = value
         try {
             await updateBoard(board)
         } catch (err) {
@@ -26,40 +23,48 @@ export function GroupHeader({ isMenuOpen, setMenu, board }) {
         }
     }
 
+    async function onToggleBoardStar() {
+        board.isStarred = !board.isStarred
+        try {
+            await updateBoard(board)
+            setIsBoardStarred(board.isStarred)
+        } catch (err) {
+            console.log(`Could'nt change isStarred`, err);
+        }
+    }
 
     const { isBright } = board.style
+    const isBlackOrWhite = isBright ? 'brightColor' : 'darkColor'
 
+    // IMPORTANT: everything that is in comment might be added in the future // 
     return (
-        <header className="group-header bgc">
-            <section className="visibility">
-                <section className="header-title">
-                    <input
-                        type="text"
-                        onChange={handleIputLength}
-                        value={boardTitle}
-                        style={{ width: `${boardTitle.scrollWidth}px` }}
-                        onBlur={onEditBoardTitle}
-                    />
-                </section>
-                <section className="group-visbility group-header">
-                    <button className="group-header-btn svg star">{workspaceSvg.star}</button>
-                    <button className="group-header-btn svg members">{groupHeaderSvg.members}<span>Workspace visible</span></button>
-                    <button className={`group-header-btn svg bars ${isBright ? 'brightColor' : 'darkColor'}`}>{groupHeaderSvg.bars} <span>Board</span></button>
-                    <button className="group-header-btn svg arrowdown">{appHeaderSvg.arrowDown}</button>
-                </section>
+        <header className="group-header container">
+            <section className="board-edit flex">
+                <div tabIndex="0" onBlur={onEditBoardTitle}
+                    contentEditable={true}>{content}</div>
+                {/* <section className="group-visbility group-header"> */}
+                {!isBoardStarred && (<button className={isBlackOrWhite} onClick={onToggleBoardStar}>{workspaceSvg.star}</button>)}
+                {isBoardStarred && (<button className={isBlackOrWhite} onClick={onToggleBoardStar}>{groupHeaderSvg.fullStar}</button>)}
+                {/* <button className="group-header-btn svg members">{groupHeaderSvg.members}<span>Workspace visible</span></button> */}
+                {/* <button className={`group-header-btn svg bars ${isBright ? 'brightColor' : 'darkColor'}`}>{groupHeaderSvg.bars} <span>Board</span></button> */}
+                {/* <button className="group-header-btn svg arrowdown">{appHeaderSvg.arrowDown}</button> */}
+                {/* </section> */}
             </section>
 
-            <section className="group-header group-editing">
-                <button className="group-header-btn svg powerUp">{groupHeaderSvg.rocket} <span>Power-Ups</span></button>
-                <button className="group-header-btn svg dashboard">{groupHeaderSvg.dashboard} <span>Dashboard</span></button>
-                <button className="group-header-btn svg filter">{groupHeaderSvg.filter} <span>Filter</span></button> <span className="separate-line">|</span>
+            <section className="group-header">
+                {/* <button className="group-header-btn svg powerUp">{groupHeaderSvg.rocket} <span>Power-Ups</span></button> */}
+                <button className={`btn ${isBlackOrWhite}`} onClick={() => alert('Will be added soon')}>{groupHeaderSvg.dashboard} <span>Dashboard</span></button>
+                <button className={`btn svg ${isBlackOrWhite}`} onClick={() => alert('Will be added soon')}>{groupHeaderSvg.filter} <span>Filters</span></button>
+                <span className="separate-line"></span>
                 <section className="group-header img">
-                    <img className="member-img" src="https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg" alt="" />
-                    <img className="member-img" src="https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg" alt="" />
-                    <img className="member-img" src="https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg" alt="" />
-                    <button className={`group-header-btn svg additional ${isBright ? 'brightColor' : 'darkColor'}`}>{groupHeaderSvg.addmember} <span>Share</span></button>
-                    {!isMenuOpen ? <button onClick={() => setMenu(!isMenuOpen)} className="group-header-btn svg dots">{groupHeaderSvg.threeDots}</button> : ''}
-                </section>
+                    {board.members.map(member => (
+                        <section className="member-img-container flex align-center">
+                            <img className={`member-img ${isBlackOrWhite}`} src={member.imgUrl} alt="" key={member._id} style={{ zIndex: zIndexCount-- }} />
+                            <span></span>
+                        </section>
+                    ))}
+                    <button className={`btn svg ${isBlackOrWhite} share`}>{groupHeaderSvg.addmember} <span>Share</span></button>
+                    {!isMenuOpen ? <button onClick={() => setMenu(!isMenuOpen)} className="group-header-btn svg dots">{groupHeaderSvg.threeDots}</button> : ''} </section>
             </section>
         </header>
     )

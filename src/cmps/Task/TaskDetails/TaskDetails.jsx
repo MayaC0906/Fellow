@@ -28,7 +28,7 @@ export function TaskDetails() {
     }, [])
 
     useEffect(() => {
-    onChangeBgc()
+        onChangeBgc()
     }, [task?.cover?.img])
 
     async function onLoadTask(boardId, groupId, taskId) {
@@ -53,15 +53,14 @@ export function TaskDetails() {
     async function onChangeBgc() {
         try {
             const bgc = await utilService.getDominantColor(task.cover.img)
-        setImgBackground(`rgb(${bgc.rgb})`)
-        } catch(err) {
+            setImgBackground(`rgb(${bgc.rgb})`)
+        } catch (err) {
             console.log('Cannot change background', err);
         }
     }
 
     if (!task) return <div>Loading</div>
 
-    console.log(imgBackground);
     return (
         <div className="task-details">
             <section className="modal-container">
@@ -73,7 +72,7 @@ export function TaskDetails() {
 
                     {task.cover?.backgroundColor && <div className="color-cover" style={{ backgroundColor: task.cover.backgroundColor }}></div>}
                     {task.cover?.img && (
-                        <div style={{backgroundColor:imgBackground}} className="img-cover">
+                        <div style={{ backgroundColor: imgBackground }} className="img-cover">
                             <img src={task.cover.img} alt="" />
                         </div>
                     )}
@@ -96,12 +95,13 @@ export function TaskDetails() {
                         />
                     </section>
 
-                    {task.dueDate && (
+                    {task.dueDate.date && (
                         <section className="task-date-show">
                             <TaskDate
-                                taskDate={task.dueDate}
+                                task={task}
                                 setEditName={setEditName}
                                 editName={editName}
+                                onSaveTask={onSaveTask}
                             />
                         </section>
                     )}

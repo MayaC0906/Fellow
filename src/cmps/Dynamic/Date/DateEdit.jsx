@@ -20,7 +20,7 @@ export function DateEdit({ editName, onCloseEditTask, onSaveTask, task }) {
 
     async function onLoadDueDate() {
         try {
-            const dueDate = task.dueDate
+            const dueDate = task.dueDate.date
             if (dueDate) {
                 const formattedDate = dayjs(dueDate, 'MMM D [at] h:mm A')
                 setSelectedDate(formattedDate)
@@ -43,7 +43,7 @@ export function DateEdit({ editName, onCloseEditTask, onSaveTask, task }) {
     async function onSaveDate() {
         if (selectedDate === null) return
         const formatedDate = selectedDate.format('MMM D [at] h:mm A')
-        task.dueDate = formatedDate
+        task.dueDate.date = formatedDate
         try {
             onSaveTask(task)
             setSelectedDate(selectedDate)
@@ -56,7 +56,7 @@ export function DateEdit({ editName, onCloseEditTask, onSaveTask, task }) {
 
     async function onRemoveDate() {
         try {
-            task.dueDate = null
+            task.dueDate.date = null
             onSaveTask(task)
             setIsDateSelected(false)
             onCloseEditTask('')
@@ -130,9 +130,6 @@ export function DateEdit({ editName, onCloseEditTask, onSaveTask, task }) {
                                     '&:hover': {
                                         border: 0
                                     },
-                                    // "& .MuiPickersDay-root": {
-                                    //     borderColor: '#0c66e4',
-                                    // },
                                     input: { cursor: isDateSelected ? 'pointer' : 'not-allowed' }
                                 }} value={selectedDate}
                                     onChange={(date) => setSelectedDate(date)} />

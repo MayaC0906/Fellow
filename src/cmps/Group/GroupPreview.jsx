@@ -105,7 +105,7 @@ export function GroupPreview({
 				onRemoveGroup={onRemoveGroup}
 				onDuplicateGroup={onDuplicateGroup}
 				openMenuGroupId={openMenuGroupId}
-				setOpenMenuGroupId={setOpenMenuGroupId} // Pass the openMenuId to GroupMenu
+				setOpenMenuGroupId={setOpenMenuGroupId} 
 				/>
 			</div>
 			)}
