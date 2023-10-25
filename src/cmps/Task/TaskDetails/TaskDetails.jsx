@@ -14,16 +14,22 @@ import { TaskCheckList } from "./TaskChecklist-list"
 import { TaskDate } from "./TaskDate"
 import { TaskMember } from "./TaskMember"
 import { TaskLabel } from "./TaskLabel"
+import { utilService } from "../../../services/util.service"
 
 export function TaskDetails() {
     const board = useSelector((storeState) => storeState.boardModule.board)
     const { boardId, groupId, taskId } = useParams()
     const [task, setTask] = useState('')
+    const [imgBackground, setImgBackground] = useState('white')
     let [editName, setEditName] = useState('')
 
     useEffect(() => {
         onLoadTask(boardId, groupId, taskId)
     }, [])
+
+    useEffect(() => {
+    onChangeBgc()
+    }, [task?.cover?.img])
 
     async function onLoadTask(boardId, groupId, taskId) {
         try {
@@ -44,7 +50,18 @@ export function TaskDetails() {
         }
     }
 
+    async function onChangeBgc() {
+        try {
+            const bgc = await utilService.getDominantColor(task.cover.img)
+        setImgBackground(`rgb(${bgc.rgb})`)
+        } catch(err) {
+            console.log('Cannot change background', err);
+        }
+    }
+
     if (!task) return <div>Loading</div>
+
+    console.log(imgBackground);
     return (
         <div className="task-details">
             <section className="modal-container">
@@ -55,10 +72,11 @@ export function TaskDetails() {
                     </Link>
 
                     {task.cover?.backgroundColor && <div className="color-cover" style={{ backgroundColor: task.cover.backgroundColor }}></div>}
-                    {task.cover?.img &&
-                        <div className="img-cover">
+                    {task.cover?.img && (
+                        <div style={{backgroundColor:imgBackground}} className="img-cover">
                             <img src={task.cover.img} alt="" />
-                        </div>}
+                        </div>
+                    )}
 
 
                     <TaskTitle onSaveTask={onSaveTask} task={task} />
