@@ -1,5 +1,4 @@
 import dayjs from "dayjs";
-import { utilService } from "../../services/util.service";
 import { taskSvg } from "../Svgs";
 
 export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels, taskMembers, taskChecklist }) {
@@ -31,7 +30,7 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
                 <section className="task-badges">
                     {task.watching && <div className="task-badge">{taskSvg.watch}</div>}
 
-                    {dueDate && <div className="task-badge">{taskSvg.clock} <span>{dayjs(dueDate, 'MMM D [at] h:mm A').format('MMM D, YYYY')}
+                    {dueDate.date && <div className="task-badge">{taskSvg.clock} {taskSvg.square} <span>{dayjs(dueDate.date, 'MMM D [at] h:mm A').format('MMM D, YYYY')}
                     </span></div>}
 
                     {task.description && <div className="task-badge">{taskSvg.description}</div>}

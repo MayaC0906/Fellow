@@ -1,22 +1,30 @@
 import { Checkbox } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { appHeaderSvg } from "../../Svgs";
 import dayjs from "dayjs";
 
-export function TaskDate({ taskDate, setEditName, editName }) {
-    const [isDateCompleted, SetIsDateCompleted] = useState(false)
-    const [isDateOverdue, setIsDateOverdue] = useState(false)
+export function TaskDate({ task, setEditName, editName, onSaveTask }) {
+    const { dueDate } = task
 
     useEffect(() => {
-        const taskDueDate = dayjs(taskDate, 'MMM D [at] h:mm A').format('YYYY-MM-DD')
+        onSettingIsOverdue()
+    }, [dueDate.date])
+
+    async function onSettingIsOverdue() {
+        const taskDueDate = dayjs(dueDate.date, 'MMM D [at] h:mm A').format('YYYY-MM-DD')
         const inputDate = new Date(`${taskDueDate}`);
         const currentDate = new Date();
-        if (inputDate < currentDate) setIsDateOverdue(true)
-        else setIsDateOverdue(false)
-    }, [taskDate])
+        if (inputDate < currentDate) {
+            dueDate.isOverdue = true
+        } else {
+            dueDate.isOverdue = false
+        }
+        onSaveTask(task)
+    }
 
     function onCompleteDueDate() {
-        SetIsDateCompleted(!isDateCompleted)
+        dueDate.isComplete = !dueDate.isComplete
+        onSaveTask(task)
     }
 
     function toggleDateDisplay() {
@@ -26,7 +34,7 @@ export function TaskDate({ taskDate, setEditName, editName }) {
 
     return (
 
-        taskDate && (
+        dueDate.date && (
             <section className="task-display">
                 <h2 className="task-date-title">Due date</h2>
                 <section className="task-display flex align-center">
@@ -34,10 +42,10 @@ export function TaskDate({ taskDate, setEditName, editName }) {
                     <div className='checkbox'>
                         <Checkbox sx={{ '& .MuiSvgIcon-root': { fontSize: 20 }, p: 0, mr: 0.2 }} onClick={onCompleteDueDate} />
                     </div>
-                    <div className={`task-date flex align-center ${isDateCompleted ? 'complete-open' : ''}`} onClick={toggleDateDisplay}>
-                        <span className="task-date-data">{taskDate}</span>
-                        {isDateCompleted && (<span className="task-date-complete flex align-center">Complete</span>)}
-                        {isDateOverdue && !isDateCompleted && (<span className="task-date-complete overdue flex align-center">Overdue</span>)}
+                    <div className={`task-date flex align-center ${dueDate.isComplete ? 'complete-open' : ''}`} onClick={toggleDateDisplay}>
+                        <span className="task-date-data">{dueDate.date}</span>
+                        {dueDate.isComplete && (<span className="task-date-complete flex align-center">Complete</span>)}
+                        {dueDate.isOverdue && !dueDate.isComplete && (<span className="task-date-complete overdue flex align-center">Overdue</span>)}
                         {appHeaderSvg.arrowDown}
                     </div>
                 </section>
