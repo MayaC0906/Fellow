@@ -18,14 +18,14 @@ export function TaskAttachments({ task, setEditName, onSaveTask }) {
     async function onToggleAttachmentCover({ isAttachmentCover, url }) {
         if (isAttachmentCover) {
             try {
-                const newTask = { ...task, cover: { ...task.cover, img: '' } }
+                const newTask = { ...task, cover: { ...task.cover, img: '', backgroundColor:'' } }
                 onSaveTask(newTask)
             } catch (err) {
                 console.log('Cannot remove cover', err)
             }
         } else {
             try {
-                const newTask = { ...task, cover: { ...task.cover, img: url } }
+                const newTask = { ...task, cover: { ...task.cover, img: url, backgroundColor:'' } }
                 onSaveTask(newTask)
             } catch (err) {
                 console.log('Cannot add cover', err)

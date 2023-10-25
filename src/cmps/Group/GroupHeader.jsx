@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { groupHeaderSvg, workspaceSvg } from "../Svgs";
 import { updateBoard } from "../../store/actions/board.actions";
 
-export function GroupHeader({ board }) {
+export function GroupHeader({ isMenuOpen, setMenu, board }) {
     const [isBoardStarred, setIsBoardStarred] = useState(board.isStarred)
     const [content, setContent] = useState('')
     let zIndexCount = 10
@@ -64,8 +64,7 @@ export function GroupHeader({ board }) {
                         </section>
                     ))}
                     <button className={`btn svg ${isBlackOrWhite} share`}>{groupHeaderSvg.addmember} <span>Share</span></button>
-                    <button className={`btn svg ${isBlackOrWhite}`}>{groupHeaderSvg.threeDots}</button>
-                </section>
+                    {!isMenuOpen ? <button onClick={() => setMenu(!isMenuOpen)} className="group-header-btn svg dots">{groupHeaderSvg.threeDots}</button> : ''} </section>
             </section>
         </header>
     )

@@ -1,21 +1,17 @@
 .app-header {
-    // background: hsl(250,47.9%,40.7%);
     padding: rem(8px);
     height: 48px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    
+
     .nav-links {
         display: flex;
         align-items: center;
         justify-content: center;
 
         .menu {
-            background: none;
             height: 32px;
-            border: none;
-            color: white;
             margin: 0;
 
             svg {
@@ -24,36 +20,21 @@
             }
         }
 
-        .logo {
-            height: 32px;
-            padding: 0 8px;
-
-            img {
-                width: 150px;
-            }
-        }
-
         .links {
             display: flex;
             align-items: center;
-
             a {
                 &:hover {
                     text-decoration: none;
                 }
             }
-
+            
             button {
                 gap: 2px;
                 margin: 0 4px 0 0;
                 padding: 6px 10px 6px 12px;
-                background: none;
                 height: 32px;
-                border: none;
-                // background: white;
-                font-size: rem(14px);
-                color: white;
-
+                
                 svg {
                     height: rem(16px);
                     width: rem(16px);
@@ -64,24 +45,21 @@
         .create-btn {
             margin: 0 4px 0 0;
             padding: 6px 10px 6px 12px;
-            background:lighten(#473699, 25%);
             height: 32px;
-            border: none;
-            color: white;
-            font-size: rem(14px);
         }
 
         button,
-        .logo,
         .menu {
-            border-radius: 3px;
             display: flex;
             align-items: center;
+        }
 
-            &:hover {
-                background-color: lighten(#473699, 15%);
-                cursor: pointer;
-            }
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: rem(20px);
+            height: 32px;
+            padding: 0 8px;
         }
 
     }
@@ -94,17 +72,10 @@
 
         .search-input {
             width: 200px;
-            border-radius: 5px;
-            background-color: lighten(#473699, 25%);
             height: 32px;
             display: flex;
             align-items: center;
-            color: white;
-
-            &:hover {
-                background-color: lighten(#473699, 15%);
-                cursor: pointer;
-            }
+            border-radius: 5px;
 
             span {
                 display: flex;
@@ -120,7 +91,6 @@
                 background: none;
                 border: none;
                 align-items: center;
-                color: white;
                 width: 165px;
 
                 &[type="text"] {
@@ -129,28 +99,16 @@
                         outline: none;
                     }
                 }
-
-                &::placeholder {
-                    color: white;
-                }
             }
         }
 
         .user-info {
-            background: none;
-            color: white;
             border-radius: 50%;
             height: 32px;
             width: 32px;
-            border: none;
             display: flex;
             align-items: center;
             justify-content: center;
-
-            &:hover {
-                background-color: lighten(gray, 30%);
-                cursor: pointer;
-            }
 
             img,
             svg {

@@ -146,7 +146,7 @@ function getDominantColor(imageUrl) {
             let maxCount = 0;
             let dominantColor = null;
 
-            for (let i = 0; i < pixelArray.length; i += 4) {
+            for (let i = 0; i < pixelArray.length/4; i += 4) {
                 const rgba = `${pixelArray[i]},${pixelArray[i + 1]},${pixelArray[i + 2]}`;
                 colorMap[rgba] = (colorMap[rgba] || 0) + 1;
                 if (colorMap[rgba] > maxCount) {

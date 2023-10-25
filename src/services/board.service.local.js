@@ -200,7 +200,7 @@ function getEmptyBoard() {
 
 const board = [
     {
-        _id: "b106",
+        _id: utilService.makeId(),
         title: "Final-project-dropping",  //need it for tasks D&D(using makeId())
         isStarred: true,
         archivedAt: 1589983468418,
@@ -274,6 +274,8 @@ const board = [
                         "title": "Demo data",
                         "description": null,
                         "cover": {
+                            "isDark" : false,
+                            "isFull" : false,
                             "backgroundColor": "",
                             "img": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696368347/%D7%A6%D7%99%D7%9C%D7%95%D7%9D_%D7%9E%D7%A1%D7%9A_2023-07-20_131912_zfdlhz.png",
                             "createdAt": 1696332780
@@ -331,8 +333,11 @@ const board = [
                         "description": null,
                         "archivedAt": null,
                         "cover": {
+                            "isDark" : false,
+                            "isFull" : false,
                             "backgroundColor": "",
-                            "img": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696368598/1_1_tasfsz.png"
+                            "img": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696368598/1_1_tasfsz.png",
+                            "createdAt": 16963327896
                         },
                         "byMember": {
                             "_id": "u103",
@@ -343,7 +348,7 @@ const board = [
                             {
                                 "id": utilService.makeId(),
                                 "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
-                                'createdAt': 1696333740,
+                                "createdAt": 1696333740,
                             },
                         ],
                         "comments": [],
@@ -359,8 +364,12 @@ const board = [
                         "description": null,
                         "archivedAt": null,
                         "cover": {
+                            "isDark" : false,
+                            "isFull" : false,
                             "backgroundColor": "",
-                            "img": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696371749/npm_zfi8q9.png"
+                            "img": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696371749/npm_zfi8q9.png",
+                            "createdAt": 1698240615,
+
                         },
                         "byMember": {
                             "_id": "u102",
@@ -371,7 +380,7 @@ const board = [
                             {
                                 "id": utilService.makeId(),
                                 "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696371749/npm_zfi8q9.png",
-                                'createdAt': 1696348680,
+                                "createdAt": 1696348680,
                             },
                         ],
                         "comments": [],
@@ -393,6 +402,8 @@ const board = [
                         "title": "Add react-beautiful-dnd library",
                         "description": null,
                         "cover": {
+                            "isDark" : false,
+                            "isFull" : false,
                             "backgroundColor": "",
                             "img": "https://trello.com/1/cards/651c0842cf5946d21802327d/attachments/651c09552a41a0070e0715a1/previews/651c09552a41a0070e071635/download/rbdpng.png",
                             "createdAt": 1696332780
@@ -450,8 +461,12 @@ const board = [
                         "description": null,
                         "archivedAt": null,
                         "cover": {
+                            "isDark" : false,
+                            "isFull" : false,
                             "backgroundColor": "",
-                            "img": "https://trello.com/1/cards/651bebdea9a06da3b2b0cc78/attachments/651bfeba9907c9d50218de36/previews/651bfebc9907c9d50218e1d7/download/BUild-idea.jpg"
+                            "img": "https://trello.com/1/cards/651bebdea9a06da3b2b0cc78/attachments/651bfeba9907c9d50218de36/previews/651bfebc9907c9d50218e1d7/download/BUild-idea.jpg",
+                            "createdAt": 1696334520,
+
                         },
                         "byMember": {
                             "_id": "u103",
@@ -462,7 +477,7 @@ const board = [
                             {
                                 "id": utilService.makeId(),
                                 "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
-                                'createdAt': 1696333740,
+                                "createdAt": 1696333740,
                             },
                         ],
                         "comments": [],
@@ -478,8 +493,11 @@ const board = [
                         "description": null,
                         "archivedAt": null,
                         "cover": {
+                            "isDark" : false,
+                            "isFull" : false,
                             "backgroundColor": "",
-                            "img": "https://trello.com/1/cards/651c0a337b39c5cdc0951338/attachments/651c3bbdee02e018d2d7b412/previews/651c3bbeee02e018d2d7b45f/download/npm2.png"
+                            "img": "https://trello.com/1/cards/651c0a337b39c5cdc0951338/attachments/651c3bbdee02e018d2d7b412/previews/651c3bbeee02e018d2d7b45f/download/npm2.png",
+                            "createdAt": 1696348680,
                         },
                         "byMember": {
                             "_id": "u102",
@@ -490,7 +508,7 @@ const board = [
                             {
                                 "id": "123abger",
                                 "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696371749/npm_zfi8q9.png",
-                                'createdAt': 1696348680,
+                                "createdAt": 1696348680,
                             },
                         ],
                         "comments": [],
@@ -513,6 +531,8 @@ const board = [
                         "title": "Add user auth",
                         "description": null,
                         "cover": {
+                            "isDark" : false,
+                            "isFull" : false,
                             "backgroundColor": "",
                             "img": "",
                             "createdAt": 1696332780
@@ -570,8 +590,11 @@ const board = [
                         "description": null,
                         "archivedAt": null,
                         "cover": {
+                            "isDark" : false,
+                            "isFull" : false,
                             "backgroundColor": "yellow",
-                            "img": ""
+                            "img": "",
+                            "createdAt": 1696333740
                         },
                         "byMember": {
                             "_id": "u103",
@@ -582,7 +605,7 @@ const board = [
                             {
                                 "id": utilService.makeId(),
                                 "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
-                                'createdAt': 1696333740,
+                                "createdAt": 1696333740,
                             },
                         ],
                         "comments": [],
@@ -598,8 +621,11 @@ const board = [
                         "description": null,
                         "archivedAt": null,
                         "cover": {
+                            "isDark" : false,
+                            "isFull" : false,
                             "backgroundColor": "",
-                            "img": "https://trello.com/1/cards/651bfda2b36856a0f1584811/attachments/651c05005a8ec24441d587b0/previews/651c05015a8ec24441d58821/download/SCSS.webp"
+                            "img": "https://trello.com/1/cards/651bfda2b36856a0f1584811/attachments/651c05005a8ec24441d587b0/previews/651c05015a8ec24441d58821/download/SCSS.webp",
+                            "createdAt": 1696348680,
                         },
                         "byMember": {
                             "_id": "u102",
@@ -610,7 +636,7 @@ const board = [
                             {
                                 "id": utilService.makeId(),
                                 "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696371749/npm_zfi8q9.png",
-                                'createdAt': 1696348680,
+                                "createdAt": 1696348680,
                             },
                         ],
                         "comments": [],
@@ -625,8 +651,11 @@ const board = [
                         "description": null,
                         "archivedAt": null,
                         "cover": {
-                            "backgroundColor": "yellow",
-                            "img": "https://trello.com/1/cards/651c013b277d997329feec74/attachments/651c01446984182bc136bbb5/previews/651c01446984182bc136bc50/download/socketsImg.png"
+                            "isDark" : false,
+                            "isFull" : false,
+                            "backgroundColor": "",
+                            "img": "https://trello.com/1/cards/651c013b277d997329feec74/attachments/651c01446984182bc136bbb5/previews/651c01446984182bc136bc50/download/socketsImg.png",
+                            "createdAt": 1696333740
                         },
                         "byMember": {
                             "_id": "u103",
@@ -637,7 +666,7 @@ const board = [
                             {
                                 "id": utilService.makeId(),
                                 "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
-                                'createdAt': 1696333740,
+                                "createdAt": 1696333740,
                             },
                         ],
                         "comments": [],
@@ -659,6 +688,8 @@ const board = [
                         "title": "Bugs search",
                         "description": null,
                         "cover": {
+                            "isDark" : false,
+                            "isFull" : false,
                             "backgroundColor": "",
                             "img": "https://trello.com/1/cards/651c064b620e619a028eb825/attachments/651c3cb49a7657692aea99c3/previews/651c3cb59a7657692aea99d9/download/bug.png.jpg",
                             "createdAt": 1696332780
@@ -716,8 +747,11 @@ const board = [
                         "description": null,
                         "archivedAt": null,
                         "cover": {
+                            "isDark" : false,
+                            "isFull" : false,
                             "backgroundColor": "lightcyan",
-                            "img": ""
+                            "img": "",
+                            "createdAt": 1696333740,
                         },
                         "byMember": {
                             "_id": "u103",
@@ -728,7 +762,7 @@ const board = [
                             {
                                 "id": utilService.makeId(),
                                 "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
-                                'createdAt': 1696333740,
+                                "createdAt": 1696333740,
                             },
                         ],
                         "comments": [],
@@ -753,6 +787,8 @@ const board = [
                         "title": "Regression testing",
                         "description": null,
                         "cover": {
+                            "isDark" : false,
+                            "isFull" : false,
                             "backgroundColor": "orange",
                             "img": "",
                             "createdAt": 1696332780
@@ -808,6 +844,8 @@ const board = [
                         "title": "Spell check",
                         "description": null,
                         "cover": {
+                            "isDark" : false,
+                            "isFull" : false,
                             "backgroundColor": "",
                             "img": "",
                             "createdAt": 1696332780
@@ -864,6 +902,8 @@ const board = [
                         "title": "A/B Testing",
                         "description": null,
                         "cover": {
+                            "isDark" : false,
+                            "isFull" : false,
                             "backgroundColor": "green",
                             "img": "",
                             "createdAt": 1696332780
@@ -927,6 +967,8 @@ const board = [
                         "title": "Deployment",
                         "description": null,
                         "cover": {
+                            "isDark" : false,
+                            "isFull" : false,
                             "backgroundColor": "",
                             "img": "https://trello.com/1/cards/651c07991b3e73159882ad29/attachments/651c08eb8236c4a95c479066/previews/651c08ec8236c4a95c4790d2/download/Cloud-computing-deployment-models-1000x503.jpg",
                             "createdAt": 1696332780
@@ -983,6 +1025,8 @@ const board = [
                         "title": "Documentation",
                         "description": null,
                         "cover": {
+                            "isDark" : false,
+                            "isFull" : false,
                             "backgroundColor": "gray",
                             "img": "",
                             "createdAt": 1696332780
@@ -1039,6 +1083,8 @@ const board = [
                         "title": "Test data",
                         "description": null,
                         "cover": {
+                            "isDark" : false,
+                            "isFull" : false,
                             "backgroundColor": "lightblue",
                             "img": "",
                             "createdAt": 1696355446
@@ -1098,64 +1144,6 @@ const board = [
             }
 
 
-
-
-            ////////////
-            // {
-            //     "id": "g103",
-            //     "title": "Group 3",
-            //     "tasks": [
-            //         {
-            //             "id": "c103",
-            //             "title": "Do that",
-            //             "archivedAt": 1589983468418,
-            //         },
-            //         {
-            //             "id": "c104",
-            //             "title": "Help me",
-            //             "priority": null,
-            //             "description": "description",
-            //             "comments": [
-            //                 {
-            //                     "id": "ZdPnm",
-            //                     "txt": "also @yaronb please CR this",
-            //                     "createdAt": 1590999817436,
-            //                     "byMember": {
-            //                         "_id": "u101",
-            //                         "fullname": "Tal Tarablus",
-            //                         "imgUrl": "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
-            //                     }
-            //                 }
-            //             ],
-            //             "checklists": [
-            //                 {
-            //                     "id": "YEhmF",
-            //                     "title": "Checklist",
-            //                     "todos": [
-            //                         {
-            //                             "id": "212jX",
-            //                             "title": "To Do 1",
-            //                             "isDone": false
-            //                         }
-            //                     ]
-            //                 }
-            //             ],
-            //             "memberIds": ["u101"],
-            //             "labelIds": ["l101", "l102"],
-            //             "dueDate": 16156215211,
-            //             "byMember": {
-            //                 "_id": "u101",
-            //                 "username": "Tal",
-            //                 "fullname": "Tal Tarablus",
-            //                 "imgUrl": "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
-            //             },
-            //             "style": {
-            //                 "backgroundColor": "#26de81"
-            //             }
-            //         }
-            //     ],
-            //     "style": {}
-            // }
         ],
         activities: [
             {
@@ -1199,5 +1187,218 @@ const board = [
 
         cmpsOrder: ["StatusPicker", "MemberPicker", "DatePicker"]
     },
+    {
+        _id: utilService.makeId(),
+        title: 'Wow',
+        isStarred: false,
+        archivedAt: Date.now(),
+        createdBy: {
+            "_id": "u103",
+            "fullname": "Sahar Machpud",
+            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
+        },
+        style: {
+            backgroundImage: "https://images.unsplash.com/photo-1696580436068-f19c26850e8b?auto=format&fit=crop&q=80&w=2071&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            backgroundColor: "",
+            dominantColor: {rgb : '247,234,225'},
+            isBright: null
+        },
+        labels: [
+            {
+                "id": "l101",
+                "title": "Urgent",
+                "color": "#4BCE97"
+            },
+            {
+                "id": "l102",
+                "title": "Tasks",
+                "color": "#F5CD47"
+            },
+            {
+                "id": "l103",
+                "title": "Data",
+                "color": "#FEA362"
+            },
+            {
+                "id": "l104",
+                "title": "",
+                "color": "#F87168"
+            },
+            {
+                "id": "l105",
+                "title": "",
+                "color": "#9F8FEF"
+            },
+            {
+                "id": "l106",
+                "title": "",
+                "color": "#579DFF"
+            },
+        ],
+        members: [
+            {
+                "_id": "u101",
+                "fullname": "Maya Cohen",
+                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
+            },
+            {
+                "_id": "u102",
+                "fullname": "Reut Edry",
+                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+            },
+            {
+                "_id": "u103",
+                "fullname": "Sahar Machpud",
+                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
+            }
+        ],
+        groups: [
+            { id: utilService.makeId(), title: '', tasks: [], style: {} }
+        ],
+        activities: [],
+        cmpsOrder: ["StatusPicker", "MemberPicker", "DatePicker"]
+    },
+    {       
+            _id: utilService.makeId(),
+            title: 'Wow2',
+            isStarred: false,
+            archivedAt: Date.now(),
+            createdBy: {
+                "_id": "u103",
+                "fullname": "Sahar Machpud",
+                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
+            },
+            style: {
+                backgroundImage: "https://res.cloudinary.com/duvatj8kg/image/upload/v1697202495/aec98becb6d15a5fc95e_dseafo.svg",
+                backgroundColor: "",
+                dominantColor: {rgb: "236,109,56"},
+                isBright: null
+            },
+            labels: [
+                {
+                    "id": "l101",
+                    "title": "Urgent",
+                    "color": "#4BCE97"
+                },
+                {
+                    "id": "l102",
+                    "title": "Tasks",
+                    "color": "#F5CD47"
+                },
+                {
+                    "id": "l103",
+                    "title": "Data",
+                    "color": "#FEA362"
+                },
+                {
+                    "id": "l104",
+                    "title": "",
+                    "color": "#F87168"
+                },
+                {
+                    "id": "l105",
+                    "title": "",
+                    "color": "#9F8FEF"
+                },
+                {
+                    "id": "l106",
+                    "title": "",
+                    "color": "#579DFF"
+                },
+            ],
+            members: [
+                {
+                    "_id": "u101",
+                    "fullname": "Maya Cohen",
+                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
+                },
+                {
+                    "_id": "u102",
+                    "fullname": "Reut Edry",
+                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+                },
+                {
+                    "_id": "u103",
+                    "fullname": "Sahar Machpud",
+                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
+                }
+            ],
+            groups: [
+                { id: utilService.makeId(), title: '', tasks: [], style: {} }
+            ],
+            activities: [],
+            cmpsOrder: ["StatusPicker", "MemberPicker", "DatePicker"]
+        },
+        {       
+                _id: utilService.makeId(),
+                title: 'Wow3',
+                isStarred: false,
+                archivedAt: Date.now(),
+                createdBy: {
+                    "_id": "u103",
+                    "fullname": "Sahar Machpud",
+                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
+                },
+                style: {
+                    backgroundImage: "https://images.unsplash.com/photo-1594743896255-be81f8dfec3d?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    backgroundColor: "",
+                    dominantColor: {rgb: '36,31,35'},
+                    isBright: null
+                },
+                labels: [
+                    {
+                        "id": "l101",
+                        "title": "Urgent",
+                        "color": "#4BCE97"
+                    },
+                    {
+                        "id": "l102",
+                        "title": "Tasks",
+                        "color": "#F5CD47"
+                    },
+                    {
+                        "id": "l103",
+                        "title": "Data",
+                        "color": "#FEA362"
+                    },
+                    {
+                        "id": "l104",
+                        "title": "",
+                        "color": "#F87168"
+                    },
+                    {
+                        "id": "l105",
+                        "title": "",
+                        "color": "#9F8FEF"
+                    },
+                    {
+                        "id": "l106",
+                        "title": "",
+                        "color": "#579DFF"
+                    },
+                ],
+                members: [
+                    {
+                        "_id": "u101",
+                        "fullname": "Maya Cohen",
+                        "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
+                    },
+                    {
+                        "_id": "u102",
+                        "fullname": "Reut Edry",
+                        "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+                    },
+                    {
+                        "_id": "u103",
+                        "fullname": "Sahar Machpud",
+                        "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
+                    }
+                ],
+                groups: [
+                    { id: utilService.makeId(), title: '', tasks: [], style: {} }
+                ],
+                activities: [],
+                cmpsOrder: ["StatusPicker", "MemberPicker", "DatePicker"]
+            }
 ]
 
