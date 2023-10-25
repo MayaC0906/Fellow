@@ -4,7 +4,7 @@
     pointer-events: auto;
     z-index: 50;
     overflow-y: scroll;
-    background-color: $dtl-bgc4;
+    background-color: $dtl-bgc5;
 
     .modal-container {
         z-index: 60;
@@ -24,7 +24,7 @@
             overflow: hidden;
             grid-area: task-modal;
             z-index: 60;
-            background-color: $clr6;
+            background-color: $dtl-bgc6;
             min-height: 600px;
             width: 100%;
             max-width: 768px;
