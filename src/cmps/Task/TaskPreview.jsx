@@ -30,8 +30,10 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
                 <h3>{task?.title}</h3>
                 <section className="task-badges">
                     {task.watching && <div className="task-badge">{taskSvg.watch}</div>}
+
                     {dueDate && <div className="task-badge">{taskSvg.clock} <span>{dayjs(dueDate, 'MMM D [at] h:mm A').format('MMM D, YYYY')}
                     </span></div>}
+
                     {task.description && <div className="task-badge">{taskSvg.description}</div>}
                     {task.comments?.length > 0 && <div className="task-badge">{taskSvg.comment} <span>{task.comments.length}</span></div>}
                     {task.attachments?.length > 0 && <div className="task-badge">{taskSvg.attatchment} <span>{task.attachments.length}</span></div>}
@@ -44,7 +46,6 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
                         {taskMembers.map(member => <img key={member._id} className="member" src={member.imgUrl} alt="" />)}
                     </section>
                 }
-
             </section>
         </article>
     )
