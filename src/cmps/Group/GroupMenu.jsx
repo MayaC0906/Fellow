@@ -7,6 +7,7 @@ export function GroupMenu({
   onRemoveGroup,
   setToggleGroupMenu,
   groupMenuPosition,
+  setOpenMenuGroupId,
   openMenuGroupId
 }) {
   const style = {
@@ -19,7 +20,7 @@ export function GroupMenu({
     <section className="group-edit-modal" style={style}>
       <header>
         <div>List action</div>
-        <button onClick={() => setOpenGroupId(null)} className="close-btn">
+        <button onClick={() => setOpenMenuGroupId(null)} className="close-btn">
             X
         </button>
       </header>
