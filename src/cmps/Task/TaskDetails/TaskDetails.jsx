@@ -17,7 +17,6 @@ import { TaskLabel } from "./TaskLabel"
 import { utilService } from "../../../services/util.service"
 
 export function TaskDetails() {
-    const board = useSelector((storeState) => storeState.boardModule.board)
     const { boardId, groupId, taskId } = useParams()
     const [task, setTask] = useState('')
     const [imgBackground, setImgBackground] = useState('white')
@@ -70,9 +69,12 @@ export function TaskDetails() {
                         {taskSvg.plus}
                     </Link>
 
-                    {task.cover?.backgroundColor && <div className="color-cover" style={{ backgroundColor: task.cover.backgroundColor }}></div>}
+                    {task.cover?.backgroundColor && <div className="color-cover" style={{ backgroundColor: task.cover.backgroundColor }}>
+                        <div className="cover-btn dark-btn" onClick={()=>setEditName('Cover')}><span>{taskSvg.title}</span> <span></span>cover</div>
+                        </div>}
                     {task.cover?.img && (
                         <div style={{ backgroundColor: imgBackground }} className="img-cover">
+                             <div className="cover-btn dark-btn" onClick={()=>setEditName('Cover')}><span>{taskSvg.title}</span>cover</div>
                             <img src={task.cover.img} alt="" />
                         </div>
                     )}
