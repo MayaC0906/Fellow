@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 export function AppHeader() {
     const boardStyle = useSelector((storeState) => storeState.boardModule.board.style) || null
     const [brightClass, setBrightClass] = useState(true)
+    console.log('brightClass', brightClass);
     const board = useSelector((storeState) => storeState.boardModule.board)
     console.log(board);
 

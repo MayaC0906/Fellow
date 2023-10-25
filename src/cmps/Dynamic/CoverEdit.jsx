@@ -12,8 +12,57 @@ export function CoverEdit({ editName, onCloseEditTask, onSaveTask, task }) {
     { imgUrl: 'https://images.unsplash.com/photo-1696595883516-76c97aa3a164?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NHx8fGVufDB8fHx8fA%3D%3D', name: 'Cokile Ceoi', nameLink: 'https://unsplash.com/@c0ki1e?utm_source=trello&utm_medium=referral&utm_campaign=api-credit' },
     { imgUrl: 'https://images.unsplash.com/photo-1696144706485-ff7825ec8481?auto=format&fit=crop&q=80&w=1935&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', name: 'Joshua Rawson-Harris', nameLink: 'https://unsplash.com/@joshrh19?utm_source=trello&utm_medium=referral&utm_campaign=api-credit' }]
 
-    function onChangeCover(color) {
-        console.log(color);
+    async function onRemoveCover() {
+        try {
+            const newTask = { ...task, cover: { ...task.cover, img: '', backgroundColor: '', createdAt: null } }
+            onSaveTask(newTask)
+        } catch (err) {
+            console.log('Cannot remove cover', err)
+        }
+    }
+
+    function onChangeCover({ type, content }) {
+        try {
+            let newTask
+            if (type === 'img') {
+                newTask = { ...task, cover: { ...task.cover, img: content, backgroundColor: '', createdAt: Date.now() } }
+            } else {
+                newTask = { ...task, cover: { ...task.cover, backgroundColor: content, img: '', createdAt: Date.now() } }
+            }
+            onSaveTask(newTask)
+        } catch (err) {
+            console.log('Cannot add cover', err)
+        }
+    }
+
+    async function onSaveAttachment(url) {
+        const newAttachment = ({ id: utilService.makeId(), imgUrl: url, createdAt: Date.now() })
+        task.attachments.push(newAttachment)
+        const newTask = { ...task, attachments: task.attachments}
+        onSaveTask(newTask)
+    }
+
+    async function uploadImg(ev) {
+
+        const CLOUD_NAME = 'dehxwadkk'
+        const UPLOAD_PRESET = 'qlj2jj4j'
+        const UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`
+        const FORM_DATA = new FormData()
+
+        FORM_DATA.append('file', ev.target.files[0])
+        FORM_DATA.append('upload_preset', UPLOAD_PRESET)
+
+        try {
+            const res = await fetch(UPLOAD_URL, {
+                method: 'POST',
+                body: FORM_DATA,
+            })
+            const { url } = await res.json()
+            await onSaveAttachment(url)
+            onChangeCover({ type: 'img', content: url })
+        } catch (err) {
+            console.error(err)
+        }
     }
 
     return (
@@ -28,8 +77,11 @@ export function CoverEdit({ editName, onCloseEditTask, onSaveTask, task }) {
                         <h2>Size</h2>
                         <section className="cover-sizes">
                             <div className="cover-size unfull"
-                                style={{ backgroundColor: task.cover.backgroundColor ? task.cover.backgroundColor : '#dcdfe4' }}>
-                                {task.cover.img && <img className="cover-img" src={task.cover.img} alt="cover-img" />}
+                                style={{
+                                    backgroundColor: task.cover.backgroundColor ? task.cover.backgroundColor : '#dcdfe4',
+                                    backgroundImage: task.cover.img ? `url(${task.cover.img})` : ''
+                                }}>
+                                {task.cover.img && <div className="bgc-img" style={{}}></div>}
                                 <div className="cover-footer">
                                     <section className="big-lines">
                                         <div className="long-line"></div>
@@ -45,37 +97,38 @@ export function CoverEdit({ editName, onCloseEditTask, onSaveTask, task }) {
                                 </div>
                             </div>
                             <div className="cover-size full"
-                                style={{ backgroundColor: task.cover.backgroundColor ? task.cover.backgroundColor : '#dcdfe4' }}>
-                                {task.cover.img && <img className="cover-img" src={task.cover.img} alt="cover-img" />}
+                                style={{
+                                    backgroundColor: task.cover.backgroundColor ? task.cover.backgroundColor : '#dcdfe4',
+                                    backgroundImage: task.cover.img ? `url(${task.cover.img})` : ''
+                                }}>
                                 <section className="big-lines">
                                     <div className="long-line"></div>
                                     <div className="short-line"></div>
                                 </section>
                             </div>
                         </section>
-                        {task.cover.createdAt && <button>Remove cover</button>}
+                        {task.cover.createdAt && <button className="remove-cover-btn" onClick={onRemoveCover}>Remove cover</button>}
                         <h2>Colors</h2>
                         <section className="backgroundColor-Pick">
                             {coverColors.map(color => {
-                                return <div style={{ backgroundColor: color }} onClick={() => { onChangeCover(color) }}></div>
+                                return <div style={{ backgroundColor: color }} onClick={() => { onChangeCover({ type: 'backgroundColor', content: color }) }}></div>
                             })}
                         </section>
                         <h2>Attachments</h2>
                         {task.attachments.length > 0 && <section className="cover-attachments">
                             {task.attachments.map(attachment => {
-                                return (<div style={{ backgroundColor: utilService.getDominantColor(attachment.imgUrl) }}
-                                    className="attachment-container">
-                                    <img src={attachment.imgUrl} alt="attachment" />
-                                </div>)
+                                return (<button onClick={() => { onChangeCover({ type: 'img', content: attachment.imgUrl }) }} style={{
+                                    backgroundImage: `url(${attachment.imgUrl})`,
+                                }}>
+                                </button>)
                             })}
                         </section>}
-                        <input type="file" id="fileInput" />
-                        {/* onChange={uploadImg} */}
+                        <input type="file" id="fileInput" onChange={uploadImg} />
                         <label for="fileInput" className="custom-button">Upload a cover image</label>
                         <h2>Photos from Unsplash</h2>
                         <section className="unsplash-photos">
                             {coverImgs.map(coverImg => {
-                                return (<div>
+                                return (<div onClick={() => { onChangeCover({ type: 'img', content: coverImg.imgUrl }) }}>
                                     <img src={coverImg.imgUrl} alt="unsplash-img" />
                                     <a className="unsplash-link" title={coverImg.name} href={coverImg.nameLink}>{coverImg.name}</a>
                                 </div>

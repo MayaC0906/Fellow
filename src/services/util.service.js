@@ -172,10 +172,8 @@ function isRgbBright(rgb) {
     const g = parseInt(colorValues[1]);
     const b = parseInt(colorValues[2]);
 
-    // Calculate the brightness of the color
     const brightness = (r * 299 + g * 587 + b * 114) / 1000;
 
-    // Return the result based on brightness
    const res = brightness >= 128 ? true : false;
    console.log('colorRes', res);
    return res
