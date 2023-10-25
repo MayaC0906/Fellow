@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { appHeaderSvg } from './Svgs'
 import { useEffect, useState } from 'react'
+import { utilService } from '../services/util.service'
 
 export function AppHeader() {
     const boardStyle = useSelector((storeState) => storeState.boardModule.board.style) || null
