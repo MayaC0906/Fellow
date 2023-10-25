@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { appHeaderSvg } from './Svgs'
 import { useEffect, useState } from 'react'
+import { utilService } from '../services/util.service'
 
 export function AppHeader() {
     const boardStyle = useSelector((storeState) => storeState.boardModule.board.style) || null
@@ -10,7 +11,7 @@ export function AppHeader() {
     const board = useSelector((storeState) => storeState.boardModule.board)
     console.log(board);
 
-
+console.log(utilService.formatImgTime(1697584976000));
     useEffect (()=>{
 if (boardStyle) {
     setBrightClass (boardStyle?.isBright)
