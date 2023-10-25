@@ -18,6 +18,7 @@ export function GroupList() {
 	const board = useSelector((storeState) => storeState.boardModule.board)
     const groups = board?.groups
     const [isLabelsShown, setIsLabelsShown] = useState(false)
+    const [openMenuGroupId, setOpenMenuGroupId] = useState(null);
 
     function handleChange(ev) {
         let { value, name: field } = ev.target
@@ -153,6 +154,8 @@ export function GroupList() {
                                                 members={board.members}
                                                 group={group}
                                                 handleDrag={handleDrag}
+                                                openMenuGroupId={openMenuGroupId}
+                                                setOpenMenuGroupId={setOpenMenuGroupId}
                                             />
                                         </li>
                                     )}
