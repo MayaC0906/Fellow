@@ -44,10 +44,10 @@ export function GroupMenu({
   
   const sortByContent = (
     <ul className="clean-list">
-      <li onClick={() => {}}>Date created (newest first)</li>
-      <li onClick={() => {}}>Date created (oldest first)</li>
-      <li onClick={sortByAlphaB}>Card name (alphabetically)</li>
-      <li onClick={() => { }}>Due Date</li>
+      <li className='disabled' onClick={() => {}}>Date created (newest first)</li>
+      <li className='disabled' onClick={() => {}}>Date created (oldest first)</li>
+      <li  onClick={sortByAlphaB}>Card name (alphabetically)</li>
+      <li className='disabled' onClick={() => { }}>Due Date</li>
     </ul>
   );
 
