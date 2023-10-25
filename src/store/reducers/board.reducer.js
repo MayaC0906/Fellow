@@ -57,7 +57,7 @@ export function boardReducer(state = initialState, action) {
         //     break
         case SET_BOARD:
             newState = { ...state, board: action.board }
-            // console.log('new sate:', newState.board);
+            console.log('new sate:', newState.board);
             break
         default:
     }

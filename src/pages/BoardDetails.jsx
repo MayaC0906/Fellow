@@ -17,26 +17,26 @@ export function BoardDetails() {
     // const [boardToDisplay, setBoard] = useState([])
     const board = useSelector(storeState => storeState.boardModule.board)
     const [isMenuOpen, setMenu] = useState(false)
-    
+
     useEffect(() => {
         loadBoards()
         onLoadBoard()
     }, [boardId])
 
 
-   async function onLoadBoard(){
+    async function onLoadBoard() {
         try {
             const board = await loadBoard(boardId)
             dispatch({ type: SET_BOARD, board })
             console.log('board loaded')
             // setBoard(board)
-        } catch(err) {
+        } catch (err) {
             console.log('cant set board', err);
             throw err
-        }     
+        }
     }
 
-    
+
 
     if (!Object.keys(board).length) return <div>loading</div>
     return (
@@ -44,10 +44,10 @@ export function BoardDetails() {
             <BoardSidebar />
             <div className="board-details-container" style={{ backgroundImage: `url(${board.style.backgroundImage})`, backgroundColor: board.style.backgroundColor }} >
                 <GroupHeader isMenuOpen={isMenuOpen} setMenu={setMenu} board={board} />
-                <Outlet/>
-                <GroupList boardId={boardId}/>
+                <Outlet />
+                <GroupList boardId={boardId} />
             </div>
-            {isMenuOpen && <BoardMenu isMenuOpen={isMenuOpen} setMenu={setMenu}/>}
+            {isMenuOpen && <BoardMenu isMenuOpen={isMenuOpen} setMenu={setMenu} />}
         </>
     )
 }

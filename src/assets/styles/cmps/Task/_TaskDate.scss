@@ -51,7 +51,6 @@
 
         &-complete {
             height: 16px;
-            width: rem(53px);
             padding: 0 rem(4px);
             font-size: rem(12px);
             font-weight: 500;
@@ -62,7 +61,6 @@
             margin: auto rem(4px) auto rem(4px);
 
             &.overdue {
-                width: rem(46px);
                 background-color: rgb(255, 236, 235);
                 color: rgb(174, 46, 36);
             }

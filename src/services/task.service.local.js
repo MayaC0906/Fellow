@@ -63,7 +63,11 @@ function getEmptyTask() {
         title: '',
         archivedAt: null,
         labelIds: [],
-        dueDate: '',
+        dueDate: {
+            date: null,
+            isComplete: null,
+            isOverdue: null
+        },
         byMember: {
             _id: '',
             username: '',
