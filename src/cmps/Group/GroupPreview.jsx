@@ -6,7 +6,7 @@ import { showSuccessMsg } from '../../services/event-bus.service';
 import { saveNewTask } from '../../store/actions/board.actions';
 import { GroupMenu } from './GroupMenu';
 import { TaskList } from '../Task/TaskList';
-import { groupPreview } from '../Svgs';
+import { checkList, groupPreview } from '../Svgs';
 
 export function GroupPreview({
   handleDrag,
@@ -147,9 +147,9 @@ export function GroupPreview({
 					<Button type="submit" onClick={onSaveNewTask}>
 					Add Card
 					</Button>
-					<button className="cancel clean-btn" onClick={() => setInputExpand(false)}>
-					X
-					</button>
+					<div className="cancel clean-btn" onClick={() => setInputExpand(false)}>
+					{checkList.x}
+					</div>
 				</section>
 				</div>
 			)}
