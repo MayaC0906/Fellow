@@ -11,6 +11,7 @@
     min-height: 0;
     z-index: 1;
     -webkit-overflow-scrolling: touch;
+
     a {
         text-decoration: none;
     }
@@ -115,6 +116,88 @@
                         color: #44546f;
                         font-size: rem(12px);
                         font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                    }
+
+                    &.duedate {
+                        border-radius: 3px;
+
+                        .clock,
+                        .checklist {
+                            display: flex;
+                            align-items: center;
+                            margin-block-end: 1px;
+                        }
+
+                        svg {
+                            width: 16px;
+                            height: 16px;
+                        }
+
+                        .empty-square {
+                            display: none;
+
+                            svg {
+                                width: 16px;
+                                height: 16px;
+                            }
+                        }
+
+                        &:hover {
+                            .empty-square {
+                                display: block;
+                                display: flex;
+                                align-items: center;
+                                margin-block-end: 1px;
+                            }
+
+                            .clock {
+                                display: none;
+                            }
+                        }
+
+                        &.complete {
+                            background-color: rgb(31, 132, 90);
+
+                            span {
+                                color: white;
+                            }
+
+                            svg {
+                                color: white;
+                            }
+
+                            .clock {
+                                display: none;
+                            }
+
+                            &:hover {
+
+                                .checklist {
+                                    display: none;
+                                }
+
+                                .clock {
+                                    display: block;
+                                    display: flex;
+                                    align-items: center;
+                                    margin-block-end: 1px;
+                                }
+                            }
+                        }
+
+                        &.overdue {
+                            background-color: rgb(255, 213, 210);
+                            color: rgb(174, 46, 36);
+
+                            span {
+                                color: rgb(174, 46, 36);
+
+                                svg {
+                                    color: rgb(174, 46, 36);
+
+                                }
+                            }
+                        }
                     }
                 }
             }

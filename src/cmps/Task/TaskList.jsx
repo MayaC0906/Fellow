@@ -49,6 +49,7 @@ export function TaskList({ handleDrag, tasks, labels, members, isLabelsShown, se
                                                     taskLabels={taskLabels}
                                                     taskMembers={taskMembers}
                                                     taskChecklist={taskChecklist}
+                                                    groupId={groupId}
                                                 />
                                             </Link>
                                         </div>
