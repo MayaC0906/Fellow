@@ -3,6 +3,7 @@ import { ChecklistEdit } from './ChecklistEdit';
 import { DateEdit } from './Date/DateEdit';
 import { LabelEdit } from './Label/LabelEdit';
 import { AttachmentEdit } from './Attachment/AttachmentEdit';
+import { CoverEdit } from './CoverEdit';
 
 export function DynamicTaskActions(props) {
     switch (props.editName) {
@@ -16,6 +17,8 @@ export function DynamicTaskActions(props) {
             return <DateEdit {...props} />
         case 'Attachment':
             return <AttachmentEdit {...props} />
+        case 'Cover':
+            return <CoverEdit {...props} />
         default:
             return null;
     }
