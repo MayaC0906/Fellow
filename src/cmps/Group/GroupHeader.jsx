@@ -1,16 +1,26 @@
 import { useEffect, useState } from "react";
 import { groupHeaderSvg, workspaceSvg } from "../Svgs";
 import { updateBoard } from "../../store/actions/board.actions";
+import { useSelector } from "react-redux";
 
-export function GroupHeader({ isMenuOpen, setMenu, board }) {
-    const [isBoardStarred, setIsBoardStarred] = useState(board.isStarred)
+export function GroupHeader({ isMenuOpen, setMenu, boardId }) {
+
+    const boards = useSelector(storeState => storeState.boardModule.boards)
+    const [board, onSetBoard] = useState({})
+    const [isBoardStarred, setIsBoardStarred] = useState(null)
     const [content, setContent] = useState('')
     let zIndexCount = 10
 
     useEffect(() => {
-        setContent(board.title)
+        onLoadBoard()
     }, [])
 
+    async function onLoadBoard() {
+        const boardToFind = boards.find(board => board._id === boardId)
+        onSetBoard(boardToFind)
+        setIsBoardStarred(boardToFind.isStarred)
+        setContent(boardToFind.title)
+    }
 
     async function onEditBoardTitle() {
         let value = event.target.textContent
@@ -32,6 +42,9 @@ export function GroupHeader({ isMenuOpen, setMenu, board }) {
             console.log(`Could'nt change isStarred`, err);
         }
     }
+
+    if (!board || !board._id) return <div>loading</div>
+    console.log('hey');
 
     const { isBright } = board.style
     const isBlackOrWhite = isBright ? 'brightColor' : 'darkColor'

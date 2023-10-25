@@ -1,6 +1,6 @@
 import React from 'react'
-import { useEffect,useState } from 'react'
-import { useSelector,useDispatch } from 'react-redux'
+import { useEffect, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { showSuccessMsg, showErrorMsg } from '../../services/event-bus.service.js'
 import { boardService } from '../../services/board.service.local.js'
@@ -15,16 +15,16 @@ import { GroupPreview } from './GroupPreview.jsx'
 export function GroupList() {
     const [isInputExpand, setInputExpand] = useState(false)
     const [newGroup, setNewGroup] = useState(boardService.getEmptyGroup())
-	const board = useSelector((storeState) => storeState.boardModule.board)
+    const board = useSelector((storeState) => storeState.boardModule.board)
     const groups = board?.groups
     const [isLabelsShown, setIsLabelsShown] = useState(false)
     const [openMenuGroupId, setOpenMenuGroupId] = useState(null);
 
     function handleChange(ev) {
         let { value, name: field } = ev.target
-		setNewGroup((prevGroup) => ({ ...prevGroup, [field]: value }))
+        setNewGroup((prevGroup) => ({ ...prevGroup, [field]: value }))
     }
-    
+
     async function onSaveNewGroup(ev) {
         ev.preventDefault();
         if (!newGroup.title) return;
@@ -38,68 +38,68 @@ export function GroupList() {
         }
     }
 
-    async function onEditGroup(groupId,{target}){
+    async function onEditGroup(groupId, { target }) {
         let groupToSave = getGroupById(groupId)
         groupToSave.title = target.value
         try {
             await saveGroup(groupToSave, board._id)
-        }catch (err) {
+        } catch (err) {
             console.log(err);
             throw err
         }
     }
 
-    function getGroupById(groupId){
-            const group = groups.find(group => group.id === groupId)
-            return group
+    function getGroupById(groupId) {
+        const group = groups.find(group => group.id === groupId)
+        return group
     }
-   
+
     async function onRemoveGroup(groupId) {
         console.log(groupId);
-		try {
-			await removeGroup(groupId, board._id)
-		} catch (err) {
-			console.log('Failed to remove group', err)
-		}
-	}
+        try {
+            await removeGroup(groupId, board._id)
+        } catch (err) {
+            console.log('Failed to remove group', err)
+        }
+    }
 
     async function onDuplicateGroup(group) {
-		let duplicatedGroup = { ...group }
-		duplicatedGroup.id = null
-		try {
-			await saveGroup(duplicatedGroup, board._id)
-		} catch (err) {
-			console.log('Failed to duplicate group', err)
+        let duplicatedGroup = { ...group }
+        duplicatedGroup.id = null
+        try {
+            await saveGroup(duplicatedGroup, board._id)
+        } catch (err) {
+            console.log('Failed to duplicate group', err)
             throw err
-		}
-	}
+        }
+    }
 
     function handleDrag(result) {
         const { destination, source, type } = result
 
         if (!destination || (destination.droppableId === source.droppableId && destination.index === source.index)) return
- 
+
         const clonedBoard = { ...board }
-      
+
         if (type === 'groups') {
             const updatedGroups = [...clonedBoard.groups]
             const [movedGroup] = updatedGroups.splice(source.index, 1)
             updatedGroups.splice(destination.index, 0, movedGroup)
-      
+
             clonedBoard.groups = updatedGroups;
             updateBoard(clonedBoard);
             return;
         }
-      
+
         if (type === 'tasks') {
             const originalGroup = clonedBoard.groups.find(group => group.id === source.droppableId)
             const targetGroup = clonedBoard.groups.find(group => group.id === destination.droppableId)
-      
+
             if (originalGroup === targetGroup) {
                 const updatedTasks = [...originalGroup.tasks]
                 const [movedTask] = updatedTasks.splice(source.index, 1)
                 updatedTasks.splice(destination.index, 0, movedTask)
-      
+
                 originalGroup.tasks = updatedTasks
                 updateBoard(clonedBoard)
                 return
@@ -108,7 +108,7 @@ export function GroupList() {
                 const tasksForTargetGroup = [...targetGroup.tasks]
                 const [movedTask] = tasksFromOriginalGroup.splice(source.index, 1)
                 tasksForTargetGroup.splice(destination.index, 0, movedTask)
-      
+
                 originalGroup.tasks = tasksFromOriginalGroup
                 targetGroup.tasks = tasksForTargetGroup
                 updateBoard(clonedBoard)
@@ -116,29 +116,30 @@ export function GroupList() {
             }
         }
     }
-    
 
 
-    if(!groups) return <div>Loading..</div>
+    console.log('board from list:', board);
+
+    if (!groups) return <div>Loading..</div>
     return (
         <div className='group-list-container'>
             <DragDropContext onDragEnd={handleDrag}>
                 <Droppable droppableId="groups" type="groups" key="groups" direction="horizontal">
                     {(provided) => (
-                        <ul 
+                        <ul
                             className='group-list clean-list'
-                            {...provided.droppableProps} 
+                            {...provided.droppableProps}
                             ref={provided.innerRef}
                         >
                             {board?.groups?.map((group, idx) => (
-                                <Draggable 
-                                    draggableId={group.id} 
-                                    key={group.id} 
+                                <Draggable
+                                    draggableId={group.id}
+                                    key={group.id}
                                     index={idx}
                                 >
                                     {(provided) => (
-                                        <li 
-                                            className='group-preview-container' 
+                                        <li
+                                            className='group-preview-container'
                                             key={group.id}
                                             {...provided.draggableProps}
                                             {...provided.dragHandleProps}
@@ -164,29 +165,29 @@ export function GroupList() {
                             {provided.placeholder}
                         </ul>
                     )}
-                    </Droppable>
-                </DragDropContext>
-                <section className='add-group-input'>
-                    {!isInputExpand ?
-                        <div className='add-group-msg' onClick={() => setInputExpand(!isInputExpand)}>
-                            <span>+ Add another list </span>
-                        </div> :
-                        <div className='add-group-input-expanded'>
-                            <Textarea 
-                                sx={{ border:'none'}}
-                                name="title"
-                                placeholder="Enter list title..."
-                                autoFocus
-                                value={newGroup.title}
-                                onChange={handleChange}
-                            />
-                            <section className='add-controls'>
-                                <Button type="submit" onClick={onSaveNewGroup}>Add List</Button>
-                                <button className='cancel' onClick={() => setInputExpand(!isInputExpand)}>X</button>
-                            </section>
-                        </div>
-                    }
-                </section>         
+                </Droppable>
+            </DragDropContext>
+            <section className='add-group-input'>
+                {!isInputExpand ?
+                    <div className='add-group-msg' onClick={() => setInputExpand(!isInputExpand)}>
+                        <span>+ Add another list </span>
+                    </div> :
+                    <div className='add-group-input-expanded'>
+                        <Textarea
+                            sx={{ border: 'none' }}
+                            name="title"
+                            placeholder="Enter list title..."
+                            autoFocus
+                            value={newGroup.title}
+                            onChange={handleChange}
+                        />
+                        <section className='add-controls'>
+                            <Button type="submit" onClick={onSaveNewGroup}>Add List</Button>
+                            <button className='cancel' onClick={() => setInputExpand(!isInputExpand)}>X</button>
+                        </section>
+                    </div>
+                }
+            </section>
         </div>
     );
 }
@@ -198,4 +199,3 @@ export function GroupList() {
 
 
 
- 
