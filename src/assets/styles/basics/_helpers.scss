@@ -179,12 +179,15 @@
         background-color: $a-h1-l;
         cursor: pointer;
     }
+    &.logo {
+        color: $a-h-txt-l
+    }
 }
 
 .dark-btn {
     background: none;
     border: none;
-    color: $a-h-txt;
+    color: $a-h-txt-d;
     font-weight: 500;
     font-size: rem(14px);
     border-radius: 3px;
@@ -202,7 +205,7 @@
         border: 1px solid $a-bd-d;
 
         input {
-            color: $a-h-txt;
+            color: $a-h-txt-d;
         }
 
         &:hover {
@@ -210,13 +213,17 @@
         }
 
         &::placeholder {
-            color: $a-h-txt;
+            color: $a-h-txt-d;
         }
     }
 
     &:hover {
         background-color: $a-h1-d;
         cursor: pointer;
+    }
+
+    &.logo {
+        color: $a-h-txt-d
     }
 }
 

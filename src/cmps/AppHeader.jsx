@@ -7,20 +7,21 @@ export function AppHeader() {
     const boardStyle = useSelector((storeState) => storeState.boardModule.board.style) || null
     const [brightClass, setBrightClass] = useState(true)
     const board = useSelector((storeState) => storeState.boardModule.board)
+    console.log(board);
 
 
     useEffect (()=>{
 if (boardStyle) {
     setBrightClass (boardStyle?.isBright)
 } else setBrightClass(true)
-    },[board])
+    },[board.style])
 
     return (
         <header className='app-header' style={{ backgroundColor: `rgb(${boardStyle?.dominantColor.rgb})` || 'white' }}>
             <section className='nav-links'>
                 <button className= {'app-header-btn nav-link-btn menu' + (brightClass? ' dark-btn' : ' light-btn')}>{appHeaderSvg.menu}</button>
                 <div className={'logo' + (brightClass? ' dark-btn' : ' light-btn')}>
-                    <img src='https://res.cloudinary.com/dehxwadkk/image/upload/v1696466880/logo_transparent_dz6ld4.png' alt="" />
+                   FELLOW
                 </div>
                 <section className='links'>
                     <NavLink to={"/workspace"}>
