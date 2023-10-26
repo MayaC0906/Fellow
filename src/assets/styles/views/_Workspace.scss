@@ -61,11 +61,11 @@
 
         &-workspace-container {
 
-            div {
+            .container-title {
                 gap: rem(8px);
                 padding: 0 0 11px;
 
-                .title {
+                .header-title {
                     font-size: rem(16px);
                     font-weight: 700;
                     color: rgb(23, 43, 77);
@@ -76,6 +76,11 @@
                     height: 32px;
                     font-size: rem(24px);
                     color: rgb(68, 84, 111);
+
+                    svg {
+                        width: 25px;
+                        height: 25px;
+                    }
                 }
 
             }

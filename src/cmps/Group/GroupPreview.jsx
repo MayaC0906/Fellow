@@ -9,34 +9,44 @@ import { TaskList } from '../Task/TaskList';
 import { checkList, groupPreview } from '../Svgs';
 
 export function GroupPreview({
-  handleDrag,
-  onEditGroup,
-  isLabelsShown,
-  setIsLabelsShown,
-  group,
-  members,
-  labels,
-  onRemoveGroup,
-  onDuplicateGroup,
-  openMenuGroupId,
-  setOpenMenuGroupId,
-  onSortGroup,
-  onUpdateBoard
-}) {
-  const [isInputExpand, setInputExpand] = useState(false);
-  const [newTask, setNewTask] = useState(taskService.getEmptyTask());
-  const board = useSelector((storeState) => storeState.boardModule.board);
-  const groupHeaderRef = useRef(null);
-  const [groupMenuPosition, setGroupMenuPosition] = useState({ top: '', left: '' });
+	handleDrag,
+	onEditGroup,
+	isLabelsShown,
+	setIsLabelsShown,
+	group,
+	members,
+	labels,
+	onRemoveGroup,
+	onDuplicateGroup,
+	openMenuGroupId,
+	setOpenMenuGroupId,
+	onSortGroup,
+	onUpdateBoard
+	}){
+	const taskListContainerRef = useRef(null)
+	const [isInputExpand, setInputExpand] = useState(false)
+	const [newTask, setNewTask] = useState(taskService.getEmptyTask())
+	const board = useSelector((storeState) => storeState.boardModule.board)
+	const groupHeaderRef = useRef(null)
+	const [groupMenuPosition, setGroupMenuPosition] = useState({ top: '', left: '' })
 
+	
+	const [prevTaskCount, setPrevTaskCount] = useState(group.tasks.length)
 
-  function toggleGroupMenu(groupId) {
-    if (openMenuGroupId === groupId) {
-        setOpenMenuGroupId(null);
-    } else {
-        setOpenMenuGroupId(groupId);
-    }
-}
+	useEffect(() => {
+		if (taskListContainerRef.current && group.tasks.length > prevTaskCount) {
+			taskListContainerRef.current.scrollTop = taskListContainerRef.current.scrollHeight;
+		}
+		setPrevTaskCount(group.tasks.length)
+	}, [group.tasks.length])
+
+	function toggleGroupMenu(groupId) {
+		if (openMenuGroupId === groupId) {
+			setOpenMenuGroupId(null)
+		} else {
+			setOpenMenuGroupId(groupId)
+		}
+	}
 
 
 	useEffect(() => {
@@ -47,31 +57,31 @@ export function GroupPreview({
 
 	function getBounds() {
 		if (groupHeaderRef.current) {
-		const rect = groupHeaderRef.current.getBoundingClientRect();
+		const rect = groupHeaderRef.current.getBoundingClientRect()
 		setGroupMenuPosition({
 			top: rect.top + rect.height,
 			left: rect.left
-		});
+		})
 		}
 	}
 
 	async function onSaveNewTask(ev) {
-		ev.preventDefault();
-		setInputExpand(false);
-		if (!newTask.title) return;
+		ev.preventDefault()
+		setInputExpand(false)
+		if (!newTask.title) return
 		try {
-		await saveNewTask(board._id, group.id, newTask);
-		setNewTask(taskService.getEmptyTask());
-		showSuccessMsg('New task added');
+		await saveNewTask(board._id, group.id, newTask)
+		setNewTask(taskService.getEmptyTask())
+		showSuccessMsg('New task added')
 		} catch (err) {
-		console.log('failed to save new task', err);
+		console.log('failed to save new task', err)
 		throw err;
 		}
 	}
 
 	function handleChange(ev) {
-		let { value, name: field } = ev.target;
-		setNewTask((prevGroup) => ({ ...prevGroup, [field]: value }));
+		let { value, name: field } = ev.target
+		setNewTask((prevGroup) => ({ ...prevGroup, [field]: value }))
 	}
 
   return (
@@ -114,7 +124,7 @@ export function GroupPreview({
 			</div>
 			)}
 		</section>
-		<section className="task-list-container">
+		<section className="task-list-container" ref={taskListContainerRef}>
 			<TaskList
 			isLabelsShown={isLabelsShown}
 			setIsLabelsShown={setIsLabelsShown}
@@ -139,7 +149,7 @@ export function GroupPreview({
 				<div>
 				<textarea
 					name="title"
-					placeholder="Enter card title..."
+					placeholder="Enter a title for this card..."
 					rows={4}
 					onChange={handleChange}
 				/>

@@ -10,8 +10,7 @@ import Textarea from '@mui/joy/Textarea';
 import Button from '@mui/joy/Button';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { GroupPreview } from './GroupPreview.jsx'
-// 
-
+import { checkList } from '../Svgs.jsx'
 export function GroupList() {
     const [isInputExpand, setInputExpand] = useState(false)
     const [newGroup, setNewGroup] = useState(boardService.getEmptyGroup())
@@ -98,25 +97,19 @@ export function GroupList() {
 
     function handleDrag(result) {
         const { destination, source, type } = result
-
         if (!destination || (destination.droppableId === source.droppableId && destination.index === source.index)) return
-
         const clonedBoard = { ...board }
-
-        if (type === 'groups') {
+        if (type === 'groups') {           
             const updatedGroups = [...clonedBoard.groups]
             const [movedGroup] = updatedGroups.splice(source.index, 1)
             updatedGroups.splice(destination.index, 0, movedGroup)
-
             clonedBoard.groups = updatedGroups;
             updateBoard(clonedBoard);
             return;
         }
-
         if (type === 'tasks') {
             const originalGroup = clonedBoard.groups.find(group => group.id === source.droppableId)
             const targetGroup = clonedBoard.groups.find(group => group.id === destination.droppableId)
-
             if (originalGroup === targetGroup) {
                 const updatedTasks = [...originalGroup.tasks]
                 const [movedTask] = updatedTasks.splice(source.index, 1)
@@ -205,7 +198,7 @@ export function GroupList() {
                         />
                         <section className='add-controls'>
                             <Button type="submit" onClick={onSaveNewGroup}>Add list</Button>
-                            <button className='cancel' onClick={() => setInputExpand(!isInputExpand)}>X</button>
+                            <button className='cancel' onClick={() => setInputExpand(!isInputExpand)}>{checkList.x}</button>
                         </section>
                     </div>
                 }

@@ -95,6 +95,12 @@
         gap: 8px;
         padding: 6px 10px 6px 12px;
 
+        .dashboard,
+        .share,
+        .filters {
+            align-items: baseline;
+        }
+
         &.share {
             margin-inline-start: 6px;
         }

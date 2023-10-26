@@ -146,7 +146,7 @@ function getDominantColor(imageUrl) {
             let maxCount = 0;
             let dominantColor = null;
 
-            for (let i = 0; i < pixelArray.length/4; i += 4) {
+            for (let i = 0; i < pixelArray.length / 4; i += 4) {
                 const rgba = `${pixelArray[i]},${pixelArray[i + 1]},${pixelArray[i + 2]}`;
                 colorMap[rgba] = (colorMap[rgba] || 0) + 1;
                 if (colorMap[rgba] > maxCount) {
@@ -174,7 +174,7 @@ function isRgbBright(rgb) {
 
     const brightness = (r * 299 + g * 587 + b * 114) / 1000;
 
-   const res = brightness >= 128 ? true : false;
-   console.log('colorRes', res);
-   return res
+    const res = brightness >= 128 ? true : false;
+    console.log('colorRes', res);
+    return res
 }
