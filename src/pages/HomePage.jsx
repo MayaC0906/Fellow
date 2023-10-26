@@ -6,42 +6,37 @@ import { Textarea } from '@mui/joy'
 import { Button } from '@mui/joy'
 import { useState } from 'react'
 import hero from '../assets/img/hero.png'
-import hs1 from '../assets/img/hs1.png'
-import hs2 from '../assets//img/hs2.png'
+// import hs1 from '../assets/img/hs1.png'
+// import hs2 from '../assets//img/hs2.png'
 import hs3 from '../assets//img/hs3.png'
 // import logo from '../assets/img/logo.png'
 import { homePage } from '../cmps/Svgs'
 export function HomePage() {
-    const [img, setImg] = useState(hs2)
+
+    const hs1 = 'https://images.ctfassets.net/rz1oowkt5gyp/3N2U3C71rApm61cGFxnc2E/970b010002488a09a420282df5e7b43a/Carousel_Image_Boards_2x.png'
+    const hs2 = 'https://images.ctfassets.net/rz1oowkt5gyp/3ZjLCD2fANfXYSN3ar9WpE/dc84a408c6a3ee89bee4a646ff6d5966/Lists_2x.png'
+    const hs3 = 'https://images.ctfassets.net/rz1oowkt5gyp/26CA6JZeRgoOK4nuRHnIlY/060702a80cf7c3be3651d9297d196267/Carousel_Image_Cards_2x.png'
+    const [img, setImg] = useState(hs1)
 
     return (
-        <section className='home-container'>
-
-            <div className='hero-container'>
-                <section className='signup-intro'>
-                    <span>
-
-                        <h2>Fellow brings all your tasks, teammates, and tools
-                    together</h2>
-                        <p>Keep everything in the same place-even if your team isn't.</p>
-                    </span>
-                    <Link className='demo-btn' to="/workspace">Start demo</Link>
-
-                </section>
-                <section className='hero'>
-                    <img src={hero} alt="img" />
-                    
-                </section>
-                <div className='full' style={{ width: '100%', height: '100px' }}>
-                    {/* <svg preserveAspectRatio="none" viewBox="0 0 1440 99" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0 99h1440V0C689.239 179.5 669.733-106.498 0 91v8Z" fill="#fff"/>
-                    </svg> */}
+        <section className='home-container'>               
+                <div className='hero-container'>
+                    <div className='hero-con layout'>
+                        <section className='signup-intro'>                   
+                            <span>
+                                <h2>Fellow brings all your tasks, teammates, and tools
+                            together</h2>
+                                <p>Keep everything in the same place-even if your team isn't.</p>
+                            </span>
+                            <Link className='demo-btn' to="/workspace">Start demo</Link>
+                        </section>
+                        <section className='hero'>
+                            <img src={hero} alt="img" />                        
+                        </section>
+                    </div>
                 </div>
-
-            </div>
-
-            <div className='app-desc'>
-                <section className='desc'>
+            <div className='app-desc '>
+                <section className='desc layout'>
                     <span>FELLOW 101</span>
                     <h2>A productivity powerhouse</h2>
                     <h3>Simple, flexible, and powerful. All it takes are boards,
@@ -52,13 +47,15 @@ export function HomePage() {
             </div>
 
             <div className='boards-desc'>
+                <div className='layout'>
+
                 <div className='tabs'>
-                    <button onClick={() => setImg(hs1)} className='tab clean-btn'>
+                    <button autoFocus onClick={() => setImg(hs1)} className='tab clean-btn'>
                         <h4>Boards</h4>
                         <p>Fellow boards keep tasks organized and work moving
                              forward. In a glance, see everything from “things to do” to “aww yeah, we did it!”</p>
                     </button>
-                    <button onClick={() => setImg(hs2)} className='tab clean-btn'>
+                    <button  onClick={() => setImg(hs2)} className='tab clean-btn'>
                         <h4>Lists</h4>
                         <p>The different stages of a task. Start as simple as
                              To Do, Doing or Done—or build a workflow custom fit to your team’s needs. There’s no wrong way to Fellow.</p>
@@ -68,13 +65,12 @@ export function HomePage() {
                         <p>Cards represent tasks and ideas and hold all
                             the information to get the job done. As you make progress, move cards across lists to show their status.</p>
                     </button>
-                </div>
-
-                <div className='imgs-section'>
-                    <img src={img} alt="" />
+                </div>             
+                    <div className='imgs-section'>
+                        <img src={img} alt="" />
+                    </div>
                 </div>
             </div>
-
             <section className='discover'>
                 <header>
                     <h2>See work in a whole new way</h2>
@@ -84,9 +80,8 @@ export function HomePage() {
                         tash at hand 
                     </p>
                     <button className='clean-btn task-btn'>Discover all Fellow views</button>
-                </header>
-               
-                    <div className='square-info sq1'>
+                </header>               
+                    <div className='square-info layout sq1'>
                     <img src="https://images.ctfassets.net/rz1oowkt5gyp/5Hb09iiMrK6mSpThW5HS89/f5683a167ad3f74bed4dc7592ae5a002/TrelloBoard_Timeline_2x.png?w=1212&fm=webp" alt="" />
 
                         <article>
@@ -100,7 +95,7 @@ export function HomePage() {
                             <a>Learn more</a>
                         </article>
                     </div>
-                    <div className='square-info sq2'>
+                    <div className='square-info layout sq2'>
                         <article>
                             <span>
                                 {homePage.calender}STAY ON TOP OF TASKS
@@ -115,11 +110,10 @@ export function HomePage() {
                             <a >Learn more</a>
                         </article>
                         <img src="https://images.ctfassets.net/rz1oowkt5gyp/7sxChS4x6XAcUgDpp4VAZk/25377d162e964f4243e329c447bfd7dc/TrelloBoard_Calendar_2x.png?w=1212&fm=webp" alt="" />
-
                     </div>
             </section>        
 
-            <section className='intuitive-features'>
+            <section className='intuitive-features '>
                     <header>
                         <span>POWERFUL WAYS TO GROW</span>
                         <h3>Do more with Fellow</h3>
@@ -168,10 +162,10 @@ export function HomePage() {
                     <Button>Sign up - it's free!</Button>
                 </form>
             </section>        
-            <footer>
-                <section className='upper-section'>
+            <footer >
+                <section className='upper-section layout'>
                     <div>
-                        <img src="https://res.cloudinary.com/dehxwadkk/image/upload/v1696466880/logo_transparent_dz6ld4.png" alt="" />
+                        <div className='footer-logo'>FELLOW</div>
                         <button className='clean-btn'>Log in</button>
                     </div>
                     {/* <div</div> */}
@@ -199,7 +193,7 @@ export function HomePage() {
                         </p>
                     </article>
                 </section>
-                <section className='lower-section'>
+                <section className='lower-section layout'>
                     <section>
                         <a >{homePage.globe}</a>
                         <span>English</span>
