@@ -35,7 +35,7 @@ export function GroupPreview({
 
 	useEffect(() => {
 		if (taskListContainerRef.current && group.tasks.length > prevTaskCount) {
-			
+			taskListContainerRef.current.scrollTop = taskListContainerRef.current.scrollHeight;
 		}
 		setPrevTaskCount(group.tasks.length)
 	}, [group.tasks.length])
