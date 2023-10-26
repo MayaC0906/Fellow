@@ -9,6 +9,7 @@ export function Workspace() {
     const boards = useSelector(storeState => storeState.boardModule.boards)
     const [isBoardAdded, setIsBoardAdded] = useState(false)
 
+
     useEffect(() => {
         loadBoards()
     }, [])
@@ -45,7 +46,7 @@ export function Workspace() {
                 {starredBoards.length > 0 &&
                     <section className="boards-workspace-container">
                         <div className="flex align-center">
-                            <span className="svg flex align-center justify-center">{workspaceSvg.star}</span>
+                            <span className="svg flex align-center justify-center">{workspaceSvg.member}</span>
                             <span className="title">Starred boards</span>
                         </div>
                         <ul className="board-list clean-list flex">
@@ -58,8 +59,8 @@ export function Workspace() {
                     </section>}
                 <section className="boards-workspace-container">
                     <div className="flex align-center">
-                        <span className="svg flex align-center justify-center">{workspaceSvg.clock}</span>
-                        <span className="title">Recently viewed</span>
+                        <span className="svg flex align-center justify-center">{workspaceSvg.member}</span>
+                        <span className="title">Your boards</span>
                     </div>
                     <ul className="board-list clean-list flex">
                         <BoardList

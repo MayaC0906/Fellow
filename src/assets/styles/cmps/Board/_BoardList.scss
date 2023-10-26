@@ -20,7 +20,7 @@
             filter: brightness(0.9);
 
             .details span {
-                right: 8px;
+                right: 12px;
                 opacity: 1;
             }
 
@@ -38,10 +38,10 @@
         }
 
         .details {
+            width: 100%;
             padding: 8px;
             flex-direction: column;
             justify-content: space-between;
-            width: 100%;
 
             h2 {
                 font-size: rem(16px);
@@ -59,11 +59,10 @@
                 align-self: end;
                 // mix-blend-mode: color-dodge;
                 right: -20px;
-                top: 70px;
+                top: 67px;
                 transition: right .2s, opacity .2s;
                 opacity: 0;
                 // mix-blend-mode: color-dodge;
-
                 // text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 
                 &:hover {
@@ -80,7 +79,11 @@
 
             .star-svg-full {
                 opacity: 1;
-                right: 8px;
+                right: 12px;
+
+                svg {
+                    color: rgb(226, 178, 3);
+                }
             }
         }
     }
