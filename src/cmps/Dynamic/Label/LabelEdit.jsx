@@ -37,7 +37,7 @@ export function LabelEdit({ editName, onCloseEditTask, onSaveTask, task }) {
             onSaveTask(newTask)
             setCheckedLabelsStart(newTask.labelIds)
         } catch (err) {
-            console.log('Could not save date =>', err)
+            console.log('Could not save label =>', err)
         }
     }
 
@@ -50,12 +50,12 @@ export function LabelEdit({ editName, onCloseEditTask, onSaveTask, task }) {
 
     async function onDeletingLabel() {
         try {
-            const updatedLabelsIBoard = board.labels.filter(label => label.id !== labelToEdit.id)
-            board.labels = updatedLabelsIBoard
-            await updateBoard(board)
+            let updatedLabelsIBoard = board.labels.filter(label => label.id !== labelToEdit.id)
+            const newBoard = { ...board, labels: updatedLabelsIBoard }
+            await updateBoard(newBoard)
 
-            const updatedLabelsInTask = task.labelIds.filter(label => label !== labelToEdit.id)
-            task.labelIds = updatedLabelsInTask
+            let updatedLabelsInTask = task.labelIds.filter(label => label !== labelToEdit.id)
+            task = { ...task, labelIds: updatedLabelsInTask }
             await onSaveTask(task)
 
             onAddLabel('')
@@ -92,7 +92,18 @@ export function LabelEdit({ editName, onCloseEditTask, onSaveTask, task }) {
                         (
                             <li className='label-edit flex'>
                                 <section className='checkbox '>
-                                    <Checkbox sx={{ '& .MuiSvgIcon-root': { fontSize: 10 }, padding: 0, width: 20, height: 20 }} onClick={() => onToggleLabelToTask(label.id)} checked={checkedLabelsStart.includes(label.id)} />
+                                    <Checkbox sx={{
+                                        '& .MuiSvgIcon-root': { fontSize: 10 }, padding: 0, width: 20, height: 20, color: 'rgba(23, 43, 77, 0.2)',
+                                        '&:checked': {
+                                            '& .MuiSvgIcon-root': {
+                                                '&.css-i4bv87-MuiSvgIcon-root': {
+                                                    color: 'initial'
+                                                }
+                                            },
+                                        }
+                                    }}
+
+                                        onClick={() => onToggleLabelToTask(label.id)} checked={checkedLabelsStart.includes(label.id)} />
                                 </section >
                                 <button className='color clean-btn' onClick={() => onToggleLabelToTask(label.id)} style={{ backgroundColor: label.color }}>{label.title}</button>
                                 <button className='pencil clean-btn flex' onClick={() => onAddLabel(label)}>{taskSvg.pencil}</button>

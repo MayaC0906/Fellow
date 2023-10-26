@@ -1,11 +1,7 @@
 .workspace-container {
-    // margin: rem(40px) calc((100% - 51.5rem)/2) 0 calc((100% - 51.5rem)/2);
     margin: auto;
-    // padding: rem(40px) rem(50px) 0 rem(50px);
     margin-block-start: rem(40px);
-    // max-width: rem(825px);
     width: rem(825px);
-    // min-width: rem(290px);
 
 
     // for nav
@@ -89,7 +85,6 @@
         &-add {
             width: rem(190px);
             height: rem(100px);
-            margin-block-start: rem(17px);
             background-color: rgba(9, 30, 66, 0.06);
             border-radius: 3px;
             cursor: pointer;

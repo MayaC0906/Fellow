@@ -42,8 +42,8 @@ export function TaskDetails() {
 
     async function onSaveTask(updatedTask) {
         try {
-            setTask(updatedTask)
             await saveNewTask(boardId, groupId, updatedTask)
+            setTask(updatedTask)
         } catch (err) {
             console.log('cant save task');
         }
@@ -70,11 +70,11 @@ export function TaskDetails() {
                     </Link>
 
                     {task.cover?.backgroundColor && <div className="color-cover" style={{ backgroundColor: task.cover.backgroundColor }}>
-                        <div className="cover-btn dark-btn" onClick={()=>setEditName('Cover')}><span>{taskSvg.title}</span> <span></span>cover</div>
-                        </div>}
+                        <div className="cover-btn dark-btn" onClick={() => setEditName('Cover')}><span>{taskSvg.cover}</span> <span></span>cover</div>
+                    </div>}
                     {task.cover?.img && (
                         <div style={{ backgroundColor: imgBackground }} className="img-cover">
-                             <div className="cover-btn dark-btn" onClick={()=>setEditName('Cover')}><span>{taskSvg.title}</span>cover</div>
+                            <div className="cover-btn dark-btn" onClick={() => setEditName('Cover')}><span>{taskSvg.cover}</span>cover</div>
                             <img src={task.cover.img} alt="" />
                         </div>
                     )}

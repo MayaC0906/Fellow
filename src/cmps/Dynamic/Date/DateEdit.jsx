@@ -88,6 +88,7 @@ export function DateEdit({ editName, onCloseEditTask, onSaveTask, task }) {
                         <DateCalendar value={selectedDate}
                             onChange={(date) => onSetSelectedDate(date)} sx={{
                                 width: 280,
+                                height: 'auto',
                                 "& .MuiPickersDay-root": {
                                     '&:hover': {
                                         bgcolor: 'rgba(9, 30, 66, 0.06)',
@@ -112,6 +113,7 @@ export function DateEdit({ editName, onCloseEditTask, onSaveTask, task }) {
                                         border: 'none',
                                         borderBottom: '2px solid #0C66E4',
                                     },
+
                                 },
                             }}
                         />

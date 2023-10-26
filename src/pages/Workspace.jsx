@@ -48,21 +48,26 @@ export function Workspace() {
                             <span className="svg flex align-center justify-center">{workspaceSvg.star}</span>
                             <span className="title">Starred boards</span>
                         </div>
-                        <BoardList
-                            boards={starredBoards}
-                            onStarredBoard={onStarredBoard}
-                        />
+                        <ul className="board-list clean-list flex">
+
+                            <BoardList
+                                boards={starredBoards}
+                                onStarredBoard={onStarredBoard}
+                            />
+                        </ul>
                     </section>}
                 <section className="boards-workspace-container">
                     <div className="flex align-center">
                         <span className="svg flex align-center justify-center">{workspaceSvg.clock}</span>
                         <span className="title">Recently viewed</span>
                     </div>
-                    <BoardList
-                        boards={boards}
-                        onStarredBoard={onStarredBoard}
-                    />
-                    <section className="boards-add flex align-center justify-center" onClick={() => setIsBoardAdded(!isBoardAdded)}>Create new board</section>
+                    <ul className="board-list clean-list flex">
+                        <BoardList
+                            boards={boards}
+                            onStarredBoard={onStarredBoard}
+                        />
+                        <section className="boards-add flex align-center justify-center" onClick={() => setIsBoardAdded(!isBoardAdded)}>Create new board</section>
+                    </ul>
                     {isBoardAdded && <AddBoard setIsBoardAdded={setIsBoardAdded} />}
                 </section>
             </section>
