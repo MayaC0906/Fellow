@@ -20,7 +20,7 @@ export function TaskDetailsSideNav({ editName, setEditName, setTask, onSaveTask,
             <button onClick={() => onOpenEditTask('Checklist')} className="btn">{taskSvg.checklist} <span>Checklist</span></button>
             <button onClick={() => onOpenEditTask('Dates')} className="btn">{taskSvg.clock} <span>Dates</span></button>
             <button onClick={() => onOpenEditTask('Attachment')} className="btn">{additionTaskEdiSvg.attachment} <span>Attachment</span></button>
-            {!task.cover.backgroundColor && !task.cover.img && <button onClick={() => onOpenEditTask('Cover')} className="btn">{taskSvg.title} <span>Cover</span></button>}
+            {!task.cover.backgroundColor && !task.cover.img && <button onClick={() => onOpenEditTask('Cover')} className="btn">{taskSvg.cover} <span>Cover</span></button>}
         </section>
     )
 

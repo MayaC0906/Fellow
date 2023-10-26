@@ -64,10 +64,10 @@ export function TaskAttachments({ task, setEditName, onSaveTask }) {
                             <button onClick={() => { onRemoveAttachment(attachment.id) }}>Delete</button>
                         </div>
                         <div className="cover-container">
-                            {taskSvg.title}
+                            {taskSvg.cover}
                             <button onClick={(() => { onToggleAttachmentCover({ isAttachmentCover, url: attachment.imgUrl }) })}
                                 className="attachment-cover">
-                                {isAttachmentCover ? 'remove cover' : 'make cover'}
+                                {isAttachmentCover ? 'Remove cover' : 'Make cover'}
                             </button>
                         </div>
                     </section>

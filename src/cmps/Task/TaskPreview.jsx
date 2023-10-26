@@ -27,7 +27,7 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
 
     return (
         <article key={task.id} className="task">
-            <button>{taskSvg.edit}</button>
+            <button>{taskSvg.pencil}</button>
             {task.cover?.backgroundColor && <div className="task-cover" style={{ backgroundColor: task.cover.backgroundColor }}></div>}
             {task.cover?.img && <img className="task-cover" src={task.cover.img} alt="" />}
 
