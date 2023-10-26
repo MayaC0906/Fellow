@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { taskSvg } from "../../Svgs";
 import { useSelector } from "react-redux";
-// import { boardService } from "../services/board.service.local";
 
 
 export function TaskLabel({ taskLabelsId, setEditName, editName }) {
@@ -14,7 +13,6 @@ export function TaskLabel({ taskLabelsId, setEditName, editName }) {
 
     async function onLoadLabels(taskLabelsId) {
         const taskLabels = board.labels.filter(label => taskLabelsId.includes(label.id))
-        // const taskMembers = boardService.getLabels(taskLabelsId, board.labels)
         setLabels(taskLabels)
     }
 

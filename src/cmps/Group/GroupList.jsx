@@ -1,5 +1,5 @@
 import React from 'react'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { showSuccessMsg, showErrorMsg } from '../../services/event-bus.service.js'
@@ -19,6 +19,7 @@ export function GroupList() {
     const groups = board?.groups
     const [isLabelsShown, setIsLabelsShown] = useState(false)
     const [openMenuGroupId, setOpenMenuGroupId] = useState(null);
+    const addListInput = useRef(null)
 
     function handleChange(ev) {
         let { value, name: field } = ev.target
@@ -31,8 +32,11 @@ export function GroupList() {
         try {
             await saveGroup(newGroup, board._id)
             setNewGroup(boardService.getEmptyGroup())
-            setInputExpand(!isInputExpand)
+            // setInputExpand(!isInputExpand)
             showSuccessMsg('New group')
+            if (addListInput.current) {
+                addListInput.current.focus();
+            }
         } catch (err) {
             console.log('Failed to save new group', err)
         }
@@ -117,7 +121,6 @@ export function GroupList() {
                 const updatedTasks = [...originalGroup.tasks]
                 const [movedTask] = updatedTasks.splice(source.index, 1)
                 updatedTasks.splice(destination.index, 0, movedTask)
-
                 originalGroup.tasks = updatedTasks
                 updateBoard(clonedBoard)
                 return
@@ -126,7 +129,6 @@ export function GroupList() {
                 const tasksForTargetGroup = [...targetGroup.tasks]
                 const [movedTask] = tasksFromOriginalGroup.splice(source.index, 1)
                 tasksForTargetGroup.splice(destination.index, 0, movedTask)
-
                 originalGroup.tasks = tasksFromOriginalGroup
                 targetGroup.tasks = tasksForTargetGroup
                 updateBoard(clonedBoard)
@@ -191,17 +193,18 @@ export function GroupList() {
                     <div className='add-group-msg' onClick={() => setInputExpand(!isInputExpand)}>
                         <span>+ Add another list </span>
                     </div> :
-                    <div className='add-group-input-expanded'>
-                        <Textarea
+                    <div className='add-group-input-expand'>
+                        <input
+                            ref={addListInput}
                             sx={{ border: 'none' }}
                             name="title"
                             placeholder="Enter list title..."
-                            autoFocus
+                            autoFocus={true}
                             value={newGroup.title}
                             onChange={handleChange}
                         />
                         <section className='add-controls'>
-                            <Button type="submit" onClick={onSaveNewGroup}>Add List</Button>
+                            <Button type="submit" onClick={onSaveNewGroup}>Add list</Button>
                             <button className='cancel' onClick={() => setInputExpand(!isInputExpand)}>X</button>
                         </section>
                     </div>

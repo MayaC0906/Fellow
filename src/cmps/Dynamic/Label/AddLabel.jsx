@@ -19,6 +19,8 @@ export function AddLabel({ onCloseEditTask, onAddLabel, labelToEdit, onSaveTask,
     }
 
     async function onSaveLabel() {
+        console.log('task before:', task);
+
         let newLabel = boardService.getEmptyLabel()
         let savedLabel
         if (labelToEdit.id) {
@@ -26,7 +28,7 @@ export function AddLabel({ onCloseEditTask, onAddLabel, labelToEdit, onSaveTask,
         } else {
             savedLabel = { ...newLabel, color: colorSelected, title: labelTitle }
         }
-        task.labelIds = [...task.labelIds, savedLabel.id]
+        task = { ...task, labelIds: [...task.labelIds, savedLabel.id] }
 
         try {
             const labelIdx = board.labels.findIndex(labels => labels.id === savedLabel.id)
@@ -35,8 +37,12 @@ export function AddLabel({ onCloseEditTask, onAddLabel, labelToEdit, onSaveTask,
             } else {
                 board.labels.splice(labelIdx, 1, savedLabel)
             }
-            await updateBoard(board)
+
+            const newBoard = { ...board, labels: board.labels }
+
+            await updateBoard(newBoard)
             await onSaveTask(task)
+            console.log('task after:', task);
             setCheckedLabelsStart(task.labelIds)
             onAddLabel('')
         } catch (err) {
