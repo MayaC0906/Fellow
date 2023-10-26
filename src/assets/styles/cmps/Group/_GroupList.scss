@@ -78,13 +78,17 @@
 
 .add-group-input { 
     margin: 10px 0 8px 5px   ;   
-    &-expanded{
+    &-expand{
         padding: 10px;
         height: 80;
         height: max-content;
         width: 250px;
+        margin-left:7px;
         background-color: #ffffff3d;
         border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
     }
     .add-group-msg {
         width: 250px;
@@ -96,6 +100,7 @@
         padding: 8px;
         transition: background 85ms ease-in,opacity 40ms ease-in,border-color 85ms ease-in;
         margin-right: 4px;
+        margin-left: 6px;
         span{
             color: #ffff;
             // display: none;

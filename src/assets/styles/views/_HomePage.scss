@@ -9,24 +9,18 @@
     background-color: white;
     height: 100vh;
     overflow: auto;
-    font-family: 'Charlie Text', sans-serif;
-    // display: grid;
-    // grid-template-columns: 1fr;
+    font-family: charlie, sans-serif;
     display: flex;
     flex-direction: column;
     width: 100%;
 
-
     p {
-        font-family: 'Charlie Text', sans-serif;
-        // font-size: 1.25rem;
+        font-family: charlie, sans-serif;
         text-align: left;
-
     }
 
     .hero-con {
         display: grid;
-
         grid-template-columns: 1fr 1fr;
         height: 100%;
     }
@@ -37,9 +31,7 @@
         height: 80vh;
         display: grid;
         flex-wrap: wrap;
-
             .demo-btn {
-                
                 display: flex;                
                 appearance: none;
                 -webkit-box-align: center;
@@ -58,7 +50,6 @@
                 color: rgb(255, 255, 255) !important;
                 width: max-content;
                 margin-top: 40px;
-
             a {
                 text-decoration: none;
                 color: white;

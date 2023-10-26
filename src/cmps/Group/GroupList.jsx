@@ -191,7 +191,7 @@ export function GroupList() {
                     <div className='add-group-msg' onClick={() => setInputExpand(!isInputExpand)}>
                         <span>+ Add another list </span>
                     </div> :
-                    <div className='add-group-input-expanded'>
+                    <div className='add-group-input-expand'>
                         <Textarea
                             sx={{ border: 'none' }}
                             name="title"
