@@ -146,6 +146,7 @@
             max-height: calc(100vh - 120px);
             
             .task-list{
+                min-height: .1px;
                 margin: 0;
                 padding: 0;
             }
