@@ -5,10 +5,7 @@
     header {
         display: flex;
         align-items: center;
-        margin: 0 0 4px 40px;
         font-size: rem(16px);
-        padding: 8px 0;
-
         div {
             width: 100%;
             justify-content: space-between;
@@ -45,15 +42,15 @@
 
     .task-attachment {
         border-radius: 3px;
-        margin: 0 0 8px 40px;
+        margin: 0 0 8px 55px;
         min-height: 80px;
         overflow: hidden;
         position: relative;
         display: flex;
-        width: calc(100% - 40px);
+        width: calc(100% - 56px);
 
         &:hover {
-            background-color: $atc-bgc8;
+            background-color: $atc-bgc1;
         }
 
         button {
@@ -89,7 +86,7 @@
         }
 
         .img-info {
-            width: 100%;
+            width: (100%);
             margin: 0;
             min-height: 80px;
             padding: 8px 8px 8px 128px;
@@ -130,6 +127,9 @@
                     justify-content: center;
                     align-items: center;
                     margin-inline-end: 4px;
+                    path {
+                        fill:$atc-txt1;
+                    }
                 }
             }
         }
