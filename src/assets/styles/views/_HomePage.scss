@@ -3,12 +3,12 @@
     background-color: white;
     height: 100vh;
     overflow: auto;
-    font-family: 'Charlie Text', sans-serif;
+    font-family: charlie, sans-serif;
   
 
     
     p {
-        font-family: 'Charlie Text', sans-serif;
+        font-family: charlie, sans-serif;
         font-size: rem(20px);
     }
 
@@ -80,7 +80,7 @@
         align-items: flex-start;
 
         .desc {
-            font-family: 'Charlie Text', sans-serif;
+            font-family: charlie, sans-serif;
             font-size: rem(20px);
             width: 700px;
 
