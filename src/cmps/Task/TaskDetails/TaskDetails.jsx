@@ -42,8 +42,8 @@ export function TaskDetails() {
 
     async function onSaveTask(updatedTask) {
         try {
-            setTask(updatedTask)
             await saveNewTask(boardId, groupId, updatedTask)
+            setTask(updatedTask)
         } catch (err) {
             console.log('cant save task');
         }
@@ -59,7 +59,6 @@ export function TaskDetails() {
     }
 
     if (!task) return <div>Loading</div>
-    console.log('1');
 
     return (
         <div className="task-details">
