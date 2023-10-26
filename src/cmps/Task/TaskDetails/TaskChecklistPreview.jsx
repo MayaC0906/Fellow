@@ -143,7 +143,12 @@ export function TaskChecklistPreview({ onDeleteList, onAddTodo, onUpdateListTitl
                     <div className='progress-bar'>
                         <span>{progressbarCalc[idx] ? progressbarCalc[idx].toFixed() : 0}%</span>
                         <div className='progress-bar-container'>
-                            <div className="fill" style={{ width: `${progressbarCalc[idx] ? progressbarCalc[idx] : 0}%` }}></div>
+                        <div className="fill" 
+                                style={{ 
+                                    width: `${progressbarCalc[idx] ? progressbarCalc[idx] : 0}%`,
+                                    backgroundColor: progressbarCalc[idx] === 100 ? 'green' : ''
+                                }}>
+                            </div>
                         </div>
                     </div>
 

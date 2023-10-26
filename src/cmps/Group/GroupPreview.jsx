@@ -149,7 +149,7 @@ export function GroupPreview({
 				<div>
 				<textarea
 					name="title"
-					placeholder="Enter card title..."
+					placeholder="Enter a title for this card..."
 					rows={4}
 					onChange={handleChange}
 				/>
