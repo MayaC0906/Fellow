@@ -84,7 +84,7 @@ export function GroupPreview({
 				id={group.id}
 				defaultValue={group.title}
 				onBlur={(event) => onEditGroup(group.id, event)}
-				onKeyDown={(event) => onEditGroup(group.id, event)}
+				// onKeyDown={(event) => onEditGroup(group.id, event)}
 			></input>
 			<section>
 				<img
@@ -131,7 +131,7 @@ export function GroupPreview({
 				<div className="add-group-task" onClick={() => setInputExpand(true)}>
 				<section>
 					{groupPreview.plus}
-					<span>Add new card</span>
+					<span>Add a card</span>
 				</section>
 				{groupPreview.copy}
 				</div>
@@ -145,7 +145,7 @@ export function GroupPreview({
 				/>
 				<section className="add-controls">
 					<Button type="submit" onClick={onSaveNewTask}>
-					Add Card
+					Add card
 					</Button>
 					<div className="cancel clean-btn" onClick={() => setInputExpand(false)}>
 					{checkList.x}
