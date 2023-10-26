@@ -12,10 +12,9 @@ export function TaskMember({ taskMembersId, setEditName, editName, onSaveTask, t
 
     useEffect(() => {
         onLoadMembers(taskMembersId)
-    }, [taskMembersId])
+    }, [task.memberIds])
 
     async function onLoadMembers(taskMembersId) {
-        // const taskMembers = boardService.getMembers(taskMembersId, board.members)
         const taskMembers = board.members.filter(member => taskMembersId.includes(member._id))
         setMembers(taskMembers)
     }
@@ -34,8 +33,8 @@ export function TaskMember({ taskMembersId, setEditName, editName, onSaveTask, t
     async function removeMemberFromTask() {
         try {
             const updatedMembers = task.memberIds.filter(taskMember => taskMember !== member._id)
-            task.memberIds = updatedMembers
-            onSaveTask(task)
+            const newTask = { ...task, memberIds: updatedMembers }
+            onSaveTask(newTask)
             setMemberDetailOpen(false)
         } catch (err) {
             console.log('Cannot remove member', err)
