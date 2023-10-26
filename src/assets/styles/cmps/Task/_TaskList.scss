@@ -4,8 +4,6 @@
     flex-direction: column;
     gap: 7px;
     justify-content: space-between;
-    // margin-left: 8px;
-    // margin-right: 3px;
     margin: 0 3.5px;
     padding: 2px 4px;
     min-height: 0;
@@ -25,6 +23,7 @@
         cursor: pointer;
 
         button {
+            margin:0 0 8px;
             height: 32px;
             width: 32px;
             display: none;
@@ -60,7 +59,7 @@
         }
 
         .task-cover {
-            min-height: 32px;
+            min-height: 36px;
             border-top-right-radius: 8px;
             border-top-left-radius: 8px;
         }
