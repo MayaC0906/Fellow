@@ -59,6 +59,7 @@ export function TaskDetails() {
     }
 
     if (!task) return <div>Loading</div>
+    console.log('1');
 
     return (
         <div className="task-details">
@@ -70,11 +71,11 @@ export function TaskDetails() {
                     </Link>
 
                     {task.cover?.backgroundColor && <div className="color-cover" style={{ backgroundColor: task.cover.backgroundColor }}>
-                        <div className="cover-btn dark-btn" onClick={()=>setEditName('Cover')}><span>{taskSvg.title}</span> <span></span>cover</div>
-                        </div>}
+                        <div className="cover-btn dark-btn" onClick={() => setEditName('Cover')}><span>{taskSvg.title}</span> <span></span>cover</div>
+                    </div>}
                     {task.cover?.img && (
                         <div style={{ backgroundColor: imgBackground }} className="img-cover">
-                             <div className="cover-btn dark-btn" onClick={()=>setEditName('Cover')}><span>{taskSvg.title}</span>cover</div>
+                            <div className="cover-btn dark-btn" onClick={() => setEditName('Cover')}><span>{taskSvg.title}</span>cover</div>
                             <img src={task.cover.img} alt="" />
                         </div>
                     )}

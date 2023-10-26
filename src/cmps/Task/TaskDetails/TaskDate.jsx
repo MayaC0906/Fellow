@@ -1,10 +1,12 @@
 import { Checkbox } from "@mui/material";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { appHeaderSvg } from "../../Svgs";
 import dayjs from "dayjs";
 
 export function TaskDate({ task, setEditName, editName, onSaveTask }) {
     const { dueDate } = task
+    const [isComplete, setIsComplete] = useState(dueDate.isComplete)
+    const [isOverdue, setIsOverdue] = useState(dueDate.isOverdue)
 
     useEffect(() => {
         onSettingIsOverdue()
@@ -19,11 +21,13 @@ export function TaskDate({ task, setEditName, editName, onSaveTask }) {
         } else {
             dueDate.isOverdue = false
         }
+        setIsOverdue(dueDate.isOverdue)
         onSaveTask(task)
     }
 
     function onCompleteDueDate() {
         dueDate.isComplete = !dueDate.isComplete
+        setIsComplete(dueDate.isComplete)
         onSaveTask(task)
     }
 
@@ -40,12 +44,12 @@ export function TaskDate({ task, setEditName, editName, onSaveTask }) {
                 <section className="task-display flex align-center">
 
                     <div className='checkbox'>
-                        <Checkbox sx={{ '& .MuiSvgIcon-root': { fontSize: 20 }, p: 0, mr: 0.2 }} onClick={onCompleteDueDate} />
+                        <Checkbox sx={{ '& .MuiSvgIcon-root': { fontSize: 20 }, p: 0, mr: 0.2 }} onClick={onCompleteDueDate} checked={dueDate.isComplete} />
                     </div>
                     <div className={`task-date flex align-center ${dueDate.isComplete ? 'complete-open' : ''}`} onClick={toggleDateDisplay}>
                         <span className="task-date-data">{dueDate.date}</span>
-                        {dueDate.isComplete && (<span className="task-date-complete flex align-center">Complete</span>)}
-                        {dueDate.isOverdue && !dueDate.isComplete && (<span className="task-date-complete overdue flex align-center">Overdue</span>)}
+                        {isComplete && (<span className="task-date-complete flex align-center">Complete</span>)}
+                        {isOverdue && !isComplete && (<span className="task-date-complete overdue flex align-center">Overdue</span>)}
                         {appHeaderSvg.arrowDown}
                     </div>
                 </section>

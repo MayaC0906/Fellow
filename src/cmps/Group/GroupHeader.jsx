@@ -44,7 +44,6 @@ export function GroupHeader({ isMenuOpen, setMenu, boardId }) {
     }
 
     if (!board || !board._id) return <div>loading</div>
-    console.log('hey');
 
     const { isBright } = board.style
     const isBlackOrWhite = isBright ? 'brightColor' : 'darkColor'

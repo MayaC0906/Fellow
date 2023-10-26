@@ -136,7 +136,6 @@ export function GroupList() {
     }
 
 
-    console.log('board from list:', board);
 
     if (!groups) return <div>Loading..</div>
     return (
