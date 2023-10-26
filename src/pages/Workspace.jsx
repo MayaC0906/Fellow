@@ -45,9 +45,9 @@ export function Workspace() {
             <section className="boards flex">
                 {starredBoards.length > 0 &&
                     <section className="boards-workspace-container">
-                        <div className="flex align-center">
+                        <div className="container-title flex align-center">
                             <span className="svg flex align-center justify-center">{workspaceSvg.member}</span>
-                            <span className="title">Starred boards</span>
+                            <span className="header-title">Starred boards</span>
                         </div>
                         <ul className="board-list clean-list flex">
 
@@ -58,9 +58,9 @@ export function Workspace() {
                         </ul>
                     </section>}
                 <section className="boards-workspace-container">
-                    <div className="flex align-center">
+                    <div className="container-title flex align-center">
                         <span className="svg flex align-center justify-center">{workspaceSvg.member}</span>
-                        <span className="title">Your boards</span>
+                        <span className="header-title">Your boards</span>
                     </div>
                     <ul className="board-list clean-list flex">
                         <BoardList

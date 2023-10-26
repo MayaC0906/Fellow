@@ -36,16 +36,31 @@
     }
 
     .img-option {
+        gap: rem(8px);
+        padding: 0 0 8px;
+
         img {
             width: 64px;
             height: 40px;
-            margin-inline-end: 6px;
+            // margin-inline-end: 8px;
             border-radius: 3px;
             cursor: pointer;
 
             &:hover {
                 filter: brightness(0.8);
             }
+        }
+    }
+
+    .color-option {
+        gap: rem(8px);
+
+        img {
+            width: 40px;
+            height: 32px;
+            // margin-inline-end: 8px;
+            border-radius: 3px;
+            cursor: pointer;
         }
     }
 

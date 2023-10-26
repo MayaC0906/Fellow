@@ -65,8 +65,8 @@ export function GroupHeader({ isMenuOpen, setMenu, boardId }) {
 
             <section className="group-header">
                 {/* <button className="group-header-btn svg powerUp">{groupHeaderSvg.rocket} <span>Power-Ups</span></button> */}
-                <button className={`btn ${isBlackOrWhite}`} onClick={() => alert('Will be added soon')}>{groupHeaderSvg.dashboard} <span>Dashboard</span></button>
-                <button className={`btn svg ${isBlackOrWhite}`} onClick={() => alert('Will be added soon')}>{groupHeaderSvg.filter} <span>Filters</span></button>
+                <button className={`btn ${isBlackOrWhite}`} onClick={() => alert('Will be added soon')}>{groupHeaderSvg.dashboard} <span className="dashboard">Dashboard</span></button>
+                <button className={`btn svg ${isBlackOrWhite}`} onClick={() => alert('Will be added soon')}>{groupHeaderSvg.filter} <span className="filters">Filters</span></button>
                 <span className="separate-line"></span>
                 <section className="group-header img">
                     {board.members.map(member => (

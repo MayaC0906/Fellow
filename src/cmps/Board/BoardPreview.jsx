@@ -2,10 +2,6 @@ import { workspaceSvg } from "../Svgs"
 
 export function BoardPreview({ board, onStarredBoard }) {
     const { title, isStarred, style } = board
-    console.log(style.isBright);
-
-    // dark :rgba(0, 0, 0, 0.15)
-    // bright:  rgba(0, 0, 0, 0.3);
 
     return (
         <>
