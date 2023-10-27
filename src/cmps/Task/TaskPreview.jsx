@@ -25,7 +25,6 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
 
     if (!task) return <div>Loading...</div>
 
-
     return (
         <article key={task.id} className="task">
             <button><span className="icon-badge">{taskSvg.pencil}</span></button>
@@ -35,20 +34,25 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
             <section className="task-info">
                 <section className="labels">
                     {taskLabels.map(label => {
-                        return <div key={label.id} className={"label " + (isLabelsShown ? 'open' : 'close')} style={{ backgroundColor: label.color}}
+                        return <div key={label.id} className={"label " + (isLabelsShown ? 'open' : 'close')} style={{ backgroundColor: label.color }}
                             onClick={onLabelOpen} >
-                            {label.title && <span className="label-title" style={{color: darken(0.4, label.color)}}>{label.title}</span>} </div>
+                            {label.title && <span className="label-title" style={{ color: darken(0.4, label.color) }}>{label.title}</span>} </div>
                     })}
                 </section>
                 <h3>{task?.title}</h3>
                 <section className="task-badges">
                     {task.watching && <div className="task-badge"><span className="icon-badge">{taskSvg.watch}</span></div>}
 
-                    {dueDate.date && <div className={`task-badge duedate ${dueDate.isComplete ? 'complete' : ''} ${dueDate.isOverdue && !dueDate.isComplete ? 'overdue' : ''}`} onClick={(e) => onCompleteDueDate(e)}>
-                        <span className="clock icon-badge">{taskSvg.clock}</span>
-                        {dueDate.isComplete ? <span className="checklist icon-badge">{taskSvg.checklist}</span> : <span className="empty-square icon-badge">{taskSvg.square}</span>}
-                        <span className="date-data number-badge">{dayjs(dueDate.date, 'MMM D [at] h:mm A').format('MMM D, YYYY')}</span>
-                    </div>}
+                    {dueDate.date &&
+                        <div className={`task-badge duedate ${dueDate.isComplete ? 'complete' : ''} ${dueDate.isOverdue && !dueDate.isComplete ? 'overdue' : ''} ${dueDate.isDueSoon && !dueDate.isComplete ? 'duesoon' : ''}`} onClick={(e) => onCompleteDueDate(e)}>
+
+                            <span className="clock icon-badge">{taskSvg.clock}</span>
+
+                            {dueDate.isComplete ? <span className="checklist icon-badge">{taskSvg.checklist}</span> : <span className="empty-square icon-badge">{taskSvg.square}</span>}
+
+                            <span className='date-data number-badge'>{dayjs(dueDate.date, 'MMM D [at] h:mm A').format('MMM D, YYYY')}</span>
+
+                        </div>}
 
                     {task.description && <div className="task-badge"> <span className="icon-badge">{taskSvg.description}</span></div>}
                     {task.comments?.length > 0 && <div className="task-badge"><span className="icon-badge">{taskSvg.comment}</span> <span className="number-badge">{task.comments.length}</span></div>}

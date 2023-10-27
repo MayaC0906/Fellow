@@ -22,7 +22,7 @@ export function DateEdit({ editName, onCloseEditTask, onSaveTask, task }) {
         try {
             const dueDate = task.dueDate.date
             if (dueDate) {
-                const formattedDate = dayjs(dueDate, 'MMM D [at] h:mm A')
+                const formattedDate = dayjs(dueDate, 'MMM D YYYY [at] h:mm A')
                 setSelectedDate(formattedDate)
                 lastDate.current = formattedDate
                 setIsDateSelected(true)
@@ -42,8 +42,10 @@ export function DateEdit({ editName, onCloseEditTask, onSaveTask, task }) {
 
     async function onSaveDate() {
         if (selectedDate === null) return
-        const formatedDate = selectedDate.format('MMM D [at] h:mm A')
-        task.dueDate.date = formatedDate
+        console.log('selectedDate', selectedDate);
+        const formatedDate = selectedDate.format('MMM D YYYY [at] h:mm A')
+        // task.dueDate.date = formatedDate
+        task = { ...task, dueDate: { ...task.dueDate, date: formatedDate } }
         try {
             onSaveTask(task)
             setSelectedDate(selectedDate)
@@ -129,6 +131,7 @@ export function DateEdit({ editName, onCloseEditTask, onSaveTask, task }) {
                                     }} />
                                 <DateField sx={{
                                     width: 95, mr: 1, fontSize: 14,
+                                    pointerEvents: 'none',
                                     '&:hover': {
                                         border: 0
                                     },
