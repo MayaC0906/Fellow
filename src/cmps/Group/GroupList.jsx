@@ -31,7 +31,6 @@ export function GroupList() {
         try {
             await saveGroup(newGroup, board._id)
             setNewGroup(boardService.getEmptyGroup())
-            // setInputExpand(!isInputExpand)
             showSuccessMsg('New group')
             if (addListInput.current) {
                 addListInput.current.focus();
@@ -52,7 +51,7 @@ export function GroupList() {
         }
     }
 
-    async function onSortGroup(group) {
+    async function onUpdateGroup(group) {
         try {
             await saveGroup(group, board._id)
         } catch (err) {
@@ -130,8 +129,6 @@ export function GroupList() {
         }
     }
 
-
-
     if (!groups) return <div>Loading..</div>
     return (
         <div className='group-list-container'>
@@ -169,7 +166,7 @@ export function GroupList() {
                                                 handleDrag={handleDrag}
                                                 openMenuGroupId={openMenuGroupId}
                                                 setOpenMenuGroupId={setOpenMenuGroupId}
-                                                onSortGroup={onSortGroup}
+                                                onUpdateGroup={onUpdateGroup}
                                                 onUpdateBoard={onUpdateBoard}
                                             />
                                         </li>
