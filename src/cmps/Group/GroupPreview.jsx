@@ -7,7 +7,7 @@ import { saveNewTask } from '../../store/actions/board.actions';
 import { GroupMenu } from './GroupMenu';
 import { TaskList } from '../Task/TaskList';
 import { checkList, groupPreview } from '../Svgs';
-
+import { taskSvg } from '../Svgs';
 export function GroupPreview({
 	handleDrag,
 	onEditGroup,
@@ -20,7 +20,7 @@ export function GroupPreview({
 	onDuplicateGroup,
 	openMenuGroupId,
 	setOpenMenuGroupId,
-	onSortGroup,
+	onUpdateGroup,
 	onUpdateBoard
 	}){
 	const taskListContainerRef = useRef(null)
@@ -83,7 +83,6 @@ export function GroupPreview({
 		let { value, name: field } = ev.target
 		setNewTask((prevGroup) => ({ ...prevGroup, [field]: value }))
 	}
-
   return (
     <section className="group-preview">
 		<section className="header-wrapper">
@@ -95,8 +94,11 @@ export function GroupPreview({
 				defaultValue={group.title}
 				onBlur={(event) => onEditGroup(group.id, event)}
 				// onKeyDown={(event) => onEditGroup(group.id, event)}
-			></input>
+				// style={!group.isWatch ? {width:'80%'} : {}}
+				></input>
+			{group.isWatch && taskSvg.watch}
 			<section>
+				
 				<img
 				onClick={() => toggleGroupMenu(group.id)}
 				src="https://res.cloudinary.com/dpwmxprpp/image/upload/v1696437012/asset_14_gltqff.svg"
@@ -110,7 +112,7 @@ export function GroupPreview({
 			{group.id === openMenuGroupId && (
 			<div className="group-menu">
 				<GroupMenu
-				onSortGroup={onSortGroup}
+				onUpdateGroup={onUpdateGroup}
 				group={group}
 				setToggleGroupMenu={toggleGroupMenu}
 				groupMenuPosition={groupMenuPosition}

@@ -269,6 +269,7 @@ const board = [
             {
                 "id": utilService.makeId(),
                 "title": "Backlog-server",
+                "isWatch": false,
                 "tasks": [
                     {
                         "id": utilService.makeId(),
@@ -417,6 +418,7 @@ const board = [
             {
                 "id": utilService.makeId(),
                 "title": "Backlog-client",
+                "isWatch": false,
                 "tasks": [
                     {
                         "id": utilService.makeId(),
@@ -565,6 +567,7 @@ const board = [
             {
                 "id": utilService.makeId(),
                 "title": "in-development",
+                "isWatch": false,
                 "tasks": [
                     {
                         "id": utilService.makeId(),
@@ -748,6 +751,7 @@ const board = [
             {
                 "id": utilService.makeId(),
                 "title": "QA",
+                "isWatch": false,
                 "tasks": [
                     {
                         "id": utilService.makeId(),
@@ -860,6 +864,7 @@ const board = [
             {
                 "id": utilService.makeId(),
                 "title": "QA-Done",
+                "isWatch": false,
                 "tasks": [
                     {
                         "id": utilService.makeId(),
@@ -1061,6 +1066,7 @@ const board = [
             {
                 "id": utilService.makeId(),
                 "title": "Ready for production",
+                "isWatch": true,
                 "tasks": [
                     {
                         "id": utilService.makeId(),

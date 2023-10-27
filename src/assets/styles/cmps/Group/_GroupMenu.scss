@@ -68,7 +68,12 @@
             grid-row: 1;
             padding: 6px;
             z-index: 2;
-            
+            margin-left: 3px;
+            svg {
+                fill: #626f86;
+                height: 14px;
+                width: 16px;
+            }
             &:hover {
                 background-color: #d4d6dc;
             }

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { groupMenu } from '../Svgs';
+import { groupMenu, taskSvg } from '../Svgs';
 import dayjs from 'dayjs';
 export function GroupMenu({
     setInputExpand,
@@ -11,27 +11,36 @@ export function GroupMenu({
     groupMenuPosition,
     setOpenMenuGroupId,
     openMenuGroupId,
-    onSortGroup,
+    onUpdateGroup,
     onUpdateBoard
     }) {
     const board = useSelector((storeState) => storeState.boardModule.board)
     const groups = board?.groups
     const { tasks } = group
-    const [menuContent, setMenuContent] = useState('default');
+    const [menuContent, setMenuContent] = useState('');
 
-  switch (menuContent) {
-    case 'sortBy':
-      contentToDisplay = sortByContent;
-      headerText = "Sort list";
-      break;
-    case 'moveCards':
-      contentToDisplay = moveCardsContent;
-      headerText = "Move all cards in list";
-      break;
-    default:
-      contentToDisplay = defaultContent;
-      headerText = "List action";
-      break;
+    useEffect(()=> {
+      setMenuContent('default')
+    },[])
+
+    const defaultContent = (
+      <ul className="clean-list">
+        <li onClick={() => onRemoveGroup(group.id)}>Delete...</li>
+        <li onClick={() => onDuplicateGroup(group)}>Copy list...</li>
+        {group.id === openMenuGroupId && (
+          <li onClick={() => setInputExpand(true)}>Add card...</li>
+        )}
+        <li onClick={onSetGroupWatch}>Watch {group.isWatch && <span className=''>{taskSvg.check}</span>}</li>
+        <hr />
+        <li onClick={() => setMenuContent('sortBy')}>Sort By...</li>
+        <hr />
+        <li onClick={() => setMenuContent('moveCards')}>Move all cards in this list...</li>
+      </ul>
+    );
+  async function onSetGroupWatch() {
+    const updatedGroup = {...group, isWatch: !group.isWatch}
+    // console.log('update', updatedBoard);
+    onUpdateGroup(updatedGroup)
   }
 
   async function sortByCreatedOld() {
@@ -42,11 +51,8 @@ export function GroupMenu({
         return firstCreated - secondCreated
       })
     }
-    onSortGroup(sortedByDuedate)
+    onUpdateGroup(sortedByDuedate)
   }
-
-  
-
 
   async function sortByDuedate() {
     const sortedByDuedate = {
@@ -64,10 +70,8 @@ export function GroupMenu({
         return diff1 - diff2
       })
     }
-    onSortGroup(sortedByDuedate)
+    onUpdateGroup(sortedByDuedate)
   }
-
-
 
   async function sortByAlphaB() {
     const { tasks } = group
@@ -79,26 +83,8 @@ export function GroupMenu({
         return firstTitle.localeCompare(secondTitle)
       })
     }
-    onSortGroup(sortedGroup)
+    onUpdateGroup(sortedGroup)
   }
-
-
-  const defaultContent = (
-    <ul className="clean-list">
-      <li onClick={() => onRemoveGroup(group.id)}>Delete</li>
-      <li onClick={() => onDuplicateGroup(group)}>Copy list</li>
-      {group.id === openMenuGroupId && (
-        <li onClick={() => setInputExpand(true)}>Add card...</li>
-      )}
-      <hr />
-      <li onClick={() => setMenuContent('sortBy')}>Sort By</li>
-      <hr />
-      <li onClick={() => setMenuContent('moveCards')}>Move all cards in this list...</li>
-    </ul>
-  );
-
-  
-
 
   const moveCardsContent = (
     <ul className="clean-list">
@@ -107,6 +93,7 @@ export function GroupMenu({
       })}
     </ul>
   );
+
   async function moveTasks({ target }) {
       console.log('target', target.value);
       const currGroupPosIdx = groups.findIndex(g => g.id === group.id)
@@ -120,6 +107,7 @@ export function GroupMenu({
 
       await onUpdateBoard(board)
   }
+
   async function sortByCreatedNew() {
     const sortedByDuedate = {
       ...group, tasks: tasks.sort((a, b) => {
@@ -128,38 +116,54 @@ export function GroupMenu({
         return secondCreated - firstCreated
       })
     }
-    onSortGroup(sortedByDuedate)
+    onUpdateGroup(sortedByDuedate)
   }
   const style = {
       position: 'fixed',
       top: groupMenuPosition.top + 'px',
       left: groupMenuPosition.left + 'px',
   };
-    let contentToDisplay;
-    let headerText;
-
-
-
   const sortByContent = (
     <ul className="clean-list">
-      <li onClick={sortByCreatedNew}>Date created (newest first)</li>
-      <li onClick={sortByCreatedOld}>Date created (oldest first)</li>
-      <li onClick={sortByAlphaB}>Card name (alphabetically)</li>
-      <li onClick={sortByDuedate}>Due Date</li>
+        <li onClick={sortByCreatedNew}>Date created (newest first)</li>
+        <li onClick={sortByCreatedOld}>Date created (oldest first)</li>
+        <li onClick={sortByAlphaB}>Card name (alphabetically)</li>
+        <li onClick={sortByDuedate}>Due Date</li>
     </ul>
   );
- 
-
   
+  let contentToDisplay;
+  let headerText;
+  switch (menuContent) {
+    case 'sortBy':
+      contentToDisplay = sortByContent;
+      headerText = "Sort list";
+      break;
+    case 'moveCards':
+      contentToDisplay = moveCardsContent;
+      headerText = "Move all cards in list";
+      break;
+    default:
+      contentToDisplay = defaultContent;
+      headerText = "List action";
+      break;
+  }
+
+ 
+ console.log('menu-content', menuContent);
   return (
       <section className="group-edit-modal" style={style}>
         <header>
           {menuContent !== 'default' && (
             <button onClick={() => setMenuContent('default')} className="back-btn clean-btn">
-              &lt;</button>
+              {groupMenu.backArr}</button>
           )}
           <div>{headerText}</div>
-          <button onClick={() => setOpenMenuGroupId(null)} className="close-btn">X</button>
+          <button onClick={() => {
+            setOpenMenuGroupId(null)
+            setMenuContent('default')
+          }} className="close-btn">X</button>
+
         </header>
         {contentToDisplay}
       </section>

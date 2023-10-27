@@ -76,33 +76,23 @@
                 user-select: none;
                 display: flex;
                 align-items: center;
-                // justify-content: flex-start;
-                // flex-grow: 1;
-                // margin: 0;
-
                 justify-content: space-between;
 
                 section {
-                    // padding: 8px 6px 0 6px;
-                    // width: 100%;
-
-                    display: flex;
+                   display: flex;
                     gap: 10px;
                     justify-content: center;
                     align-items: center;
                     font-weight: 400;
                     font-family: -apple-system, "system-ui", "Segoe UI", Roboto, "Noto Sans", Ubuntu, "Droid Sans", "Helvetica Neue", sans-serif;
-
                     svg {
                         height: 16px;
                         width: 16px;
-
                     }
 
                     &:hover {
                         cursor: pointer;
-                        // background: lightgray;
-                        // border-radius: 3px;   
+
                     }
                 }
 
@@ -122,12 +112,10 @@
 
             .cancel {
                 margin-left: 6px;
-                // margin-top: ;
                 font-size: 18px;
                 padding: 6px 8px;
                 border-radius: 4px;
                 display: flex;
-                // flex-direction: column;
                 svg {
                     height: 22px;
                     width: 24px;
@@ -155,10 +143,6 @@
             &::-webkit-scrollbar {
                 width: 8px;
                 padding-top: 20px;
-                // margin: 0 auto;
-                // right: -10px;
-                // position: absolute;
-
             }
 
             &::-webkit-scrollbar-thumb {
@@ -175,19 +159,29 @@
             }
         }
 
-        header {
-            column-gap: 4px;
-            display: grid;
-            flex: 0 0 auto;
-            grid-template-columns: 1fr max-content;
+        &-header {
+            gap: 20px;
+            display: flex;
             min-height: 20px;
             padding: 8px;
             position: relative;
             align-items: center;
-
+            svg {
+                overflow: hidden;
+                pointer-events: none;
+                max-width: 100%;
+                max-height: 100%;
+                color: #42526E;
+                fill:  #42526E;
+                vertical-align: bottom;
+                margin-left: 3px;
+                position: absolute;
+                right: 55px;
+            }
             .edit-group-title {
                 background: #0000;
                 border: none;
+                
             }
 
             section {
@@ -197,7 +191,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-
+                margin-left: 16px;
                 img {
                     font-size: 16px;
                     height: 16px;
@@ -232,8 +226,6 @@
             outline: none;
         }
 
-
-
         &:focus {
             border: none;
             box-shadow: rgb(0, 121, 191) 0px 0px 0px 2px inset;
@@ -244,10 +236,27 @@
 
     .group-edit {
         position: relative;
+        &-modal li {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 5px;
+            span{
+                display: flex;
+                svg {
+                    height: 12px;
+                    width: 12px;
+                    // margin-top: 4px;
+                }
+            }
+        }
     }
+
 
     .add-task-preview {
         position: absolute;
     }
+
+    
 
 }
