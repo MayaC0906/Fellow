@@ -169,15 +169,15 @@
 
         input {
             color: $clr6;
+            &::placeholder {
+                color: $clr6;
+            }
         }
 
         &:hover {
             background-color: $a-h4-l;
         }
 
-        &::placeholder {
-            color: $clr6;
-        }
     }
 
     &:hover {
@@ -212,14 +212,14 @@
 
         input {
             color: $a-h-txt-d;
+            
+                    &::placeholder {
+                        color: $a-h-txt-d;
+                    }
         }
 
         &:hover {
             background-color: $a-h2-d;
-        }
-
-        &::placeholder {
-            color: $a-h-txt-d;
         }
     }
 
