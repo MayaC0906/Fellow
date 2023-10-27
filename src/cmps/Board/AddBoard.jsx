@@ -7,7 +7,7 @@ import { utilService } from "../../services/util.service";
 import { additionTaskSvg } from "../Svgs";
 import { bottom } from "@popperjs/core";
 
-export function AddBoard({pos, setIsBoardAdded }) {
+export function AddBoard({pos, setSidebarExpand, setModalState, setIsBoardAdded }) {
     const imgUrls = ['https://images.unsplash.com/photo-1696384036025-c7d7b7f6584d?auto=format&fit=crop&q=80&w=1964&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'https://images.unsplash.com/photo-1696580436068-f19c26850e8b?auto=format&fit=crop&q=80&w=2071&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'https://images.unsplash.com/photo-1568010967378-b92ea68220c5?auto=format&fit=crop&q=80&w=1974&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'https://images.unsplash.com/photo-1594743896255-be81f8dfec3d?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D']
     const colorUrls = ['https://res.cloudinary.com/duvatj8kg/image/upload/v1697202531/707f35bc691220846678_bdydef.svg', 'https://res.cloudinary.com/duvatj8kg/image/upload/v1697202537/d106776cb297f000b1f4_kroicr.svg', 'https://res.cloudinary.com/duvatj8kg/image/upload/v1697202522/8ab3b35f3a786bb6cdac_ci3ilc.svg', 'https://res.cloudinary.com/dp0y6hy2o/image/upload/v1686384787/a7c521b94eb153008f2d_ex0umg.svg', 'https://res.cloudinary.com/duvatj8kg/image/upload/v1697202495/aec98becb6d15a5fc95e_dseafo.svg', 'https://res.cloudinary.com/dp0y6hy2o/image/upload/v1686389855/92e67a71aaaa98dea5ad_ogsw1y.svg']
     const [getPos, setPos] = useState(pos)
@@ -38,9 +38,19 @@ export function AddBoard({pos, setIsBoardAdded }) {
         try {
             const addedBoard = await addBoard(savedBoard)
             navigate(`/board/${addedBoard._id}`)
+            handleBoardAdded()
+            if(getPos) setSidebarExpand(false)
         } catch (err) {
             console.log('Could not add new board');
         }
+    }
+
+
+    function handleBoardAdded() {
+        if (getPos) setModalState(prevState => ({ ...prevState, isOpen: false }))
+        else setIsBoardAdded(false)
+         
+      
     }
 
     return (
@@ -48,7 +58,9 @@ export function AddBoard({pos, setIsBoardAdded }) {
         className="edit-modal">
             <div className="title-container">
                 <p className="add-board-title">Create board</p>
-                <button onClick={() => setIsBoardAdded(false)} className="close-modal">{additionTaskSvg.close}</button>
+                <button onClick={() => {
+                    handleBoardAdded();
+                }} className="close-modal">{additionTaskSvg.close}</button>
             </div>
             <section className="edit-modal-content">
                 <div className="content">

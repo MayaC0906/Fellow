@@ -3,48 +3,50 @@ import { useSelector, useDispatch } from 'react-redux'
 import { groupMenu } from '../Svgs';
 import dayjs from 'dayjs';
 export function GroupMenu({
-  setInputExpand,
-  onDuplicateGroup,
-  group,
-  onRemoveGroup,
-  setToggleGroupMenu,
-  groupMenuPosition,
-  setOpenMenuGroupId,
-  openMenuGroupId,
-  onSortGroup,
-  onUpdateBoard
-}) {
-  const board = useSelector((storeState) => storeState.boardModule.board)
-  const groups = board?.groups
-  const { tasks } = group
-  const [menuContent, setMenuContent] = useState('default');
-
-  const defaultContent = (
-    <ul className="clean-list">
-      <li onClick={() => onRemoveGroup(group.id)}>Delete</li>
-      <li onClick={() => onDuplicateGroup(group)}>Copy list</li>
-      {group.id === openMenuGroupId && (
-        <li onClick={() => setInputExpand(true)}>Add card...</li>
-      )}
-      <hr />
-      <li onClick={() => setMenuContent('sortBy')}>Sort By</li>
-      <hr />
-      <li onClick={() => setMenuContent('moveCards')}>Move all cards in this list...</li>
-    </ul>
-  );
-
-  async function sortByAlphaB() {
-    // const tasks = {}
+    setInputExpand,
+    onDuplicateGroup,
+    group,
+    onRemoveGroup,
+    setToggleGroupMenu,
+    groupMenuPosition,
+    setOpenMenuGroupId,
+    openMenuGroupId,
+    onSortGroup,
+    onUpdateBoard
+    }) {
+    const board = useSelector((storeState) => storeState.boardModule.board)
+    const groups = board?.groups
     const { tasks } = group
-    const sortedGroup = {
+    const [menuContent, setMenuContent] = useState('default');
+
+  switch (menuContent) {
+    case 'sortBy':
+      contentToDisplay = sortByContent;
+      headerText = "Sort list";
+      break;
+    case 'moveCards':
+      contentToDisplay = moveCardsContent;
+      headerText = "Move all cards in list";
+      break;
+    default:
+      contentToDisplay = defaultContent;
+      headerText = "List action";
+      break;
+  }
+
+  async function sortByCreatedOld() {
+    const sortedByDuedate = {
       ...group, tasks: tasks.sort((a, b) => {
-        const firstTitle = a.title.toUpperCase()
-        const secondTitle = b.title.toUpperCase()
-        return firstTitle.localeCompare(secondTitle)
+        const firstCreated = a.createdAt
+        const secondCreated = b.createdAt
+        return firstCreated - secondCreated
       })
     }
-    onSortGroup(sortedGroup)
+    onSortGroup(sortedByDuedate)
   }
+
+  
+
 
   async function sortByDuedate() {
     const sortedByDuedate = {
@@ -65,17 +67,59 @@ export function GroupMenu({
     onSortGroup(sortedByDuedate)
   }
 
-  async function sortByCreatedOld() {
-    const sortedByDuedate = {
-      ...group, tasks: tasks.sort((a, b) => {
-        const firstCreated = a.createdAt
-        const secondCreated = b.createdAt
-        return firstCreated - secondCreated
+
+
+  async function sortByAlphaB() {
+    const { tasks } = group
+    const sortedGroup = {
+      ...group, tasks: tasks.sort((a, b) => 
+      {
+        const firstTitle = a.title.toUpperCase()
+        const secondTitle = b.title.toUpperCase()
+        return firstTitle.localeCompare(secondTitle)
       })
     }
-    onSortGroup(sortedByDuedate)
+    onSortGroup(sortedGroup)
   }
 
+
+  const defaultContent = (
+    <ul className="clean-list">
+      <li onClick={() => onRemoveGroup(group.id)}>Delete</li>
+      <li onClick={() => onDuplicateGroup(group)}>Copy list</li>
+      {group.id === openMenuGroupId && (
+        <li onClick={() => setInputExpand(true)}>Add card...</li>
+      )}
+      <hr />
+      <li onClick={() => setMenuContent('sortBy')}>Sort By</li>
+      <hr />
+      <li onClick={() => setMenuContent('moveCards')}>Move all cards in this list...</li>
+    </ul>
+  );
+
+  
+
+
+  const moveCardsContent = (
+    <ul className="clean-list">
+      {groups && groups.map((group, idx) => {
+        return <li onClick={moveTasks} value={idx} key={group.id}>{group.title}</li>
+      })}
+    </ul>
+  );
+  async function moveTasks({ target }) {
+      console.log('target', target.value);
+      const currGroupPosIdx = groups.findIndex(g => g.id === group.id)
+      const groupTargetIdx = target.value
+      const currGroupTasks = [...group.tasks]
+      console.log('curr', currGroupTasks);
+      groups[currGroupPosIdx].tasks.splice(0, group.tasks.length)
+      // console.log('target group tasks', targetGroupTasks);
+      board.groups[groupTargetIdx].tasks.push(...currGroupTasks)
+      console.log('group', groups[groupTargetIdx].tasks);
+
+      await onUpdateBoard(board)
+  }
   async function sortByCreatedNew() {
     const sortedByDuedate = {
       ...group, tasks: tasks.sort((a, b) => {
@@ -86,6 +130,15 @@ export function GroupMenu({
     }
     onSortGroup(sortedByDuedate)
   }
+  const style = {
+      position: 'fixed',
+      top: groupMenuPosition.top + 'px',
+      left: groupMenuPosition.left + 'px',
+  };
+    let contentToDisplay;
+    let headerText;
+
+
 
   const sortByContent = (
     <ul className="clean-list">
@@ -95,66 +148,20 @@ export function GroupMenu({
       <li onClick={sortByDuedate}>Due Date</li>
     </ul>
   );
+ 
 
-
-  async function moveTasks({ target }) {
-    console.log('target', target.value);
-    const currGroupPosIdx = groups.findIndex(g => g.id === group.id)
-    const groupTargetIdx = target.value
-    const currGroupTasks = [...group.tasks]
-    console.log('curr', currGroupTasks);
-    groups[currGroupPosIdx].tasks.splice(0, group.tasks.length)
-    // console.log('target group tasks', targetGroupTasks);
-    board.groups[groupTargetIdx].tasks.push(...currGroupTasks)
-    console.log('group', groups[groupTargetIdx].tasks);
-
-    await onUpdateBoard(board)
-  }
-
-
-
-  const moveCardsContent = (
-    <ul className="clean-list">
-      {groups && groups.map((group, idx) => {
-        return <li onClick={moveTasks} value={idx} key={group.id}>{group.title}</li>
-      })}
-    </ul>
-  );
-
-  const style = {
-    position: 'fixed',
-    top: groupMenuPosition.top + 'px',
-    left: groupMenuPosition.left + 'px',
-  };
-
-  let contentToDisplay;
-  let headerText;
-
-  switch (menuContent) {
-    case 'sortBy':
-      contentToDisplay = sortByContent;
-      headerText = "Sort list";
-      break;
-    case 'moveCards':
-      contentToDisplay = moveCardsContent;
-      headerText = "Move all cards in list";
-      break;
-    default:
-      contentToDisplay = defaultContent;
-      headerText = "List action";
-      break;
-  }
-
+  
   return (
-    <section className="group-edit-modal" style={style}>
-      <header>
-        {menuContent !== 'default' && (
-          <button onClick={() => setMenuContent('default')} className="back-btn clean-btn">&lt;</button>
-        )}
-        <div>{headerText}</div>
-        <button onClick={() => setOpenMenuGroupId(null)} className="close-btn">X</button>
-      </header>
-      {contentToDisplay}
-    </section>
+      <section className="group-edit-modal" style={style}>
+        <header>
+          {menuContent !== 'default' && (
+            <button onClick={() => setMenuContent('default')} className="back-btn clean-btn">
+              &lt;</button>
+          )}
+          <div>{headerText}</div>
+          <button onClick={() => setOpenMenuGroupId(null)} className="close-btn">X</button>
+        </header>
+        {contentToDisplay}
+      </section>
   );
 }

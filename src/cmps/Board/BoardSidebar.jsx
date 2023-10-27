@@ -13,6 +13,7 @@ export function BoardSidebar() {
     const boards = useSelector((storeState) => storeState.boardModule.boards)
     const board = useSelector((storeState) => storeState.boardModule.board)
     const [showSortDropdown, setShowSortDropdown] = useState(false);
+    const [sortedBoards, setSetSortedBoards] = useState(boards)
     const [modalState, setModalState] = useState({
         isOpen: false,
         type: '',
@@ -50,6 +51,19 @@ export function BoardSidebar() {
         }
     }, [boardId])
 
+    function sortByAlphaB() {
+      const sortedBoards = [...boards].sort((a, b) => {
+          const firstTitle = a.title.toUpperCase()
+          const secondTitle = b.title.toUpperCase()
+          return firstTitle.localeCompare(secondTitle)
+      });
+    
+      setModalState(prevState => ({ ...prevState, isOpen: false }))
+      setShowSortDropdown(false)
+      setSetSortedBoards(sortedBoards)
+    }
+    
+
   return (
     <section
       className='board-sidebar'
@@ -68,8 +82,10 @@ export function BoardSidebar() {
               }}>
             <header className="title-container">
                   <p>Sort By</p>
-                  <button className="clean-btn close-modal" onClick={() => setModalState(prevState => ({ ...prevState, isOpen: false }))}>
-                    {checkList.x}
+                  <button className="clean-btn close-modal" onClick={() => {
+                    setShowSortDropdown(!showSortDropdown)
+                    setModalState(prevState => ({ ...prevState, isOpen: false }))}}>
+                      {checkList.x}
                   </button>
             </header>
             <section className="sorting">
@@ -77,16 +93,16 @@ export function BoardSidebar() {
                 <div className="options" id="">
                     <article>
                         <div className="sort" onClick={handleSortClick}>
-                            <span>Sort alphabetically</span>
+                            <span >Sort alphabetically</span>
                             <span>{sideBar.arrDown}</span>
                         </div>
                     </article>
                 </div>
                 {showSortDropdown && (
                     <div className="sort-dropdown">
-                          <div onClick={() => { console.log("Option 1 selected"); setShowSortDropdown(false); }}><span> Sort alphabetically</span></div>
+                          <div onClick={() => sortByAlphaB()}><span> Sort alphabetically</span></div>
                           <hr className="divider"/>
-                          <div onClick={() => { console.log("Option 2 selected"); setShowSortDropdown(false); }}><span>Sort by most recent</span></div>
+                          <div className="disabled" onClick={() => {  setShowSortDropdown(false) }}><span>Sort by most recent</span></div>
                     </div>)} 
             </section>
           </div>
@@ -133,14 +149,16 @@ export function BoardSidebar() {
             </div>
           </li>
         )}
-
         {isSidebarExpand && (
           <section className="user-boards ">
 
             <header>
                 <span>Your Boards</span>
                 <article className="actions">
-                <div className="dots" onClick={(event) => handleClick(event, 'edit')}>
+                <div className="dots" onClick={(event) => {
+                  handleClick(event, 'edit')
+                 
+                }}>
                     {sideBar.dots}
                 </div>
                 <div className="plus" onClick={(event) => handleClick(event, 'addBoard')}>
@@ -148,7 +166,7 @@ export function BoardSidebar() {
                 </div>
                 </article>
             </header>
-            {boards.map((boardItem) => (
+            {sortedBoards.map((boardItem) => (
               <section
                 key={boardItem._id}
                 className={`${activeBoardId === boardItem._id ? 'active' : ''}`}
@@ -171,11 +189,10 @@ export function BoardSidebar() {
                     zIndex: 1001,
                     background: 'white',
                 }}>
-                    <AddBoard pos={{ style: { bottom: '0', right: '0' } }} />
+                    <AddBoard setSidebarExpand={setSidebarExpand} modalState={modalState} setModalState={setModalState} pos={{ style: { bottom: '0', right: '0' } }} />
                 </div>
             )}   
-
-               
+     
     </section>
   );
 }
