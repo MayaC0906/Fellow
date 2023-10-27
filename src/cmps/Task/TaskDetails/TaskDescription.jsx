@@ -41,7 +41,7 @@ export function TaskDescription({ onSaveTask, task }) {
 
     return (
         <section className="task-descriptoin">
-            <div className='description-title'>
+            <div className='task-details-title '>
                 {taskSvg.description}
                 Description
             </div>
@@ -108,20 +108,8 @@ export function TaskDescription({ onSaveTask, task }) {
                             >
                                 <FormatItalic />
                             </IconButton>
-                            <Button onClick={onSaveDesscription} sx={{ ml: 'auto' }}>Save</Button>
-                            <Button
-                                onClick={onToggleDescription}
-                                sx={{
-                                    background: 'none',
-                                    color: 'black',
-                                    '&:hover': {
-                                        backgroundColor: 'lightgray',
-                                    },
-                                }}
-                            >
-                                Cancel
-                            </Button>
                         </Box>
+
                     }
                     sx={{
                         minWidth: 300,
@@ -131,6 +119,10 @@ export function TaskDescription({ onSaveTask, task }) {
                 />
             </FormControl>
             }
+            {isDescExpand && <section className='desc-actions'>
+                <button className='desc-btn save' onClick={onSaveDesscription}>Save</button>
+                <button className='desc-btn cancel' onClick={onToggleDescription}> Cancel </button>
+            </section>}
         </section>
     )
 }

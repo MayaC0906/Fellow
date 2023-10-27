@@ -1274,8 +1274,8 @@ const board = [
         style: {
             backgroundImage: "https://images.unsplash.com/photo-1696580436068-f19c26850e8b?auto=format&fit=crop&q=80&w=2071&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             backgroundColor: "",
-            dominantColor: { rgb: '247,234,225' },
-            isBright: true
+            dominantColor: { rgb: '29,31,30' },
+            isBright: false
         },
         labels: [
             {
@@ -1345,8 +1345,8 @@ const board = [
         style: {
             backgroundImage: "https://res.cloudinary.com/duvatj8kg/image/upload/v1697202495/aec98becb6d15a5fc95e_dseafo.svg",
             backgroundColor: "",
-            dominantColor: { rgb: "236,109,56" },
-            isBright: null
+            dominantColor: { rgb: '230,85,54' },
+            isBright: false
         },
         labels: [
             {
@@ -1416,8 +1416,8 @@ const board = [
         style: {
             backgroundImage: "https://images.unsplash.com/photo-1594743896255-be81f8dfec3d?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             backgroundColor: "",
-            dominantColor: { rgb: '36,31,35' },
-            isBright: null
+            dominantColor: { rgb: '222,208,223' },
+            isBright: true
         },
         labels: [
             {
