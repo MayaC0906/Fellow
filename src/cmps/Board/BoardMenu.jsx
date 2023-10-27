@@ -3,11 +3,11 @@ import React, { useState } from 'react';
 import { boardMenu } from "../Svgs";
 import { useSelector } from 'react-redux';
 import { AboutBoard } from './AboutBoard';
-
+import { BoardChangeBgc } from './BoardChangeBgc';
 export function BoardMenu({ setMenu, isMenuOpen }) {
     const board = useSelector((storeState) => storeState.boardModule.board)
     const [isAboutBoardOpen, setIsAboutBoardOpen] = useState()
-
+    const [isChangeBgcOpen, setIsChangeBgcOpen] = useState('')
     // function getCmp() {
     //     switch(title) {
     //         case 'Menu': 
@@ -37,9 +37,10 @@ export function BoardMenu({ setMenu, isMenuOpen }) {
                             <p className='nav-item'>Activity</p>
                         </section>
                         <hr className='divider' />
-                        <article className='board-menu-change-bgc'>
-                            <img className='nav-icon' src={board.style.backgroundImage} alt="" />
+                        <article onClick={() => setIsChangeBgcOpen(!isChangeBgcOpen)} className='board-menu-change-bgc'>
+                            <img className='nav-icon'  src={board.style.backgroundImage} alt="" />
                             <p className='nav-item'>Change Background</p>
+                            {isChangeBgcOpen && <BoardChangeBgc />}
                         </article>
                     </section>
                 </div>
