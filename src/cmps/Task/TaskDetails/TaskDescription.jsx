@@ -44,6 +44,7 @@ export function TaskDescription({ onSaveTask, task }) {
             <div className='task-details-title '>
                 {taskSvg.description}
                 Description
+                {description && !isDescExpand && <button  onClick={onToggleDescription}>Edit</button>}
             </div>
 
             <div onClick={onToggleDescription}
