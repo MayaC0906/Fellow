@@ -45,11 +45,7 @@
             &:hover {
                 background-color: rgba(255, 255, 255, 0.2);
             }
-
         }
-
-        
-
         li{
             header{
                 display: flex;
@@ -191,9 +187,11 @@
         .user-boards{
             margin-top: 6px;
             header{
+                // justify-content: space-between;
                 display: flex;
                 flex-direction: row;
                 align-items: center;
+                justify-content: space-between;
                 padding: 4px 0 4px 12px;
                 font-size: 13px;
                 font-weight: 700;
@@ -207,6 +205,52 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
+                width: 100%;
+                .actions {
+                    display: flex;
+                    padding: 4px 0 4px 12px;
+                    margin-right: 10px;
+                    align-items: center;
+                }
+                svg {
+                    height: 16px;
+                    width: 16px;
+                    display: flex;
+                    // justify-self: flex-end;
+                }
+                .dots {
+                    margin-right: 10px;
+                    opacity: 0;
+                    width: 24px;
+                    height: 24px;  
+                    svg {
+                        margin-left: 4px;
+                        color: rgb(255, 255, 255);
+                        margin-top: 5px;
+                        cursor: pointer;     
+                    }
+                    &:hover {
+                        background-color: rgba(211, 211, 211, 0.165);
+                        border-radius: 3px;
+                    }
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+
+                .plus {
+                    cursor: pointer;
+                    padding: 4px 4px 4px 4px;
+                    &:hover {
+                        background-color: rgba(211, 211, 211, 0.165);
+                        border-radius: 3px;
+                    }
+                }
+                &:hover {
+                    .dots {
+                        opacity: 1;
+                    }
+                }
             }
 
             section{
@@ -261,17 +305,102 @@
             }
             .active{
                 background-color: rgba(255, 255, 255, 0.2);
-                &:hover{
-                    background-color: rgba(255, 255, 255, 0.1)
+                
+            }            
+        }
+    } 
+
+    .edit-modal {
+
+        .sorting {
+            width: 90%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            .sort-dropdown {
+                // position: absolute;
+                width: 100%;
+                margin-top: 3px;
+                background-color: white;
+                border: 1px solid #ccc;
+                z-index: 1002;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+
+                hr {
+                    margin: 0;
+                }
+                span {
+                    color: rgba(23, 43, 77, 0.838);
+                    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Noto Sans", "Ubuntu", "Droid Sans", "Helvetica Neue", sans-serif;
+                    font-size: 14px;
+                    line-height: 20px;
+                    font-weight: 400;
+                }
+            }
+            
+            .sort-dropdown > div {
+                padding: 6px;
+                cursor: pointer;
+            }
+            
+            .sort-dropdown > div:hover {
+                background-color: #f1f1f1;
+            }
+            label {
+                color: #44546f;
+                font-size: 12px;
+                font-weight: 600;
+                line-height: 16px;
+                margin-top: 16px;
+                margin-top: 8px;
+                margin-bottom: 8px;
+            }
+            .options {
+                display: flex;
+                align-items: center;
+                width: 100%;
+                
+                
+                article {
+                    color: #172b4dbe;
+                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Noto Sans', 'Ubuntu', 'Droid Sans', 'Helvetica Neue', sans-serif;
+                    font-size: 14px;
+                    line-height: 20px;
+                    font-weight: 400;
+                    width: 100%;
+                   
+                    div {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        background-color:  #091e420f;
+                        box-shadow: none;
+                        min-height: 36px;
+                        background-color: #dfe1e6;
+                        box-shadow: inset 0 0 0 2px #dfe1e6;
+                        border-radius: 3px;
+                        border: none;
+                        width: 100%;
+                        padding-left: 12px;
+                        background-repeat: no-repeat;
+                        background-position: right 8px center;
+                        background-size: 20px;
+                        background-image: url("<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"20px\" height=\"20px\" fill=\"%2344546f\" viewBox=\"0 0 20 20\"><path d=\"M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z\" /></svg>");
+                    }
+                        span {
+                            
+                            svg {
+                                fill: #172b4d69;
+                                margin-right: 6px;
+                                margin-top: 7px;
+                            }
+                        }
+                    }
                 }
             }
         }
-
-
     }
 
-  
-}
 
 
 
