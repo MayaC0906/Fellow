@@ -3,11 +3,14 @@ import { taskSvg } from "../../Svgs";
 
 export function TaskAttachments({ task, setEditName, onSaveTask }) {
 
-    async function onRemoveAttachment(attachmentId) {
+    async function onRemoveAttachment(attachmentId, url) {
         try {
             const attachmentIdx = task.attachments.findIndex(attachment => attachment.id === attachmentId)
             task.attachments.splice(attachmentIdx, 1)
-            const newTask = { ...task, attachments: task.attachments }
+            let newTask = { ...task, attachments: task.attachments }
+            if (task.cover.img === url) {
+                newTask = { ...task, cover: { ...task.cover, img: '' } }
+            }
             onSaveTask(newTask)
 
         } catch (err) {
@@ -18,14 +21,14 @@ export function TaskAttachments({ task, setEditName, onSaveTask }) {
     async function onToggleAttachmentCover({ isAttachmentCover, url }) {
         if (isAttachmentCover) {
             try {
-                const newTask = { ...task, cover: { ...task.cover, img: '', backgroundColor:'', createdAt: null } }
+                const newTask = { ...task, cover: { ...task.cover, img: '', backgroundColor: '', createdAt: null } }
                 onSaveTask(newTask)
             } catch (err) {
                 console.log('Cannot remove cover', err)
             }
         } else {
             try {
-                const newTask = { ...task, cover: { ...task.cover, img: url, backgroundColor:'', createdAt: Date.now()} }
+                const newTask = { ...task, cover: { ...task.cover, img: url, backgroundColor: '', createdAt: Date.now() } }
                 onSaveTask(newTask)
             } catch (err) {
                 console.log('Cannot add cover', err)
@@ -61,7 +64,7 @@ export function TaskAttachments({ task, setEditName, onSaveTask }) {
                         <h2>{utilService.getFileNameFromUrl(attachment.imgUrl)}</h2>
                         <div className="img-actions">
                             <h3>Created {utilService.formatImgTime(attachment.createdAt)}</h3>
-                            <button onClick={() => { onRemoveAttachment(attachment.id) }}>Delete</button>
+                            <button onClick={() => { onRemoveAttachment(attachment.id, attachment.imgUrl) }}>Delete</button>
                         </div>
                         <div className="cover-container">
                             {taskSvg.cover}

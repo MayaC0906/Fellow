@@ -25,11 +25,6 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
 
     if (!task) return <div>Loading...</div>
 
-    // console.log(task);
-
-    // console.log('complete:', dueDate.isComplete);
-    // console.log('overdue:', dueDate.isOverdue);
-    // console.log('due soon:', dueDate.isDueSoon);
     return (
         <article key={task.id} className="task">
             <button><span className="icon-badge">{taskSvg.pencil}</span></button>
@@ -50,7 +45,6 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
 
                     {dueDate.date &&
                         <div className={`task-badge duedate ${dueDate.isComplete ? 'complete' : ''} ${dueDate.isOverdue && !dueDate.isComplete ? 'overdue' : ''} ${dueDate.isDueSoon && !dueDate.isComplete ? 'duesoon' : ''}`} onClick={(e) => onCompleteDueDate(e)}>
-                            {/* <div className={`task-badge duedate ${dueDate.isComplete ? 'complete' : ''} ${dueDate.isOverdue && !dueDate.isComplete ? 'overdue' : ''} ${dueDate.isDueSoon && !dueDate.isComplete ? 'duesoon' : ''}`} onClick={(e) => onCompleteDueDate(e)}> */}
 
                             <span className="clock icon-badge">{taskSvg.clock}</span>
 

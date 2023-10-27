@@ -2,11 +2,6 @@
     box-sizing: border-box;
 }
 
-::selection {
-    background-color: $clr1;
-    color: $clr6;
-}
-
 body::-webkit-scrollbar {
     background-color: #c1c1c1;
     width: 16px;
