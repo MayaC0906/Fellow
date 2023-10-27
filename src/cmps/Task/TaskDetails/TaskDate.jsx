@@ -8,42 +8,37 @@ export function TaskDate({ task, setEditName, editName, onSaveTask }) {
 
     useEffect(() => {
         onSettingIsOverdue()
-        onSettingIsDueSoon()
     }, [dueDate.date])
 
     async function onSettingIsOverdue() {
         console.log('1: task from overdue:', task);
-        if (dueDate.isDueSoon) return
+        // if (dueDate.isDueSoon) return
         let updatedOverdue
         const taskDueDate = dayjs(dueDate.date, 'MMM D YYYY [at] h:mm A').format('YYYY-MM-DD')
         const inputDate = new Date(`${taskDueDate}`);
         const currentDate = new Date();
         if (inputDate < currentDate) {
             updatedOverdue = true
-            // newTask = { ...task, dueDate: { ...task.dueDate, isOverdue: true } }
         } else {
             updatedOverdue = false
-            // newTask = { ...task, dueDate: { ...task.dueDate, isOverdue: false } }
         }
-        // console.log('due:', updatedOverdue);
         const newTask = { ...task, dueDate: { ...task.dueDate, isOverdue: updatedOverdue } }
+        console.log('1: new task overdue:', newTask);
 
-        console.log('from 1 newTask', newTask);
         try {
             await onSaveTask(newTask)
+            onSettingIsDueSoon(newTask)
         } catch (err) {
             console.log(`Couldn't set isOverDue`, err);
         }
     }
 
-    async function onSettingIsDueSoon() {
-        console.log('2: duesoon task:', task);
-        if (dueDate.isOverdue) return
-        const myDate = dayjs(dueDate.date, 'MMM D YYYY [at] h:mm A')
+    async function onSettingIsDueSoon(task) {
+        // if (task.dueDate.isOverdue) return
+        const myDate = dayjs(task.dueDate.date, 'MMM D YYYY [at] h:mm A')
         const tomorrow = dayjs().add(1, 'day').startOf('day')
         const isDateDueSoon = myDate.isSame(tomorrow, 'day')
         const newTask = { ...task, dueDate: { ...task.dueDate, isDueSoon: isDateDueSoon } }
-        console.log('from 2 newTask', newTask);
         try {
             await onSaveTask(newTask)
         } catch (err) {

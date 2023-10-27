@@ -131,6 +131,7 @@ export function DateEdit({ editName, onCloseEditTask, onSaveTask, task }) {
                                     }} />
                                 <DateField sx={{
                                     width: 95, mr: 1, fontSize: 14,
+                                    pointerEvents: 'none',
                                     '&:hover': {
                                         border: 0
                                     },
