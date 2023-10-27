@@ -62,10 +62,12 @@ function getEmptyTask() {
         title: '',
         archivedAt: null,
         labelIds: [],
+        createdAt: Date.now(),
         dueDate: {
             date: null,
             isComplete: null,
-            isOverdue: null
+            isOverdue: null,
+            isDueSoon: null
         },
         byMember: {
             _id: '',

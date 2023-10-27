@@ -198,6 +198,7 @@ function getEmptyBoard() {
     }
 }
 
+
 const board = [
     {
         _id: utilService.makeId(),
@@ -297,10 +298,12 @@ const board = [
                         "labelIds": ["l101", "l102", "l103"],
                         "memberIds": ["u101", "u102", "u103"],
                         "watching": true,
+                        "createdAt": 1751449600000,
                         "dueDate": {
                             date: null,
                             isComplete: null,
-                            isOverdue: null
+                            isOverdue: null,
+                            isDueSoon: null
                         },
                         "checklists": [
                             {
@@ -338,6 +341,7 @@ const board = [
                         "title": "Connect to Mongo",
                         "description": null,
                         "archivedAt": null,
+                        "createdAt": 1680518400000,
                         "cover": {
                             "isDark": false,
                             "isFull": false,
@@ -364,7 +368,8 @@ const board = [
                         "dueDate": {
                             date: null,
                             isComplete: null,
-                            isOverdue: null
+                            isOverdue: null,
+                            isDueSoon: null
                         },
                         "watching": false
                     },
@@ -373,6 +378,7 @@ const board = [
                         "title": "Adding npm packages",
                         "description": null,
                         "archivedAt": null,
+                        "createdAt": 1751449600000,
                         "cover": {
                             "isDark": false,
                             "isFull": false,
@@ -400,7 +406,8 @@ const board = [
                         "dueDate": {
                             date: null,
                             isComplete: null,
-                            isOverdue: null
+                            isOverdue: null,
+                            isDueSoon: null
                         },
                         "watching": true
                     }
@@ -415,6 +422,7 @@ const board = [
                         "id": utilService.makeId(),
                         "title": "Add react-beautiful-dnd library",
                         "description": null,
+                        "createdAt": 1635364800000,
                         "cover": {
                             "isDark": false,
                             "isFull": false,
@@ -441,7 +449,8 @@ const board = [
                         "dueDate": {
                             date: null,
                             isComplete: null,
-                            isOverdue: null
+                            isOverdue: null,
+                            isDueSoon: null
                         },
                         "checklists": [
                             {
@@ -479,6 +488,7 @@ const board = [
                         "title": "Project planning",
                         "description": null,
                         "archivedAt": null,
+                        "createdAt": 1680518400000,
                         "cover": {
                             "isDark": false,
                             "isFull": false,
@@ -506,7 +516,8 @@ const board = [
                         "dueDate": {
                             date: null,
                             isComplete: null,
-                            isOverdue: null
+                            isOverdue: null,
+                            isDueSoon: null
                         },
                         "watching": false
                     },
@@ -515,6 +526,7 @@ const board = [
                         "title": "Adding npm packages",
                         "description": null,
                         "archivedAt": null,
+                        "createdAt": 1751449600000,
                         "cover": {
                             "isDark": false,
                             "isFull": false,
@@ -541,7 +553,8 @@ const board = [
                         "dueDate": {
                             date: null,
                             isComplete: null,
-                            isOverdue: null
+                            isOverdue: null,
+                            isDueSoon: null
                         },
                         "watching": true
                     }
@@ -557,6 +570,7 @@ const board = [
                         "id": utilService.makeId(),
                         "title": "Add user auth",
                         "description": null,
+                        "createdAt": 1716787200000,
                         "cover": {
                             "isDark": false,
                             "isFull": false,
@@ -583,7 +597,8 @@ const board = [
                         "dueDate": {
                             date: null,
                             isComplete: null,
-                            isOverdue: null
+                            isOverdue: null,
+                            isDueSoon: null
                         },
                         "checklists": [
                             {
@@ -621,6 +636,7 @@ const board = [
                         "title": "Adding backend services",
                         "description": null,
                         "archivedAt": null,
+                        "createdAt": 1751449600000,
                         "cover": {
                             "isDark": false,
                             "isFull": false,
@@ -647,7 +663,8 @@ const board = [
                         "dueDate": {
                             date: null,
                             isComplete: null,
-                            isOverdue: null
+                            isOverdue: null,
+                            isDueSoon: null
                         },
                         "watching": false
                     },
@@ -656,6 +673,7 @@ const board = [
                         "title": "SCSS Architecture",
                         "description": null,
                         "archivedAt": null,
+                        "createdAt": 1635364800000,
                         "cover": {
                             "isDark": false,
                             "isFull": false,
@@ -682,14 +700,17 @@ const board = [
                         "dueDate": {
                             date: null,
                             isComplete: null,
-                            isOverdue: null
+                            isOverdue: null,
+                            isDueSoon: null
                         },
                         "watching": true
-                    }, {
+                    },
+                    {
                         "id": utilService.makeId(),
                         "title": "Socket services",
                         "description": null,
                         "archivedAt": null,
+                        "createdAt": 1680518400000,
                         "cover": {
                             "isDark": false,
                             "isFull": false,
@@ -716,7 +737,8 @@ const board = [
                         "dueDate": {
                             date: null,
                             isComplete: null,
-                            isOverdue: null
+                            isOverdue: null,
+                            isDueSoon: null
                         },
                         "watching": false
                     }
@@ -731,6 +753,7 @@ const board = [
                         "id": utilService.makeId(),
                         "title": "Bugs search",
                         "description": null,
+                        "createdAt": 1751449600000,
                         "cover": {
                             "isDark": false,
                             "isFull": false,
@@ -757,7 +780,8 @@ const board = [
                         "dueDate": {
                             date: null,
                             isComplete: null,
-                            isOverdue: null
+                            isOverdue: null,
+                            isDueSoon: null
                         },
                         "checklists": [
                             {
@@ -795,6 +819,7 @@ const board = [
                         "title": "Check user auth",
                         "description": null,
                         "archivedAt": null,
+                        "createdAt": 1716787200000,
                         "cover": {
                             "isDark": false,
                             "isFull": false,
@@ -821,7 +846,8 @@ const board = [
                         "dueDate": {
                             date: null,
                             isComplete: null,
-                            isOverdue: null
+                            isOverdue: null,
+                            isDueSoon: null
                         },
                         "watching": false
                     },
@@ -839,6 +865,7 @@ const board = [
                         "id": utilService.makeId(),
                         "title": "Regression testing",
                         "description": null,
+                        "createdAt": 1751449600000,
                         "cover": {
                             "isDark": false,
                             "isFull": false,
@@ -865,7 +892,8 @@ const board = [
                         "dueDate": {
                             date: null,
                             isComplete: null,
-                            isOverdue: null
+                            isOverdue: null,
+                            isDueSoon: null
                         },
                         "checklists": [
                             {
@@ -897,10 +925,12 @@ const board = [
                                 }
                             }
                         ]
-                    }, {
+                    },
+                    {
                         "id": utilService.makeId(),
                         "title": "Spell check",
                         "description": null,
+                        "createdAt": 1635364800000,
                         "cover": {
                             "isDark": false,
                             "isFull": false,
@@ -927,7 +957,8 @@ const board = [
                         "dueDate": {
                             date: null,
                             isComplete: null,
-                            isOverdue: null
+                            isOverdue: null,
+                            isDueSoon: null
                         },
                         "checklists": [
                             {
@@ -964,6 +995,7 @@ const board = [
                         "id": utilService.makeId(),
                         "title": "A/B Testing",
                         "description": null,
+                        "createdAt": 1635364800000,
                         "cover": {
                             "isDark": false,
                             "isFull": false,
@@ -986,7 +1018,8 @@ const board = [
                         "dueDate": {
                             date: null,
                             isComplete: null,
-                            isOverdue: null
+                            isOverdue: null,
+                            isDueSoon: null
                         },
                         "checklists": [
                             {
@@ -1033,6 +1066,7 @@ const board = [
                         "id": utilService.makeId(),
                         "title": "Deployment",
                         "description": null,
+                        "createdAt": 1635364800000,
                         "cover": {
                             "isDark": false,
                             "isFull": false,
@@ -1059,7 +1093,8 @@ const board = [
                         "dueDate": {
                             date: null,
                             isComplete: null,
-                            isOverdue: null
+                            isOverdue: null,
+                            isDueSoon: null
                         },
                         "checklists": [
                             {
@@ -1096,6 +1131,7 @@ const board = [
                         "id": utilService.makeId(),
                         "title": "Documentation",
                         "description": null,
+                        "createdAt": 1716787200000,
                         "cover": {
                             "isDark": false,
                             "isFull": false,
@@ -1118,7 +1154,8 @@ const board = [
                         "dueDate": {
                             date: null,
                             isComplete: null,
-                            isOverdue: null
+                            isOverdue: null,
+                            isDueSoon: null
                         },
                         "checklists": [
                             {
@@ -1155,6 +1192,7 @@ const board = [
                         "id": utilService.makeId(),
                         "title": "Test data",
                         "description": null,
+                        "createdAt": 1680518400000,
                         "cover": {
                             "isDark": false,
                             "isFull": false,
@@ -1177,7 +1215,8 @@ const board = [
                         "dueDate": {
                             date: null,
                             isComplete: null,
-                            isOverdue: null
+                            isOverdue: null,
+                            isDueSoon: null
                         },
                         "checklists": [
                             {

@@ -64,6 +64,11 @@
                 background-color: rgb(255, 236, 235);
                 color: rgb(174, 46, 36);
             }
+
+            &.due-soon {
+                background-color: rgb(245, 205, 71);
+                color: rgb(23, 43, 77);
+            }
         }
 
     }

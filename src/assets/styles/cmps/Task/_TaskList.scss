@@ -23,7 +23,7 @@
         cursor: pointer;
 
         button {
-            margin:0 0 8px;
+            margin: 0 0 8px;
             height: 32px;
             width: 32px;
             display: none;
@@ -34,6 +34,7 @@
             padding: 6px 8px;
             background-color: $clr6;
             border: none;
+
             svg {
                 width: 16px;
                 height: 16px;
@@ -43,6 +44,7 @@
                 align-items: center;
             }
         }
+
         &:hover {
             outline: 2px solid black;
 
@@ -50,9 +52,9 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                
+
                 &:hover {
-                    background-color:  #f1f2f4;
+                    background-color: #f1f2f4;
                     cursor: pointer;
                 }
             }
@@ -109,6 +111,7 @@
                         display: flex;
                         max-width: 100%;
                         align-items: center;
+
                         &:hover {
                             cursor: pointer;
                             filter: brightness(95%);
@@ -273,6 +276,10 @@
                             }
                         }
 
+                        &.duesoon {
+                            background-color: rgb(245, 205, 71);
+                            color: rgb(23, 43, 77);
+                        }
 
                     }
                 }
