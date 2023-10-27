@@ -20,7 +20,10 @@ export function BoardSidebar() {
         position: { top: 0, left: 0 }
     })
 
-    console.log(modalState);
+    useEffect(() => {
+      setSetSortedBoards(boards);
+    }, [boards]);
+    
 
     function handleClick(ev, type) {
       ev.stopPropagation();

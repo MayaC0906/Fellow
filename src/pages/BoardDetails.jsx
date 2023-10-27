@@ -42,7 +42,7 @@ export function BoardDetails() {
         <>
             <BoardSidebar />
             <div className="board-details-container" style={{ backgroundImage: `url(${board.style.backgroundImage})`, backgroundColor: board.style.backgroundColor }} >
-                <GroupHeader isMenuOpen={isMenuOpen} setMenu={setMenu} boardId={boardId} />
+                <GroupHeader onLoadBoard={onLoadBoard} isMenuOpen={isMenuOpen} setMenu={setMenu} boardId={boardId} />
                 <Outlet />
                 <GroupList boardId={boardId} />
             </div>

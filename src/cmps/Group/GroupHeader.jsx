@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { groupHeaderSvg, workspaceSvg } from "../Svgs";
 import { updateBoard } from "../../store/actions/board.actions";
 import { useSelector } from "react-redux";
+import { useParams } from 'react-router-dom'
 
-export function GroupHeader({ isMenuOpen, setMenu, boardId }) {
+export function GroupHeader({ isMenuOpen, setMenu }) {
+    const { boardId } = useParams()
 
     const boards = useSelector(storeState => storeState.boardModule.boards)
     const [board, onSetBoard] = useState({})
@@ -13,7 +15,7 @@ export function GroupHeader({ isMenuOpen, setMenu, boardId }) {
 
     useEffect(() => {
         onLoadBoard()
-    }, [])
+    }, [boardId, board])
 
     async function onLoadBoard() {
         const boardToFind = boards.find(board => board._id === boardId)

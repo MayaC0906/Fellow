@@ -39,7 +39,7 @@ export function AddBoard({pos, setSidebarExpand, setModalState, setIsBoardAdded 
             const addedBoard = await addBoard(savedBoard)
             navigate(`/board/${addedBoard._id}`)
             handleBoardAdded()
-            if(getPos) setSidebarExpand(false)
+            // if(getPos) setSidebarExpand(false)
         } catch (err) {
             console.log('Could not add new board');
         }
