@@ -4,7 +4,6 @@
     padding: 0;
     white-space: nowrap;
     overflow-x: scroll;
-    margin-inline-start: 0.25em;
     margin-bottom: 8px;
     display: flex;
     &::-webkit-scrollbar {
@@ -54,7 +53,7 @@
     .group-list{
         display: flex;
         gap: 12px;
-        margin: 10px 0 8px 5px;
+        margin: 10px 0 8px 12px;
         .placeholder {
             font-size: 14px;
             line-height: 26px;
