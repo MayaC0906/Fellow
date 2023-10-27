@@ -79,72 +79,68 @@ export function TaskDetails() {
                         </div>
                     )}
 
+                    <div className="task-detail-screen">
+                        <TaskTitle className="task-detail-title" onSaveTask={onSaveTask} task={task} />
+                        <section className="task-main">
+                            <section className="task-info">
+                                <section className="task-items-display flex">
+                                    <TaskMember
+                                        taskMembersId={task.memberIds}
+                                        setEditName={setEditName}
+                                        editName={editName}
+                                        onSaveTask={onSaveTask}
+                                        task={task}
+                                    />
+                                    <TaskLabel
+                                        taskLabelsId={task.labelIds}
+                                        setEditName={setEditName}
+                                        editName={editName}
+                                    />
+                                </section>
 
-                    <TaskTitle onSaveTask={onSaveTask} task={task} />
+                                {task.dueDate.date && (
+                                    <section className="task-date-show">
+                                        <TaskDate
+                                            task={task}
+                                            setEditName={setEditName}
+                                            editName={editName}
+                                            onSaveTask={onSaveTask}
+                                        />
+                                    </section>
+                                )}
 
-                    <section className="task-items-display flex align-center">
-                        <TaskMember
-                            taskMembersId={task.memberIds}
-                            setEditName={setEditName}
-                            editName={editName}
-                            onSaveTask={onSaveTask}
-                            task={task}
-                        />
-                        <TaskLabel
-                            taskLabelsId={task.labelIds}
-                            setEditName={setEditName}
-                            editName={editName}
-                        />
-                    </section>
 
-                    {task.dueDate.date && (
-                        <section className="task-date-show">
-                            <TaskDate
-                                task={task}
-                                setEditName={setEditName}
-                                editName={editName}
-                                onSaveTask={onSaveTask}
-                            />
+                                <section className="task-content">
+                                    <TaskDescription
+                                        onSaveTask={onSaveTask}
+                                        task={task} />
+                                    <TaskAttachments
+                                        setEditName={setEditName}
+                                        onSaveTask={onSaveTask}
+                                        task={task}
+                                    />
+                                    <TaskCheckList
+                                        setTask={setTask}
+                                        setEditName={setEditName}
+                                        // checklists={task.checklists}
+                                        onSaveTask={onSaveTask}
+                                        task={task}
+                                    />
+                                </section>
+                            </section >
+
+
+                            <section className="edit-task-nav">
+                                <TaskDetailsSideNav
+                                    setTask={setTask}
+                                    editName={editName}
+                                    setEditName={setEditName}
+                                    onSaveTask={onSaveTask}
+                                    task={task}
+                                />
+                            </section >
                         </section>
-                    )}
-
-                    <section className="task-main">
-                        <section className="task-info">
-                            <TaskDescription
-                                onSaveTask={onSaveTask}
-                                task={task} />
-                            <TaskAttachments
-                                setEditName={setEditName}
-                                onSaveTask={onSaveTask}
-                                task={task}
-                            />
-                        </section>
-
-
-
-                        <section className="edit-task-nav">
-                            <TaskDetailsSideNav
-                                setTask={setTask}
-                                editName={editName}
-                                setEditName={setEditName}
-                                onSaveTask={onSaveTask}
-                                task={task}
-                            />
-                        </section >
-
-
-
-                        <section>
-                            <TaskCheckList
-                                setTask={setTask}
-                                setEditName={setEditName}
-                                // checklists={task.checklists}
-                                onSaveTask={onSaveTask}
-                                task={task}
-                            />
-                        </section>
-                    </section >
-
+                    </div>
                 </article >
             </section >
         </div >

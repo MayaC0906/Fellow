@@ -52,7 +52,6 @@ export function TaskTitle({ onSaveTask, task }) {
                 onKeyDown={onEnterSaveTitle}
                 sx={{
                     width: '86%', minHeight: '37px',
-                    padding: '6px 10px', margin: '0',
                     border: 'none', background: 'none',
                     boxShadow: 'none', borderBottom: 'none'
                 }}
