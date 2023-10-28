@@ -2,20 +2,22 @@
 .layout {
     max-width: 1200px;
     margin: 0 auto;
+    font-family: charlie-bold;
 }
 
 .home-container {
+    font-family: charlie-bold;
     padding: 0;
     background-color: white;
     height: 100vh;
     overflow: auto;
-    font-family: charlie, sans-serif;
+    // font-family: charlie, sans-serif;
     display: flex;
     flex-direction: column;
     width: 100%;
 
     p {
-        font-family: charlie, sans-serif;
+        // font-family: charlie, sans-serif;
         text-align: left;
     }
 
@@ -39,14 +41,17 @@
                 border-radius: 0.3rem;
                 font-weight: 800;
                 cursor: pointer;
-                display: inline-flex;
+                justify-content: center;
+                align-items: center;
                 text-align: center;
                 transition: all 250ms ease-out 0s;
                 text-decoration: none;
                 background-color: rgb(0, 101, 255);
                 border: 1px solid rgb(0, 101, 255);
                 font-size: 1rem;
-                padding: 0.7rem 1rem 0.8rem;
+                padding: 0.8rem 2.8rem 0.8rem;
+                // width: 200px;
+                // height: 50px;
                 color: rgb(255, 255, 255) !important;
                 width: max-content;
                 margin-top: 40px;
@@ -95,9 +100,13 @@
         .desc {
             font-family: charlie, sans-serif;
             font-size: rem(20px);
+            order: 1;
             h2 {
                 margin-bottom: 40px;
                 font-size: rem(36px);
+            }
+            p {
+                font-family: charlie-regular;
             }
         }
 
@@ -132,25 +141,27 @@
             }
 
 
-            .tab:focus {
+            .tab.active {
                 background-color: rgb(255, 255, 255);
                 box-shadow: rgb(9 30 66 / 15%) 0px 0.5rem 1rem 0px;
                 border-radius: .3rem;
                 border: 0;
                 padding: 1rem 1rem 1rem 1.5rem;
                 color: rgb(9, 30, 66);
-
-                &::after {
-                    background-color: rgb(0, 199, 229);
-                    border-radius: 0.3rem 0px 0px 0.3rem;
-                    bottom: 0px;
-                    content: "";
-                    left: 0px;
-                    position: absolute;
-                    top: 0px;
-                    width: 0.5rem;
-                }
+                position: relative;
             }
+            
+            .tab.active::after {
+                background-color: rgb(0, 199, 229);
+                border-radius: 0.3rem 0px 0px 0.3rem;
+                bottom: 0px;
+                content: "";
+                left: 0px;
+                position: absolute;
+                top: 0px;
+                width: 0.5rem;
+            }
+            
         }
 
         .imgs-section {
