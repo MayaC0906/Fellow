@@ -1,0 +1,24 @@
+.activities {
+    position: relative;
+    .activity {
+        margin-left: 40px;
+        min-height: 32px;
+        padding: 8px 0;
+        position: relative;
+        font-size: 14px;
+        img {
+            height: 34px;
+            width: 100%;
+            left: -40px;
+            position: absolute;
+            top: 8px;
+            border-radius: 50%;
+            object-fit:fill;
+        }
+        
+        article {
+            word-wrap: break-word;
+            margin-left: 5px;
+        }
+    }
+}

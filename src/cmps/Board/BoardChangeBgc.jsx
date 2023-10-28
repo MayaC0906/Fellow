@@ -1,23 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import { sideBar } from "../Svgs"
-import { ChangeBgcPhotos } from './ChangeBgcPhotos';
-import { utilService } from '../../services/util.service';
-import { updateBoard } from '../../store/actions/board.actions';
-import { useNavigate } from "react-router-dom";
-import { useSelector } from 'react-redux';
-import { ChangeBgcColor } from './ChangeBgcColors';
-export function BoardChangeBgc() {
+import { ChangeBgcPhotos } from './ChangeBgcPhotos'
+import { utilService } from '../../services/util.service'
+import { updateBoard } from '../../store/actions/board.actions'
+import { useNavigate } from "react-router-dom"
+import { useSelector } from 'react-redux'
+import { ChangeBgcColor } from './ChangeBgcColors'
+
+export function BoardChangeBgc({ setTitle }) {
     const navigate = useNavigate()
     const board = useSelector((storeState) => storeState.boardModule.board)
     const [currentContent, setCurrentContent] = useState('default')
 
 
-    const renderContent = () => {
+    function renderContent() {
         switch(currentContent) {
             case 'changePhoto':
-                return <ChangeBgcPhotos onChangeBoardBgc={onChangeBoardBgc} />
+                return <ChangeBgcPhotos setTitle={setTitle} onChangeBoardBgc={onChangeBoardBgc} />
             case 'changeClr':
-                return <ChangeBgcColor onChangeBoardBgc={onChangeBoardBgc}/>
+                return <ChangeBgcColor setTitle={setTitle} onChangeBoardBgc={onChangeBoardBgc}/>
             default:
                 return (
                     <div className="bgc-modal-layout">   

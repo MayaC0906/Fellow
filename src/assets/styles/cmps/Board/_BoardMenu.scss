@@ -157,6 +157,10 @@
         width: 20px;
     }
 
+    .nav-icon,img {
+        border-radius: 4px;
+    }
+
     &-change-bgc {
         margin-top: 10px;
         position: relative;
@@ -165,6 +169,7 @@
             img {
                 height: 26px;
                 width: 26px;
+                
             }
         }
     }

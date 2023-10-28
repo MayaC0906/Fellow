@@ -1,5 +1,6 @@
-export function ChangeBgcColor({ onChangeBoardBgc}) {
-    console.log('entered');
+import { useEffect } from "react";
+
+export function ChangeBgcColor({setTitle, onChangeBoardBgc}) {
     const clrsImgs = ['https://res.cloudinary.com/duvatj8kg/image/upload/v1697202531/707f35bc691220846678_bdydef.svg',
      'https://res.cloudinary.com/duvatj8kg/image/upload/v1697202537/d106776cb297f000b1f4_kroicr.svg',
       'https://res.cloudinary.com/duvatj8kg/image/upload/v1697202522/8ab3b35f3a786bb6cdac_ci3ilc.svg', 
@@ -7,6 +8,15 @@ export function ChangeBgcColor({ onChangeBoardBgc}) {
       'https://res.cloudinary.com/duvatj8kg/image/upload/v1697202495/aec98becb6d15a5fc95e_dseafo.svg', 
       'https://res.cloudinary.com/dp0y6hy2o/image/upload/v1686389855/92e67a71aaaa98dea5ad_ogsw1y.svg',
     ]
+
+    useEffect(() => {
+        setTitle('Colors');
+        return () => {
+            setTitle("Menu")
+        };
+    }, [setTitle])
+    
+
     return ( 
     <section className="bgc-modal-layout">        
         <div className="upper-section">
