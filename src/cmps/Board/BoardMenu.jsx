@@ -7,15 +7,16 @@ import { BoardChangeBgc } from './BoardChangeBgc';
 export function BoardMenu({ setMenu, isMenuOpen }) {
     const board = useSelector((storeState) => storeState.boardModule.board)
     const [isAboutBoardOpen, setIsAboutBoardOpen] = useState()
-    const [isChangeBgcOpen, setIsChangeBgcOpen] = useState('')
+    const [isChangeBgcOpen, setIsChangeBgcOpen] = useState(false)
     // function getCmp() {
     //     switch(title) {
     //         case 'Menu': 
     //     }
     // }
-
+    console.log('check', isChangeBgcOpen);
     return (
         <div className={`board-menu ${isMenuOpen ? 'translate' : ''}`}>
+
             <div className="board-menu-container">
                 <div className="board-menu-tab-content">
 
@@ -37,12 +38,13 @@ export function BoardMenu({ setMenu, isMenuOpen }) {
                             <p className='nav-item'>Activity</p>
                         </section>
                         <hr className='divider' />
-                        <article onClick={() => setIsChangeBgcOpen(!isChangeBgcOpen)} className='board-menu-change-bgc'>
-                            <img className='nav-icon'  src={board.style.backgroundImage} alt="" />
+                        <article onClick={() => setIsChangeBgcOpen(!isChangeBgcOpen)}  className='board-menu-change-bgc'>
+                            <img  className='nav-icon'  src={board.style.backgroundImage} alt="" />
                             <p className='nav-item'>Change Background</p>
-                            {isChangeBgcOpen && <BoardChangeBgc />}
+                            
                         </article>
                     </section>
+                    {isChangeBgcOpen && <BoardChangeBgc />}
                 </div>
             </div>
         </div>
