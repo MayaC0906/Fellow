@@ -1,52 +1,61 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
-import { boardMenu } from "../Svgs";
-import { useSelector } from 'react-redux';
-import { AboutBoard } from './AboutBoard';
-import { BoardChangeBgc } from './BoardChangeBgc';
+import { boardMenu, checkList } from "../Svgs"
+import { useSelector } from 'react-redux'
+import { AboutBoard } from './AboutBoard'
+import { BoardChangeBgc } from './BoardChangeBgc'
+import { groupMenu } from '../Svgs'
+
+
 export function BoardMenu({ setMenu, isMenuOpen }) {
     const board = useSelector((storeState) => storeState.boardModule.board)
-    const [isAboutBoardOpen, setIsAboutBoardOpen] = useState()
-    const [isChangeBgcOpen, setIsChangeBgcOpen] = useState(false)
-    // function getCmp() {
-    //     switch(title) {
-    //         case 'Menu': 
-    //     }
-    // }
-    console.log('check', isChangeBgcOpen);
-    return (
-        <div className={`board-menu ${isMenuOpen ? 'translate' : ''}`}>
+    const [currentContent, setCurrentContent] = useState('default')
 
-            <div className="board-menu-container">
-                <div className="board-menu-tab-content">
-
-                    <header className="board-menu-header">
-                        <div>
-                            <h3>Menu</h3>
-                            <button className="clean-btn" onClick={() => setMenu(false)}>x</button>
-                        </div>
-                    </header>
-                    <hr className="divider" />
+    const renderContent = () => {
+        switch(currentContent) {
+            case 'aboutBoard':
+                return <AboutBoard />
+            case 'changeBgc':
+                return <BoardChangeBgc />
+            default:
+                return (
                     <section className='board-menu-content-frame'>
-                        {isAboutBoardOpen && <AboutBoard />}
                         <section className="board-menu-info ">
                             <span className="nav-icon">{boardMenu.info}</span>
-                            <p className="nav-item" onClick={() => setIsAboutBoardOpen(true)}>About this board</p>
+                            <p className="nav-item" onClick={() => setCurrentContent('aboutBoard')}>About this board</p>
                         </section>
                         <section className='board-menu-activities'>
                             <span className='nav-icon'>{boardMenu.activity}</span>
                             <p className='nav-item'>Activity</p>
                         </section>
                         <hr className='divider' />
-                        <article onClick={() => setIsChangeBgcOpen(!isChangeBgcOpen)}  className='board-menu-change-bgc'>
-                            <img  className='nav-icon'  src={board.style.backgroundImage} alt="" />
+                        <article onClick={() => setCurrentContent('changeBgc')} className='board-menu-change-bgc'>
+                            <img className='nav-icon' src={board.style.backgroundImage} alt="" />
                             <p className='nav-item'>Change Background</p>
-                            
                         </article>
                     </section>
-                    {isChangeBgcOpen && <BoardChangeBgc />}
+                )
+        }
+    }
+
+    return (
+        <div className={`board-menu ${isMenuOpen ? 'translate' : ''}`}>
+            <div className="board-menu-container">
+                <div className="board-menu-tab-content">
+                    <header className="board-menu-header">
+                        <div>
+                        {currentContent !== 'default' && (
+                                <button onClick={() => setCurrentContent('default')} className="back-btn clean-btn">
+                                {groupMenu.backArr}</button>
+                            )}
+                            <h3>Menu</h3>
+                            <button className="close-btn clean-btn" onClick={() => setMenu(false)}>{checkList.x}</button>
+                        </div>
+                    </header>
+                    <hr className="divider" />
+                    {renderContent()}
                 </div>
             </div>
         </div>
-    )
+    );
 }

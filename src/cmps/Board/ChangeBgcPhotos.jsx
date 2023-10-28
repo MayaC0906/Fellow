@@ -103,7 +103,6 @@ export function ChangeBgcPhotos({onChangeBoardBgc}) {
             <div className="input-section">
                 <input type="text" 
                     placeholder="Photos"
-                    //TODO - FILTER PHOTOS
                 />
                 {appHeaderSvg.search}
             </div>
@@ -115,15 +114,14 @@ export function ChangeBgcPhotos({onChangeBoardBgc}) {
                             <article>
                                 <a href={`${img.nameLink}`}>{img.name}</a>
                             </article>
-                        </div>               
-                    
+                        </div>                     
                 })}
             </div>
-            <footer>
+            {/* <footer>
                 <p>
                     By using images from Unsplash, you agree to their <span>license</span> and <span>Terms of Service</span>
                 </p>
-            </footer>
+            </footer> */}
         </section>
     )
 }

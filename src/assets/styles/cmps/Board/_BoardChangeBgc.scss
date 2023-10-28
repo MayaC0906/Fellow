@@ -10,6 +10,16 @@
     overflow: auto;
     height: 600px;
     position: relative;
+
+    .upper-section {
+        gap: 5px;
+        display: grid;
+        /* margin: 0 auto; */
+        grid-template-columns: 1fr 1fr;
+        /* align-items: center; */
+        /* justify-content: center; */
+        height: max-content;
+    }
     .unsplash  {
         position: relative;
         flex: 1;
@@ -30,12 +40,13 @@
     }
     .sq{
         box-sizing: border-box;
-        float: left;
+        /* float: left; */
         padding: 0 4px;
         position: relative;
         text-align: center;
-        width: 50%;
-       
+        display: flex;
+        // width: 50%;
+        flex-direction: column;
         img{
             cursor: pointer;
             background-color: #091e420f;
@@ -77,10 +88,10 @@
             text-decoration: underline;
             text-overflow: ellipsis;
             white-space: nowrap;
-            width: 94%;
+            width: 95%;
             height: 20px;
             left: 4px;
-            bottom: 16px;
+            bottom: 7px;
         }
     }
 

@@ -69,27 +69,48 @@
             }
 
             button {
+                height: 32px;
+                width: 32px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 900;
+                &:hover {
+                    background-color: #d4d6dc74;
+                }
+            }
+
+            svg {
+                fill: #626f86;
+            }
+            .back-btn {
+                border-radius: 8px;
+                color: #44546f;
+                padding: 6px;
+                z-index: 2;
+                margin-left: 3px;
+                position: absolute;
+                left: 10px;
+                svg {      
+                    height: 14px;
+                    width: 16px;
+                }           
+            }
+            .close-btn {
                     border-radius: 8px; 
                     cursor: pointer;
-                    font-size: 20px; 
+                    font-size: 18px; 
                     position: absolute; 
                     right: 12px;
                     top: 12px;
-                    color: #44546f;
-                    height: 32px;
-                    width: 32px;
-                    &:hover {
-                        background-color: #091e423c;
-                    }
+                    color: #5f6164;  
+                    font-weight: bold;               
             }
         }
     }
 
     &-info {
         position: relative;
-        // display: flex;
-        // align-items: center;
-        // // margin-top: 12px;
         svg {
             height: 20px;
             width: 20px;
