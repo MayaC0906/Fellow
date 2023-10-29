@@ -1,7 +1,7 @@
 import { utilService } from "../../services/util.service";
 import { additionTaskSvg } from "../Svgs";
 
-export function CoverEdit({ editName, onCloseEditTask, onSaveTask, task }) {
+export function CoverEdit({ pos, editName, onCloseEditTask, onSaveTask, task }) {
     const coverColors = ['#4bce97', '#f5cd47', '#fea362', '#f87168', '#9f8fef',
         '#579dff', '#6cc3e0', '#94c748', '#e774bb', '#8590a2']
 
@@ -66,7 +66,7 @@ export function CoverEdit({ editName, onCloseEditTask, onSaveTask, task }) {
     }
 
     return (
-        <section className="edit-modal">
+        <section style={{top:pos.top, left: pos.left}} className="edit-modal">
             <div className="title-container">
                 <p>{editName}</p>
                 <button onClick={onCloseEditTask} className="close-modal">{additionTaskSvg.close}</button>

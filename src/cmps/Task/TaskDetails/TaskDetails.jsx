@@ -1,5 +1,5 @@
-import { useParams } from "react-router"
-import { loadTask } from "../../../store/actions/board.actions"
+import { useNavigate, useParams } from "react-router"
+import { deleteTask, loadTask } from "../../../store/actions/board.actions"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { TaskTitle } from "./TaskTitle"
@@ -21,6 +21,7 @@ export function TaskDetails() {
     const [task, setTask] = useState('')
     const [imgBackground, setImgBackground] = useState('white')
     let [editName, setEditName] = useState('')
+    const navigate = useNavigate()
 
     useEffect(() => {
         onLoadTask(boardId, groupId, taskId)
@@ -47,6 +48,21 @@ export function TaskDetails() {
         } catch (err) {
             console.log('cant save task');
         }
+    }
+
+    async function onDeleteTask(taskId) {
+        try {
+            await deleteTask(boardId, groupId, taskId)
+        } catch (err) {
+            console.log('cant save task');
+        }
+    }
+
+    //Dynamic component
+
+    function onActionDeleteTask() {
+        navigate(`/board/${boardId}`)
+        onDeleteTask(task.id)
     }
 
     async function onChangeBgc() {
@@ -132,6 +148,8 @@ export function TaskDetails() {
 
                             <section className="edit-task-nav">
                                 <TaskDetailsSideNav
+                                    onActionDeleteTask={onActionDeleteTask}
+                                    onDeleteTask={onDeleteTask}
                                     setTask={setTask}
                                     editName={editName}
                                     setEditName={setEditName}
