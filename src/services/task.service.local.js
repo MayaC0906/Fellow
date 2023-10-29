@@ -20,7 +20,7 @@ async function getById(boardId, groupId, taskId) {
     }
 }
 
-async function saveTask(boardId, groupId, newTask) {
+async function saveTask(boardId, groupId, newTask, user, txt) {
     try {
         let group = await boardService.getGroupById(groupId, boardId)
         if (newTask.id) {
@@ -30,7 +30,7 @@ async function saveTask(boardId, groupId, newTask) {
             newTask.id = utilService.makeId()
             group.tasks.push(newTask)
         }
-        return await boardService.saveGroup(group, boardId)
+        return await boardService.saveGroup(group, boardId, user, txt)
     } catch (err) {
         console.log('couldn\'t save task', err);
         throw err

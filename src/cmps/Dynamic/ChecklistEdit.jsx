@@ -23,7 +23,8 @@ export function ChecklistEdit({ onSaveTask, onCloseEditTask, setTask, task }) {
             checklistsToSave.push(newList)
             const newTask = { ...task, checklists: checklistsToSave }
             // setTask(newTask)
-            onSaveTask(newTask)
+            const activityTxt = `added checklist ${newList.title} to "${task.title}".`
+            onSaveTask(newTask, activityTxt)
             onCloseEditTask()
         } catch (err) {
             console.log('cant save checklist', err);

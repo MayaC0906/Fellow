@@ -6,39 +6,42 @@ import { useParams } from 'react-router-dom'
 
 export function GroupHeader({ isMenuOpen, setMenu }) {
     const { boardId } = useParams()
-
+    const user = useSelector((storeState) => storeState.userModule.user)
+    
     const boards = useSelector(storeState => storeState.boardModule.boards)
     const [board, onSetBoard] = useState({})
     const [isBoardStarred, setIsBoardStarred] = useState(null)
     const [content, setContent] = useState('')
     let zIndexCount = 10
-
+    
     useEffect(() => {
         onLoadBoard()
     }, [boardId, board])
-
+    
     async function onLoadBoard() {
         const boardToFind = boards.find(board => board._id === boardId)
         onSetBoard(boardToFind)
         setIsBoardStarred(boardToFind.isStarred)
         setContent(boardToFind.title)
     }
-
+    
     async function onEditBoardTitle() {
         let value = event.target.textContent
         board.title = value
         try {
-            await updateBoard(board)
+            const txt = `changed this board title from ${board.title} to ${value}.`
+            await updateBoard(board, user, txt)
         } catch (err) {
             console.log(err);
             throw err
         }
     }
-
+    
     async function onToggleBoardStar() {
         board.isStarred = !board.isStarred
         try {
-            await updateBoard(board)
+            const txt = `${board.isStarred ? 'starred' : 'unstarred'} this board.`
+            await updateBoard(board, user, txt)
             setIsBoardStarred(board.isStarred)
         } catch (err) {
             console.log(`Could'nt change isStarred`, err);

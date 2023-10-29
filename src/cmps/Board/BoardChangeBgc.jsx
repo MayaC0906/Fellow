@@ -4,13 +4,15 @@ import { ChangeBgcPhotos } from './ChangeBgcPhotos'
 import { utilService } from '../../services/util.service'
 import { updateBoard } from '../../store/actions/board.actions'
 import { useNavigate } from "react-router-dom"
-import { useSelector } from 'react-redux'
 import { ChangeBgcColor } from './ChangeBgcColors'
+import { useSelector } from 'react-redux'
+
 
 export function BoardChangeBgc({ setTitle }) {
     const navigate = useNavigate()
     const board = useSelector((storeState) => storeState.boardModule.board)
     const [currentContent, setCurrentContent] = useState('default')
+    const user = useSelector((storeState) => storeState.userModule.user)
 
 
     function renderContent() {
@@ -52,7 +54,8 @@ export function BoardChangeBgc({ setTitle }) {
                 let dominantColor = await utilService.getDominantColor(bgcImg)
                 boardToSave.style.dominantColor = dominantColor
                 boardToSave.style.isBright = utilService.isRgbBright(dominantColor.rgb)
-                await updateBoard(boardToSave)
+                const txt = `${user.fullname} changed this board background.`;
+                await updateBoard(boardToSave, user, txt)
                 navigate(`/board/${boardToSave._id}`)
             } catch (err) {
                 console.log('Could not change board bgc')

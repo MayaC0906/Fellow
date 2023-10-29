@@ -12,7 +12,7 @@ export function BoardActivity({ board }) {
 
     function formatDate(timestamp){
         const now = Date.now()
-        const differenceInSeconds = (now - timestamp * 1000) / 1000
+        const differenceInSeconds = (now - timestamp) / 1000;
         const differenceInMinutes = differenceInSeconds / 60
         const differenceInHours = differenceInMinutes / 60
 

@@ -16,6 +16,7 @@ export const boardService = {
     getGroupById,
     getEmptyLabel,
     getEmptyBoard,
+    addActivity
 }
 
 window.bs = boardService
@@ -53,18 +54,22 @@ async function getById(boardId) {
     return storageService.get(STORAGE_KEY, boardId)
 }
 
-async function remove(babaId) {
+async function remove(boardId) {
     // throw new Error('Nope')
-    await storageService.remove(STORAGE_KEY, babaId)
+    await storageService.remove(STORAGE_KEY, boardId)
 }
 
-async function save(board) {
-    var savedBoard
-    if (board._id) {
+async function save(board, user, txt) {
+    console.log('user:', user)
+    var savedBoard 
+    if (board._id) {        
+        addActivity(board, user, txt)
         savedBoard = await storageService.put(STORAGE_KEY, board)
     } else {
         // Later, owner is set by the backend
-        // board.owner = userService.getLoggedinUser()
+        board.createdBy = userService.getLoggedinUser()
+        addActivity(board, user, txt)
+
         savedBoard = await storageService.post(STORAGE_KEY, board)
     }
     return savedBoard
@@ -74,7 +79,6 @@ function getEmptyGroup() {
     return {
         title: '',
         tasks: [],
-        byMember: userService.getLoggedinUser(),
     }
 }
 
@@ -89,9 +93,11 @@ async function getGroupById(groupId, boardId) {
     }
 }
 
-async function saveGroup(group, boardId) {
+async function saveGroup(group, boardId, user, txt) {
+    console.log('user:', user)
     try {
         let board = await getById(boardId)
+        
         if (group.id) {
             const idx = board.groups.findIndex((currGroup) => currGroup.id === group.id)
             board.groups.splice(idx, 1, group)
@@ -99,6 +105,9 @@ async function saveGroup(group, boardId) {
             group.id = utilService.makeId()
             board.groups.push(group)
         }
+
+        addActivity(board, user, txt, group)
+
         return save(board)
     } catch (err) {
         console.log('couldnt save group', err)
@@ -106,17 +115,43 @@ async function saveGroup(group, boardId) {
     }
 }
 
-async function removeGroup(groupId, boardId) {
+
+async function removeGroup(group, boardId, user, txt) {
     try {
         const board = await getById(boardId)
-        const updatedGroups = board.groups.filter((group) => group.id !== groupId)
+        const updatedGroups = board.groups.filter((g) => g.id !== group.id)
         board.groups = updatedGroups
+        addActivity(board, user, txt, group);
+
         return save(board)
     } catch (err) {
         console.log('Failed to remove group', err)
         throw err
     }
 }
+
+function addActivity(board, user, txt, { group, task } = {}) {
+    console.log('user: from add', user)
+    if(!user || !board || !txt) return
+    // console.log('details:', details.group)
+    // const activityTxt = generateActivityText(action, member.fullname, optionalDetails)
+    const activity = {
+        id: utilService.makeId(),
+        txt,
+        createdAt: Date.now(),
+        byMember: user,
+        group: {
+            id: group?.id || '',
+            title: group?.title || '',
+        },
+        task: {
+            id: task?.id || '',
+            title: task?.title || '',
+        }    
+    };
+    board.activities.push(activity);
+}
+
 
 function getEmptyLabel() {
     return {
@@ -131,7 +166,6 @@ function getEmptyBoard() {
         title: '',
         isStarred: false,
         archivedAt: Date.now(),
-        createdBy: userService.getLoggedinUser(),
         style: {
             backgroundImage: "",
             backgroundColor: "",

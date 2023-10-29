@@ -21,7 +21,7 @@ export function TaskDetails() {
     const [task, setTask] = useState('')
     const [imgBackground, setImgBackground] = useState('white')
     let [editName, setEditName] = useState('')
-
+    const user = useSelector((storeState) => storeState.userModule.user)
     useEffect(() => {
         onLoadTask(boardId, groupId, taskId)
     }, [])
@@ -40,9 +40,9 @@ export function TaskDetails() {
         }
     }
 
-    async function onSaveTask(updatedTask) {
+    async function onSaveTask(updatedTask, txt) {
         try {
-            await saveNewTask(boardId, groupId, updatedTask)
+            await saveNewTask(boardId, groupId, updatedTask, user, txt)
             setTask(updatedTask)
         } catch (err) {
             console.log('cant save task');

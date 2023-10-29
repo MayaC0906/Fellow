@@ -61,9 +61,9 @@ export async function removeBoard(boardId) {
     }
 }
 
-export async function addBoard(board) {
+export async function addBoard(board, user, txt) {
     try {
-        const savedBoard = await boardService.save(board)
+        const savedBoard = await boardService.save(board, user, txt)
         store.dispatch(getActionAddBoard(savedBoard))
         return savedBoard
     } catch (err) {
@@ -72,9 +72,10 @@ export async function addBoard(board) {
     }
 }
 
-export async function updateBoard(board) {
+export async function updateBoard(board, user, txt) {
+    console.log('txt:', txt)
     try {
-        const savedBoard = await boardService.save(board)
+        const savedBoard = await boardService.save(board, user, txt)
         store.dispatch(getActionUpdateBoard(savedBoard))
         return savedBoard
     } catch (err) {
@@ -84,11 +85,11 @@ export async function updateBoard(board) {
 }
 
 
-export async function removeGroup(groupId, boardId) {
+export async function removeGroup(group, boardId, user, txt) {
     try {
-        const savedBoard = await boardService.removeGroup(groupId, boardId)
+        const savedBoard = await boardService.removeGroup(group, boardId, user, txt)
         store.dispatch(getActionUpdateBoard(savedBoard))
-        return groupId
+        return group
     } catch (err) {
         console.log('Cannot remove group', err)
         throw err
@@ -96,9 +97,9 @@ export async function removeGroup(groupId, boardId) {
 }
 
 
-export async function saveNewTask(boardId, groupId, newTask) {
+export async function saveNewTask(boardId, groupId, newTask, user, txt) {
     try {
-        const board = await taskService.saveTask(boardId, groupId, newTask)
+        const board = await taskService.saveTask(boardId, groupId, newTask, user, txt)
         store.dispatch(getActionUpdateBoard(board))
         return board
     } catch (err) {
@@ -107,9 +108,10 @@ export async function saveNewTask(boardId, groupId, newTask) {
     }
 }
 
-export async function saveGroup(group, boardId) {
+export async function saveGroup(group, boardId, user, txt) {
+    console.log('user:', user)
     try {
-        const board = await boardService.saveGroup(group, boardId)
+        const board = await boardService.saveGroup(group, boardId, user, txt)
         store.dispatch(getActionUpdateBoard(board))
         return group
     } catch (err) {
