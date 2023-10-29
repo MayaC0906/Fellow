@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { ImgUploader } from '../cmps/Dynamic/Attachment/ImgUploader'
-import { loadUsers, login, signup } from '../store/user.actions'
+import { loadUsers, login, signup } from '../store/actions/user.actions'
 import { useNavigate } from 'react-router'
 
 export function LoginSignup(props) {
@@ -33,18 +33,22 @@ export function LoginSignup(props) {
 
     async function onConnect(ev = null) {
         if (ev) ev.preventDefault()
-        if (!isSignup) {
-            if (!credentials.username) return
-            // props.onLogin(credentials)
-            await login(credentials)
-            navigate('/workspace')
-        } else {
-            if (!credentials.username || !credentials.password || !credentials.fullname) return
-            // props.onSignup(credentials)
-            await signup(credentials)
-            navigate('/workspace')
+        try {
+            if (!isSignup) {
+                if (!credentials.username) return
+                // props.onLogin(credentials)
+                await login(credentials)
+                navigate('/workspace')
+            } else {
+                if (!credentials.username || !credentials.password || !credentials.fullname) return
+                // props.onSignup(credentials)
+                await signup(credentials)
+                navigate('/workspace')
+            }
+            clearState()
+        } catch (err) {
+            console.log('Could not set user', err)
         }
-        clearState()
     }
 
     // function onSignup(ev = null) {

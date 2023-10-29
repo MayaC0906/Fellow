@@ -58,6 +58,7 @@ function remove(userId) {
 // }
 
 async function login(userCred) {
+    login(userCred)
     const users = await storageService.query(STORAGE_KEY)
     const user = users.find(user => user.username === userCred.username)
     // const user = await httpService.post('auth/login', userCred)
@@ -89,7 +90,7 @@ async function logout() {
 
 
 function saveLocalUser(user) {
-    user = { _id: user._id, fullname: user.fullname, imgUrl: user.imgUrl }
+    user = { _id: user._id, fullname: user.fullname, imgUrl: user.imgUrl, username: user.username }
     // , score: user.score  - was also in user object maybe use it further
     sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
     return user
