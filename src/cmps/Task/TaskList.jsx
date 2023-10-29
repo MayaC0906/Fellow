@@ -41,7 +41,7 @@ export function TaskList({ handleDrag, tasks, labels, members, isLabelsShown, se
                                             {...provided.draggableProps}
                                             {...provided.dragHandleProps}
                                         >
-                                            <Link to={`${groupId}/${task.id}`}>
+                                          
                                                 <TaskPreview
                                                     setIsLabelsShown={setIsLabelsShown}
                                                     isLabelsShown={isLabelsShown}
@@ -51,7 +51,6 @@ export function TaskList({ handleDrag, tasks, labels, members, isLabelsShown, se
                                                     taskChecklist={taskChecklist}
                                                     groupId={groupId}
                                                 />
-                                            </Link>
                                         </div>
                                     )}
                                 </Draggable>

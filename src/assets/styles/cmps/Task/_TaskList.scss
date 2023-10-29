@@ -14,219 +14,255 @@
         text-decoration: none;
     }
 
-    .task {
-        margin: 0 auto;
+    .task-container {
         position: relative;
-        border-radius: 8px;
-        box-shadow: 0px 1px 1px #091E4240, 0px 0px 1px #091E424F;
-        background-color: white;
-        cursor: pointer;
 
-        button {
-            margin: 0 0 8px;
-            height: 32px;
-            width: 32px;
-            display: none;
-            position: absolute;
-            top: 2px;
-            right: 2px;
-            border-radius: 50%;
-            padding: 6px 8px;
-            background-color: $clr6;
-            border: none;
+        &.quickedit {
+            z-index: 50;
 
-            svg {
-                width: 16px;
-                height: 16px;
-                color: #172b4d;
-                display: flex;
-                justify-content: center;
-                align-items: center;
+            a {
+                pointer-events: none;
             }
-        }
 
-        &:hover {
-            outline: 2px solid black;
+            .task {
+                z-index: 50;
+            }
 
-            button {
-                display: flex;
-                justify-content: center;
-                align-items: center;
+            .save-btn {
+                position: fixed;
+                z-index: 30;
+                border-radius: 3px;
+                font-size: rem(14px);
+                padding: 6px 12px;
+                line-height: 20px;
+                font-weight: 500;
+                border: none;
+                background-color: #0c66e4;
+                color: #fff;
+                cursor: pointer;
 
                 &:hover {
-                    background-color: #f1f2f4;
-                    cursor: pointer;
-                }
-            }
-        }
-
-        .task-cover {
-            min-height: 36px;
-            border-top-right-radius: 8px;
-            border-top-left-radius: 8px;
-        }
-
-        .task-title {
-            display: block;
-            margin-block-end: 4px;
-            overflow: hidden;
-            overflow-wrap: break-word;
-            white-space: normal;
-            color: #172b4d;
-            font-weight: 400;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif4;
-        }
-
-        .task-info {
-            position: relative;
-            padding: 8px 12px 4px;
-            min-height: 24px;
-            display: flow-root;
-            position: relative;
-
-            .labels {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 4px;
-                margin-block-end: 4px;
-
-
-                .label {
-                    margin-bottom: 0;
-                    border-radius: 4px;
-                    transition: 0.1s ease-in, height 0.1s ease-in 0.15s;
-
-                    &.close {
-                        width: 40px;
-                        height: 8px;
-
-                        span {
-                            opacity: 0;
-                        }
-                    }
-
-                    &.open {
-                        height: 16px;
-                        min-width: 56px;
-                        display: flex;
-                        max-width: 100%;
-                        align-items: center;
-
-                        &:hover {
-                            cursor: pointer;
-                            filter: brightness(95%);
-                        }
-
-                        span {
-                            padding: 0 8px;
-                            line-height: rem(16px);
-                            font-size: rem(12px);
-                            font-weight: 500;
-                            text-align: left;
-                            vertical-align: middle;
-                            overflow: hidden;
-                            text-overflow: ellipsis;
-                            transition-delay: 0.15s;
-                            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-                            display: inline-block;
-                            position: relative;
-                            white-space: nowrap;
-                            opacity: 1;
-                        }
-                    }
+                    background-color: rgb(0, 85, 204);
                 }
 
-
+                &:active {
+                    background-color: rgb(9, 50, 108);
+                }
 
             }
 
-            h3 {
-                word-wrap: break-word;
-                font-size: rem(14px);
-                color: #172b4d;
-                margin: 0 0 4px;
-                overflow: hidden;
-                font-weight: 400;
-                font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            }
+            .edit-actions {
+                position: fixed;
 
-            .task-badges {
-                display: flex;
-                flex-wrap: wrap;
-                float: left;
-                column-gap: 4px;
-                max-width: 100%;
-
-                .task-badge {
+                &.rtl {
                     display: flex;
-                    justify-content: center;
+                    flex-direction: column;
+                    align-items: end;
+                    .add-container {
+                        align-items: end;
+                    }
+                }
+
+                .btn {
+                    background: white;
+                    width: max-content;
+                }
+
+                .open-card-btn {
+                    background: white;
+                    width: max-content;
+                    font-size: rem(14px);
+                    font-weight: 500;
+                    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                    margin-block-end: 8px;
+                    gap: 8px;
+                    height: 32px;
+                    display: flex;
                     align-items: center;
-                    position: relative;
                     border-radius: 3px;
-                    padding: 2px;
-                    margin-bottom: 4px;
-                    width: fit-content;
-                    max-width: 100%;
-                    height: 24px;
-
-                    &.complete {
-                        background-color: rgb(31, 132, 90);
-
-                        span {
-                            color: white;
-                        }
-
-                        svg {
-                            color: white;
-
-                            path {
-                                fill: white;
-                            }
-                        }
-                    }
-
-                    .icon-badge {
-                        height: 20px;
-                        width: 20px;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                    }
+                    border: none;
+                    padding: 6px 12px;
+                    cursor: pointer;
+                    color: #172B4D;
 
                     svg {
-                        color: #44546f;
-                        height: 16px;
                         width: 16px;
+                        height: 16px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
 
                         path {
                             fill: #44546f;
                         }
                     }
+                }
 
-                    .number-badge {
-                        padding: 0 4px 0 2px;
-                        border-color: #44546f;
-                        color: #44546f;
-                        font-size: rem(12px);
-                        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                h3 {
+                    display: none;
+                }
+            }
+        }
+
+        .task {
+            margin: 0 auto;
+            position: relative;
+            border-radius: 8px;
+            box-shadow: 0px 1px 1px #091E4240, 0px 0px 1px #091E424F;
+            background-color: white;
+            cursor: pointer;
+
+            button {
+                margin: 0 0 8px;
+                height: 32px;
+                width: 32px;
+                opacity: 0;
+                position: absolute;
+                top: 2px;
+                right: 2px;
+                border-radius: 50%;
+                padding: 6px 8px;
+                background-color: $clr6;
+                border: none;
+
+                &.quick-edit-badge {
+                    z-index: 30;
+                }
+
+                svg {
+                    width: 16px;
+                    height: 16px;
+                    color: #172b4d;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+
+            &:hover {
+                outline: 2px solid black;
+
+                button {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    opacity: 1;
+
+                    &:hover {
+                        background-color: #f1f2f4;
+                        cursor: pointer;
+                    }
+                }
+            }
+
+            .task-cover {
+                min-height: 36px;
+                border-top-right-radius: 8px;
+                border-top-left-radius: 8px;
+            }
+
+            .task-title {
+                display: block;
+                margin-block-end: 4px;
+                overflow: hidden;
+                overflow-wrap: break-word;
+                white-space: normal;
+                color: #172b4d;
+                font-weight: 400;
+                font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif4;
+            }
+
+            .task-info {
+                position: relative;
+                padding: 8px 12px 4px;
+                min-height: 24px;
+                display: flow-root;
+                position: relative;
+
+                .labels {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 4px;
+                    margin-block-end: 4px;
+
+
+                    .label {
+                        margin-bottom: 0;
+                        border-radius: 4px;
+                        transition: 0.1s ease-in, height 0.1s ease-in 0.15s;
+
+                        &.close {
+                            width: 40px;
+                            height: 8px;
+
+                            span {
+                                opacity: 0;
+                            }
+                        }
+
+                        &.open {
+                            height: 16px;
+                            min-width: 56px;
+                            display: flex;
+                            max-width: 100%;
+                            align-items: center;
+
+                            &:hover {
+                                cursor: pointer;
+                                filter: brightness(95%);
+                            }
+
+                            span {
+                                padding: 0 8px;
+                                line-height: rem(16px);
+                                font-size: rem(12px);
+                                font-weight: 500;
+                                text-align: left;
+                                vertical-align: middle;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                transition-delay: 0.15s;
+                                font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                                display: inline-block;
+                                position: relative;
+                                white-space: nowrap;
+                                opacity: 1;
+                            }
+                        }
                     }
 
-                    &.duedate {
+
+
+                }
+
+                h3 {
+                    word-wrap: break-word;
+                    font-size: rem(14px);
+                    color: #172b4d;
+                    margin: 0 0 4px;
+                    overflow: hidden;
+                    font-weight: 400;
+                    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                }
+
+                .task-badges {
+                    display: flex;
+                    flex-wrap: wrap;
+                    float: left;
+                    column-gap: 4px;
+                    max-width: 100%;
+
+                    .task-badge {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        position: relative;
                         border-radius: 3px;
-
-                        .empty-square {
-                            display: none;
-                        }
-
-                        &:hover {
-                            .empty-square {
-                                display: flex;
-                            }
-
-                            .clock {
-                                display: none;
-                            }
-                        }
+                        padding: 2px;
+                        margin-bottom: 4px;
+                        width: fit-content;
+                        max-width: 100%;
+                        height: 24px;
 
                         &.complete {
                             background-color: rgb(31, 132, 90);
@@ -242,67 +278,139 @@
                                     fill: white;
                                 }
                             }
+                        }
 
-                            .clock {
+                        .icon-badge {
+                            height: 20px;
+                            width: 20px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+
+                        }
+
+
+                        svg {
+                            color: #44546f;
+                            height: 16px;
+                            width: 16px;
+
+                            path {
+                                fill: #44546f;
+                            }
+                        }
+
+                        .number-badge {
+                            padding: 0 4px 0 2px;
+                            border-color: #44546f;
+                            color: #44546f;
+                            font-size: rem(12px);
+                            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                        }
+
+                        &.duedate {
+                            border-radius: 3px;
+
+                            .empty-square {
                                 display: none;
                             }
 
                             &:hover {
-
-                                .checklist {
-                                    display: none;
+                                .empty-square {
+                                    display: flex;
                                 }
 
                                 .clock {
-                                    display: flex;
+                                    display: none;
                                 }
                             }
-                        }
 
-                        &.overdue {
-                            background-color: rgb(255, 213, 210);
-                            color: rgb(174, 46, 36);
+                            &.complete {
+                                background-color: rgb(31, 132, 90);
 
-                            span {
-                                color: rgb(174, 46, 36);
+                                span {
+                                    color: white;
+                                }
 
                                 svg {
-                                    color: rgb(174, 46, 36);
+                                    color: white;
 
                                     path {
-                                        fill: rgb(174, 46, 36);
+                                        fill: white;
+                                    }
+                                }
+
+                                .clock {
+                                    display: none;
+                                }
+
+                                &:hover {
+
+                                    .checklist {
+                                        display: none;
+                                    }
+
+                                    .clock {
+                                        display: flex;
                                     }
                                 }
                             }
-                        }
 
-                        &.duesoon {
-                            background-color: rgb(245, 205, 71);
-                            color: rgb(23, 43, 77);
-                        }
+                            &.overdue {
+                                background-color: rgb(255, 213, 210);
+                                color: rgb(174, 46, 36);
 
+                                span {
+                                    color: rgb(174, 46, 36);
+
+                                    svg {
+                                        color: rgb(174, 46, 36);
+
+                                        path {
+                                            fill: rgb(174, 46, 36);
+                                        }
+                                    }
+                                }
+                            }
+
+                            &.duesoon {
+                                background-color: rgb(245, 205, 71);
+                                color: rgb(23, 43, 77);
+                            }
+
+                        }
+                    }
+                }
+
+                .task-members {
+                    float: right;
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: right;
+                    gap: 4px;
+                    margin-right: -4px;
+                    margin-bottom: 4px;
+
+                    .member {
+                        height: 24px;
+                        width: 24px;
+                        border-radius: 50%;
+                        margin-left: 4px;
+                        object-fit: cover;
                     }
                 }
             }
 
-            .task-members {
-                float: right;
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: right;
-                gap: 4px;
-                margin-right: -4px;
-                margin-bottom: 4px;
-
-                .member {
-                    height: 24px;
-                    width: 24px;
-                    border-radius: 50%;
-                    margin-left: 4px;
-                    object-fit: cover;
-                }
-            }
         }
-
     }
+}
+
+.back-drop-quick {
+    position: fixed;
+    z-index: 40;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: $dtl-bgc5;
 }

@@ -11,7 +11,8 @@ export const utilService = {
     getFileNameFromUrl,
     formatImgTime,
     getDominantColor,
-    isRgbBright
+    isRgbBright,
+    delay
 }
 
 function makeId(length = 6) {
@@ -41,6 +42,9 @@ function getRandomIntInclusive(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min //The maximum is inclusive and the minimum is inclusive 
 }
 
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 
 function randomPastTime() {
     const HOUR = 1000 * 60 * 60

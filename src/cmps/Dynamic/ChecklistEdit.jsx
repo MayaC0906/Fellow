@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import { Textarea } from '@mui/joy';
 import { loadTask } from '../../store/actions/board.actions.js';
 import { taskService } from '../../services/task.service.local';
-export function ChecklistEdit({ onSaveTask, onCloseEditTask, setTask, task }) {
+export function ChecklistEdit({ pos, onSaveTask, onCloseEditTask, setTask, task }) {
     const [txt, setTxt] = useState('')
     const { checklists } = task
 
@@ -33,7 +33,7 @@ export function ChecklistEdit({ onSaveTask, onCloseEditTask, setTask, task }) {
 
 
     return (
-        <section className="edit-modal">
+        <section style={{top: pos.top, left: pos.left}} className="edit-modal">
             <div className="title-container">
                 <p>Add checklist</p>
                 <button onClick={onCloseEditTask} className="close-modal">{additionTaskSvg.close}</button>

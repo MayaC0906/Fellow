@@ -107,6 +107,17 @@ export async function saveNewTask(boardId, groupId, newTask) {
     }
 }
 
+export async function deleteTask(boardId, groupId, taskId) {
+    try {
+        const board = await taskService.deleteTask(boardId, groupId, taskId)
+        store.dispatch(getActionUpdateBoard(board))
+        return board
+    } catch (err) {
+        console.log('cannot save new task');
+        throw err
+    }
+}
+
 export async function saveGroup(group, boardId) {
     try {
         const board = await boardService.saveGroup(group, boardId)
