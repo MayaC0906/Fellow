@@ -3,7 +3,8 @@ import { additionTaskSvg, taskSvg } from '../Svgs'
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
-export function MemberEdit({ editName, onCloseEditTask, onSaveTask, task }) {
+export function MemberEdit({ pos, editName, onCloseEditTask, onSaveTask, task }) {
+    console.log(pos);
     const board = useSelector(storeState => storeState.boardModule.board)
     const [filterMembers, setFilterdMembers] = useState(board.members)
     const [connectMembers, setConnectMembers] = useState(task.memberIds)
@@ -34,7 +35,7 @@ export function MemberEdit({ editName, onCloseEditTask, onSaveTask, task }) {
     }
 
     return (
-        <section className="edit-modal">
+        <section style={{top: pos.top, left: pos.left}}  className="edit-modal">
             <div className="title-container">
                 <p>{editName}</p>
                 <button onClick={onCloseEditTask} className="close-modal">{additionTaskSvg.close}</button>

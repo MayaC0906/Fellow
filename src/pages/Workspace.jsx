@@ -35,7 +35,12 @@ export function Workspace() {
 
 
 
-    if (!boards || !boards.length) return <div>loading</div>
+    if (!boards || !boards.length) return (
+        <>
+            <section className="boards-add flex align-center justify-center" onClick={() => setIsBoardAdded(!isBoardAdded)}>Create new board</section>
+            {isBoardAdded && <AddBoard setIsBoardAdded={setIsBoardAdded} />}
+        </>
+    )
     return (
         <section className="workspace-container flex">
             {/* <nav className="flex">

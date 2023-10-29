@@ -6,12 +6,16 @@ import { AboutBoard } from './AboutBoard'
 import { BoardChangeBgc } from './BoardChangeBgc'
 import { groupMenu } from '../Svgs'
 import { BoardActivity } from './BoardActivity'
+import { useNavigate, useParams } from 'react-router'
+import { removeBoard } from '../../store/actions/board.actions'
 
 
 export function BoardMenu({ setMenu, isMenuOpen }) {
     const board = useSelector((storeState) => storeState.boardModule.board)
     const [currentContent, setCurrentContent] = useState('default')
     const [title, setTitle] = useState('Menu')
+    const { boardId } = useParams()
+    const navigate = useNavigate()
 
     const contentTitleMap = {
         aboutBoard: "About Board",
@@ -19,19 +23,29 @@ export function BoardMenu({ setMenu, isMenuOpen }) {
         activities: "Activity",
         default: "Menu"
     };
-    
+
     function handleContentChange(contentKey) {
         setCurrentContent(contentKey);
         setTitle(contentTitleMap[contentKey]);
     }
-    
 
-    function renderContent(){
-        switch(currentContent) {
+    async function deleteBoard() {
+        try {
+            await removeBoard(boardId)
+            navigate('/workspace')
+        } catch (err) {
+            console.log('Could not delete board')
+        }
+
+    }
+
+
+    function renderContent() {
+        switch (currentContent) {
             case 'aboutBoard':
                 return <AboutBoard />
             case 'changeBgc':
-                return <BoardChangeBgc setTitle={setTitle}/>
+                return <BoardChangeBgc setTitle={setTitle} />
             case 'activities':
                 return <BoardActivity board={board} />
             default:
@@ -50,6 +64,10 @@ export function BoardMenu({ setMenu, isMenuOpen }) {
                             <img className='nav-icon' src={board.style.backgroundImage} alt="" />
                             <p className='nav-item'>Change Background</p>
                         </article>
+                        <section className="board-menu-info ">
+                            <span className="nav-icon">{checkList.garbage}</span>
+                            <p className="nav-item" onClick={deleteBoard}>Delete board</p>
+                        </section>
                     </section>
                 )
         }
@@ -61,9 +79,9 @@ export function BoardMenu({ setMenu, isMenuOpen }) {
                 <div className="board-menu-tab-content">
                     <header className="board-menu-header">
                         <div>
-                        {currentContent !== 'default' && (
+                            {currentContent !== 'default' && (
                                 <button onClick={() => handleContentChange('default')} className="back-btn clean-btn">
-                                {groupMenu.backArr}</button>
+                                    {groupMenu.backArr}</button>
                             )}
                             <h3>{title}</h3>
                             <button className="close-btn clean-btn" onClick={() => setMenu(false)}>{checkList.x}</button>

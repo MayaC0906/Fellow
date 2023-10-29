@@ -9,7 +9,7 @@ import { Checkbox } from '@mui/material'
 
 
 
-export function DateEdit({ editName, onCloseEditTask, onSaveTask, task }) {
+export function DateEdit({ pos, editName, onCloseEditTask, onSaveTask, task }) {
     const [selectedDate, setSelectedDate] = useState(null)
     const [isDateSelected, setIsDateSelected] = useState(false)
     let lastDate = useRef(null)
@@ -78,7 +78,7 @@ export function DateEdit({ editName, onCloseEditTask, onSaveTask, task }) {
     }
 
     return (
-        <section className="edit-modal">
+        <section style={{top:pos.top, left: pos.left}} className="edit-modal">
             <div className="title-container">
                 <p>{editName}</p>
                 <button onClick={onCloseEditTask} className="close-modal">{additionTaskSvg.close}</button>

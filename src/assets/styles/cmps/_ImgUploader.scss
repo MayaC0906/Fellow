@@ -1,4 +1,10 @@
 .upload-preview {
+
+    img {
+        max-width: rem(200px);
+        margin-block-end: 2px;
+    }
+
     label {
         width: rem(320px);
         border: none;
