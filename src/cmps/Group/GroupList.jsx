@@ -11,6 +11,7 @@ import Button from '@mui/joy/Button';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { GroupPreview } from './GroupPreview.jsx'
 import { checkList } from '../Svgs.jsx'
+
 export function GroupList() {
     const [isInputExpand, setInputExpand] = useState(false)
     const [newGroup, setNewGroup] = useState(boardService.getEmptyGroup())
@@ -19,7 +20,8 @@ export function GroupList() {
     const [isLabelsShown, setIsLabelsShown] = useState(false)
     const [openMenuGroupId, setOpenMenuGroupId] = useState(null);
     const addListInput = useRef(null)
-
+    const user = useSelector((storeState) => storeState.userModule.user)
+    console.log(user);
     function handleChange(ev) {
         let { value, name: field } = ev.target
         setNewGroup((prevGroup) => ({ ...prevGroup, [field]: value }))
@@ -29,12 +31,15 @@ export function GroupList() {
         ev.preventDefault();
         if (!newGroup.title) return;
         try {
-            await saveGroup(newGroup, board._id)
+            const txt = `added a new group titled '${newGroup.title}'.`;
+            await saveGroup(newGroup, board._id, user, txt)
             setNewGroup(boardService.getEmptyGroup())
             showSuccessMsg('New group')
             if (addListInput.current) {
                 addListInput.current.focus();
             }
+// await saveGroup(group, boardId, currUser, txt);
+
         } catch (err) {
             console.log('Failed to save new group', err)
         }
@@ -74,10 +79,12 @@ export function GroupList() {
         return group
     }
 
-    async function onRemoveGroup(groupId) {
-        console.log(groupId);
+    async function onRemoveGroup(group) {
+        console.log(group);
         try {
-            await removeGroup(groupId, board._id)
+            // await saveGroup(newGroup, board._id, user, txt)
+            const txt = `deleted a group titled '${group.title}'.`;
+            await removeGroup(group, board._id, user,txt)
         } catch (err) {
             console.log('Failed to remove group', err)
         }

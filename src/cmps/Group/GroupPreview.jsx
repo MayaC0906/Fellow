@@ -29,6 +29,7 @@ export function GroupPreview({
 	const board = useSelector((storeState) => storeState.boardModule.board)
 	const groupHeaderRef = useRef(null)
 	const [groupMenuPosition, setGroupMenuPosition] = useState({ top: '', left: '' })
+	const user = useSelector((storeState) => storeState.userModule.user)
 
 	
 	const [prevTaskCount, setPrevTaskCount] = useState(group.tasks.length)
@@ -70,7 +71,8 @@ export function GroupPreview({
 		setInputExpand(false)
 		if (!newTask.title) return
 		try {
-		await saveNewTask(board._id, group.id, newTask)
+		const txt = `saved new task titled ${newTask.title} in ${group.title}`
+		await saveNewTask(board._id, group.id, newTask, user, txt)
 		setNewTask(taskService.getEmptyTask())
 		showSuccessMsg('New task added')
 		} catch (err) {
