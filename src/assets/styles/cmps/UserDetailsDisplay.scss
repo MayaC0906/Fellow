@@ -6,7 +6,8 @@
     right: 15px;
     background-color: rgb(255, 255, 255);
     box-shadow: rgba(9, 30, 66, 0.15) 0px 8px 12px 0px, rgba(9, 30, 66, 0.31) 0px 0px 1px 0px;
-    border-radius: 8px;
+    border-radius: rem(8px);
+    z-index: 40;
 
     .user-details {
         padding-inline: rem(20px);

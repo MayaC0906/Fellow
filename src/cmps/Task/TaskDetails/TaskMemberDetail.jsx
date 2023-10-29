@@ -4,7 +4,7 @@ import { TaskMemberImage } from "./TaskMemberImage";
 
 export function TaskMemberDetail({ member, setMemberDetailOpen, removeMemberFromTask }) {
     const [isMemberImageOpen, setIsMemberImageOpen] = useState(false)
-    const { fullname, imgUrl } = member
+    const { fullname, imgUrl, username } = member
 
     return isMemberImageOpen ? (
         <TaskMemberImage
@@ -19,7 +19,7 @@ export function TaskMemberDetail({ member, setMemberDetailOpen, removeMemberFrom
                 <img src={imgUrl} alt="" onClick={() => setIsMemberImageOpen(true)} />
                 <div className="flex">
                     <h2 className="full-name">{fullname}</h2>
-                    <h2 className="user-name">@userName - further</h2>
+                    <h2 className="user-name">@{username}</h2>
                 </div>
             </section>
             <hr />

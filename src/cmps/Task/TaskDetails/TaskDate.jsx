@@ -69,7 +69,7 @@ export function TaskDate({ task, setEditName, editName, onSaveTask }) {
                     </div>
                     <div className={`task-date flex align-center ${dueDate.isComplete ? 'complete-open' : ''}`} onClick={toggleDateDisplay}>
                         <span className="task-date-data">
-                            {dayjs(dueDate.date, 'MMM D YYYY [at] h:mm A').format('MMM D [at] h:mm A')}
+                            {dayjs(dueDate.date, 'MMM D YYYY [at] h:mm A').format(`${dueDate.isDueSoon ? '[tomorrow]' : 'MMM '} [at] h:mm A`)}
                         </span>
                         {dueDate.isComplete && (<span className="task-date-complete flex align-center">Complete</span>)}
                         {dueDate.isOverdue && !dueDate.isComplete && (<span className="task-date-complete overdue flex align-center">Overdue</span>)}
