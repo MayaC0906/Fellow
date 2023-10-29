@@ -1,61 +1,124 @@
-.login-page {
-    border-radius: 10px;
-    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    width: 300px;
+.login-page-container {
+    background-color: rgb(250, 251, 252);
     margin: 50px auto;
-    border: 1px solid lightgray;
-    .login-form {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        justify-content: center;
 
-        input {
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            background-color: #EFEFEF; 
-            transition: background-color 0.3s ease;
+    .login-page {
+        width: 400px;
+        // height: fit-content;
+        padding: 32px 40px;
+        margin: 0px auto;
+        border-radius: 3px;
+        background-color: rgb(255, 255, 255);
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, .1);
 
-            &:focus {
-                outline: none;
-                background-color: #D9E8FF;
+        &-titles {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            margin-block-end: rem(12px);
+
+            .logo {
+                font-weight: 500;
+                color: rgb(23, 43, 77);
+                font-size: rem(26px);
             }
+
+            .welcome-title {
+                font-size: rem(16px);
+                font-weight: 600;
+                color: rgb(23, 43, 77);
+                padding-block-start: rem(24px);
+            }
+
+            >* {
+                margin: 0;
+            }
+
         }
 
-        button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            background-color: #007BFF;
-            color: white;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
+        &-form {
+            input {
+                width: 100%;
+                padding: 8px 6px;
+                margin: 0;
+                font-family: inherit;
+                font-size: rem(14px);
+                line-height: 20px;
+                border: 2px solid #DFE1E6;
+                border-radius: 3px;
+                color: rgb(9, 30, 66);
+                background-color: #FAFBFC;
+                margin-block-end: rem(8px);
 
-            &:hover {
-                background-color: #0056B3; 
+                &:hover {
+                    background-color: rgb(235, 236, 240);
+                }
+
+                &:focus {
+                    background-color: white;
+                    border: 2px solid #388bff;
+                    outline: none;
+                }
+            }
+
+            button {
+                width: 100%;
+                padding: 6px 12px;
+                margin: 0;
+                font-family: inherit;
+                font-size: rem(14px);
+                line-height: 20px;
+                font-weight: 500;
+                border-radius: 3px;
+                border: 0;
+                background-color: #0c66e4;
+                color: #fff;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: rgb(0, 85, 204);
+                }
+
+                &:active {
+                    background-color: rgb(9, 50, 108);
+                }
+            }
+
+        }
+    }
+
+    .login-footer {
+        position: relative;
+
+        .footer-imgs {
+            height: 100%;
+            left: 0;
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: -900;
+
+            .right-img {
+                width: 25rem;
+                bottom: 0;
+                right: 0;
+                max-width: 30%;
+                overflow: hidden;
+                position: absolute;
+                z-index: -999;
+            }
+
+            .left-img {
+                width: 25rem;
+                bottom: 0;
+                left: 0;
+                max-width: 30%;
+                overflow: hidden;
+                position: absolute;
+                z-index: -999;
             }
         }
     }
 
-    .btns {
-        margin-top: 20px;
-        text-align: center;
-
-        button {
-            background: none;
-            border: none;
-            color: #0091FF; 
-            cursor: pointer;
-            text-decoration: underline;
-            transition: color 0.3s ease;
-
-            &:hover {
-                color: #006BD1; 
-            }
-        }
-    }
 }
