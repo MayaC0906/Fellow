@@ -55,7 +55,15 @@ export function TaskMember({ taskMembersId, setEditName, editName, onSaveTask, t
                     setMemberDetailOpen={setMemberDetailOpen}
                     removeMemberFromTask={removeMemberFromTask}
                 />}
-                <button className="members-btn clean-btn flex align-center justify-center" onClick={toggleMemberDisplay}>{taskSvg.add}</button>
+                <button onClick={toggleMemberDisplay}
+                    className="members-btn clean-btn flex align-center justify-center" >
+                    {taskSvg.add}
+                </button>
+
+                {/* <button onClick={toggleMemberDisplay}
+                    className="btn-member" >
+                    {taskSvg.add}
+                </button> */}
             </div>
         </section>)
     )

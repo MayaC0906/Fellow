@@ -1,4 +1,7 @@
 .about-board {
+    margin: 12px;
+    width: 100%;
+
     &-title {
         margin-block-end: 4px;
 
@@ -67,4 +70,9 @@
             background-color: rgba(9, 30, 66, 0.06);
         }
     }
+
+    hr {
+        margin: 12px;
+    }
+
 }

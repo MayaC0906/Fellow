@@ -3,13 +3,17 @@ import { useSelector } from 'react-redux'
 import { appHeaderSvg } from './Svgs'
 import { useEffect, useState, useRef } from 'react'
 import { AddBoard } from './Board/AddBoard'
+import { login } from '../store/actions/user.actions'
+import { UserDetailsDisplay } from './UserDetailsDisplay'
 
 export function AppHeader() {
     const boardStyle = useSelector((storeState) => storeState.boardModule.board.style) || null
+    const user = useSelector(storeState => storeState.userModule.user)
+    const [isUserDetailOpen, setIsUserDetailOpen] = useState(false)
     const [brightClass, setBrightClass] = useState(true)
     const board = useSelector((storeState) => storeState.boardModule.board)
     const boards = useSelector((storeState) => storeState.boardModule.boards)
-    console.log(boards, 'boards');
+    // console.log(boards, 'boards');
     const [modalState, setModalState] = useState({ isOpen: false, modal: '' })
     const createBtnRef = useRef(null)
     const searchBtnRef = useRef(null)
@@ -19,6 +23,10 @@ export function AppHeader() {
     const [searchInput, setSearchInput] = useState(null)
     const [filterdBoards, setFilterdBoards] = useState([...boards])
     const [isSearchOpen, setIsSearchOpen] = useState(false)
+
+    useEffect(() => {
+        if (!user) login({ username: 'Guest', password: '1234' })
+    }, [user])
 
     useEffect(() => {
         if (boardStyle) {
@@ -81,6 +89,7 @@ export function AppHeader() {
         inputRef.current.blur()
     }
 
+
     return (
         <header className='app-header' style={{ backgroundColor: `rgb(${boardStyle?.dominantColor.rgb})` || 'white' }}>
             <section className='nav-links'>
@@ -101,6 +110,7 @@ export function AppHeader() {
                     ref={createBtnRef}
                     onBlur={() => (setModalState(prevState => ({ ...prevState, isOpen: false, modal: '' })))}
                 >Create board</button>
+                <Link to={'/login'}>Login</Link>
             </section>
 
             <section className='nav-info'>
@@ -111,17 +121,24 @@ export function AppHeader() {
                     ref={searchBtnRef}
                 >
                     <div className='search-input'
-                        onBlur={() => { setIsSearchOpen(false)
-                            setModalState(prevState => ({ ...prevState, isOpen:false, modal: '' })) }}>
+                        onBlur={() => {
+                            setIsSearchOpen(false)
+                            setModalState(prevState => ({ ...prevState, isOpen: false, modal: '' }))
+                        }}>
                         <span>{appHeaderSvg.search}</span>
                         <input type="text" placeholder={isSearchOpen ? 'Search trello' : 'Search'} ref={inputRef}
                             onChange={(event) => { setSearchInput(event.target.value) }} />
                     </div>
                 </div>
                 <button className={'app-header-btn user-info' + (brightClass ? ' dark-btn' : ' light-btn')}>{appHeaderSvg.notifications}</button>
-                <div className={'app-header-btn user-info' + (brightClass ? ' dark-btn' : ' light-btn')} >
-                    <img src="https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg" alt="" />
-                </div>
+                {user &&
+                    <>
+                        <div className={'app-header-btn user-info' + (brightClass ? ' dark-btn' : ' light-btn')} >
+                            <img onClick={() => setIsUserDetailOpen(!isUserDetailOpen)} src={user.imgUrl} alt="" />
+                        </div>
+                        {isUserDetailOpen && (<UserDetailsDisplay isUserDetailOpen={isUserDetailOpen} setIsUserDetailOpen={setIsUserDetailOpen} user={user} />)}
+                    </>
+                }
             </section>
 
             {modalState.isOpen && modalState.modal === 'create' &&

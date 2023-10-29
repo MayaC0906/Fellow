@@ -12,13 +12,20 @@
     position: relative;
 
     .upper-section {
-        gap: 5px;
+        gap: 10px;
         display: grid;
         /* margin: 0 auto; */
         grid-template-columns: 1fr 1fr;
         /* align-items: center; */
         /* justify-content: center; */
         height: max-content;
+
+        .colors {
+
+            &:hover {
+                opacity: 0.7;
+            }
+        }
     }
     .unsplash  {
         position: relative;
@@ -47,13 +54,14 @@
         display: flex;
         // width: 50%;
         flex-direction: column;
+        // align-items: flex-end;
         img{
             cursor: pointer;
             background-color: #091e420f;
             background-size: cover;
             border-radius: 8px;
             height: 96px;
-            margin-bottom: 8px;
+            // margin-bottom: 8px;
             position: relative;
             width: 100%;
         }

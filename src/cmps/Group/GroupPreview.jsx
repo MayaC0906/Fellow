@@ -94,7 +94,7 @@ export function GroupPreview({
 				defaultValue={group.title}
 				onBlur={(event) => onEditGroup(group.id, event)}
 				// onKeyDown={(event) => onEditGroup(group.id, event)}
-				// style={!group.isWatch ? {width:'80%'} : {}}
+				style={!group.isWatch ? {width:'83%'} : {}}
 				></input>
 			{group.isWatch && taskSvg.watch}
 			<section>
