@@ -3,7 +3,7 @@ import { ImgUploader } from '../cmps/Dynamic/Attachment/ImgUploader'
 import { loadUsers, login, signup } from '../store/actions/user.actions'
 import { useNavigate } from 'react-router'
 
-export function LoginSignup(props) {
+export function LoginSignup() {
     const [credentials, setCredentials] = useState({ username: '', password: '', fullname: '' })
     const [isSignup, setIsSignup] = useState(false)
     const navigate = useNavigate()

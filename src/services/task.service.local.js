@@ -69,12 +69,7 @@ function getEmptyTask() {
             isOverdue: null,
             isDueSoon: null
         },
-        byMember: {
-            _id: '',
-            username: '',
-            fullname: '',
-            imgUrl: '',
-        },
+        byMember: userService.getLoggedinUser(),
         memberIds: [],
         comments: [],
         style: {},
