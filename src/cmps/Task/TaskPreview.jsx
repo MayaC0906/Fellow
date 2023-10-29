@@ -31,14 +31,14 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
         console.log('TRY', ev.clientY, ev.clientX);
         const taskRect = taskRef.current.getBoundingClientRect()
         const screenWidth = window.innerWidth
-        if (screenWidth - ev.clientX < 150) {
+        if (screenWidth - ev.clientX < 170) {
             setRtl(true)
             setQuickEditPosition({
                 top: taskRect.top,
                 left: taskRect.x - 200
             })
             setSaveBtnPosition({
-                top: taskRect.height + (ev.clientY),
+                top: taskRect.bottom + 16,
                 left: taskRect.left
             })
         } else {
@@ -48,7 +48,7 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
                 left: taskRect.x +230
             })
             setSaveBtnPosition({
-                top: taskRect.height + (ev.clientY),
+                top: taskRect.bottom + 16,
                 left: taskRect.left
             })
 
