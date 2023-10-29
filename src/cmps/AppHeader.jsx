@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { appHeaderSvg } from './Svgs'
 import { useEffect, useState, useRef } from 'react'
 import { AddBoard } from './Board/AddBoard'
-import { login } from '../store/actions/user.actions'
+import { loadUsers, login } from '../store/actions/user.actions'
 import { UserDetailsDisplay } from './UserDetailsDisplay'
 
 export function AppHeader() {
@@ -25,8 +25,17 @@ export function AppHeader() {
     const [isSearchOpen, setIsSearchOpen] = useState(false)
 
     useEffect(() => {
+        onLoadUsers()
+    }, [])
+
+    async function onLoadUsers() {
+        const users = await userService.getUsers()
         if (!user) login({ username: 'Guest', password: '1234' })
-    }, [user])
+        // setUsers(users)
+    }
+
+    // useEffect(() => {
+    // }, [user])
 
     useEffect(() => {
         if (boardStyle) {

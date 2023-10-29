@@ -5,22 +5,22 @@ import { boardService } from "../../../services/board.service.local";
 import { updateBoard } from '../../../store/actions/board.actions'
 import { useSelector } from "react-redux";
 
-
 export function AddLabel({ onCloseEditTask, onAddLabel, labelToEdit, onSaveTask, task, setCheckedLabelsStart, onDeletingLabel }) {
     const board = useSelector((storeState) => storeState.boardModule.board)
     const labelsColorPickers = ['#baf3db', '#f8e6a0', '#ffe2bd', '#ffd2cc', '#dfd8fd', '#4bce97', '#e2b203', '#faa53d', '#f87462', '#9f8fef', '#1f845a', '#946f00', '#b65c02', '#ca3521', '#6e5dc6', '#cce0ff', '#c1f0f5', '#D3F1A7', '#fdd0ec', '#dcdfe4', '#579dff', '#60c6d2', '#94c748', '#e774bb', '#8590a2', '#0c66e4', '#1d7f8c', '#5b7f24', '#ae4787', '#626f86',]
     const { title, color } = labelToEdit
     const [colorSelected, setColorSelected] = useState(color ? color : '#60c6d2')
     const [labelTitle, setTitle] = useState(title ? title : '')
-
+    const user = useSelector((storeState) => storeState.userModule.user)
+    
     function onSetTitle() {
         let value = event.target.value
         setTitle(value)
     }
-
+    
     async function onSaveLabel() {
         console.log('task before:', task);
-
+        
         let newLabel = boardService.getEmptyLabel()
         let savedLabel
         if (labelToEdit.id) {
@@ -29,7 +29,7 @@ export function AddLabel({ onCloseEditTask, onAddLabel, labelToEdit, onSaveTask,
             savedLabel = { ...newLabel, color: colorSelected, title: labelTitle }
         }
         task = { ...task, labelIds: [...task.labelIds, savedLabel.id] }
-
+        
         try {
             const labelIdx = board.labels.findIndex(labels => labels.id === savedLabel.id)
             if (labelIdx === -1) {
@@ -37,11 +37,12 @@ export function AddLabel({ onCloseEditTask, onAddLabel, labelToEdit, onSaveTask,
             } else {
                 board.labels.splice(labelIdx, 1, savedLabel)
             }
-
+            
             const newBoard = { ...board, labels: board.labels }
-
+            
+            const txt = `added label to ${task.title}.`
             await updateBoard(newBoard)
-            await onSaveTask(task)
+            await onSaveTask(task, txt)
             console.log('task after:', task);
             setCheckedLabelsStart(task.labelIds)
             onAddLabel('')

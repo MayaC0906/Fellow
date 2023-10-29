@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { groupMenu, taskSvg } from '../Svgs';
 import dayjs from 'dayjs';
+
 export function GroupMenu({
     setInputExpand,
     onDuplicateGroup,
@@ -18,6 +19,8 @@ export function GroupMenu({
     const groups = board?.groups
     const { tasks } = group
     const [menuContent, setMenuContent] = useState('');
+    const user = useSelector((storeState) => storeState.userModule.user)
+
 
     useEffect(()=> {
       setMenuContent('default')
@@ -25,7 +28,7 @@ export function GroupMenu({
 
     const defaultContent = (
       <ul className="clean-list">
-        <li onClick={() => onRemoveGroup(group.id)}>Delete...</li>
+        <li onClick={() => onRemoveGroup(group)}>Delete...</li>
         <li onClick={() => onDuplicateGroup(group)}>Copy list...</li>
         {group.id === openMenuGroupId && (
           <li onClick={() => setInputExpand(true)}>Add card...</li>
@@ -104,7 +107,7 @@ export function GroupMenu({
       // console.log('target group tasks', targetGroupTasks);
       board.groups[groupTargetIdx].tasks.push(...currGroupTasks)
       console.log('group', groups[groupTargetIdx].tasks);
-
+      
       await onUpdateBoard(board)
   }
 
