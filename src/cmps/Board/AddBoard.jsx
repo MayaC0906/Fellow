@@ -54,10 +54,10 @@ export function AddBoard({pos, setSidebarExpand, setModalState, setIsBoardAdded 
          
       
     }
-
+    // style={getPos ? { bottom: '0px', right: '0px' }
     return (
-        <section style={getPos ? { bottom: '0px', right: '0px' } : { bottom: '290px', right: '130px' }}
-        className="edit-modal">
+        <section style={getPos ? { top: '0px', left: '15px' } : { bottom: '290px', right: '130px' }}
+        className="edit-modal add-board">
             <div className="title-container">
                 <p className="add-board-title">Create board</p>
                 <button onClick={() => {
