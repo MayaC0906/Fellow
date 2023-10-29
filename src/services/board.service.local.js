@@ -1268,7 +1268,7 @@ const board = [
             {
                 "id": utilService.makeId(),
                 "txt": "marked the due date incomplete",
-                "createdAt": 1696368960,
+                "createdAt": 1698321100,
                 "byMember": {
                     "_id": "u102",
                     "fullname": "Reut Edry",
@@ -1285,8 +1285,8 @@ const board = [
             },
             {
                 "id": utilService.makeId(),
-                "txt": "left this card",
-                "createdAt": 1696333780,
+                "txt": "changed the background of this board",
+                "createdAt": 1698413300,
                 "byMember": {
                     "_id": "u103",
                     "fullname": "Sahar Machpud",
@@ -1300,7 +1300,26 @@ const board = [
                     "id": utilService.makeId(),
                     "title": "Connect to Mongo"
                 }
+            },
+            {
+                "id": utilService.makeId(),
+                "txt": "Changed description of this board",
+                "createdAt": 1698510000,
+                "byMember":{
+                    "_id": "u101",
+                    "fullname": "Maya Cohen",
+                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
+                },
+                "group": {
+                    "id": utilService.makeId(),
+                    "title": "Backlog-server"
+                },
+                "task": {
+                    "id": utilService.makeId(),
+                    "title": "Connect to Mongo"
+                }
             }
+
 
         ],
 

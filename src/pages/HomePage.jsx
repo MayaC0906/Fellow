@@ -28,7 +28,7 @@ export function HomePage() {
                             together</h2>
                                 <p>Keep everything in the same place-even if your team isn't.</p>
                             </span>
-                            <Link className='demo-btn' to="/workspace">Start demo</Link>
+                            <Link className='demo-btn' to="/workspace">Start Demo</Link>
                         </section>
                         <section className='hero'>
                             <img src={hero} alt="img" />                        
@@ -36,13 +36,13 @@ export function HomePage() {
                     </div>
                 </div>
             <div className='app-desc '>
-                <section className='desc layout'>
+                <section style={{width: '100%'}} className='desc layout'>
                     <span>FELLOW 101</span>
                     <h2>A productivity powerhouse</h2>
-                    <h3>Simple, flexible, and powerful. All it takes are boards,
+                    <p style={{maxWidth: '600px'}}>Simple, flexible, and powerful. All it takes are boards,
                         lists, and cards to get a clear view of who’s doing
                          what and what needs to get done.
-                        Learn more in our guide for getting started.</h3>
+                        Learn more in our guide for getting started.</p>
                 </section>
             </div>
 
@@ -50,17 +50,21 @@ export function HomePage() {
                 <div className='layout'>
 
                 <div className='tabs'>
-                    <button autoFocus onClick={() => setImg(hs1)} className='tab clean-btn'>
+                    <button 
+                        className={`tab clean-btn ${img === hs1 ? 'active' : ''}`}
+                        onClick={() => setImg(hs1)}>
                         <h4>Boards</h4>
                         <p>Fellow boards keep tasks organized and work moving
                              forward. In a glance, see everything from “things to do” to “aww yeah, we did it!”</p>
                     </button>
-                    <button  onClick={() => setImg(hs2)} className='tab clean-btn'>
+                    <button  className={`tab clean-btn ${img === hs2 ? 'active' : ''}`}
+                        onClick={() => setImg(hs2)}>
                         <h4>Lists</h4>
                         <p>The different stages of a task. Start as simple as
                              To Do, Doing or Done—or build a workflow custom fit to your team’s needs. There’s no wrong way to Fellow.</p>
                     </button>
-                    <button onClick={() => setImg(hs3)} className='tab clean-btn'>
+                    <button className={`tab clean-btn ${img === hs3 ? 'active' : ''}`}
+                        onClick={() => setImg(hs3)}>
                         <h4>Cards</h4>
                         <p>Cards represent tasks and ideas and hold all
                             the information to get the job done. As you make progress, move cards across lists to show their status.</p>
@@ -92,7 +96,7 @@ export function HomePage() {
                                 the pipeline and identify any gaps that might
                                 impede your team's progress.
                             </p>
-                            <a>Learn more</a>
+                            <a style={{color: '#0052cc', cursor:'pointer'}}>Learn more about Timeline view</a>
                         </article>
                     </div>
                     <div className='square-info layout sq2'>
@@ -107,7 +111,7 @@ export function HomePage() {
                                 is like a crystal ball giving you a clear 
                                 vision of what work lies ahead
                             </p>
-                            <a >Learn more</a>
+                            <a style={{color: '#0052cc', cursor:'pointer'}} >Learn more about Calendar view</a>
                         </article>
                         <img src="https://images.ctfassets.net/rz1oowkt5gyp/7sxChS4x6XAcUgDpp4VAZk/25377d162e964f4243e329c447bfd7dc/TrelloBoard_Calendar_2x.png?w=1212&fm=webp" alt="" />
                     </div>

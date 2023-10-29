@@ -4,20 +4,10 @@ import { useEffect } from "react"
 export function ChangeBgcPhotos({setTitle,onChangeBoardBgc}) {
     
     const imgs = [
-        { 
-            imgUrl: 'https://images.unsplash.com/photo-1696144706485-ff7825ec8481?auto=format&fit=crop&q=80&w=1935&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 
-            name: 'Joshua Rawson-Harris', 
-            nameLink: 'https://unsplash.com/@joshrh19?utm_source=trello&utm_medium=referral&utm_campaign=api-credit' 
-        },
-        { 
-            imgUrl: 'https://images.unsplash.com/photo-1696595883555-5a2f5ab967f8?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 
-            name: 'Cokile Ceoi', 
-            nameLink: 'https://unsplash.com/@c0ki1e?utm_source=trello&utm_medium=referral&utm_campaign=api-credit' 
-        },
-        { 
-            imgUrl: 'https://images.unsplash.com/photo-1697201826242-141dec817a6f?auto=format&fit=crop&q=80&w=1935&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 
-            name: 'Ander Peña', 
-            nameLink: 'https://unsplash.com/@anderrek?utm_source=trello&utm_medium=referral&utm_campaign=api-credit'
+        {
+            imgUrl: 'https://images.unsplash.com/photo-1698255921824-9c87f3f8514a?auto=format&fit=crop&q=80&w=2105&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            name: 'Mo',
+            nameLink: 'https://unsplash.com/@mo_design_3d?utm_source=trello&utm_medium=referral&utm_campaign=api-credit'
         },
         { 
             imgUrl: 'https://images.unsplash.com/photo-1697577473134-46490cf51044?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 
@@ -49,11 +39,7 @@ export function ChangeBgcPhotos({setTitle,onChangeBoardBgc}) {
             name: 'Jigar Panchal',
             nameLink: 'https://unsplash.com/@brave4_heart?utm_source=trello&utm_medium=referral&utm_campaign=api-credit'
         },
-        {
-            imgUrl: 'https://images.unsplash.com/photo-1698255921824-9c87f3f8514a?auto=format&fit=crop&q=80&w=2105&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-            name: 'Mo',
-            nameLink: 'https://unsplash.com/@mo_design_3d?utm_source=trello&utm_medium=referral&utm_campaign=api-credit'
-        },
+        
         {
             imgUrl: 'https://images.unsplash.com/photo-1697015357114-a30b4ee51659?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             name: 'Ilia Bronskiy',
@@ -78,6 +64,21 @@ export function ChangeBgcPhotos({setTitle,onChangeBoardBgc}) {
             imgUrl: 'https://images.unsplash.com/photo-1697990718230-b8e83532edcc?auto=format&fit=crop&q=80&w=2129&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             name: 'Marek Piwnicki',
             nameLink: 'https://unsplash.com/@marekpiwnicki'
+        },
+        { 
+            imgUrl: 'https://images.unsplash.com/photo-1696144706485-ff7825ec8481?auto=format&fit=crop&q=80&w=1935&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 
+            name: 'Joshua Rawson-Harris', 
+            nameLink: 'https://unsplash.com/@joshrh19?utm_source=trello&utm_medium=referral&utm_campaign=api-credit' 
+        },
+        { 
+            imgUrl: 'https://images.unsplash.com/photo-1696595883555-5a2f5ab967f8?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 
+            name: 'Cokile Ceoi', 
+            nameLink: 'https://unsplash.com/@c0ki1e?utm_source=trello&utm_medium=referral&utm_campaign=api-credit' 
+        },
+        { 
+            imgUrl: 'https://images.unsplash.com/photo-1697201826242-141dec817a6f?auto=format&fit=crop&q=80&w=1935&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 
+            name: 'Ander Peña', 
+            nameLink: 'https://unsplash.com/@anderrek?utm_source=trello&utm_medium=referral&utm_campaign=api-credit'
         },
         {
             imgUrl: 'https://images.unsplash.com/photo-1693868769698-6c7440636a09?auto=format&fit=crop&q=80&w=1935&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
@@ -150,7 +151,7 @@ export function ChangeBgcPhotos({setTitle,onChangeBoardBgc}) {
                    return <div onClick={() => onChangeBoardBgc(img.imgUrl)} className="sq unsplash">
                             <img src={`${img.imgUrl}`} alt="" />
                             <article>
-                                <a href={`${img.nameLink}`}>{img.name}</a>
+                                <a style={{bottom:'0'}} href={`${img.nameLink}`}>{img.name}</a>
                             </article>
                         </div>                     
                 })}
