@@ -236,6 +236,9 @@
 .edit-modal {
     position: fixed;
     z-index: 100;
+    &.add-board {
+        position: absolute;
+    }
 }
 
 // Media helpers
