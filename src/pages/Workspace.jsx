@@ -72,7 +72,8 @@ export function Workspace() {
                             boards={boards}
                             onStarredBoard={onStarredBoard}
                         />
-                        <section className="boards-add flex align-center justify-center" onClick={() => setIsBoardAdded(!isBoardAdded)}>Create new board</section>
+                        <section className="boards-add flex align-center justify-center" onClick={() => setIsBoardAdded(!isBoardAdded)}>Create new board
+                        </section>
                     </ul>
                     {isBoardAdded && <AddBoard setIsBoardAdded={setIsBoardAdded} />}
                 </section>
