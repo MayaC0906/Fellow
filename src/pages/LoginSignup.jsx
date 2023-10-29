@@ -36,31 +36,32 @@ export function LoginSignup() {
         try {
             if (!isSignup) {
                 if (!credentials.username) return
-                // props.onLogin(credentials)
-                await login(credentials)
-                navigate('/workspace')
+                const user = await login(credentials)
+                if (user) navigate('/workspace')
             } else {
                 if (!credentials.username || !credentials.password || !credentials.fullname) return
                 // props.onSignup(credentials)
                 await signup(credentials)
                 navigate('/workspace')
+                clearState()
             }
-            clearState()
         } catch (err) {
             console.log('Could not set user', err)
         }
     }
 
-    // function onSignup(ev = null) {
-    // if (ev) ev.preventDefault()
-    // if (!credentials.username || !credentials.password || !credentials.fullname) return
-    // props.onSignup(credentials)
-    // clearState()
-    // }
+    async function onConnectAsAUser() {
+        try {
+            await login({ username: 'Guest', password: '1234' })
+            navigate('/workspace')
+        } catch (err) {
+            console.log('Could not connect as a guest', err);
+        }
+    }
 
-    // function toggleSignup() {
-    //     setIsSignup(!isSignup)
-    // }
+    function toggleSignup() {
+        setIsSignup(!isSignup)
+    }
 
     function onUploaded(imgUrl) {
         setCredentials({ ...credentials, imgUrl })
@@ -73,18 +74,7 @@ export function LoginSignup() {
                     <p className='logo'>FELLOW</p>
                     <p className='welcome-title'>{isSignup ? 'Sign up' : 'Log in'} to continue</p>
                 </div>
-                {/* <p>
-                <button className="btn-link" onClick={toggleSignup}>{!isSignup ? 'Signup' : 'Login'}</button>
-            </p> */}
                 <form className="login-page-form" onSubmit={onConnect}>
-                    {/* <select
-                    name="username"
-                    value={credentials.username}
-                    onChange={handleChange}
-                >
-                    <option value="">Select User</option>
-                    {users.map(user => <option key={user._id} value={user.username}>{user.fullname}</option>)}
-                </select> */}
                     <input
                         type="text"
                         name="username"
@@ -118,36 +108,11 @@ export function LoginSignup() {
                         )}
                     <button>{isSignup ? 'Sign up' : 'Continue'}</button>
                 </form>
-                {/* <div className="signup-section">
-                {isSignup && <form className="signup-form" onSubmit={onSignup}>
-                    <input
-                        type="text"
-                        name="fullname"
-                        value={credentials.fullname}
-                        placeholder="Fullname"
-                        onChange={handleChange}
-                        required
-                    />
-                    <input
-                        type="text"
-                        name="username"
-                        value={credentials.username}
-                        placeholder="Username"
-                        onChange={handleChange}
-                        required
-                    />
-                    <input
-                        type="password"
-                        name="password"
-                        value={credentials.password}
-                        placeholder="Password"
-                        onChange={handleChange}
-                        required
-                    />
-                    <ImgUploader onUploaded={onUploaded} />
-                    <button >Signup!</button>
-                </form>}
-            </div> */}
+                <div className='toggle-login-signup flex'>
+                    {/* <hr /> */}
+                    <button className='clean-btn' onClick={toggleSignup}>{!isSignup ? 'Dont have a user? signup' : 'Have a user? login'}</button>
+                    <button className='clean-btn guest' onClick={onConnectAsAUser}>Dont want to {isSignup ? 'signUp' : 'Login'}? connect as a guset</button>
+                </div>
             </div>
             <footer className='login-footer'>
                 <div className='footer-imgs'>

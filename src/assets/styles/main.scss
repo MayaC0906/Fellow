@@ -17,15 +17,16 @@
 @import "views/HomePage";
 @import "views/BoardDetails";
 @import "views/ReviewIndex";
-@import "views/UserDetails";
+// @import "views/UserDetails";
 @import "views/Workspace";
 
 
 // Components
 @import "cmps/UserMsg";
 @import "cmps/UserMsg.scss";
-@import "cmps/Login";
+@import "cmps/_LoginSignup";
 @import "cmps/ImgUploader";
+@import "cmps/UserDetailsDisplay.scss";
 
 
 // Board

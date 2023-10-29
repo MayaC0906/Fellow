@@ -38,6 +38,18 @@ async function query() {
     let boards = utilService.loadFromStorage(STORAGE_KEY)
     if (!boards || !boards.length) utilService.saveToStorage(STORAGE_KEY, board)
     boards = await storageService.query(STORAGE_KEY)
+    const user = userService.getLoggedinUser()
+    if (user._id === 'guest') {
+        return boards
+    } else {
+        boards = boards.filter(board => {
+            const isUserMember = board.members.some(boardMember => boardMember._id === user._id);
+            return isUserMember
+        })
+    }
+
+    console.log('boards from query:', boards)
+
     // if (filterBy.txt) {
     //     const regex = new RegExp(filterBy.txt, 'i')
     //     boards = boards.filter(board => regex.test(board.title) || regex.test(board.description))
@@ -174,17 +186,20 @@ function getEmptyBoard() {
             {
                 "_id": "m101",
                 "fullname": "Maya Cohen",
-                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
+                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg",
+                "username": "Maya"
             },
             {
                 "_id": "r101",
                 "fullname": "Reut Edry",
-                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg",
+                "username": "Reut"
             },
             {
                 "_id": "s101",
                 "fullname": "Sahar Machpud",
-                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
+                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
+                "username": "Sahar"
             }
         ],
         groups: [
@@ -203,9 +218,10 @@ const board = [
         isStarred: true,
         archivedAt: 1589983468418,
         createdBy: {
-            "_id": "u103",
+            "_id": "s101",
             "fullname": "Sahar Machpud",
-            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
+            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
+            "username": "Sahar"
         },
         style: {
             backgroundImage: "https://images.unsplash.com/photo-1696384036025-c7d7b7f6584d?auto=format&fit=crop&q=80&w=1964&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -249,17 +265,20 @@ const board = [
             {
                 "_id": "m101",
                 "fullname": "Maya Cohen",
-                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
+                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg",
+                "username": "Maya"
             },
             {
                 "_id": "r101",
                 "fullname": "Reut Edry",
-                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg",
+                "username": "Reut"
             },
             {
                 "_id": "s101",
                 "fullname": "Sahar Machpud",
-                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
+                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
+                "username": "Sahar"
             }
         ],
         groups: [
@@ -288,9 +307,10 @@ const board = [
                             }
                         ],
                         "byMember": {
-                            "_id": "u102",
+                            "_id": "r101",
                             "fullname": "Reut Edry",
-                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg",
+                            "username": "Reut"
                         },
                         "archivedAt": null,
                         "labelIds": ["l101", "l102", "l103"],
@@ -327,9 +347,10 @@ const board = [
                                 "txt": "Important",
                                 "createdAt": 1696334520,
                                 "byMember": {
-                                    "_id": "u101",
+                                    "_id": "m101",
                                     "fullname": "Maya Cohen",
-                                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
+                                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg",
+                                    "username": "Maya"
                                 }
                             }
                         ],
@@ -348,9 +369,10 @@ const board = [
                             "createdAt": 1698189776000
                         },
                         "byMember": {
-                            "_id": "u103",
+                            "_id": "s101",
                             "fullname": "Sahar Machpud",
-                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
+                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
+                            "username": "Sahar"
                         },
                         "attachments": [
                             {
@@ -386,9 +408,10 @@ const board = [
 
                         },
                         "byMember": {
-                            "_id": "u102",
+                            "_id": "r101",
                             "fullname": "Reut Edry",
-                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg",
+                            "username": "Reut"
                         },
                         "attachments": [
                             {
@@ -437,9 +460,10 @@ const board = [
                             }
                         ],
                         "byMember": {
-                            "_id": "u102",
+                            "_id": "r101",
                             "fullname": "Reut Edry",
-                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg",
+                            "username": "Reut"
                         },
                         "archivedAt": null,
                         "labelIds": ["l101", "l102", "l103"],
@@ -475,9 +499,10 @@ const board = [
                                 "txt": "Important",
                                 "createdAt": 1696334520,
                                 "byMember": {
-                                    "_id": "u101",
+                                    "_id": "m101",
                                     "fullname": "Maya Cohen",
-                                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
+                                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg",
+                                    "username": "Maya"
                                 }
                             }
                         ],
@@ -497,9 +522,10 @@ const board = [
 
                         },
                         "byMember": {
-                            "_id": "u103",
+                            "_id": "s101",
                             "fullname": "Sahar Machpud",
-                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
+                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
+                            "username": "Sahar"
                         },
                         "attachments": [
                             {
@@ -534,9 +560,10 @@ const board = [
                             "createdAt": 1698016976000,
                         },
                         "byMember": {
-                            "_id": "u102",
+                            "_id": "r101",
                             "fullname": "Reut Edry",
-                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg",
+                            "username": "Reut"
                         },
                         "attachments": [
                             {
@@ -586,9 +613,10 @@ const board = [
                             }
                         ],
                         "byMember": {
-                            "_id": "u102",
+                            "_id": "r101",
                             "fullname": "Reut Edry",
-                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg",
+                            "username": "Reut"
                         },
                         "archivedAt": null,
                         "labelIds": ["l101", "l102", "l103"],
@@ -624,9 +652,10 @@ const board = [
                                 "txt": "Important",
                                 "createdAt": 1696334520,
                                 "byMember": {
-                                    "_id": "u101",
+                                    "_id": "m101",
                                     "fullname": "Maya Cohen",
-                                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
+                                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg",
+                                    "username": "Maya"
                                 }
                             }
                         ],
@@ -645,9 +674,10 @@ const board = [
                             "createdAt": 1697412176000
                         },
                         "byMember": {
-                            "_id": "u103",
+                            "_id": "s101",
                             "fullname": "Sahar Machpud",
-                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
+                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
+                            "username": "Sahar"
                         },
                         "attachments": [
                             {
@@ -682,9 +712,10 @@ const board = [
                             "createdAt": 1694820176000,
                         },
                         "byMember": {
-                            "_id": "u102",
+                            "_id": "r101",
                             "fullname": "Reut Edry",
-                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg",
+                            "username": "Reut"
                         },
                         "attachments": [
                             {
@@ -719,9 +750,10 @@ const board = [
                             "createdAt": 1696116176000
                         },
                         "byMember": {
-                            "_id": "u103",
+                            "_id": "s101",
                             "fullname": "Sahar Machpud",
-                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
+                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
+                            "username": "Sahar"
                         },
                         "attachments": [
                             {
@@ -770,9 +802,10 @@ const board = [
                             }
                         ],
                         "byMember": {
-                            "_id": "u102",
+                            "_id": "r101",
                             "fullname": "Reut Edry",
-                            "imgUrl": "https://trello.com/1/cards/651c064b620e619a028eb825/attachments/651c3cb49a7657692aea99c3/previews/651c3cb59a7657692aea99d9/download/bug.png.jpg"
+                            "imgUrl": "https://trello.com/1/cards/651c064b620e619a028eb825/attachments/651c3cb49a7657692aea99c3/previews/651c3cb59a7657692aea99d9/download/bug.png.jpg",
+                            "username": "Reut"
                         },
                         "archivedAt": null,
                         "labelIds": ["l101", "l102", "l103"],
@@ -808,9 +841,10 @@ const board = [
                                 "txt": "Important",
                                 "createdAt": 1696334520,
                                 "byMember": {
-                                    "_id": "u101",
+                                    "_id": "m101",
                                     "fullname": "Maya Cohen",
-                                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
+                                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg",
+                                    "username": "Maya"
                                 }
                             }
                         ],
@@ -829,9 +863,10 @@ const board = [
                             "createdAt": 1692746576000,
                         },
                         "byMember": {
-                            "_id": "u103",
+                            "_id": "s101",
                             "fullname": "Sahar Machpud",
-                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
+                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
+                            "username": "Sahar"
                         },
                         "attachments": [
                             {
@@ -882,9 +917,10 @@ const board = [
                             }
                         ],
                         "byMember": {
-                            "_id": "u102",
+                            "_id": "r101",
                             "fullname": "Reut Edry",
-                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg",
+                            "username": "Reut"
                         },
                         "archivedAt": null,
                         "labelIds": ["l101"],
@@ -920,9 +956,10 @@ const board = [
                                 "txt": "Important",
                                 "createdAt": 1696334520,
                                 "byMember": {
-                                    "_id": "u101",
+                                    "_id": "m101",
                                     "fullname": "Maya Cohen",
-                                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
+                                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg",
+                                    "username": "Maya"
                                 }
                             }
                         ]
@@ -947,9 +984,10 @@ const board = [
                             }
                         ],
                         "byMember": {
-                            "_id": "u102",
+                            "_id": "r101",
                             "fullname": "Reut Edry",
-                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg",
+                            "username": "Reut"
                         },
                         "archivedAt": null,
                         "labelIds": ["l101"],
@@ -985,9 +1023,10 @@ const board = [
                                 "txt": "Important",
                                 "createdAt": 1696334520,
                                 "byMember": {
-                                    "_id": "u101",
+                                    "_id": "m101",
                                     "fullname": "Maya Cohen",
-                                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
+                                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg",
+                                    "username": "Maya"
                                 }
                             }
                         ]
@@ -1008,9 +1047,10 @@ const board = [
 
                         ],
                         "byMember": {
-                            "_id": "u102",
+                            "_id": "r101",
                             "fullname": "Reut Edry",
-                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg",
+                            "username": "Reut"
                         },
                         "archivedAt": null,
                         "labelIds": ["l101"],
@@ -1046,9 +1086,10 @@ const board = [
                                 "txt": "Important",
                                 "createdAt": 1696334520,
                                 "byMember": {
-                                    "_id": "u101",
+                                    "_id": "m101",
                                     "fullname": "Maya Cohen",
-                                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
+                                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg",
+                                    "username": "Maya"
                                 }
                             }
                         ]
@@ -1084,9 +1125,10 @@ const board = [
                             }
                         ],
                         "byMember": {
-                            "_id": "u102",
+                            "_id": "r101",
                             "fullname": "Reut Edry",
-                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg",
+                            "username": "Reut"
                         },
                         "archivedAt": null,
                         "labelIds": ["l101", "l102", "l103"],
@@ -1122,9 +1164,10 @@ const board = [
                                 "txt": "Important",
                                 "createdAt": 1696334520,
                                 "byMember": {
-                                    "_id": "u101",
+                                    "_id": "m101",
                                     "fullname": "Maya Cohen",
-                                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
+                                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg",
+                                    "username": "Maya"
                                 }
                             }
                         ]
@@ -1145,9 +1188,10 @@ const board = [
 
                         ],
                         "byMember": {
-                            "_id": "u102",
+                            "_id": "r101",
                             "fullname": "Reut Edry",
-                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg",
+                            "username": "Reut"
                         },
                         "archivedAt": null,
                         "labelIds": ["l101", "l102", "l103"],
@@ -1183,9 +1227,10 @@ const board = [
                                 "txt": "Important",
                                 "createdAt": 1696334520,
                                 "byMember": {
-                                    "_id": "u101",
+                                    "_id": "m101",
                                     "fullname": "Maya Cohen",
-                                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
+                                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg",
+                                    "username": "Maya"
                                 }
                             }
                         ]
@@ -1206,9 +1251,10 @@ const board = [
 
                         ],
                         "byMember": {
-                            "_id": "u102",
+                            "_id": "r101",
                             "fullname": "Reut Edry",
-                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+                            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg",
+                            "username": "Reut"
                         },
                         "archivedAt": null,
                         "labelIds": ["l103"],
@@ -1244,9 +1290,10 @@ const board = [
                                 "txt": "Important",
                                 "createdAt": 1696334520,
                                 "byMember": {
-                                    "_id": "u101",
+                                    "_id": "m101",
                                     "fullname": "Maya Cohen",
-                                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
+                                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg",
+                                    "username": "Maya"
                                 }
                             }
                         ]
@@ -1264,9 +1311,10 @@ const board = [
                 "txt": "marked the due date incomplete",
                 "createdAt": 1698321100,
                 "byMember": {
-                    "_id": "u102",
+                    "_id": "r101",
                     "fullname": "Reut Edry",
-                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg",
+                    "username": "Reut"
                 },
                 "group": {
                     "id": utilService.makeId(),
@@ -1282,9 +1330,10 @@ const board = [
                 "txt": "changed the background of this board",
                 "createdAt": 1698413300,
                 "byMember": {
-                    "_id": "u103",
+                    "_id": "s101",
                     "fullname": "Sahar Machpud",
-                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
+                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
+                    "username": "Sahar"
                 },
                 "group": {
                     "id": utilService.makeId(),
@@ -1300,9 +1349,10 @@ const board = [
                 "txt": "Changed description of this board",
                 "createdAt": 1698510000,
                 "byMember": {
-                    "_id": "u101",
+                    "_id": "m101",
                     "fullname": "Maya Cohen",
-                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
+                    "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg",
+                    "username": "Maya"
                 },
                 "group": {
                     "id": utilService.makeId(),
@@ -1325,9 +1375,10 @@ const board = [
         isStarred: false,
         archivedAt: Date.now(),
         createdBy: {
-            "_id": "u103",
+            "_id": "s101",
             "fullname": "Sahar Machpud",
-            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
+            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
+            "username": "Sahar"
         },
         style: {
             backgroundImage: "https://images.unsplash.com/photo-1696580436068-f19c26850e8b?auto=format&fit=crop&q=80&w=2071&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -1371,17 +1422,20 @@ const board = [
             {
                 "_id": "m101",
                 "fullname": "Maya Cohen",
-                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
+                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg",
+                "username": "Maya"
             },
             {
                 "_id": "r101",
                 "fullname": "Reut Edry",
-                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg",
+                "username": "Reut"
             },
             {
                 "_id": "s101",
                 "fullname": "Sahar Machpud",
-                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
+                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
+                "username": "Sahar"
             }
         ],
         groups: [
@@ -1396,9 +1450,10 @@ const board = [
         isStarred: false,
         archivedAt: Date.now(),
         createdBy: {
-            "_id": "u103",
+            "_id": "s101",
             "fullname": "Sahar Machpud",
-            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
+            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
+            "username": "Sahar"
         },
         style: {
             backgroundImage: "https://res.cloudinary.com/duvatj8kg/image/upload/v1697202495/aec98becb6d15a5fc95e_dseafo.svg",
@@ -1442,17 +1497,20 @@ const board = [
             {
                 "_id": "m101",
                 "fullname": "Maya Cohen",
-                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
+                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg",
+                "username": "Maya"
             },
             {
                 "_id": "r101",
                 "fullname": "Reut Edry",
-                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg",
+                "username": "Reut"
             },
             {
                 "_id": "s101",
                 "fullname": "Sahar Machpud",
-                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
+                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
+                "username": "Sahar"
             }
         ],
         groups: [
@@ -1467,9 +1525,10 @@ const board = [
         isStarred: false,
         archivedAt: Date.now(),
         createdBy: {
-            "_id": "u103",
+            "_id": "s101",
             "fullname": "Sahar Machpud",
-            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
+            "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
+            "username": "Sahar"
         },
         style: {
             backgroundImage: "https://images.unsplash.com/photo-1594743896255-be81f8dfec3d?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -1513,17 +1572,14 @@ const board = [
             {
                 "_id": "m101",
                 "fullname": "Maya Cohen",
-                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg"
-            },
-            {
-                "_id": "r101",
-                "fullname": "Reut Edry",
-                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg"
+                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg",
+                "username": "Maya"
             },
             {
                 "_id": "s101",
                 "fullname": "Sahar Machpud",
-                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg"
+                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
+                "username": "Sahar"
             }
         ],
         groups: [

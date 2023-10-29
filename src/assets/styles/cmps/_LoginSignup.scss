@@ -121,4 +121,25 @@
         }
     }
 
+    .toggle-login-signup {
+        flex-direction: column;
+
+        button {
+            cursor: pointer;
+            font-size: rem(14px);
+            font-family: inherit;
+            margin-block-start: rem(8px);
+            color: blue;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        .guest {
+            font-size: rem(16px);
+            font-weight: 600;
+        }
+    }
+
 }
