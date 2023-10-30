@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { loadBoards, updateBoard } from "../store/actions/board.actions"
 import { useSelector } from "react-redux"
 import { workspaceSvg } from "../cmps/Svgs"
@@ -8,6 +8,9 @@ import { BoardList } from "../cmps/Board/BoardList"
 export function Workspace() {
     const boards = useSelector(storeState => storeState.boardModule.boards)
     const [isBoardAdded, setIsBoardAdded] = useState(false)
+    const [addBoardPosition, setAddBoardPosition] = useState({ top: '', left: '' })
+    const createBoardRef = useRef()
+
 
 
     useEffect(() => {
@@ -33,6 +36,20 @@ export function Workspace() {
         }
     }
 
+    function onSetIsBoardAdded(ev) {
+        getBounds(ev)
+        setIsBoardAdded(!isBoardAdded)
+    }
+
+    function getBounds(ev) {
+        const addBoarddRect = createBoardRef.current.getBoundingClientRect()
+        setAddBoardPosition({
+            top: addBoarddRect.top - 179,
+            left: addBoarddRect.left + 205
+        })
+    }
+
+
 
 
     if (!boards || !boards.length) return (
@@ -41,6 +58,7 @@ export function Workspace() {
             {isBoardAdded && <AddBoard setIsBoardAdded={setIsBoardAdded} />}
         </>
     )
+    console.log('addBoardPosition', addBoardPosition);
     return (
         <section className="workspace-container flex">
             {/* <nav className="flex">
@@ -72,10 +90,10 @@ export function Workspace() {
                             boards={boards}
                             onStarredBoard={onStarredBoard}
                         />
-                        <section className="boards-add flex align-center justify-center" onClick={() => setIsBoardAdded(!isBoardAdded)}>Create new board
+                        <section ref={createBoardRef} className="boards-add flex align-center justify-center" onClick={(ev) => onSetIsBoardAdded(ev)}>Create new board
                         </section>
                     </ul>
-                    {isBoardAdded && <AddBoard setIsBoardAdded={setIsBoardAdded} />}
+                    {isBoardAdded && <AddBoard setIsBoardAdded={setIsBoardAdded} addBoardPosition={addBoardPosition} />}
                 </section>
             </section>
         </section>
