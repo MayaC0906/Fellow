@@ -90,9 +90,9 @@
 }
 
 .disabled {
-    pointer-events:none;
+    pointer-events: none;
     opacity: 0.4;
-  }
+}
 
 .task-btn {
     margin-top: 8px;
@@ -169,6 +169,7 @@
 
         input {
             color: $clr6;
+
             &::placeholder {
                 color: $clr6;
             }
@@ -212,10 +213,10 @@
 
         input {
             color: $a-h-txt-d;
-            
-                    &::placeholder {
-                        color: $a-h-txt-d;
-                    }
+
+            &::placeholder {
+                color: $a-h-txt-d;
+            }
         }
 
         &:hover {
@@ -236,6 +237,92 @@
 .edit-modal {
     position: fixed;
     z-index: 100;
+
+    &.add-board {
+        position: absolute;
+    }
+}
+
+.loader {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.board {
+        background-color: white;
+        svg {
+            .line {
+                stroke: rgb(103, 103, 103);
+            }
+        }
+        div {
+            background: none;
+        }
+    }
+
+    &.task-details {
+        background-color: rgba(0, 0, 0, 0.599);
+        svg {
+            .line {
+                stroke: #aaa;
+            }
+        }
+        div {
+            background-color: white;
+        }
+
+    }
+    div {
+        width: 700px;
+        height: 600px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 3px;
+    }
+
+    svg {
+        .line {
+            fill: none;
+            stroke-width: 8;
+            stroke-dasharray: 40;
+        }
+
+        .animated {
+            animation: draw 0.8s ease-in-out;
+            animation-iteration-count: infinite;
+            stroke-dashoffset: 0;
+        }
+
+        .line2 {
+            animation-delay: 0.08s
+        }
+
+        .line3 {
+            animation-delay: 0.16s
+        }
+
+        @keyframes draw {
+            0% {
+                stroke-dashoffset: 0;
+            }
+
+            50% {
+                stroke-dashoffset: 30;
+            }
+
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+    }
+
 }
 
 // Media helpers

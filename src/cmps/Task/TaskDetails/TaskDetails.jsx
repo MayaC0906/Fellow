@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 import { TaskTitle } from "./TaskTitle"
 import { TaskDescription } from "./TaskDescription"
 import { TaskDetailsSideNav } from "../TaskDetailsSideNav"
-import { taskSvg } from "../../Svgs"
+import { loaderSvg, taskSvg } from "../../Svgs"
 import { TaskAttachments } from "./TaskAttachments"
 import { useSelector } from 'react-redux'
 import { saveNewTask } from "../../../store/actions/board.actions"
@@ -75,7 +75,7 @@ export function TaskDetails() {
         }
     }
 
-    if (!task) return <div>Loading</div>
+    if (!task) return <div className="loader task-details"><div>{loaderSvg.loader}</div></div>
 
     return (
         <div className="task-details">

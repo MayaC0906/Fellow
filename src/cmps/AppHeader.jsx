@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { appHeaderSvg } from './Svgs'
 import { useEffect, useState, useRef } from 'react'
 import { AddBoard } from './Board/AddBoard'
-import { loadUsers, login } from '../store/actions/user.actions'
+import {  login } from '../store/actions/user.actions'
 import { UserDetailsDisplay } from './UserDetailsDisplay'
 
 export function AppHeader() {
@@ -13,7 +13,6 @@ export function AppHeader() {
     const [brightClass, setBrightClass] = useState(true)
     const board = useSelector((storeState) => storeState.boardModule.board)
     const boards = useSelector((storeState) => storeState.boardModule.boards)
-    // console.log(boards, 'boards');
     const [modalState, setModalState] = useState({ isOpen: false, modal: '' })
     const createBtnRef = useRef(null)
     const searchBtnRef = useRef(null)

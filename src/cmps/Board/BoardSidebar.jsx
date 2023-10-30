@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector } from 'react-redux';
 import { boardMenu, checkList, sideBar } from "../Svgs";
 import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
-import { Brightness1 } from "@mui/icons-material";
+import { Block, Brightness1 } from "@mui/icons-material";
 import { lighten } from 'polished';
 import { AddBoard } from '../Board/AddBoard'
 import { removeBoard } from "../../store/actions/board.actions";

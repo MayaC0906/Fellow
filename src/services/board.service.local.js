@@ -48,9 +48,6 @@ async function query() {
             return isUserMember
         })
     }
-
-    console.log('boards from query:', boards)
-
     // if (filterBy.txt) {
     //     const regex = new RegExp(filterBy.txt, 'i')
     //     boards = boards.filter(board => regex.test(board.title) || regex.test(board.description))
@@ -73,8 +70,8 @@ async function remove(boardId) {
 
 async function save(board, user, txt) {
     console.log('user:', user)
-    var savedBoard 
-    if (board._id) {        
+    var savedBoard
+    if (board._id) {
         addActivity(board, user, txt)
         savedBoard = await storageService.put(STORAGE_KEY, board)
     } else {
@@ -109,7 +106,7 @@ async function saveGroup(group, boardId, user, txt) {
     console.log('user:', user)
     try {
         let board = await getById(boardId)
-        
+
         if (group.id) {
             const idx = board.groups.findIndex((currGroup) => currGroup.id === group.id)
             board.groups.splice(idx, 1, group)
@@ -144,7 +141,7 @@ async function removeGroup(group, boardId, user, txt) {
 
 function addActivity(board, user, txt, { group, task } = {}) {
     console.log('user: from add', user)
-    if(!user || !board || !txt) return
+    if (!user || !board || !txt) return
     // console.log('details:', details.group)
     // const activityTxt = generateActivityText(action, member.fullname, optionalDetails)
     const activity = {
@@ -159,7 +156,7 @@ function addActivity(board, user, txt, { group, task } = {}) {
         task: {
             id: task?.id || '',
             title: task?.title || '',
-        }    
+        }
     };
     board.activities.push(activity);
 }
@@ -216,26 +213,7 @@ function getEmptyBoard() {
                 "color": "#579DFF"
             },
         ],
-        members: [
-            {
-                "_id": "m101",
-                "fullname": "Maya Cohen",
-                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg",
-                "username": "Maya"
-            },
-            {
-                "_id": "r101",
-                "fullname": "Reut Edry",
-                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg",
-                "username": "Reut"
-            },
-            {
-                "_id": "s101",
-                "fullname": "Sahar Machpud",
-                "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
-                "username": "Sahar"
-            }
-        ],
+        members: [userService.getLoggedinUser()],
         groups: [
             { id: utilService.makeId(), title: '', tasks: [], style: {} }
         ],
