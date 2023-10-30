@@ -360,7 +360,7 @@ export function OurSiri({isSiriOpen, setSiriOpen}) {
     return (
         <>
             <div className="siri-overlay"  ></div>
-            <div className="siri-modal" onClick={() => closeModal()}>
+            <div className="siri-modal">
                 <div className={`siri-container ${listening ? 'speaking' : ''}`}>
                     <div className="siri-instructions">
                         <h3>How to Use:</h3>
