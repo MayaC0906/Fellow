@@ -52,7 +52,7 @@ export function AppHeader() {
         }
         if (screenWidth <= 780 && screenWidth> 530 ){
             setIsPhoneDisplay({isDisplay: true, isSearch: true })
-            setExtandedWidthSearch(screenWidth - 600)
+            setExtandedWidthSearch(screenWidth - 270)
         }
         if (screenWidth <= 530) setIsPhoneDisplay({isDisplay: true, isSearch: false})
         
@@ -223,12 +223,14 @@ export function AppHeader() {
                     </div>
                 </div>}
 
-                <button className={'app-header-btn user-info' + (brightClass ? ' dark-btn' : ' light-btn')}>{appHeaderSvg.notifications}</button>
-                {isPhoneDisplay.isDisplay && !isPhoneDisplay.isSearch && <NavLink to={'/search'}><button className={'create-btn' +
+                {isPhoneDisplay.isDisplay && !isPhoneDisplay.isSearch && <NavLink to={'/search'}>
+                    <button className={'search-btn' +
                     (brightClass ? ' dark-btn' : ' light-btn')}>
-                    <span>{appHeaderSvg.search}</span>
+                    {appHeaderSvg.search}
                 </button>
                 </NavLink>}
+                <button className={'app-header-btn user-info' + (brightClass ? ' dark-btn' : ' light-btn')}>
+                    {appHeaderSvg.notifications}</button>
                 {user &&
                     <>
                         <div className={'app-header-btn user-info' + (brightClass ? ' dark-btn' : ' light-btn')} >
