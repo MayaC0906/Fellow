@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { loadBoards, updateBoard } from "../store/actions/board.actions"
+import { loadBoards, updateBoard, updateBoards } from "../store/actions/board.actions"
 import { useSelector } from "react-redux"
 import { workspaceSvg } from "../cmps/Svgs"
 import { AddBoard } from "../cmps/Board/AddBoard"
@@ -10,7 +10,7 @@ export function Workspace() {
     const [isBoardAdded, setIsBoardAdded] = useState(false)
     const [addBoardPosition, setAddBoardPosition] = useState({ top: '', left: '' })
     const createBoardRef = useRef()
-
+    const user = useSelector(storeState => storeState.userModule.user)
 
 
     useEffect(() => {
@@ -28,8 +28,7 @@ export function Workspace() {
         event.preventDefault()
         boardToChange.isStarred = !boardToChange.isStarred
         try {
-            await updateBoard(boardToChange)
-            await loadBoards()
+            await updateBoards(boards, boardToChange, user, 'starrd')
             getStarredBoards()
         } catch (err) {
             console.log('could not star the board', err)

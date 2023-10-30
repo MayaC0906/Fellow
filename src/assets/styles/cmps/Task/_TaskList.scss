@@ -58,6 +58,7 @@
                     display: flex;
                     flex-direction: column;
                     align-items: end;
+
                     .add-container {
                         align-items: end;
                     }
@@ -310,6 +311,12 @@
 
                         &.duedate {
                             border-radius: 3px;
+                            .number-badge {
+                                color: rgb(23, 43, 77);
+                            }
+                            path {
+                                fill: rgb(23, 43, 77);
+                            }
 
                             .empty-square {
                                 display: none;

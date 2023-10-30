@@ -84,6 +84,22 @@ export async function updateBoard(board, user, txt) {
     }
 }
 
+export async function updateBoards(boards, newBoard, user, txt) {
+    try {
+        await boardService.save(newBoard, user, txt)
+        const boardIdx = boards.findIndex(board => newBoard._id === board._id)
+        boards[boardIdx] = newBoard
+        console.log(boards);
+        store.dispatch({
+            type: SET_BOARDS,
+            boards: [...boards]
+        })
+        return boards
+    } catch (err) {
+        console.log('Cannot update boards', err)
+        throw err
+    }
+}
 
 export async function removeGroup(group, boardId, user, txt) {
     try {
