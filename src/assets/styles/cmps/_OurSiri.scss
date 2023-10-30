@@ -1,0 +1,153 @@
+.siri-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 9998;
+}
+
+.siri-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.siri-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    // background: linear-gradient(145deg, #1c1e21, #2c2e31);
+    background-color: #000;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    height: max-content;
+    overflow-y: auto;
+
+}
+
+.siri-btn {
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 30px;
+    background: linear-gradient(145deg, #ffffff, #e6e6e6);
+    box-shadow:  5px 5px 15px #b8b8b8, -5px -5px 15px #ffffff;
+    color: #000;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+}
+
+.siri-btn.stop-btn {
+    background: linear-gradient(145deg, #ff4b4b, #e63333);
+    color: #fff;
+}
+
+.siri-btn:hover {
+    background: linear-gradient(145deg, #e6e6e6, #ffffff);
+}
+
+.transcript-text {
+    color: #fff;
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+
+.close-siri-btn {
+    position: absolute;
+    top: 10px;
+    right: 3px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #fff;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    outline: none;
+}
+
+.close-siri-btn:hover {
+    opacity: 0.8;
+}
+
+.siri-gif, .siri-static {
+    width: 100px; 
+    height: auto;
+    cursor: pointer;
+}
+
+.siri-instructions {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.siri-instructions h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.siri-instructions ol {
+    margin: 10px 0 0;
+    color: #fff;
+    font-size: 16px;
+}
+
+.siri-instructions li {
+    margin: 5px 0;
+}
+
+
+
+
+
+
+// .close-siri-btn {
+//     position: absolute;
+//     top: 10px;
+//     right: 3px;
+//     background: none;
+//     border: none;
+//     font-size: 24px;
+//     color: #fff;
+//     cursor: pointer;
+//     transition: opacity 0.3s ease;
+//     outline: none;
+// }
+
+
+
+// .siri-btn {
+//     font-size: 16px;
+//     padding: 10px 20px;
+//     border: none;
+//     border-radius: 30px;
+//     background: linear-gradient(145deg, #ffffff, #e6e6e6);
+//     box-shadow:  5px 5px 15px #b8b8b8, -5px -5px 15px #ffffff;
+//     color: #000;
+//     transition: all 0.3s ease;
+//     cursor: pointer;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     outline: none;
+// }

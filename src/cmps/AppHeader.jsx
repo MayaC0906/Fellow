@@ -28,7 +28,7 @@ export function AppHeader() {
 
     useEffect(() => {
         onLoadUsers()
-    }, [])
+    }, [user])
 
     useEffect(() => {
         window.addEventListener('resize', handleResize);
@@ -57,6 +57,12 @@ export function AppHeader() {
         if (screenWidth <= 530) setIsPhoneDisplay({isDisplay: true, isSearch: false})
         
     }
+    async function onLoadUsers() {
+        await loadUsers()
+        if (!user) login({ username: 'Guest', password: '1234' })
+    }
+
+
 
     useEffect(() => {
         if (boardStyle) {

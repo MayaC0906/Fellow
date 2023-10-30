@@ -11,11 +11,21 @@ export function Workspace() {
     const [addBoardPosition, setAddBoardPosition] = useState({ top: '', left: '' })
     const createBoardRef = useRef()
     const user = useSelector(storeState => storeState.userModule.user)
+    const [count, setCount] = useState(10 - boards.length)
+    const boardCount = useRef(10 - boards.length)
+
 
 
     useEffect(() => {
-        loadBoards()
+        onLoadBoars()
     }, [])
+
+    async function onLoadBoars() {
+        const boards = await loadBoards()
+        // console.log('boars.length', boards.length);
+        // boardCount.current = 10 - boards.length
+        setCount(10 - boards.length)
+    }
 
     let starredBoards = getStarredBoards()
 
@@ -40,24 +50,47 @@ export function Workspace() {
         setIsBoardAdded(!isBoardAdded)
     }
 
-    function getBounds(ev) {
+    function getBounds() {
         const addBoarddRect = createBoardRef.current.getBoundingClientRect()
-        setAddBoardPosition({
-            top: addBoarddRect.top - 179,
-            left: addBoarddRect.left + 205
-        })
+
+        //DO NOT DELETE!!!!
+
+        // if (addBoarddRect.y < 145) {
+        //     setAddBoardPosition({
+        //         top: addBoarddRect.top,
+        //         left: addBoarddRect.left + 205
+        //     })
+        // }
+        if (addBoarddRect.x > 590) {
+            setAddBoardPosition({
+                top: addBoarddRect.top,
+                left: addBoarddRect.left + 200
+            })
+        }
+        if (addBoarddRect.y > 540) {
+            setAddBoardPosition({
+                top: addBoarddRect.top - 345,
+                left: addBoarddRect.left + 200
+            })
+        }
+        else {
+            setAddBoardPosition({
+                top: addBoarddRect.top,
+                left: addBoarddRect.left + 205
+            })
+        }
     }
 
-
-
-
     if (!boards || !boards.length) return (
-        <>
-            <section className="boards-add flex align-center justify-center" onClick={() => setIsBoardAdded(!isBoardAdded)}>Create new board</section>
-            {isBoardAdded && <AddBoard setIsBoardAdded={setIsBoardAdded} />}
-        </>
+        <div className="workspace-container">
+            <section ref={createBoardRef} className="no-board-container" onClick={() => onSetIsBoardAdded()}>
+                <h2 className="fs14">Create new board</h2>
+                <h3 className="fs12">{count} remaining</h3>
+                {/* <h3 className="fs12">{boardCount.current} remaining</h3> */}
+            </section>
+            {isBoardAdded && <AddBoard setIsBoardAdded={setIsBoardAdded} addBoardPosition={addBoardPosition} />}
+        </div>
     )
-    console.log('addBoardPosition', addBoardPosition);
     return (
         <section className="workspace-container flex">
             {/* <nav className="flex">
@@ -89,10 +122,18 @@ export function Workspace() {
                             boards={boards}
                             onStarredBoard={onStarredBoard}
                         />
-                        <section ref={createBoardRef} className="boards-add flex align-center justify-center" onClick={(ev) => onSetIsBoardAdded(ev)}>Create new board
+                        <section ref={createBoardRef} className={`boards-add ${count === 0 ? 'disable' : ''}`} onClick={count > 0 ? () => onSetIsBoardAdded() : null}>
+                            <h2 className="fs14">Create new board</h2>
+                            <h3 className="fs12">{count} remaining</h3>
                         </section>
                     </ul>
                     {isBoardAdded && <AddBoard setIsBoardAdded={setIsBoardAdded} addBoardPosition={addBoardPosition} />}
+                    {/* <section ref={createBoardRef} className={`boards-add ${!boardCount.current === 0 ? 'disable' : ''}`} onClick={boardCount.current > 0 ? () => onSetIsBoardAdded() : null}>
+                            <h2 className="fs14">Create new board</h2>
+                            <h3 className="fs12">{boardCount.current} remaining</h3>
+                        </section>
+                    </ul>
+                    {isBoardAdded && <AddBoard boardCount={boardCount} setIsBoardAdded={setIsBoardAdded} addBoardPosition={addBoardPosition} />} */}
                 </section>
             </section>
         </section>

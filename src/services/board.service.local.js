@@ -64,6 +64,7 @@ async function getById(boardId) {
 }
 
 async function remove(boardId) {
+    console.log('from service:', boardId);
     // throw new Error('Nope')
     await storageService.remove(STORAGE_KEY, boardId)
 }
@@ -102,7 +103,7 @@ async function getGroupById(groupId, boardId) {
     }
 }
 
-async function saveGroup(group, boardId, user, txt) {
+async function saveGroup(group, boardId, user, txt, task) {
     console.log('user:', user)
     try {
         let board = await getById(boardId)
@@ -115,7 +116,7 @@ async function saveGroup(group, boardId, user, txt) {
             board.groups.push(group)
         }
 
-        addActivity(board, user, txt, group)
+        addActivity(board, user, txt, {group, task})
 
         return save(board)
     } catch (err) {
@@ -141,6 +142,8 @@ async function removeGroup(group, boardId, user, txt) {
 
 function addActivity(board, user, txt, { group, task } = {}) {
     console.log('user: from add', user)
+    console.log('task: from activity', task, group)
+    
     if (!user || !board || !txt) return
     // console.log('details:', details.group)
     // const activityTxt = generateActivityText(action, member.fullname, optionalDetails)
@@ -213,7 +216,15 @@ function getEmptyBoard() {
                 "color": "#579DFF"
             },
         ],
-        members: [userService.getLoggedinUser()],
+        members: [
+            userService.getLoggedinUser(),
+            {
+                "_id": 'guest',
+                "fullname": 'Guest',
+                "imgUrl": "https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg",
+                "username": 'Guest'
+            }
+        ],
         groups: [
             { id: utilService.makeId(), title: '', tasks: [], style: {} }
         ],
@@ -291,6 +302,12 @@ const board = [
                 "fullname": "Sahar Machpud",
                 "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
                 "username": "Sahar"
+            },
+            {
+                "_id": 'guest',
+                "fullname": 'Guest',
+                "imgUrl": "https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg",
+                "username": 'Guest'
             }
         ],
         groups: [
@@ -1448,6 +1465,12 @@ const board = [
                 "fullname": "Sahar Machpud",
                 "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
                 "username": "Sahar"
+            },
+            {
+                "_id": 'guest',
+                "fullname": 'Guest',
+                "imgUrl": "https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg",
+                "username": 'Guest'
             }
         ],
         groups: [
@@ -1523,6 +1546,12 @@ const board = [
                 "fullname": "Sahar Machpud",
                 "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
                 "username": "Sahar"
+            },
+            {
+                "_id": 'guest',
+                "fullname": 'Guest',
+                "imgUrl": "https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg",
+                "username": 'Guest'
             }
         ],
         groups: [
@@ -1592,6 +1621,12 @@ const board = [
                 "fullname": "Sahar Machpud",
                 "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
                 "username": "Sahar"
+            },
+            {
+                "_id": 'guest',
+                "fullname": 'Guest',
+                "imgUrl": "https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg",
+                "username": 'Guest'
             }
         ],
         groups: [

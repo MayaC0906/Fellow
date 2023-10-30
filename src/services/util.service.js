@@ -12,7 +12,29 @@ export const utilService = {
     formatImgTime,
     getDominantColor,
     isRgbBright,
-    delay
+    delay,
+    formatDate
+}
+
+function formatDate(timestamp){
+    const now = Date.now()
+    const differenceInSeconds = (now - timestamp) / 1000;
+    const differenceInMinutes = differenceInSeconds / 60
+    const differenceInHours = differenceInMinutes / 60
+
+    if (differenceInMinutes < 1) {
+    return 'just now'
+    } else if (differenceInHours < 1) {
+    return `${Math.round(differenceInMinutes)} minutes ago`
+    } else if (differenceInHours < 24) {
+    return `${Math.round(differenceInHours)} hours ago`
+    } else if (differenceInHours < 48) {
+    const date = new Date(timestamp * 1000)
+    return `yesterday at ${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`
+    } else {
+    const date = new Date(timestamp * 1000)
+    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} at ${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
+    }
 }
 
 function makeId(length = 6) {

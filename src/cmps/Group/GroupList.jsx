@@ -21,7 +21,7 @@ export function GroupList() {
     const [openMenuGroupId, setOpenMenuGroupId] = useState(null);
     const addListInput = useRef(null)
     const user = useSelector((storeState) => storeState.userModule.user)
-    console.log(user);
+    // console.log(user);
     function handleChange(ev) {
         let { value, name: field } = ev.target
         setNewGroup((prevGroup) => ({ ...prevGroup, [field]: value }))
@@ -38,7 +38,7 @@ export function GroupList() {
             if (addListInput.current) {
                 addListInput.current.focus();
             }
-// await saveGroup(group, boardId, currUser, txt);
+            // await saveGroup(group, boardId, currUser, txt);
 
         } catch (err) {
             console.log('Failed to save new group', err)
@@ -83,8 +83,8 @@ export function GroupList() {
         console.log(group);
         try {
             // await saveGroup(newGroup, board._id, user, txt)
-            const txt = `deleted a group titled '${group.title}'.`;
-            await removeGroup(group, board._id, user,txt)
+            const txt = `deleted a group titled "${group.title}".`;
+            await removeGroup(group, board._id, user, txt)
         } catch (err) {
             console.log('Failed to remove group', err)
         }
@@ -94,7 +94,8 @@ export function GroupList() {
         let duplicatedGroup = { ...group }
         duplicatedGroup.id = null
         try {
-            await saveGroup(duplicatedGroup, board._id)
+            const txt = `duplicated group "${group.title}"`
+            await saveGroup(duplicatedGroup, board._id, user, txt)
         } catch (err) {
             console.log('Failed to duplicate group', err)
             throw err
@@ -105,7 +106,7 @@ export function GroupList() {
         const { destination, source, type } = result
         if (!destination || (destination.droppableId === source.droppableId && destination.index === source.index)) return
         const clonedBoard = { ...board }
-        if (type === 'groups') {           
+        if (type === 'groups') {
             const updatedGroups = [...clonedBoard.groups]
             const [movedGroup] = updatedGroups.splice(source.index, 1)
             updatedGroups.splice(destination.index, 0, movedGroup)

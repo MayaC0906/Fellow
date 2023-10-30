@@ -27,6 +27,7 @@
 @import "cmps/_LoginSignup";
 @import "cmps/ImgUploader";
 @import "cmps/UserDetailsDisplay.scss";
+@import "cmps/OurSiri.scss";
 
 
 // Board
@@ -37,6 +38,7 @@
 @import "cmps/Board/AboutBoard";
 @import "cmps/Board/BoardChangeBgc";
 @import "cmps/Board/BoardActivity";
+@import "cmps/Board/SharedBoard";
 
 // Group
 @import "cmps/Group/GroupList";
@@ -56,6 +58,7 @@
 @import "cmps/Task/TaskMemberImage";
 @import "cmps/Task/TaskMemberDetail";
 @import "cmps/Task/TaskAttachments";
+@import "cmps/Task/TaskActvities";
 
 // Dynamic
 @import "cmps/Dynamic/DynamicTaskEdit";
