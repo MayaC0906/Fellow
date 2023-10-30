@@ -223,3 +223,11 @@ export const groupMenu = {
             d="M640-80 240-480l400-400 71 71-329 329 329 329-71 71Z" />
     </svg>
 }
+
+export const loaderSvg = {
+    loader: <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60">
+    <line class="line animated" x1="14" y1="10" x2="14" y2="50" />
+    <line class="line animated line2" x1="30" y1="10" x2="30" y2="50" />
+    <line class="line animated line3" x1="46" y1="10" x2="46" y2="50" />
+</svg>
+}

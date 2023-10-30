@@ -9,6 +9,7 @@ import { BoardSidebar } from "../cmps/Board/BoardSidebar.jsx";
 import { GroupHeader } from "../cmps/Group/GroupHeader.jsx";
 import { GroupList } from "../cmps/Group/GroupList.jsx";
 import { BoardMenu } from "../cmps/Board/BoardMenu.jsx";
+import { loaderSvg } from "../cmps/Svgs.jsx";
 
 
 export function BoardDetails() {
@@ -37,7 +38,7 @@ export function BoardDetails() {
     }
 
 
-    if (!Object.keys(board).length) return <div>loading</div>
+    if (!Object.keys(board).length) return <div className="loader board"><div>{loaderSvg.loader}</div></div>
     return (
         <>
             <BoardSidebar />
