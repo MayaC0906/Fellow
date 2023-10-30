@@ -88,6 +88,7 @@
         }
 
         &-add {
+            position: relative; // adding
             width: rem(190px);
             height: rem(100px);
             background-color: rgba(9, 30, 66, 0.06);
