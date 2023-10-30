@@ -103,7 +103,7 @@ async function getGroupById(groupId, boardId) {
     }
 }
 
-async function saveGroup(group, boardId, user, txt) {
+async function saveGroup(group, boardId, user, txt, task) {
     console.log('user:', user)
     try {
         let board = await getById(boardId)
@@ -116,7 +116,7 @@ async function saveGroup(group, boardId, user, txt) {
             board.groups.push(group)
         }
 
-        addActivity(board, user, txt, group)
+        addActivity(board, user, txt, {group, task})
 
         return save(board)
     } catch (err) {
@@ -142,6 +142,8 @@ async function removeGroup(group, boardId, user, txt) {
 
 function addActivity(board, user, txt, { group, task } = {}) {
     console.log('user: from add', user)
+    console.log('task: from activity', task, group)
+    
     if (!user || !board || !txt) return
     // console.log('details:', details.group)
     // const activityTxt = generateActivityText(action, member.fullname, optionalDetails)

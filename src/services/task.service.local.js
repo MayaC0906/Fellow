@@ -30,7 +30,7 @@ async function saveTask(boardId, groupId, newTask, user, txt) {
             newTask.id = utilService.makeId()
             group.tasks.push(newTask)
         }
-        return await boardService.saveGroup(group, boardId, user, txt)
+        return await boardService.saveGroup(group, boardId, user, txt, newTask)
     } catch (err) {
         console.log('couldn\'t save task', err);
         throw err
