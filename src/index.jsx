@@ -7,6 +7,7 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 import { store } from './store/store'
 import { App } from './App'
 import './assets/styles/main.scss'
+import 'regenerator-runtime/runtime';
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
