@@ -16,7 +16,8 @@ export const boardService = {
     getGroupById,
     getEmptyLabel,
     getEmptyBoard,
-    addActivity
+    addActivity,
+    getEmptyComment 
 }
 
 window.bs = boardService
@@ -162,6 +163,24 @@ function addActivity(board, user, txt, { group, task } = {}) {
         }
     };
     board.activities.push(activity);
+}
+
+function getEmptyComment (user, txt, groupId, taskId) {
+    if (!user || !txt || !groupId || !taskId) return
+    const comment = {
+        id: utilService.makeId(),
+        txt,
+        createdAt: Date.now(),
+        byMember: user,
+        group: {
+            id: groupId || '',
+        },
+        task: {
+            id: taskId || '',
+        }
+    }
+
+    return comment
 }
 
 

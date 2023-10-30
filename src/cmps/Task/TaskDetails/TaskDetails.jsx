@@ -17,6 +17,7 @@ import { TaskLabel } from "./TaskLabel"
 import { utilService } from "../../../services/util.service"
 import { TaskActivities } from "./TaskActivities"
 
+
 export function TaskDetails() {
     const { boardId, groupId, taskId } = useParams()
     const [task, setTask] = useState('')
@@ -144,7 +145,7 @@ export function TaskDetails() {
                                         onSaveTask={onSaveTask}
                                         task={task}
                                     />
-                                    <TaskActivities task={task} />
+                                    <TaskActivities onSaveTask={onSaveTask} groupId={groupId} task={task} />
                                 </section>
                             </section >
 
