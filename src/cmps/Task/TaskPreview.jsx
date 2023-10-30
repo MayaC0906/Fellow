@@ -14,9 +14,9 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
     const [isQuickEdit, setIsQuickEdit] = useState(false)
     const quickEditRef = useRef(null)
     const taskRef = useRef(null)
-    console.log(quickEditRef);
+    // console.log(quickEditRef);
     const [quickEditPosition, setQuickEditPosition] = useState({ top: '', left: '' })
-    console.log('quickEditPosition', quickEditPosition);
+    // console.log('quickEditPosition', quickEditPosition);
     const [saveBtnPosition, setSaveBtnPosition] = useState({ top: '0', left: '0' })
     const [rtl, setRtl] = useState(false)
     const navigate = useNavigate()
@@ -44,8 +44,8 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
         } else {
             setRtl(false)
             setQuickEditPosition({
-                top: taskRect.top ,
-                left: taskRect.x +230
+                top: taskRect.top,
+                left: taskRect.x + 230
             })
             setSaveBtnPosition({
                 top: taskRect.bottom + 16,
@@ -193,7 +193,7 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
                     }}>save</button>}
 
                 {isQuickEdit &&
-                    <section className={"edit-actions " + (rtl?'rtl':'')}
+                    <section className={"edit-actions " + (rtl ? 'rtl' : '')}
                         style={{ top: quickEditPosition.top, left: quickEditPosition.left + 30 }}>
                         <button className="open-card-btn" onClick={() => {
                             setIsQuickEdit(false)

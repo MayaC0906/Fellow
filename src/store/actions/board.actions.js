@@ -77,6 +77,7 @@ export async function updateBoard(board, user, txt) {
     try {
         const savedBoard = await boardService.save(board, user, txt)
         store.dispatch(getActionUpdateBoard(savedBoard))
+        console.log('savedBoard', savedBoard);
         return savedBoard
     } catch (err) {
         console.log('Cannot save board', err)

@@ -3,28 +3,31 @@ import { groupHeaderSvg, workspaceSvg } from "../Svgs";
 import { updateBoard } from "../../store/actions/board.actions";
 import { useSelector } from "react-redux";
 import { useParams } from 'react-router-dom'
+import { ShareBoard } from "../Board/ShareBoard";
 
 export function GroupHeader({ isMenuOpen, setMenu }) {
     const { boardId } = useParams()
     const user = useSelector((storeState) => storeState.userModule.user)
-    
+    const boardFromState = useSelector(storeState => storeState.boardModule.board)
     const boards = useSelector(storeState => storeState.boardModule.boards)
     const [board, onSetBoard] = useState({})
     const [isBoardStarred, setIsBoardStarred] = useState(null)
     const [content, setContent] = useState('')
+    const [isOpenShareBoard, setIsOpenShareBoard] = useState(false)
     let zIndexCount = 10
-    
+
     useEffect(() => {
+        console.log('use effect in groupheader');
         onLoadBoard()
     }, [boardId, board])
-    
+
     async function onLoadBoard() {
         const boardToFind = boards.find(board => board._id === boardId)
         onSetBoard(boardToFind)
         setIsBoardStarred(boardToFind.isStarred)
         setContent(boardToFind.title)
     }
-    
+
     async function onEditBoardTitle() {
         let value = event.target.textContent
         board.title = value
@@ -36,7 +39,7 @@ export function GroupHeader({ isMenuOpen, setMenu }) {
             throw err
         }
     }
-    
+
     async function onToggleBoardStar() {
         board.isStarred = !board.isStarred
         try {
@@ -52,6 +55,8 @@ export function GroupHeader({ isMenuOpen, setMenu }) {
 
     const { isBright } = board.style
     const isBlackOrWhite = isBright ? 'brightColor' : 'darkColor'
+
+    console.log('board from groupheader:', board);
 
     // IMPORTANT: everything that is in comment might be added in the future // 
     return (
@@ -74,13 +79,15 @@ export function GroupHeader({ isMenuOpen, setMenu }) {
                 <button className={`btn svg ${isBlackOrWhite}`} onClick={() => alert('Will be added soon')}>{groupHeaderSvg.filter} <span className="filters">Filters</span></button>
                 <span className="separate-line"></span>
                 <section className="group-header img">
-                    {board.members.map(member => (
+                    {console.log(board.members)}
+                    {boardFromState.members.map(member => (
                         <section className="member-img-container flex align-center">
                             <img className={`member-img ${isBlackOrWhite}`} src={member.imgUrl} alt="" key={member._id} style={{ zIndex: zIndexCount-- }} />
                             <span></span>
                         </section>
                     ))}
-                    <button className={`btn svg ${isBlackOrWhite} share`}>{groupHeaderSvg.addmember} <span>Share</span></button>
+                    <button className={`btn svg ${isBlackOrWhite} share`} onClick={() => setIsOpenShareBoard(!isOpenShareBoard)}>{groupHeaderSvg.addmember} <span>Share</span></button>
+                    {isOpenShareBoard && <ShareBoard setIsOpenShareBoard={setIsOpenShareBoard} />}
                     {!isMenuOpen ? <button onClick={() => setMenu(!isMenuOpen)} className="group-header-btn svg dots">{groupHeaderSvg.threeDots}</button> : ''} </section>
             </section>
         </header>

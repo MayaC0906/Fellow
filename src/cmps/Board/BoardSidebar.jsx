@@ -29,7 +29,9 @@ export function BoardSidebar() {
 
   function handleClick(ev, type) {
     ev.stopPropagation();
-
+    if (type === 'addBoard') {
+      if (boards.length === 10) return
+    }
     console.log('hey');
     const rect = ev.target.getBoundingClientRect()
     setModalState({
@@ -68,7 +70,7 @@ export function BoardSidebar() {
     setSetSortedBoards(sortedBoards)
   }
 
-  async function deleteBoard() {
+  async function deleteBoard(boardId) {
     try {
       await removeBoard(boardId)
       navigate('/workspace')
@@ -77,6 +79,8 @@ export function BoardSidebar() {
     }
 
   }
+
+  console.log('modalState', modalState.isOpen);
 
   return (
     <section
@@ -189,7 +193,7 @@ export function BoardSidebar() {
               >
                 <img src={boardItem.style.backgroundImage} alt="" />
                 <Link to={`/board/${boardItem._id}`}>{boardItem.title}</Link>
-                <span onClick={deleteBoard}>{checkList.garbage}</span>
+                <span onClick={() => deleteBoard(boardItem._id)}>{checkList.garbage}</span>
               </section>
             ))}
           </section>

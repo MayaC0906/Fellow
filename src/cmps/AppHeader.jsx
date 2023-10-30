@@ -13,7 +13,6 @@ export function AppHeader() {
     const [brightClass, setBrightClass] = useState(true)
     const board = useSelector((storeState) => storeState.boardModule.board)
     const boards = useSelector((storeState) => storeState.boardModule.boards)
-    // console.log(boards, 'boards');
     const [modalState, setModalState] = useState({ isOpen: false, modal: '' })
     const createBtnRef = useRef(null)
     const searchBtnRef = useRef(null)
@@ -26,16 +25,14 @@ export function AppHeader() {
 
     useEffect(() => {
         onLoadUsers()
-    }, [])
+    }, [user])
 
     async function onLoadUsers() {
-        const users = await userService.getUsers()
+        await loadUsers()
         if (!user) login({ username: 'Guest', password: '1234' })
-        // setUsers(users)
     }
 
-    // useEffect(() => {
-    // }, [user])
+
 
     useEffect(() => {
         if (boardStyle) {
