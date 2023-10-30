@@ -15,6 +15,7 @@ import { TaskDate } from "./TaskDate"
 import { TaskMember } from "./TaskMember"
 import { TaskLabel } from "./TaskLabel"
 import { utilService } from "../../../services/util.service"
+import { TaskActivities } from "./TaskActivities"
 
 export function TaskDetails() {
     const { boardId, groupId, taskId } = useParams()
@@ -143,6 +144,7 @@ export function TaskDetails() {
                                         onSaveTask={onSaveTask}
                                         task={task}
                                     />
+                                    <TaskActivities task={task} />
                                 </section>
                             </section >
 
