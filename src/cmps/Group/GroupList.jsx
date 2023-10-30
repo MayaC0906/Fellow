@@ -83,7 +83,7 @@ export function GroupList() {
         console.log(group);
         try {
             // await saveGroup(newGroup, board._id, user, txt)
-            const txt = `deleted a group titled '${group.title}'.`;
+            const txt = `deleted a group titled "${group.title}".`;
             await removeGroup(group, board._id, user, txt)
         } catch (err) {
             console.log('Failed to remove group', err)
@@ -94,7 +94,8 @@ export function GroupList() {
         let duplicatedGroup = { ...group }
         duplicatedGroup.id = null
         try {
-            await saveGroup(duplicatedGroup, board._id)
+            const txt = `duplicated group "${group.title}"`
+            await saveGroup(duplicatedGroup, board._id, user, txt)
         } catch (err) {
             console.log('Failed to duplicate group', err)
             throw err

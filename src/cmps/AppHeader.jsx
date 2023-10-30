@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { appHeaderSvg } from './Svgs'
 import { useEffect, useState, useRef } from 'react'
 import { AddBoard } from './Board/AddBoard'
-import { loadUsers, login } from '../store/actions/user.actions'
+import {  login } from '../store/actions/user.actions'
 import { UserDetailsDisplay } from './UserDetailsDisplay'
 
 export function AppHeader() {
