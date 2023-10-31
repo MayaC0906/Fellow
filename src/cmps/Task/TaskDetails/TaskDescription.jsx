@@ -52,7 +52,7 @@ export function TaskDescription({ onSaveTask, task }) {
                 {description || 'Add a more detailed description...'}
             </div>
 
-            {isDescExpand && < FormControl className="description-input" sx={{ width: '90%' }}>
+            {isDescExpand && < FormControl className="description-input" sx={{ width: '90%'}}>
                 <Textarea
                     onChange={(event) => { setDescription(event.target.value) }}
                     defaultValue={description}
