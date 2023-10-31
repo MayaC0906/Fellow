@@ -5,7 +5,8 @@ import { useSelector } from "react-redux";
 import { useParams } from 'react-router-dom'
 import { ShareBoard } from "../Board/ShareBoard";
 import { OurSiri } from "../OurSiri";
-
+// import { Dashboard } from "../Dashboard";
+import { Dashboard } from "../Dashboard";
 export function GroupHeader({ isMenuOpen, setMenu }) {
     const { boardId } = useParams()
     const user = useSelector((storeState) => storeState.userModule.user)
@@ -17,6 +18,8 @@ export function GroupHeader({ isMenuOpen, setMenu }) {
     const [isOpenShareBoard, setIsOpenShareBoard] = useState(false)
     const [isSiriOpen, setSiriOpen] = useState(false)
     const [isPhoneDisplay, setIsPhoneDisplay] = useState(false)
+    const [isDashboardOpen, setDashBoardOpen] = useState(false)
+
     let zIndexCount = 10
 
     useEffect(() => {
@@ -90,9 +93,10 @@ export function GroupHeader({ isMenuOpen, setMenu }) {
                 </section>
 
                 <section className="group-header">
-                    {!isPhoneDisplay && <button className={`btn ${isBlackOrWhite}`} onClick={() => alert('Will be added soon')}>{groupHeaderSvg.dashboard} <span className="dashboard">Dashboard</span></button>}
+                    {!isPhoneDisplay && <button className={`btn ${isBlackOrWhite}`} onClick={() => setDashBoardOpen(!isDashboardOpen)}>{groupHeaderSvg.dashboard} <span className="dashboard">Dashboard</span></button>}
                     <button className={`${isBlackOrWhite} ` + (isPhoneDisplay ? '' : 'svg btn')} onClick={() => alert('Will be added soon')}>{groupHeaderSvg.filter} <span className="filters">{isPhoneDisplay ? '' : 'Filters'}</span></button>
                     <button className={`${isBlackOrWhite} ` + (isPhoneDisplay ? '' : 'svg btn')} onClick={() => setSiriOpen(!isSiriOpen)} >{groupHeaderSvg.speaker} <span className="siri">{isPhoneDisplay ? '' : 'Siri'}</span></button>
+                    <button className={`btn svg ${isBlackOrWhite}`} onClick={() => alert('Will be added soon')}>{groupHeaderSvg.filter} <span className="filters">Filters</span></button>
 
                     <span className="separate-line"></span>
                     <section className="group-header img">
@@ -111,6 +115,7 @@ export function GroupHeader({ isMenuOpen, setMenu }) {
                 </section>
             </header>
             {isSiriOpen && <OurSiri isSiriOpen={isSiriOpen} setSiriOpen={setSiriOpen} />}
+            {isDashboardOpen && <Dashboard board={board} setDashBoardOpen={setDashBoardOpen} isDashboardOpen={isDashboardOpen} />}
         </>
     )
 }

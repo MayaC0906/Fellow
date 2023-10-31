@@ -30,7 +30,7 @@ export function HomePage() {
                                 together</h2>
                             <p>Keep everything in the same place-even if your team isn't.</p>
                         </span>
-                        <Link className='demo-btn' to="/workspace">Start Demo</Link>
+                        <Link className='demo-btn' to="/workspace"><span style={{fontSize:'20px', letterSpacing:'1px'}}>Try it now - it's free!</span></Link>
                     </section>
                     <section className='hero'>
                         <img src={hero} alt="img" />
@@ -164,8 +164,8 @@ export function HomePage() {
             <section className='signup'>
                 <h2>Get started with Fellow today</h2>
                 <form action="">
-                    <Textarea size="md" name="Size" placeholder="Email" />
-                    <Button>Sign up - it's free!</Button>
+                    <Textarea size="md" name="Size" sx={{width:'300px'}} placeholder="Email" />
+                    <Button sx={{width:'150px'}}>Sign up - it's free!</Button>
                 </form>
             </section>
             <footer >

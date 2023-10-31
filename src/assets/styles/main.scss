@@ -30,6 +30,8 @@
 @import "cmps/ImgUploader";
 @import "cmps/UserDetailsDisplay.scss";
 @import "cmps/OurSiri.scss";
+@import "cmps/Dashboard.scss";
+@import "cmps/UserActivity.scss";
 
 
 // Board
@@ -41,6 +43,7 @@
 @import "cmps/Board/BoardChangeBgc";
 @import "cmps/Board/BoardActivity";
 @import "cmps/Board/SharedBoard";
+
 
 // Group
 @import "cmps/Group/GroupList";
