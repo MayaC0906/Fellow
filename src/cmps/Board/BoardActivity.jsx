@@ -2,13 +2,14 @@ import React from 'react'
 import { useState, useRef } from 'react'
 import { taskSvg } from '../Svgs'
 import { additionTaskSvg } from '../Svgs'
-
+import { UserActivity } from '../UserActivity'
 export function BoardActivity({ board }) {
     const { activities } = board;
     const [selectedActivity, setSelectedActivity] = useState(null)
     const imgRefs = useRef({});
     const containerRef = useRef(null)
     const [modalPosition, setModalPosition] = useState({ top: 0, left: 0 })
+    const [userActivityModal, setUserActivityModal] = useState({isOpen: false, userId: ''})
 
     function formatDate(timestamp){
         const now = Date.now()
@@ -44,7 +45,15 @@ export function BoardActivity({ board }) {
             setModalPosition({ top: top, left: left })
         }
     }
+
+    function onSetUserActivityModal(user) {
+        setUserActivityModal(prevState => ({
+            isOpen: !prevState.isOpen, 
+            user,
+        }))
+    }
     return (
+        // <>
         <div className='bgc-modal-layout activities' ref={containerRef}>
         {activities.map((activity) => (
             <div className='activity' key={activity.id} style={{ display: '', alignItems: 'center', marginBottom: '10px' }}>
@@ -76,12 +85,23 @@ export function BoardActivity({ board }) {
                      <img style={{borderRadius:'50%'}} src={selectedActivity.byMember.imgUrl} alt=""/>
                      <div className="flex">
                          <h2 className="full-name">{selectedActivity.byMember.fullname}</h2>
-                         <h2 className="user-name">@userName - further</h2>
+                         <h2 className="user-name">{selectedActivity.byMember.username}</h2>
                      </div>
+
                  </section>
                  <hr />
+                 <div className='activity-member-view' onClick={() => onSetUserActivityModal(selectedActivity.byMember)}>View member's board activity</div>
+
              </section>
             }
+            {userActivityModal.isOpen &&
+                <UserActivity
+                setUserActivityModal={setUserActivityModal}
+                isOpen={userActivityModal.isOpen}
+                user={userActivityModal.user}
+                />}
         </div>
+    
+        // </>
     );
 }

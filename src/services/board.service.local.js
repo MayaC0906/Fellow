@@ -141,13 +141,8 @@ async function removeGroup(group, boardId, user, txt) {
     }
 }
 
-function addActivity(board, user, txt, { group, task } = {}) {
-    console.log('user: from add', user)
-    console.log('task: from activity', task, group)
-    
+function addActivity(board, user, txt, { group, task } = {}) { 
     if (!user || !board || !txt) return
-    // console.log('details:', details.group)
-    // const activityTxt = generateActivityText(action, member.fullname, optionalDetails)
     const activity = {
         id: utilService.makeId(),
         txt,
