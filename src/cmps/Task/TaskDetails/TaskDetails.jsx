@@ -133,7 +133,7 @@ export function TaskDetails() {
                                 <span>Card actions</span>
                                 <span>{taskSvg.dropDoen}</span>
                             </button>}
-                            {!isPhoneDisplay.isDisplay || isPhoneDisplay.isActionsShown &&
+                            {(!isPhoneDisplay.isDisplay || isPhoneDisplay.isActionsShown) &&
                                 <section className="edit-task-nav">
                                     <TaskDetailsSideNav
                                         coverRef={coverBtnRef}
