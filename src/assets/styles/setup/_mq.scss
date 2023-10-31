@@ -2,42 +2,105 @@
     .task-details {
         .modal-container {
             display: flex;
+
             .task-modal {
                 border-radius: 0px;
+
                 .task-detail-screen {
-                    .task-title{
+                    .task-title {
                         padding-top: 8px;
                         border-bottom: 2px solid #dcdcdc;
                         margin-block-end: 8px;
-                        div{
+
+                        div {
                             height: auto;
                         }
                     }
+
                     .task-main {
                         display: flex;
                         flex-direction: column;
 
+                        .actions-show-btn {
+                            cursor: pointer;
+                            font-weight: 500;
+                            color: white;
+                            border: none;
+                            width: max-content;
+                            margin: 0 0 10px 56px;
+                            display: flex;
+                            padding: 6px 12px;
+                            font-size: rem(16px);
+                            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                            justify-content:flex-start;
+                            gap: 10px;
+                            border-radius: 3px;
+                            align-items: center;
+                            background-color: #172b4d9a;
+                            span {
+                                display: flex;
+                                align-items: center;
+                            }
+                            svg {
+                                align-self: center;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                height: 20px;
+                                width: 20px;
+                                path {
+                                    fill: white
+                                }
+                            }
+                            &:hover {
+                                background-color: lighten(#172b4d9a, 3%)
+                            }
+                            &:active {
+                                background-color: darken(#172b4d9a, 3%)
+                            }
+                        }
+
                         .task-info {
                             .task-content {
-                                >*{
+                                >* {
                                     border-bottom: 1px solid #e5e7eb;
                                 }
+
                                 >:first-child {
                                     border-top: 1px solid #e5e7eb;
                                 }
+
+                                .task-descriptoin {
+                                    .desc-actions {
+                                        margin-block-end: 10px;
+                                    }
+
+                                    .description-input.add-description {
+                                        margin-block-end: 10px;
+                                    }
+                                }
+
                                 .task-checklist {
                                     margin-block-end: 10px;
                                 }
-                                .task-activities{
+
+                                .task-activities {
                                     margin-block-start: 8px;
+
+                                    .write-comment {
+                                        width: calc(100% - 56px);
+                                    }
                                 }
+
                                 .task-attachments {
                                     .task-details-title {
                                         padding-top: 0;
                                     }
+
                                     .task-attachment {
                                         .img-info {
                                             padding-top: 0;
+
                                             h2 {
                                                 white-space: nowrap;
                                                 overflow: hidden;
@@ -55,7 +118,7 @@
                             border-bottom: 1px solid #e5e7eb;
 
                             .add-container {
-                                .edit-modal  {
+                                .edit-modal {
                                     position: fixed;
                                 }
 
@@ -74,15 +137,6 @@
                             }
 
                         }
-
-                        .task-descriptoin {
-                            .write-comment {
-                                width: calc(90% - 20px)
-                            }
-                        }
-
-
-
 
                     }
                 }

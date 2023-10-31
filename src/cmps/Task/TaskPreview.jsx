@@ -7,21 +7,15 @@ import { useState, Fragment, useRef, useEffect, useLayoutEffect } from "react";
 import { Link } from "react-router-dom";
 import { TaskDetailsSideNav } from "./TaskDetailsSideNav";
 
-export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels, taskMembers, taskChecklist, groupId }) {
+export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels, taskMembers, taskChecklist, groupId, onScrollDown, tasks }) {
     const { dueDate } = task
     const { boardId } = useParams()
     let [editName, setEditName] = useState('')
     const [isQuickEdit, setIsQuickEdit] = useState(false)
-    const quickEditRef = useRef(null)
-    const taskRef = useRef(null)
+    let taskRef = useRef(null)
     const [quickEditPosition, setQuickEditPosition] = useState({ top: '', left: '' })
-    const [saveBtnPosition, setSaveBtnPosition] = useState({ top: '0', left: '0' })
     const [rtl, setRtl] = useState(false)
     const navigate = useNavigate()
-
-    // useEffect(() => {
-
-    // }, [taskRef])
 
     function getBounds(ev) {
         const taskRect = taskRef.current.getBoundingClientRect()
@@ -32,27 +26,18 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
                 top: taskRect.top,
                 left: taskRect.x - 195
             })
-            setSaveBtnPosition({
-                top: taskRect.bottom + 16,
-                left: taskRect.left
-            })
+
         } else {
             setRtl(false)
             setQuickEditPosition({
                 top: taskRect.top,
                 left: taskRect.x + 230
             })
-            setSaveBtnPosition({
-                top: taskRect.bottom + 16,
-                left: taskRect.left
-            })
-
         }
 
     }
 
     function onLabelOpen(ev) {
-        console.log();
         ev.preventDefault()
         setIsLabelsShown(!isLabelsShown)
     }
@@ -68,6 +53,9 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
     }
 
     function onOpenQuickEdit(ev) {
+        if (window.innerHeight - ev.clientY < taskRef.current.offsetHeight + 110) {
+            onScrollDown(ev)
+        }
         getBounds(ev)
         ev.preventDefault()
         ev.stopPropagation()
@@ -100,7 +88,7 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
     const defaultContent = <article ref={taskRef} key={task.id} className="task">
         {!isQuickEdit && <button
             className="quick-edit-badge"
-            onClick={onOpenQuickEdit}>
+            onClick={(event) => { onOpenQuickEdit(event, task) }}>
             <span className="icon-badge">{taskSvg.pencil}</span>
         </button>}
         {task.cover?.backgroundColor && <div className="task-cover"
@@ -172,19 +160,12 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
     </article>
     return (
         <Fragment>
-
             <div className={"task-container " + (isQuickEdit ? 'quickedit' : '')}
             >
                 {!isQuickEdit && <Link to={`${groupId}/${task.id}`}>
                     {defaultContent}
                 </Link>}
                 {isQuickEdit && defaultContent}
-                {isQuickEdit && <button style={{ top: saveBtnPosition.top - 10, left: saveBtnPosition.left }}
-                    className="save-btn" onClick={(event) => {
-                        event.preventDefault
-                        setIsQuickEdit(false)
-                    }}>save</button>}
-
                 {isQuickEdit &&
                     <section className={"edit-actions " + (rtl ? 'rtl' : '')}
                         style={{ top: quickEditPosition.top, left: quickEditPosition.left + 30 }}>
@@ -196,12 +177,18 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
                             Open card
                         </button>
                         <TaskDetailsSideNav
+                            rtl={rtl}
                             onActionDeleteTask={onActionDeleteTask}
                             isQuickEdit={true}
                             editName={editName}
                             setEditName={setEditName}
                             onSaveTask={onSaveTask}
                             task={task} />
+                        <button
+                            className="save-btn" onClick={(event) => {
+                                event.preventDefault
+                                setIsQuickEdit(false)
+                            }}>Save</button>
                     </section>
                 }
             </div>

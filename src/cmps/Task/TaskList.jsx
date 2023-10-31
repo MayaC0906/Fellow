@@ -4,7 +4,7 @@ import { TaskPreview } from "./TaskPreview";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 
-export function TaskList({ handleDrag, tasks, labels, members, isLabelsShown, setIsLabelsShown, groupId }) {
+export function TaskList({ handleDrag, tasks, labels, members, isLabelsShown, setIsLabelsShown, groupId, onScrollDown }) {
     const { boardId } = useParams();
 
     if (!tasks) return <div>Loading...</div>;
@@ -41,16 +41,18 @@ export function TaskList({ handleDrag, tasks, labels, members, isLabelsShown, se
                                             {...provided.draggableProps}
                                             {...provided.dragHandleProps}
                                         >
-                                          
-                                                <TaskPreview
-                                                    setIsLabelsShown={setIsLabelsShown}
-                                                    isLabelsShown={isLabelsShown}
-                                                    task={task}
-                                                    taskLabels={taskLabels}
-                                                    taskMembers={taskMembers}
-                                                    taskChecklist={taskChecklist}
-                                                    groupId={groupId}
-                                                />
+
+                                            <TaskPreview
+                                                tasks={tasks}
+                                                onScrollDown={onScrollDown}
+                                                setIsLabelsShown={setIsLabelsShown}
+                                                isLabelsShown={isLabelsShown}
+                                                task={task}
+                                                taskLabels={taskLabels}
+                                                taskMembers={taskMembers}
+                                                taskChecklist={taskChecklist}
+                                                groupId={groupId}
+                                            />
                                         </div>
                                     )}
                                 </Draggable>

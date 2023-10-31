@@ -16,9 +16,28 @@ export function GroupHeader({ isMenuOpen, setMenu }) {
     const [content, setContent] = useState('')
     const [isOpenShareBoard, setIsOpenShareBoard] = useState(false)
     const [isSiriOpen, setSiriOpen] = useState(false)
+    const [isPhoneDisplay, setIsPhoneDisplay] = useState(false)
     let zIndexCount = 10
+
     useEffect(() => {
-        console.log('use effect in groupheader');
+        window.addEventListener('resize', handleResize);
+        handleResize()
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+
+
+    function handleResize() {
+        const screenWidth = window.innerWidth
+        if (screenWidth > 980) {
+            setIsPhoneDisplay(false)
+        }
+        else setIsPhoneDisplay(true)
+    }
+
+    useEffect(() => {
         onLoadBoard()
     }, [boardId, board])
 
@@ -59,38 +78,34 @@ export function GroupHeader({ isMenuOpen, setMenu }) {
 
     console.log('board from groupheader:', board);
 
-    // IMPORTANT: everything that is in comment might be added in the future // 
+
     return (
         <>
             <header className="group-header container">
                 <section className="board-edit flex">
                     <div tabIndex="0" onBlur={onEditBoardTitle}
                         contentEditable={true}>{content}</div>
-                    {/* <section className="group-visbility group-header"> */}
                     {!isBoardStarred && (<button className={isBlackOrWhite} onClick={onToggleBoardStar}>{workspaceSvg.star}</button>)}
                     {isBoardStarred && (<button className={isBlackOrWhite} onClick={onToggleBoardStar}>{groupHeaderSvg.fullStar}</button>)}
-                    {/* <button className="group-header-btn svg members">{groupHeaderSvg.members}<span>Workspace visible</span></button> */}
-                    {/* <button className={`group-header-btn svg bars ${isBright ? 'brightColor' : 'darkColor'}`}>{groupHeaderSvg.bars} <span>Board</span></button> */}
-                    {/* <button className="group-header-btn svg arrowdown">{appHeaderSvg.arrowDown}</button> */}
-                    {/* </section> */}
                 </section>
 
                 <section className="group-header">
-                    {/* <button className="group-header-btn svg powerUp">{groupHeaderSvg.rocket} <span>Power-Ups</span></button> */}
-                    <button className={`btn ${isBlackOrWhite}`} onClick={() => alert('Will be added soon')}>{groupHeaderSvg.dashboard} <span className="dashboard">Dashboard</span></button>
-                    <button className={`btn svg ${isBlackOrWhite}`} onClick={() => alert('Will be added soon')}>{groupHeaderSvg.filter} <span className="filters">Filters</span></button>
-                    <button className={`btn ${isBlackOrWhite}`} onClick={() => setSiriOpen(!isSiriOpen)} >Siri</button>
+                    {!isPhoneDisplay && <button className={`btn ${isBlackOrWhite}`} onClick={() => alert('Will be added soon')}>{groupHeaderSvg.dashboard} <span className="dashboard">Dashboard</span></button>}
+                    <button className={`${isBlackOrWhite} ` + (isPhoneDisplay ? '' : 'svg btn')} onClick={() => alert('Will be added soon')}>{groupHeaderSvg.filter} <span className="filters">{isPhoneDisplay ? '' : 'Filters'}</span></button>
+                    <button className={`${isBlackOrWhite} ` + (isPhoneDisplay ? '' : 'svg btn')} onClick={() => setSiriOpen(!isSiriOpen)} >{groupHeaderSvg.speaker} <span className="siri">{isPhoneDisplay ? '' : 'Siri'}</span></button>
 
                     <span className="separate-line"></span>
                     <section className="group-header img">
                         {console.log(board.members)}
-                        {boardFromState.members.map(member => (
-                            <section className="member-img-container flex align-center">
-                                <img className={`member-img ${isBlackOrWhite}`} src={member.imgUrl} alt="" key={member._id} style={{ zIndex: zIndexCount-- }} />
-                                <span></span>
-                            </section>
-                        ))}
-                        <button className={`btn svg ${isBlackOrWhite} share`} onClick={() => setIsOpenShareBoard(!isOpenShareBoard)}>{groupHeaderSvg.addmember} <span>Share</span></button>
+                        {!isPhoneDisplay &&
+                            boardFromState.members.map(member => (
+                                <section className="member-img-container flex align-center">
+                                    <img className={`member-img ${isBlackOrWhite}`} src={member.imgUrl} alt="" key={member._id} style={{ zIndex: zIndexCount-- }} />
+                                    <span></span>
+                                </section>
+                            ))
+                        }
+                        <button className={`${isBlackOrWhite} share ` + (isPhoneDisplay ? '' : 'svg btn')} onClick={() => setIsOpenShareBoard(!isOpenShareBoard)}>{groupHeaderSvg.addmember} <span>{isPhoneDisplay ? '' : 'Share'}</span></button>
                         {isOpenShareBoard && <ShareBoard setIsOpenShareBoard={setIsOpenShareBoard} />}
                         {!isMenuOpen ? <button onClick={() => setMenu(!isMenuOpen)} className="group-header-btn svg dots">{groupHeaderSvg.threeDots}</button> : ''} </section>
                 </section>

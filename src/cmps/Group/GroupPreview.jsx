@@ -30,8 +30,6 @@ export function GroupPreview({
 	const groupHeaderRef = useRef(null)
 	const [groupMenuPosition, setGroupMenuPosition] = useState({ top: '', left: '' })
 	const user = useSelector((storeState) => storeState.userModule.user)
-
-	
 	const [prevTaskCount, setPrevTaskCount] = useState(group.tasks.length)
 
 	useEffect(() => {
@@ -49,6 +47,20 @@ export function GroupPreview({
 		}
 	}
 
+	function onScrollDown(event) {
+		// const taskListContainer = taskListContainerRef.current;
+		// const clickPosition = event.clientY;
+		// const containerTop = taskListContainer.getBoundingClientRect().top;
+		// const scrollToPosition = clickPosition  - containerTop - 50;
+	   
+		// taskListContainer.scrollTo({
+		//   top: scrollToPosition,
+		//   behavior: 'smooth' 
+		// });
+		taskListContainerRef.current.scrollTop = taskListContainerRef.current.scrollHeight;
+
+	  }
+	  
 
 	useEffect(() => {
 		if (openMenuGroupId !== null && groupHeaderRef.current) {
@@ -130,6 +142,7 @@ export function GroupPreview({
 		</section>
 		<section className="task-list-container" ref={taskListContainerRef}>
 			<TaskList
+			onScrollDown={onScrollDown}
 			isLabelsShown={isLabelsShown}
 			setIsLabelsShown={setIsLabelsShown}
 			members={members}

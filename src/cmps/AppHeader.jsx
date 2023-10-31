@@ -24,14 +24,13 @@ export function AppHeader() {
     const [isPhoneDisplay, setIsPhoneDisplay] = useState({isDisplay: false, isSearch: true})
     const [extandedWidthSearch, setExtandedWidthSearch] = useState('160px')
 
-    console.log('isPhoneDisplay', isPhoneDisplay);
-
     useEffect(() => {
         onLoadUsers()
     }, [user])
 
     useEffect(() => {
         window.addEventListener('resize', handleResize);
+        handleResize()
 
         return () => {
             window.removeEventListener('resize', handleResize);
@@ -57,12 +56,11 @@ export function AppHeader() {
         if (screenWidth <= 530) setIsPhoneDisplay({isDisplay: true, isSearch: false})
         
     }
+
     async function onLoadUsers() {
         await loadUsers()
         if (!user) login({ username: 'Guest', password: '1234' })
     }
-
-
 
     useEffect(() => {
         if (boardStyle) {

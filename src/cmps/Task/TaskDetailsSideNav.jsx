@@ -1,9 +1,8 @@
 import { additionTaskEdiSvg, checkList, taskSvg, workspaceSvg } from "../Svgs";
 import { DynamicTaskActions } from "../Dynamic/DynamicTaskActions";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-export function TaskDetailsSideNav({ editName, setEditName, onSaveTask, task, isQuickEdit, onActionDeleteTask}) {
-
+export function TaskDetailsSideNav({ editName, setEditName, onSaveTask, task, isQuickEdit, onActionDeleteTask, rtl }) {
     const [modalPos, setModalPos] = useState({ top: '', left: '' })
     const memberBtnRef = useRef(null)
     const labelBtnRef = useRef(null)
@@ -54,21 +53,36 @@ export function TaskDetailsSideNav({ editName, setEditName, onSaveTask, task, is
     }
 
     function updateModalPos(btnRef, name) {
-        const rect = btnRef.current.getBoundingClientRect()
+        const screenWidth = window.innerWidth
+        let rect = btnRef.current.getBoundingClientRect()
+        let left = rect.left
+        if (screenWidth - rect.left < 320) left = (screenWidth - 330)
+        if (rtl) left = rect.right - 304
         if (name === 'Dates') {
             setModalPos({
-                top: - rect.height + 50,
-                left: rect.left
+                top: - rect.height + 90,
+                left
             })
         } else if (name === 'Attachment') {
             setModalPos({
                 top: rect.top - 50,
-                left: rect.left
+                left
             })
-        } else {
+        } else if (name === 'Label') {
+            setModalPos({
+                top: rect.top - 120,
+                left
+            })
+        // } else if (coverRef) {
+        //     setModalPos({
+        //         top: rect.top + rect.height,
+        //         left: left - 50
+        //     })
+        }
+        else {
             setModalPos({
                 top: rect.top + rect.height + 10,
-                left: rect.left
+                left
             })
         }
     }
