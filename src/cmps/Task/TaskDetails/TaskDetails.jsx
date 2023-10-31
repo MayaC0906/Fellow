@@ -101,6 +101,17 @@ export function TaskDetails() {
                     <div className="task-detail-screen">
                         <TaskTitle className="task-detail-title" onSaveTask={onSaveTask} task={task} />
                         <section className="task-main">
+                        <section className="edit-task-nav">
+                                <TaskDetailsSideNav
+                                    onActionDeleteTask={onActionDeleteTask}
+                                    onDeleteTask={onDeleteTask}
+                                    setTask={setTask}
+                                    editName={editName}
+                                    setEditName={setEditName}
+                                    onSaveTask={onSaveTask}
+                                    task={task}
+                                />
+                            </section >
                             <section className="task-info">
                                 <section className="task-items-display flex">
                                     <TaskMember
@@ -149,18 +160,6 @@ export function TaskDetails() {
                                 </section>
                             </section >
 
-
-                            <section className="edit-task-nav">
-                                <TaskDetailsSideNav
-                                    onActionDeleteTask={onActionDeleteTask}
-                                    onDeleteTask={onDeleteTask}
-                                    setTask={setTask}
-                                    editName={editName}
-                                    setEditName={setEditName}
-                                    onSaveTask={onSaveTask}
-                                    task={task}
-                                />
-                            </section >
                         </section>
                     </div>
                 </article >

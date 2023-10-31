@@ -1,0 +1,98 @@
+@media only screen and (max-width: 670px) {
+    .task-details {
+        .modal-container {
+            display: flex;
+            .task-modal {
+                border-radius: 0px;
+                .task-detail-screen {
+                    .task-title{
+                        padding-top: 8px;
+                        border-bottom: 2px solid #dcdcdc;
+                        margin-block-end: 8px;
+                        div{
+                            height: auto;
+                        }
+                    }
+                    .task-main {
+                        display: flex;
+                        flex-direction: column;
+
+                        .task-info {
+                            .task-content {
+                                >*{
+                                    border-bottom: 1px solid #e5e7eb;
+                                }
+                                >:first-child {
+                                    border-top: 1px solid #e5e7eb;
+                                }
+                                .task-checklist {
+                                    margin-block-end: 10px;
+                                }
+                                .task-activities{
+                                    margin-block-start: 8px;
+                                }
+                                .task-attachments {
+                                    .task-details-title {
+                                        padding-top: 0;
+                                    }
+                                    .task-attachment {
+                                        .img-info {
+                                            padding-top: 0;
+                                            h2 {
+                                                white-space: nowrap;
+                                                overflow: hidden;
+                                                text-overflow: ellipsis;
+                                                width: 100%;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        .edit-task-nav {
+                            grid-column: 1;
+                            border-bottom: 1px solid #e5e7eb;
+
+                            .add-container {
+                                .edit-modal  {
+                                    position: fixed;
+                                }
+
+                                .btn {
+                                    width: 130px
+                                }
+
+                                margin-inline-start: 46px;
+
+                                h3 {
+                                    display: none;
+                                }
+
+                                flex-direction: row;
+                                flex-wrap: wrap;
+                            }
+
+                        }
+
+                        .task-descriptoin {
+                            .write-comment {
+                                width: calc(90% - 20px)
+                            }
+                        }
+
+
+
+
+                    }
+                }
+            }
+        }
+    }
+
+
+    .task-btn {
+        font-size: rem(13px);
+    }
+
+}

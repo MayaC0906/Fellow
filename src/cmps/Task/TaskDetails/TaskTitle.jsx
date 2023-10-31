@@ -51,7 +51,7 @@ export function TaskTitle({ onSaveTask, task }) {
                 onBlur={onBlurSaveTitle}
                 onKeyDown={onEnterSaveTitle}
                 sx={{
-                    width: '86%', minHeight: '37px',
+                    width: '86%', minHeight: '37px',  height: 'auto',
                     border: 'none', background: 'none',
                     boxShadow: 'none', borderBottom: 'none'
                 }}
