@@ -5,7 +5,8 @@ import { useSelector } from "react-redux";
 import { useParams } from 'react-router-dom'
 import { ShareBoard } from "../Board/ShareBoard";
 import { OurSiri } from "../OurSiri";
-
+// import { Dashboard } from "../Dashboard";
+import { Dashboard } from "../Dashboard";
 export function GroupHeader({ isMenuOpen, setMenu }) {
     const { boardId } = useParams()
     const user = useSelector((storeState) => storeState.userModule.user)
@@ -16,6 +17,8 @@ export function GroupHeader({ isMenuOpen, setMenu }) {
     const [content, setContent] = useState('')
     const [isOpenShareBoard, setIsOpenShareBoard] = useState(false)
     const [isSiriOpen, setSiriOpen] = useState(false)
+    const [isDashboardOpen, setDashBoardOpen] = useState(false)
+
     let zIndexCount = 10
     useEffect(() => {
         console.log('use effect in groupheader');
@@ -77,7 +80,7 @@ export function GroupHeader({ isMenuOpen, setMenu }) {
 
                 <section className="group-header">
                     {/* <button className="group-header-btn svg powerUp">{groupHeaderSvg.rocket} <span>Power-Ups</span></button> */}
-                    <button className={`btn ${isBlackOrWhite}`} onClick={() => alert('Will be added soon')}>{groupHeaderSvg.dashboard} <span className="dashboard">Dashboard</span></button>
+                    <button className={`btn ${isBlackOrWhite}`} onClick={() => setDashBoardOpen(!isDashboardOpen)}>{groupHeaderSvg.dashboard} <span className="dashboard">Dashboard</span></button>
                     <button className={`btn svg ${isBlackOrWhite}`} onClick={() => alert('Will be added soon')}>{groupHeaderSvg.filter} <span className="filters">Filters</span></button>
                     <button className={`btn ${isBlackOrWhite}`} onClick={() => setSiriOpen(!isSiriOpen)} >Siri</button>
 
@@ -96,6 +99,7 @@ export function GroupHeader({ isMenuOpen, setMenu }) {
                 </section>
             </header>
             {isSiriOpen && <OurSiri isSiriOpen={isSiriOpen} setSiriOpen={setSiriOpen} />}
+            {isDashboardOpen && <Dashboard board={board} setDashBoardOpen={setDashBoardOpen} isDashboardOpen={isDashboardOpen} />}
         </>
     )
 }
