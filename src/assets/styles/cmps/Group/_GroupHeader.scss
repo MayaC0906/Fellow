@@ -1,7 +1,7 @@
 .group-header {
     position: sticky;
     top: 0;
-    z-index: 50; // Ensures the header is above other content.
+    z-index: 40; // Ensures the header is above other content.
     display: flex;
     justify-content: space-between;
     align-items: center;
