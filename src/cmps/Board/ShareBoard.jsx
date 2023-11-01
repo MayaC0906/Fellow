@@ -2,16 +2,18 @@ import { Textarea } from "@mui/joy"
 import { additionTaskSvg, taskSvg } from "../Svgs"
 import { useSelector } from "react-redux";
 import { updateBoard } from "../../store/actions/board.actions";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function ShareBoard({ setIsOpenShareBoard }) {
-    const users = useSelector(storeState => storeState.userModule.users)
+    let users = useSelector(storeState => storeState.userModule.users)
+    users = users.filter(user => user._id !== 'guest')
     const board = useSelector(storeState => storeState.boardModule.board)
     const [connectUsers, setConnectUsers] = useState(board.members)
     const [filterUsers, setFilterdUsers] = useState(users)
-    console.log('users,', users);
+
 
     function onUserSearch({ target }) {
+        console.log(users);
         const filteredMembers = users.filter(user =>
             user.fullname.toLowerCase().includes(target.value.toLowerCase())
         )
@@ -61,7 +63,7 @@ export function ShareBoard({ setIsOpenShareBoard }) {
                     />
                 </div>
                 <div className='content'>
-                    <p className='member-list-headline'>Trello users:</p>
+                    <p className='member-list-headline'>Trello users</p>
                     <ul className='member-list clean-list'>
                         {filterUsers.map(user =>
                         (<li className="member-preview" key={user._id}>

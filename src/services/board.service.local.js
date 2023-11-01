@@ -17,7 +17,7 @@ export const boardService = {
     getEmptyLabel,
     getEmptyBoard,
     addActivity,
-    getEmptyComment 
+    getEmptyComment
 }
 
 window.bs = boardService
@@ -40,22 +40,6 @@ async function query() {
     let boards = utilService.loadFromStorage(STORAGE_KEY)
     if (!boards || !boards.length) utilService.saveToStorage(STORAGE_KEY, board)
     boards = await storageService.query(STORAGE_KEY)
-    const user = userService.getLoggedinUser()
-    if (user._id === 'guest') {
-        return boards
-    } else {
-        boards = boards.filter(board => {
-            const isUserMember = board.members.some(boardMember => boardMember._id === user._id);
-            return isUserMember
-        })
-    }
-    // if (filterBy.txt) {
-    //     const regex = new RegExp(filterBy.txt, 'i')
-    //     boards = boards.filter(board => regex.test(board.title) || regex.test(board.description))
-    // }
-    // if (filterBy.price) {
-    //     boards = boards.filter(board => board.price <= filterBy.price)
-    // }
     return boards
 }
 
@@ -117,7 +101,7 @@ async function saveGroup(group, boardId, user, txt, task) {
             board.groups.push(group)
         }
 
-        addActivity(board, user, txt, {group, task})
+        addActivity(board, user, txt, { group, task })
 
         return save(board)
     } catch (err) {
@@ -141,7 +125,7 @@ async function removeGroup(group, boardId, user, txt) {
     }
 }
 
-function addActivity(board, user, txt, { group, task } = {}) { 
+function addActivity(board, user, txt, { group, task } = {}) {
     if (!user || !board || !txt) return
     const activity = {
         id: utilService.makeId(),
@@ -160,7 +144,7 @@ function addActivity(board, user, txt, { group, task } = {}) {
     board.activities.push(activity);
 }
 
-function getEmptyComment (user, txt, groupId, taskId) {
+function getEmptyComment(user, txt, groupId, taskId) {
     if (!user || !txt || !groupId || !taskId) return
     const comment = {
         id: utilService.makeId(),
@@ -232,12 +216,12 @@ function getEmptyBoard() {
         ],
         members: [
             userService.getLoggedinUser(),
-            {
-                "_id": 'guest',
-                "fullname": 'Guest',
-                "imgUrl": "https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg",
-                "username": 'Guest'
-            }
+            // {
+            //     "_id": 'guest',
+            //     "fullname": 'Guest',
+            //     "imgUrl": "https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg",
+            //     "username": 'Guest'
+            // }
         ],
         groups: [
             { id: utilService.makeId(), title: '', tasks: [], style: {} }
@@ -317,12 +301,12 @@ const board = [
                 "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
                 "username": "Sahar"
             },
-            {
-                "_id": 'guest',
-                "fullname": 'Guest',
-                "imgUrl": "https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg",
-                "username": 'Guest'
-            }
+            // {
+            //     "_id": 'guest',
+            //     "fullname": 'Guest',
+            //     "imgUrl": "https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg",
+            //     "username": 'Guest'
+            // }
         ],
         groups: [
             {
@@ -1480,12 +1464,12 @@ const board = [
                 "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
                 "username": "Sahar"
             },
-            {
-                "_id": 'guest',
-                "fullname": 'Guest',
-                "imgUrl": "https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg",
-                "username": 'Guest'
-            }
+            // {
+            //     "_id": 'guest',
+            //     "fullname": 'Guest',
+            //     "imgUrl": "https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg",
+            //     "username": 'Guest'
+            // }
         ],
         groups: [
             { id: utilService.makeId(), title: '', tasks: [], style: {} }
@@ -1561,12 +1545,12 @@ const board = [
                 "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
                 "username": "Sahar"
             },
-            {
-                "_id": 'guest',
-                "fullname": 'Guest',
-                "imgUrl": "https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg",
-                "username": 'Guest'
-            }
+            // {
+            //     "_id": 'guest',
+            //     "fullname": 'Guest',
+            //     "imgUrl": "https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg",
+            //     "username": 'Guest'
+            // }
         ],
         groups: [
             { id: utilService.makeId(), title: '', tasks: [], style: {} }
@@ -1636,12 +1620,12 @@ const board = [
                 "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
                 "username": "Sahar"
             },
-            {
-                "_id": 'guest',
-                "fullname": 'Guest',
-                "imgUrl": "https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg",
-                "username": 'Guest'
-            }
+            // {
+            //     "_id": 'guest',
+            //     "fullname": 'Guest',
+            //     "imgUrl": "https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg",
+            //     "username": 'Guest'
+            // }
         ],
         groups: [
             { id: utilService.makeId(), title: '', tasks: [], style: {} }
