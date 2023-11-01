@@ -47,15 +47,17 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
     const addListInput = useRef(null)
     const user = useSelector((storeState) => storeState.userModule.user)
     const [taskFilterBy, setTaskFilterby] = useState(getEmptyFilter())
+    const [filteredGroups, setFilteredGroups] = useState(groups);
 
     useEffect(() => {
-        // console.log('filter');
-        onFilterGroups(taskFilterBy)
+        const filteredGroups = onFilterGroups(taskFilterBy)
+        setFilteredGroups(filteredGroups)
     }, [taskFilterBy, groups])
 
     function onFilterGroups(filterBy) {
+        console.log('filter,', filterBy);
         const { txt, byMembers, byDuedate, byLabels } = filterBy
-        const filteredGroupsTasks = groups.map(group => {
+        groups = groups.map(group => {
             let filteredTasks = group.tasks
             if (txt) {
                 const regExp = new RegExp(txt, 'i')
@@ -78,7 +80,7 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
                     let includeTask = true
                     if (byDuedate.isComplete) includeTask = includeTask && task.dueDate.isComplete
                     if (byDuedate.isDate) includeTask = includeTask && !task.dueDate.date
-                    if (byDuedate.isDuesoon) includeTask = includeTask && task.dueDate.isDuesoon
+                    if (byDuedate.isDuesoon) includeTask = includeTask && task.dueDate.isDueSoon
                     if (byDuedate.isOverdue) includeTask = includeTask && task.dueDate.isOverdue
                     return includeTask
                 })
@@ -93,13 +95,11 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
                     return includeTask
                 })
             }
-            return { ...group, tasks: filteredTasks }
-            // console.log('filteredTasks', filteredTasks);
-        })
-        // console.log(filterBy);
-        // console.log('groups tasks:', filteredGroupsTasks)
-        // console.log('groups', groups);
 
+            return { ...group, tasks: filteredTasks }
+        })
+
+        return groups
     }
 
     function handleChange(ev) {
@@ -216,8 +216,6 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
         }
     }
 
-
-    console.log('groups right before return', groups);
     if (!groups) return <div>Loading..</div>
     return (
         <div className='group-list-container'>
@@ -235,7 +233,8 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
                             {...provided.droppableProps}
                             ref={provided.innerRef}
                         >
-                            {board?.groups?.map((group, idx) => (
+                            {/* {board?.groups?.map((group, idx) => ( */}
+                            {filteredGroups.map((group, idx) => (
                                 <Draggable
                                     draggableId={group.id}
                                     key={group.id}

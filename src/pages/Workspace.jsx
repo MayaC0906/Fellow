@@ -22,8 +22,7 @@ export function Workspace() {
 
     async function onLoadBoars() {
         const boards = await loadBoards()
-        // console.log('boars.length', boards.length);
-        // boardCount.current = 10 - boards.length
+        console.log('boards loaded');
         setCount(10 - boards.length)
     }
 
@@ -105,7 +104,6 @@ export function Workspace() {
                             <span className="header-title">Starred boards</span>
                         </div>
                         <ul className="board-list clean-list flex">
-
                             <BoardList
                                 boards={starredBoards}
                                 onStarredBoard={onStarredBoard}

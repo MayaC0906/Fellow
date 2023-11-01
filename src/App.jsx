@@ -10,9 +10,24 @@ import { SearchBoard } from './pages/SearchBoard'
 import { useState, useEffect } from 'react';
 import { HomeHeader } from './cmps/HomeHeader'
 import { useLocation } from 'react-router-dom/dist'
+import { loadUsers, login } from './store/actions/user.actions'
+import { useSelector } from 'react-redux'
 export function App() {
+    const user = useSelector(storeState => storeState.userModule.user)
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const location = useLocation();
+    useEffect(() => {
+        onLoadUsers()
+    }, [])
+
+    async function onLoadUsers() {
+        try {
+            const users = await loadUsers()
+            if (!user) login({ username: 'Guest', password: '1234' })
+        } catch (err) {
+            console.log()
+        }
+    }
 
     useEffect(() => {
         const handleResize = () => {

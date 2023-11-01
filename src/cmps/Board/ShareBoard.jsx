@@ -70,7 +70,7 @@ export function ShareBoard({ setIsOpenShareBoard }) {
                                 <h2>{user.fullname} @{user.username}</h2>
                                 {connectUsers.map(connected => {
                                     if (connected._id === user._id) {
-                                        return (<span className='flex align-center'>{taskSvg.check}</span>)
+                                        return (<span className='share-check flex align-center'>{taskSvg.check}</span>)
                                     }
                                 })}
                             </section>

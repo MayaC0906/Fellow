@@ -2,23 +2,17 @@ import { useState, useEffect } from 'react'
 import { ImgUploader } from '../cmps/Dynamic/Attachment/ImgUploader'
 import { loadUsers, login, signup } from '../store/actions/user.actions'
 import { useNavigate } from 'react-router'
+import { useSelector } from 'react-redux'
 
 export function LoginSignup() {
     const [credentials, setCredentials] = useState({ username: '', password: '', fullname: '' })
     const [isSignup, setIsSignup] = useState(false)
     const navigate = useNavigate()
 
-    // const [users, setUsers] = useState([])
 
     useEffect(() => {
         loadUsers()
-        // onLoadUsers()
     }, [])
-
-    // async function onLoadUsers() {
-    //     const users = await userService.getUsers()
-    //     // setUsers(users)
-    // }
 
     function clearState() {
         setCredentials({ username: '', password: '', fullname: '', imgUrl: '' })
