@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import { loadBoards, updateBoard, updateBoards } from "../store/actions/board.actions"
 import { useSelector } from "react-redux"
-import { workspaceSvg } from "../cmps/Svgs"
+import { loaderSvg, workspaceSvg } from "../cmps/Svgs"
 import { AddBoard } from "../cmps/Board/AddBoard"
 import { BoardList } from "../cmps/Board/BoardList"
 
@@ -80,8 +80,8 @@ export function Workspace() {
             })
         }
     }
-
-    if (!boards || !boards.length) return (
+    if (!boards) return <div className="loader board"><div>{loaderSvg.loader}</div></div>
+    if (boards.length === 0) return (
         <div className="workspace-container">
             <section ref={createBoardRef} className="no-board-container" onClick={() => onSetIsBoardAdded()}>
                 <h2 className="fs14">Create new board</h2>

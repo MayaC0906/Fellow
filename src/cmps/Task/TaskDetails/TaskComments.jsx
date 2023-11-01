@@ -13,50 +13,65 @@ import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
 import Check from '@mui/icons-material/Check';
 import { useState } from 'react';
 import { taskSvg } from '../../Svgs';
+import { useSelector } from 'react-redux'
 
-export function TaskDescription({ onSaveTask, task }) {
-
+import { boardService } from '../../../services/board.service.local';
+export function TaskComments({onSaveTask ,task, groupId}) {
     const [isDescExpand, setIsDescExpand] = useState(false)
-    const [description, setDescription] = useState(task.description)
-
+    const [txt, setTxt] = useState('')
     const [italic, setItalic] = useState(false);
     const [fontWeight, setFontWeight] = useState('normal');
     const [anchorEl, setAnchorEl] = useState(null);
+    const user = useSelector((storeState) => storeState.userModule.user)
 
     function onToggleDescription() {
         setIsDescExpand(!isDescExpand)
     }
 
-    async function onSaveDesscription(ev) {
+
+    async function onSaveComment(ev) {
         ev.preventDefault()
-        const newTask = { ...task, description: description }
+        const newTask = { ...task }
+        const comment = boardService.getEmptyComment(user,txt, groupId, newTask.id)
+        newTask.comments.push(comment)
         try {
             await onSaveTask(newTask)
             onToggleDescription()
-            console.log('Task description changed successfully')
+            console.log('Task comment added successfully')
         } catch (err) {
-            console.log('Cannot save description title', err);
+            console.log('Cannot save comment', err);
         }
     }
 
+   
+
     return (
         <section className="task-descriptoin">
-            <div className='task-details-title '>
-                {taskSvg.description}
-                Description
-                {description && !isDescExpand && <button  onClick={onToggleDescription}>Edit</button>}
-            </div>
+                <img 
+                    // ref={(el) => imgRefs.current[activity.id] = el}
+                    // onClick={() => handleImgClick(activity)}
+                    src={user.imgUrl}
+                    // alt={activity.byMember.fullname}
+                    style={{ 
+                    height: '32px',
+                    width:'32px',
+                    borderRadius: '50%',
+                    marginLeft: '12px',
+                    marginTop:'3px',
+                    position:'absolute'
+                    }}             
+                />
+                <div onClick={onToggleDescription}
+                    className={'write-comment ' + (isDescExpand ? 'hide ' : '' + (isDescExpand ? '' : 'add-description'))}>
+                    {isDescExpand || 'Write a comment...'}
+                    {/* <style</style> */}
+                </div>
 
-            <div onClick={onToggleDescription}
-                className={'description-input ' + (isDescExpand ? 'hide ' : '' + (description ? '' : 'add-description'))}>
-                {description || 'Add a more detailed description...'}
-            </div>
-
-            {isDescExpand && < FormControl className="description-input" sx={{ width: '90%'}}>
+            {isDescExpand && < FormControl className="description-input" sx={{ width: '90%' }}>
                 <Textarea
-                    onChange={(event) => { setDescription(event.target.value) }}
-                    defaultValue={description}
-                    minRows={5}
+                    onChange={(event) => { setTxt(event.target.value) }}
+                    // defaultValue={description}
+                    minRows={2}
                     endDecorator={
                         <Box
                             sx={{
@@ -121,9 +136,10 @@ export function TaskDescription({ onSaveTask, task }) {
             </FormControl>
             }
             {isDescExpand && <section className='desc-actions'>
-                <button className='desc-btn save' onClick={onSaveDesscription}>Save</button>
+                <button className='desc-btn save' onClick={onSaveComment}>Save</button>
                 <button className='desc-btn cancel' onClick={onToggleDescription}> Cancel </button>
             </section>}
+
         </section>
     )
 }

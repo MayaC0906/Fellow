@@ -6,13 +6,12 @@ import { Textarea } from '@mui/joy'
 import { updateBoard } from '../../../store/actions/board.actions'
 import { AddLabel } from './AddLabel'
 
-export function LabelEdit({pos, editName, onCloseEditTask, onSaveTask, task }) {
+export function LabelEdit({ pos, editName, onCloseEditTask, onSaveTask, task }) {
     const board = useSelector(storeState => storeState.boardModule.board)
     const [labels, setLabels] = useState(board.labels)
     const [checkedLabelsStart, setCheckedLabelsStart] = useState(task.labelIds)
     const [isLabelEdit, setIsLabelEdit] = useState(false)
     const [labelToEdit, setLabelToEdit] = useState(null)
-
 
     useEffect(() => {
         setLabels(board.labels)
@@ -68,6 +67,7 @@ export function LabelEdit({pos, editName, onCloseEditTask, onSaveTask, task }) {
 
     return isLabelEdit ? (
         <AddLabel
+            pos={pos}
             onCloseEditTask={onCloseEditTask}
             onAddLabel={onAddLabel}
             labelToEdit={labelToEdit}
@@ -77,7 +77,7 @@ export function LabelEdit({pos, editName, onCloseEditTask, onSaveTask, task }) {
             onDeletingLabel={onDeletingLabel}
         />) : (
 
-        <section style={{top: pos.top, left: pos.left}} className="edit-modal">
+        <section style={{ top: pos.top, left: pos.left }} className="edit-modal">
             <div className="title-container">
                 <p>{editName}</p>
                 <button onClick={onCloseEditTask} className="close-modal">{additionTaskSvg.close}</button>

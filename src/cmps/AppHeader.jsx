@@ -6,7 +6,7 @@ import { AddBoard } from './Board/AddBoard'
 import { loadUsers, login } from '../store/actions/user.actions'
 import { UserDetailsDisplay } from './UserDetailsDisplay'
 import { updateBoards } from '../store/actions/board.actions'
-
+import { loadUsers } from '../store/actions/user.actions'
 export function AppHeader() {
     const boardStyle = useSelector((storeState) => storeState.boardModule.board.style) || null
     const user = useSelector(storeState => storeState.userModule.user)
@@ -23,8 +23,6 @@ export function AppHeader() {
     const [isSearchOpen, setIsSearchOpen] = useState(false)
     const [isPhoneDisplay, setIsPhoneDisplay] = useState({ isDisplay: false, isSearch: true })
     const [extandedWidthSearch, setExtandedWidthSearch] = useState('160px')
-
-    // console.log('isPhoneDisplay', isPhoneDisplay);
 
     useEffect(() => {
         onLoadUsers()
@@ -43,6 +41,7 @@ export function AppHeader() {
 
     useEffect(() => {
         window.addEventListener('resize', handleResize);
+        handleResize()
 
         return () => {
             window.removeEventListener('resize', handleResize);
@@ -63,13 +62,11 @@ export function AppHeader() {
         }
         if (screenWidth <= 780 && screenWidth > 530) {
             setIsPhoneDisplay({ isDisplay: true, isSearch: true })
-            setExtandedWidthSearch(screenWidth - 600)
+            setExtandedWidthSearch(screenWidth - 270)
         }
         if (screenWidth <= 530) setIsPhoneDisplay({ isDisplay: true, isSearch: false })
 
     }
-
-
 
 
     useEffect(() => {
@@ -226,12 +223,14 @@ export function AppHeader() {
                         </div>
                     </div>}
 
-                <button className={'app-header-btn user-info' + (brightClass ? ' dark-btn' : ' light-btn')}>{appHeaderSvg.notifications}</button>
-                {isPhoneDisplay.isDisplay && !isPhoneDisplay.isSearch && <NavLink to={'/search'}><button className={'create-btn' +
-                    (brightClass ? ' dark-btn' : ' light-btn')}>
-                    <span>{appHeaderSvg.search}</span>
-                </button>
+                {isPhoneDisplay.isDisplay && !isPhoneDisplay.isSearch && <NavLink to={'/search'}>
+                    <button className={'search-btn' +
+                        (brightClass ? ' dark-btn' : ' light-btn')}>
+                        {appHeaderSvg.search}
+                    </button>
                 </NavLink>}
+                <button className={'app-header-btn user-info' + (brightClass ? ' dark-btn' : ' light-btn')}>
+                    {appHeaderSvg.notifications}</button>
                 {user &&
                     <>
                         <div className={'app-header-btn user-info' + (brightClass ? ' dark-btn' : ' light-btn')} >

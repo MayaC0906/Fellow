@@ -34,8 +34,6 @@ export function GroupPreview({
 	const groupHeaderRef = useRef(null)
 	const [groupMenuPosition, setGroupMenuPosition] = useState({ top: '', left: '' })
 	const user = useSelector((storeState) => storeState.userModule.user)
-
-
 	const [prevTaskCount, setPrevTaskCount] = useState(group.tasks.length)
 
 	useEffect(() => {
@@ -51,6 +49,20 @@ export function GroupPreview({
 		} else {
 			setOpenMenuGroupId(groupId)
 		}
+	}
+
+	function onScrollDown(event) {
+		// const taskListContainer = taskListContainerRef.current;
+		// const clickPosition = event.clientY;
+		// const containerTop = taskListContainer.getBoundingClientRect().top;
+		// const scrollToPosition = clickPosition  - containerTop - 50;
+
+		// taskListContainer.scrollTo({
+		//   top: scrollToPosition,
+		//   behavior: 'smooth' 
+		// });
+		taskListContainerRef.current.scrollTop = taskListContainerRef.current.scrollHeight;
+
 	}
 
 
@@ -90,91 +102,90 @@ export function GroupPreview({
 		setNewTask((prevGroup) => ({ ...prevGroup, [field]: value }))
 	}
 	return (
-		<>
-			<section className="group-preview">
-				<section className="header-wrapper">
-					<header className="group-preview-header">
-						<input
-							name="title"
-							className="edit-group-title clean-btn"
-							id={group.id}
-							defaultValue={group.title}
-							onBlur={(event) => onEditGroup(group.id, event)}
-							// onKeyDown={(event) => onEditGroup(group.id, event)}
-							style={!group.isWatch ? { width: '83%' } : {}}
-						></input>
-						{group.isWatch && taskSvg.watch}
-						<section>
+		<section className="group-preview">
+			<section className="header-wrapper">
+				<header className="group-preview-header">
+					<input
+						name="title"
+						className="edit-group-title clean-btn"
+						id={group.id}
+						defaultValue={group.title}
+						onBlur={(event) => onEditGroup(group.id, event)}
+						// onKeyDown={(event) => onEditGroup(group.id, event)}
+						style={!group.isWatch ? { width: '83%' } : {}}
+					></input>
+					{group.isWatch && taskSvg.watch}
+					<section>
 
-							<img
-								onClick={() => toggleGroupMenu(group.id)}
-								src="https://res.cloudinary.com/dpwmxprpp/image/upload/v1696437012/asset_14_gltqff.svg"
-								alt=""
-								ref={groupHeaderRef}
+						<img
+							onClick={() => toggleGroupMenu(group.id)}
+							src="https://res.cloudinary.com/dpwmxprpp/image/upload/v1696437012/asset_14_gltqff.svg"
+							alt=""
+							ref={groupHeaderRef}
+						/>
+					</section>
+				</header>
+			</section>
+			<section className="group-edit">
+				{group.id === openMenuGroupId && (
+					<div className="group-menu">
+						<GroupMenu
+							onUpdateGroup={onUpdateGroup}
+							group={group}
+							setToggleGroupMenu={toggleGroupMenu}
+							groupMenuPosition={groupMenuPosition}
+							setInputExpand={setInputExpand}
+							onRemoveGroup={onRemoveGroup}
+							onDuplicateGroup={onDuplicateGroup}
+							openMenuGroupId={openMenuGroupId}
+							setOpenMenuGroupId={setOpenMenuGroupId}
+							onUpdateBoard={onUpdateBoard}
+						/>
+					</div>
+				)}
+			</section>
+			<section className="task-list-container" ref={taskListContainerRef}>
+				<TaskList
+					onScrollDown={onScrollDown}
+					isLabelsShown={isLabelsShown}
+					setIsLabelsShown={setIsLabelsShown}
+					members={members}
+					labels={labels}
+					tasks={group.tasks}
+					groupId={group.id}
+					handleDrag={handleDrag}
+				/>
+			</section>
+			<section className="footer-wrapper">
+				<footer>
+					{!isInputExpand ? (
+						<div className="add-group-task" onClick={() => setInputExpand(true)}>
+							<section>
+								{groupPreview.plus}
+								<span>Add a card</span>
+							</section>
+							{groupPreview.copy}
+						</div>
+					) : (
+						<div>
+							<textarea
+								name="title"
+								placeholder="Enter a title for this card..."
+								rows={4}
+								onChange={handleChange}
 							/>
-						</section>
-					</header>
-				</section>
-				<section className="group-edit">
-					{group.id === openMenuGroupId && (
-						<div className="group-menu">
-							<GroupMenu
-								onUpdateGroup={onUpdateGroup}
-								group={group}
-								setToggleGroupMenu={toggleGroupMenu}
-								groupMenuPosition={groupMenuPosition}
-								setInputExpand={setInputExpand}
-								onRemoveGroup={onRemoveGroup}
-								onDuplicateGroup={onDuplicateGroup}
-								openMenuGroupId={openMenuGroupId}
-								setOpenMenuGroupId={setOpenMenuGroupId}
-								onUpdateBoard={onUpdateBoard}
-							/>
+							<section className="add-controls">
+								<Button type="submit" onClick={onSaveNewTask}>
+									Add card
+								</Button>
+								<div className="cancel clean-btn" onClick={() => setInputExpand(false)}>
+									{checkList.x}
+								</div>
+							</section>
 						</div>
 					)}
-				</section>
-				<section className="task-list-container" ref={taskListContainerRef}>
-					<TaskList
-						isLabelsShown={isLabelsShown}
-						setIsLabelsShown={setIsLabelsShown}
-						members={members}
-						labels={labels}
-						tasks={group.tasks}
-						groupId={group.id}
-						handleDrag={handleDrag}
-					/>
-				</section>
-				<section className="footer-wrapper">
-					<footer>
-						{!isInputExpand ? (
-							<div className="add-group-task" onClick={() => setInputExpand(true)}>
-								<section>
-									{groupPreview.plus}
-									<span>Add a card</span>
-								</section>
-								{groupPreview.copy}
-							</div>
-						) : (
-							<div>
-								<textarea
-									name="title"
-									placeholder="Enter a title for this card..."
-									rows={4}
-									onChange={handleChange}
-								/>
-								<section className="add-controls">
-									<Button type="submit" onClick={onSaveNewTask}>
-										Add card
-									</Button>
-									<div className="cancel clean-btn" onClick={() => setInputExpand(false)}>
-										{checkList.x}
-									</div>
-								</section>
-							</div>
-						)}
-					</footer>
-				</section>
+				</footer>
 			</section>
-		</>
-	);
+		</section>
+	)
 }

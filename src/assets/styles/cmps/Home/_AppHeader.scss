@@ -5,6 +5,7 @@
     align-items: center;
     justify-content: space-between;
     position: relative;
+    border-bottom: 1px solid rgba(23, 43, 77, 0.16);
 
     .nav-links {
         display: flex;
@@ -49,6 +50,14 @@
             padding: 6px 10px 6px 12px;
             height: 32px;
             position: relative;
+
+            svg {
+                width: 16px;
+                height: 16px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
         }
 
         .starred-btn {
@@ -110,18 +119,24 @@
 
                     .full-star-icon {
                         position: relative;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
 
                         path {
                             fill: #F2D600;
                         }
 
                         .empty-star-icon {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
                             position: absolute;
                             top: 0;
                             right: 0;
 
                             &:hover {
-                                scale: 1.2;
+                                scale: 1.3;
                             }
 
                             path {
@@ -179,6 +194,20 @@
         height: 32px;
         align-items: center;
         gap: 4px;
+
+        .search-btn {
+            height: 32px;
+            width: 32px;
+            padding: 8px;
+
+            svg {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 16px;
+                height: 16px;
+            }
+        }
 
         .search-app-header {
             height: 32px;

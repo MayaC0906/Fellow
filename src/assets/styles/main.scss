@@ -4,6 +4,7 @@
 @import "setup/mixins";
 @import "setup/typography";
 
+
 // Basics
 @import "basics/helpers";
 @import "basics/layout";
@@ -19,6 +20,7 @@
 @import "views/ReviewIndex";
 // @import "views/UserDetails";
 @import "views/Workspace";
+@import "views/SearchBoard";
 
 
 // Components
@@ -28,6 +30,8 @@
 @import "cmps/ImgUploader";
 @import "cmps/UserDetailsDisplay.scss";
 @import "cmps/OurSiri.scss";
+@import "cmps/Dashboard.scss";
+@import "cmps/UserActivity.scss";
 
 
 // Board
@@ -39,6 +43,7 @@
 @import "cmps/Board/BoardChangeBgc";
 @import "cmps/Board/BoardActivity";
 @import "cmps/Board/SharedBoard";
+
 
 // Group
 @import "cmps/Group/GroupList";
@@ -60,6 +65,7 @@
 @import "cmps/Task/TaskAttachments";
 @import "cmps/Task/TaskActvities";
 @import "cmps/Task/TaskFilters";
+@import "cmps/Task/TaskComments";
 
 // Dynamic
 @import "cmps/Dynamic/DynamicTaskEdit";
@@ -76,3 +82,6 @@
 @import "cmps/Home/HomeProductivity";
 @import "cmps/Home/AppHeader";
 @import "cmps/Home/AppFooter";
+
+
+@import "setup/mq";

@@ -48,7 +48,7 @@ export function TaskAttachments({ task, setEditName, onSaveTask }) {
                 <div className="task-details-title ">
                     {taskSvg.attatchment}
                     Attachments
-                    <button onClick={() => setEditName('Attachment')}>Add</button>
+                    <button className="task-btn" onClick={() => setEditName('Attachment')}>Add</button>
                 </div>
             </header>
 

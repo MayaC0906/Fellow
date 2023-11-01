@@ -5,8 +5,9 @@ import { useSelector } from "react-redux";
 import { useParams } from 'react-router-dom'
 import { ShareBoard } from "../Board/ShareBoard";
 import { OurSiri } from "../OurSiri";
+import { Dashboard } from "../Dashboard";
 
-export function GroupHeader({ isMenuOpen, setMenu, setIsFiltersOpen, isFiltersOpen }) {
+export function GroupHeader({ isMenuOpen, setMenu }) {
     const { boardId } = useParams()
     const user = useSelector((storeState) => storeState.userModule.user)
     const boardFromState = useSelector(storeState => storeState.boardModule.board)
@@ -16,7 +17,29 @@ export function GroupHeader({ isMenuOpen, setMenu, setIsFiltersOpen, isFiltersOp
     const [content, setContent] = useState('')
     const [isOpenShareBoard, setIsOpenShareBoard] = useState(false)
     const [isSiriOpen, setSiriOpen] = useState(false)
+    const [isPhoneDisplay, setIsPhoneDisplay] = useState(false)
+    const [isDashboardOpen, setDashBoardOpen] = useState(false)
+
     let zIndexCount = 10
+
+    useEffect(() => {
+        window.addEventListener('resize', handleResize);
+        handleResize()
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+
+
+    function handleResize() {
+        const screenWidth = window.innerWidth
+        if (screenWidth > 980) {
+            setIsPhoneDisplay(false)
+        }
+        else setIsPhoneDisplay(true)
+    }
+
     useEffect(() => {
         onLoadBoard()
     }, [boardId, board])
@@ -56,42 +79,42 @@ export function GroupHeader({ isMenuOpen, setMenu, setIsFiltersOpen, isFiltersOp
     const { isBright } = board.style
     const isBlackOrWhite = isBright ? 'brightColor' : 'darkColor'
 
-    // console.log('board from groupheader:', board);
+    console.log('board from groupheader:', board);
 
-    // IMPORTANT: everything that is in comment might be added in the future // 
+
     return (
         <>
             <header className="group-header container">
                 <section className="board-edit flex">
                     <div tabIndex="0" onBlur={onEditBoardTitle}
                         contentEditable={true}>{content}</div>
-                    {/* <section className="group-visbility group-header"> */}
                     {!isBoardStarred && (<button className={isBlackOrWhite} onClick={onToggleBoardStar}>{workspaceSvg.star}</button>)}
                     {isBoardStarred && (<button className={isBlackOrWhite} onClick={onToggleBoardStar}>{groupHeaderSvg.fullStar}</button>)}
-                    {/* <button className="group-header-btn svg members">{groupHeaderSvg.members}<span>Workspace visible</span></button> */}
-                    {/* <button className={`group-header-btn svg bars ${isBright ? 'brightColor' : 'darkColor'}`}>{groupHeaderSvg.bars} <span>Board</span></button> */}
-                    {/* <button className="group-header-btn svg arrowdown">{appHeaderSvg.arrowDown}</button> */}
-                    {/* </section> */}
                 </section>
+
                 <section className="group-header">
-                    <button className={`btn ${isBlackOrWhite}`} onClick={() => alert('Will be added soon')}>{groupHeaderSvg.dashboard} <span className="dashboard">Dashboard</span></button>
-                    <button className={`btn svg ${isBlackOrWhite}`} onClick={() => setIsFiltersOpen(!isFiltersOpen)}>{groupHeaderSvg.filter} <span className="filters">Filters</span></button>
-                    <button className={`btn ${isBlackOrWhite}`} onClick={() => setSiriOpen(!isSiriOpen)} >Siri</button>
+                    {!isPhoneDisplay && <button className={`btn ${isBlackOrWhite}`} onClick={() => setDashBoardOpen(!isDashboardOpen)}>{groupHeaderSvg.dashboard} <span className="dashboard">Dashboard</span></button>}
+                    <button className={`${isBlackOrWhite} ` + (isPhoneDisplay ? '' : 'svg btn')} onClick={() => setIsFiltersOpen(!isFiltersOpen)}>{groupHeaderSvg.filter} <span className="filters">{isPhoneDisplay ? '' : 'Filters'}</span></button>
+                    <button className={`${isBlackOrWhite} ` + (isPhoneDisplay ? '' : 'svg btn')} onClick={() => setSiriOpen(!isSiriOpen)} >{groupHeaderSvg.speaker} <span className="siri">{isPhoneDisplay ? '' : 'Siri'}</span></button>
 
                     <span className="separate-line"></span>
                     <section className="group-header img">
-                        {boardFromState.members.map(member => (
-                            <section className="member-img-container flex align-center">
-                                <img className={`member-img ${isBlackOrWhite}`} src={member.imgUrl} alt="" key={member._id} style={{ zIndex: zIndexCount-- }} />
-                                <span></span>
-                            </section>
-                        ))}
-                        <button className={`btn svg ${isBlackOrWhite} share`} onClick={() => setIsOpenShareBoard(!isOpenShareBoard)}>{groupHeaderSvg.addmember} <span>Share</span></button>
+                        {console.log(board.members)}
+                        {!isPhoneDisplay &&
+                            boardFromState.members.map(member => (
+                                <section className="member-img-container flex align-center">
+                                    <img className={`member-img ${isBlackOrWhite}`} src={member.imgUrl} alt="" key={member._id} style={{ zIndex: zIndexCount-- }} />
+                                    <span></span>
+                                </section>
+                            ))
+                        }
+                        <button className={`${isBlackOrWhite} share ` + (isPhoneDisplay ? '' : 'svg btn')} onClick={() => setIsOpenShareBoard(!isOpenShareBoard)}>{groupHeaderSvg.addmember} <span>{isPhoneDisplay ? '' : 'Share'}</span></button>
+                        {isOpenShareBoard && <ShareBoard setIsOpenShareBoard={setIsOpenShareBoard} />}
                         {!isMenuOpen ? <button onClick={() => setMenu(!isMenuOpen)} className="group-header-btn svg dots">{groupHeaderSvg.threeDots}</button> : ''} </section>
                 </section>
             </header>
-            {isOpenShareBoard && <ShareBoard setIsOpenShareBoard={setIsOpenShareBoard} />}
             {isSiriOpen && <OurSiri isSiriOpen={isSiriOpen} setSiriOpen={setSiriOpen} />}
+            {isDashboardOpen && <Dashboard board={board} setDashBoardOpen={setDashBoardOpen} isDashboardOpen={isDashboardOpen} />}
         </>
     )
 }

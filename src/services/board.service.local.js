@@ -16,7 +16,8 @@ export const boardService = {
     getGroupById,
     getEmptyLabel,
     getEmptyBoard,
-    addActivity
+    addActivity,
+    getEmptyComment 
 }
 
 window.bs = boardService
@@ -140,13 +141,8 @@ async function removeGroup(group, boardId, user, txt) {
     }
 }
 
-function addActivity(board, user, txt, { group, task } = {}) {
-    console.log('user: from add', user)
-    console.log('task: from activity', task, group)
-    
+function addActivity(board, user, txt, { group, task } = {}) { 
     if (!user || !board || !txt) return
-    // console.log('details:', details.group)
-    // const activityTxt = generateActivityText(action, member.fullname, optionalDetails)
     const activity = {
         id: utilService.makeId(),
         txt,
@@ -162,6 +158,24 @@ function addActivity(board, user, txt, { group, task } = {}) {
         }
     };
     board.activities.push(activity);
+}
+
+function getEmptyComment (user, txt, groupId, taskId) {
+    if (!user || !txt || !groupId || !taskId) return
+    const comment = {
+        id: utilService.makeId(),
+        txt,
+        createdAt: Date.now(),
+        byMember: user,
+        group: {
+            id: groupId || '',
+        },
+        task: {
+            id: taskId || '',
+        }
+    }
+
+    return comment
 }
 
 
