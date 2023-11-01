@@ -2,7 +2,7 @@ import { additionTaskEdiSvg, checkList, taskSvg, workspaceSvg } from "../Svgs";
 import { DynamicTaskActions } from "../Dynamic/DynamicTaskActions";
 import { useRef, useState } from "react";
 
-export function TaskDetailsSideNav({ editName, setEditName, onSaveTask, task, isQuickEdit, onActionDeleteTask}) {
+export function TaskDetailsSideNav({ editName, setEditName, onSaveTask, task, isQuickEdit, onActionDeleteTask }) {
 
     const [modalPos, setModalPos] = useState({ top: '', left: '' })
     const memberBtnRef = useRef(null)
@@ -78,7 +78,7 @@ export function TaskDetailsSideNav({ editName, setEditName, onSaveTask, task, is
             <h3>Add to card</h3>
             <DynamicTaskActions pos={modalPos} onSaveTask={onSaveTask} task={task} editName={editName} onCloseEditTask={onCloseEditTask} />
             <button ref={memberBtnRef} onClick={() => onOpenEditTask('Member')} className="btn">{workspaceSvg.member} <span>{isQuickEdit ? 'Change members' : 'Members'}</span></button>
-            <button ref={labelBtnRef} onClick={() => onOpenEditTask('Label')} className="btn">{additionTaskEdiSvg.label} <span>{isQuickEdit ? 'Edit labels' : 'Labels'}</span></button>
+            <button ref={labelBtnRef} onClick={() => onOpenEditTask('Label')} className="btn">{additionTaskEdiSvg.label}<span>{isQuickEdit ? 'Edit labels' : 'Labels'}</span></button>
             {!isQuickEdit && <button ref={checklistBtnRef} onClick={() => onOpenEditTask('Checklist')} className="btn">{taskSvg.checklist} <span>Checklist</span></button>}
             <button ref={dateBtnRef} onClick={() => onOpenEditTask('Dates')} className="btn">{taskSvg.clock} <span>{isQuickEdit ? 'Edit dates' : 'Dates'}</span></button>
             {!isQuickEdit && <button ref={attachmentBtnRef} onClick={() => onOpenEditTask('Attachment')} className="btn">{additionTaskEdiSvg.attachment} <span>Attachment</span></button>}

@@ -9,6 +9,7 @@ export function ShareBoard({ setIsOpenShareBoard }) {
     const board = useSelector(storeState => storeState.boardModule.board)
     const [connectUsers, setConnectUsers] = useState(board.members)
     const [filterUsers, setFilterdUsers] = useState(users)
+    console.log('users,', users);
 
     function onUserSearch({ target }) {
         const filteredMembers = users.filter(user =>

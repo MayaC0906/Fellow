@@ -12,12 +12,15 @@ import { BoardMenu } from "../cmps/Board/BoardMenu.jsx";
 import { loaderSvg } from "../cmps/Svgs.jsx";
 
 
+
 export function BoardDetails() {
     const dispatch = useDispatch()
     const { boardId } = useParams()
     // const [boardToDisplay, setBoard] = useState([])
     const board = useSelector(storeState => storeState.boardModule.board)
     const [isMenuOpen, setMenu] = useState(false)
+    const [isFiltersOpen, setIsFiltersOpen] = useState(false)
+
 
     useEffect(() => {
         loadBoards()
@@ -43,9 +46,9 @@ export function BoardDetails() {
         <>
             <BoardSidebar />
             <div className="board-details-container" style={{ backgroundImage: `url(${board.style.backgroundImage})`, backgroundColor: board.style.backgroundColor }} >
-                <GroupHeader onLoadBoard={onLoadBoard} isMenuOpen={isMenuOpen} setMenu={setMenu} boardId={boardId} />
+                <GroupHeader setIsFiltersOpen={setIsFiltersOpen} isFiltersOpen={isFiltersOpen} onLoadBoard={onLoadBoard} isMenuOpen={isMenuOpen} setMenu={setMenu} boardId={boardId} />
                 <Outlet />
-                <GroupList boardId={boardId} />
+                <GroupList setIsFiltersOpen={setIsFiltersOpen} isFiltersOpen={isFiltersOpen} boardId={boardId} />
             </div>
             {isMenuOpen && <BoardMenu isMenuOpen={isMenuOpen} setMenu={setMenu} />}
         </>

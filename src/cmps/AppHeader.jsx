@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { appHeaderSvg, sideBar, taskSvg, workspaceSvg } from './Svgs'
 import { useEffect, useState, useRef } from 'react'
 import { AddBoard } from './Board/AddBoard'
-import { login } from '../store/actions/user.actions'
+import { loadUsers, login } from '../store/actions/user.actions'
 import { UserDetailsDisplay } from './UserDetailsDisplay'
 import { updateBoards } from '../store/actions/board.actions'
 
@@ -21,14 +21,25 @@ export function AppHeader() {
     const [filterdBoards, setFilterdBoards] = useState([...boards])
     const [starredBoards, setStarredBoards] = useState([])
     const [isSearchOpen, setIsSearchOpen] = useState(false)
-    const [isPhoneDisplay, setIsPhoneDisplay] = useState({isDisplay: false, isSearch: true})
+    const [isPhoneDisplay, setIsPhoneDisplay] = useState({ isDisplay: false, isSearch: true })
     const [extandedWidthSearch, setExtandedWidthSearch] = useState('160px')
 
-    console.log('isPhoneDisplay', isPhoneDisplay);
+    // console.log('isPhoneDisplay', isPhoneDisplay);
 
     useEffect(() => {
         onLoadUsers()
-    }, [user])
+    }, [])
+
+    async function onLoadUsers() {
+        try {
+            const users = await loadUsers()
+            console.log(users);
+            if (!user) login({ username: 'Guest', password: '1234' })
+
+        } catch (err) {
+            console.log();
+        }
+    }
 
     useEffect(() => {
         window.addEventListener('resize', handleResize);
@@ -43,24 +54,21 @@ export function AppHeader() {
     function handleResize() {
         const screenWidth = window.innerWidth
         if (screenWidth > 1320) {
-            setIsPhoneDisplay({isDisplay: false, isSearch: true})
+            setIsPhoneDisplay({ isDisplay: false, isSearch: true })
             setExtandedWidthSearch(780)
         }
-        else if (screenWidth >= 780 || screenWidth <=1320) {
-            setIsPhoneDisplay({isDisplay: false, isSearch: true})
+        else if (screenWidth >= 780 || screenWidth <= 1320) {
+            setIsPhoneDisplay({ isDisplay: false, isSearch: true })
             setExtandedWidthSearch(screenWidth - 600)
         }
-        if (screenWidth <= 780 && screenWidth> 530 ){
-            setIsPhoneDisplay({isDisplay: true, isSearch: true })
+        if (screenWidth <= 780 && screenWidth > 530) {
+            setIsPhoneDisplay({ isDisplay: true, isSearch: true })
             setExtandedWidthSearch(screenWidth - 600)
         }
-        if (screenWidth <= 530) setIsPhoneDisplay({isDisplay: true, isSearch: false})
-        
+        if (screenWidth <= 530) setIsPhoneDisplay({ isDisplay: true, isSearch: false })
+
     }
-    async function onLoadUsers() {
-        await loadUsers()
-        if (!user) login({ username: 'Guest', password: '1234' })
-    }
+
 
 
 
@@ -84,11 +92,6 @@ export function AppHeader() {
         const newStarredBoards = boards.filter(board => board.isStarred)
         setStarredBoards(newStarredBoards)
     }, [boards])
-
-    async function onLoadUsers() {
-        const users = await userService.getUsers()
-        if (!user) login({ username: 'Guest', password: '1234' })
-    }
 
 
     function onCreateBoard() {
@@ -187,41 +190,41 @@ export function AppHeader() {
             </section>
 
             <section className='nav-info'>
-                { isPhoneDisplay.isSearch &&
-                 <div className={'search-app-header' +
-                    (brightClass ? ' dark-btn' : ' light-btn') +
-                    (isSearchOpen ? ' open' : '')}
-                    onClick={onOpenHeaderSearch}                >
-                    <div className='search-input'
-                        onBlur={() => {
-                            setIsSearchOpen(false)
-                            setModalState(prevState => ({ ...prevState, isOpen: false, modal: '' }))
-                        }}>
-                        <span>{appHeaderSvg.search}</span>
-                        <input type="text" placeholder={isSearchOpen ? 'Search trello' : 'Search'} ref={inputRef}
-                            onChange={(event) => { setSearchInput(event.target.value) }}
-                            style={{width: isSearchOpen ? `${extandedWidthSearch - 35}px` : '200px'}} />
+                {isPhoneDisplay.isSearch &&
+                    <div className={'search-app-header' +
+                        (brightClass ? ' dark-btn' : ' light-btn') +
+                        (isSearchOpen ? ' open' : '')}
+                        onClick={onOpenHeaderSearch}                >
+                        <div className='search-input'
+                            onBlur={() => {
+                                setIsSearchOpen(false)
+                                setModalState(prevState => ({ ...prevState, isOpen: false, modal: '' }))
+                            }}>
+                            <span>{appHeaderSvg.search}</span>
+                            <input type="text" placeholder={isSearchOpen ? 'Search trello' : 'Search'} ref={inputRef}
+                                onChange={(event) => { setSearchInput(event.target.value) }}
+                                style={{ width: isSearchOpen ? `${extandedWidthSearch - 35}px` : '200px' }} />
 
-                        {isSearchOpen &&
-                            <div
-                                style={{ right: '0px', top: '38px', width:`${extandedWidthSearch}px`}}
-                                className='searched-boards-header'>
-                                <span>BOARDS</span>
-                                {filterdBoards.map(board => {
-                                    return <div
-                                        onMouseDown={(event) => {
-                                            event.preventDefault()
-                                            onOpenBoard(event, board._id)
-                                        }}
-                                        className='searched-board'>
-                                        <img src={board.style.backgroundImage} alt="Board background" />
-                                        <span>{board.title}</span>
-                                    </div>
-                                })}
-                            </div>
-                        }
-                    </div>
-                </div>}
+                            {isSearchOpen &&
+                                <div
+                                    style={{ right: '0px', top: '38px', width: `${extandedWidthSearch}px` }}
+                                    className='searched-boards-header'>
+                                    <span>BOARDS</span>
+                                    {filterdBoards.map(board => {
+                                        return <div
+                                            onMouseDown={(event) => {
+                                                event.preventDefault()
+                                                onOpenBoard(event, board._id)
+                                            }}
+                                            className='searched-board'>
+                                            <img src={board.style.backgroundImage} alt="Board background" />
+                                            <span>{board.title}</span>
+                                        </div>
+                                    })}
+                                </div>
+                            }
+                        </div>
+                    </div>}
 
                 <button className={'app-header-btn user-info' + (brightClass ? ' dark-btn' : ' light-btn')}>{appHeaderSvg.notifications}</button>
                 {isPhoneDisplay.isDisplay && !isPhoneDisplay.isSearch && <NavLink to={'/search'}><button className={'create-btn' +

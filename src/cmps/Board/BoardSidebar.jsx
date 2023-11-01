@@ -80,8 +80,6 @@ export function BoardSidebar() {
 
   }
 
-  console.log('modalState', modalState.isOpen);
-
   return (
     <section
       className='board-sidebar'

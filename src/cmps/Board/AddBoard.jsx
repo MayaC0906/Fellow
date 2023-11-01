@@ -85,7 +85,7 @@ export function AddBoard({ pos, setSidebarExpand, setModalState, setIsBoardAdded
                             {colorUrls.map(colorUrl => (
                                 <>
                                     <img src={colorUrl} alt="" onClick={() => setBackGroundImg(colorUrl)} key={colorUrl} />
-                                    {backGroundgImg === colorUrl && (<span style={{ width: 30, height: 30 }}>{taskSvg.check}</span>)}
+                                    {/* {backGroundgImg === colorUrl && (<span style={{ width: 30, height: 30 }}>{taskSvg.check}</span>)} */}
                                 </>
                             ))}
                         </div>

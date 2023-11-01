@@ -11,17 +11,97 @@ import Button from '@mui/joy/Button';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { GroupPreview } from './GroupPreview.jsx'
 import { checkList } from '../Svgs.jsx'
+import { TaskFilter } from '../Task/TaskFilter.jsx'
 
-export function GroupList() {
+function getEmptyFilter() {
+    return {
+        txt: '',
+        byMembers: {
+            isAll: false,
+            isMe: false,
+            isNoOne: false,
+            someMembers: []
+        },
+        byDuedate: {
+            isDate: false,
+            isOverdue: false,
+            isDuesoon: false,
+            isComplete: false
+        },
+        byLabels: {
+            isNoOne: false,
+            isAll: false,
+            someLabel: []
+        }
+    }
+
+}
+
+export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
     const [isInputExpand, setInputExpand] = useState(false)
     const [newGroup, setNewGroup] = useState(boardService.getEmptyGroup())
     const board = useSelector((storeState) => storeState.boardModule.board)
-    const groups = board?.groups
+    let groups = board?.groups
     const [isLabelsShown, setIsLabelsShown] = useState(false)
     const [openMenuGroupId, setOpenMenuGroupId] = useState(null);
     const addListInput = useRef(null)
     const user = useSelector((storeState) => storeState.userModule.user)
-    // console.log(user);
+    const [taskFilterBy, setTaskFilterby] = useState(getEmptyFilter())
+
+    useEffect(() => {
+        // console.log('filter');
+        onFilterGroups(taskFilterBy)
+    }, [taskFilterBy, groups])
+
+    function onFilterGroups(filterBy) {
+        const { txt, byMembers, byDuedate, byLabels } = filterBy
+        const filteredGroupsTasks = groups.map(group => {
+            let filteredTasks = group.tasks
+            if (txt) {
+                const regExp = new RegExp(txt, 'i')
+                filteredTasks = filteredTasks.filter(task => regExp.test(task.title))
+            }
+
+            if (byMembers) {
+                filteredTasks = filteredTasks.filter(task => {
+                    let includeTask = true
+                    if (byMembers.isAll) includeTask = includeTask && board.members.every(boardMember => task.memberIds.includes(boardMember._id))
+                    if (byMembers.isMe) includeTask = includeTask && task.memberIds.includes(user._id)
+                    if (byMembers.isNoOne) includeTask = includeTask && task.memberIds.length === 0
+                    if (byMembers.someMembers.length) includeTask = includeTask && byMembers.someMembers.some(someMember => task.memberIds.includes(someMember))
+                    return includeTask
+                })
+            }
+
+            if (byDuedate) {
+                filteredTasks = filteredTasks.filter(task => {
+                    let includeTask = true
+                    if (byDuedate.isComplete) includeTask = includeTask && task.dueDate.isComplete
+                    if (byDuedate.isDate) includeTask = includeTask && !task.dueDate.date
+                    if (byDuedate.isDuesoon) includeTask = includeTask && task.dueDate.isDuesoon
+                    if (byDuedate.isOverdue) includeTask = includeTask && task.dueDate.isOverdue
+                    return includeTask
+                })
+            }
+
+            if (byLabels) {
+                filteredTasks = filteredTasks.filter(task => {
+                    let includeTask = true
+                    if (byLabels.isNoOne) includeTask = includeTask && task.labelIds.length === 0
+                    if (byLabels.isAll) includeTask = includeTask && board.labels.every(boardLabels => task.labelIds.includes(boardLabels.id))
+                    if (byLabels.someLabel.length) includeTask = includeTask && byLabels.someLabel.some(label => task.labelIds.includes(label))
+                    return includeTask
+                })
+            }
+            return { ...group, tasks: filteredTasks }
+            // console.log('filteredTasks', filteredTasks);
+        })
+        // console.log(filterBy);
+        // console.log('groups tasks:', filteredGroupsTasks)
+        // console.log('groups', groups);
+
+    }
+
     function handleChange(ev) {
         let { value, name: field } = ev.target
         setNewGroup((prevGroup) => ({ ...prevGroup, [field]: value }))
@@ -39,7 +119,6 @@ export function GroupList() {
                 addListInput.current.focus();
             }
             // await saveGroup(group, boardId, currUser, txt);
-
         } catch (err) {
             console.log('Failed to save new group', err)
         }
@@ -137,9 +216,17 @@ export function GroupList() {
         }
     }
 
+
+    console.log('groups right before return', groups);
     if (!groups) return <div>Loading..</div>
     return (
         <div className='group-list-container'>
+            {isFiltersOpen && <TaskFilter
+                setIsFiltersOpen={setIsFiltersOpen}
+                groups={groups}
+                setTaskFilterby={setTaskFilterby}
+                taskFilterBy={taskFilterBy}
+            />}
             <DragDropContext onDragEnd={handleDrag}>
                 <Droppable droppableId="groups" type="groups" key="groups" direction="horizontal">
                     {(provided) => (
@@ -163,6 +250,8 @@ export function GroupList() {
                                             ref={provided.innerRef}
                                         >
                                             <GroupPreview
+                                                setTaskFilterby={setTaskFilterby}
+                                                taskFilterBy={taskFilterBy}
                                                 onDuplicateGroup={onDuplicateGroup}
                                                 onEditGroup={onEditGroup}
                                                 setIsLabelsShown={setIsLabelsShown}
@@ -211,11 +300,3 @@ export function GroupList() {
         </div>
     );
 }
-
-
-
-
-
-
-
-

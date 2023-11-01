@@ -28,6 +28,10 @@
                     }
                 }
 
+                &::placeholder {
+                    color: rgb(68, 84, 111);
+                }
+
                 p {
                     padding-inline-start: rem(4px);
                 }

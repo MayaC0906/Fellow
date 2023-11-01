@@ -1,7 +1,7 @@
 .group-header {
     position: sticky;
     top: 0;
-    z-index: 11; // Ensures the header is above other content.
+    z-index: 50; // Ensures the header is above other content.
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -99,10 +99,10 @@
         .share,
         .filters {
             align-items: baseline;
+            position: relative;
         }
 
         &.share {
-            position: relative;
             margin-inline-start: 6px;
         }
     }

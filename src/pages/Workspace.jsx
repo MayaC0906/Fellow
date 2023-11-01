@@ -128,12 +128,6 @@ export function Workspace() {
                         </section>
                     </ul>
                     {isBoardAdded && <AddBoard setIsBoardAdded={setIsBoardAdded} addBoardPosition={addBoardPosition} />}
-                    {/* <section ref={createBoardRef} className={`boards-add ${!boardCount.current === 0 ? 'disable' : ''}`} onClick={boardCount.current > 0 ? () => onSetIsBoardAdded() : null}>
-                            <h2 className="fs14">Create new board</h2>
-                            <h3 className="fs12">{boardCount.current} remaining</h3>
-                        </section>
-                    </ul>
-                    {isBoardAdded && <AddBoard boardCount={boardCount} setIsBoardAdded={setIsBoardAdded} addBoardPosition={addBoardPosition} />} */}
                 </section>
             </section>
         </section>

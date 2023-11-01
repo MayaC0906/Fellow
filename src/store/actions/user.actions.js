@@ -8,14 +8,16 @@ import { REMOVE_USER, SET_USER, SET_USERS, SET_WATCHED_USER } from "../reducers/
 
 export async function loadUsers() {
     try {
-        store.dispatch({ type: LOADING_START })
+        // store.dispatch({ type: LOADING_START })
         const users = await userService.getUsers()
         store.dispatch({ type: SET_USERS, users })
+        return users
     } catch (err) {
         console.log('UserActions: err in loadUsers', err)
-    } finally {
-        store.dispatch({ type: LOADING_DONE })
     }
+    // } finally {
+    //     store.dispatch({ type: LOADING_DONE })
+    // }
 }
 
 export async function removeUser(userId) {
