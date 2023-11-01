@@ -6,6 +6,7 @@ import { AddBoard } from './Board/AddBoard'
 import { loadUsers, login } from '../store/actions/user.actions'
 import { UserDetailsDisplay } from './UserDetailsDisplay'
 import { updateBoards } from '../store/actions/board.actions'
+
 export function AppHeader() {
     const boardStyle = useSelector((storeState) => storeState.boardModule.board.style) || null
     const user = useSelector(storeState => storeState.userModule.user)
