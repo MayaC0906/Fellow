@@ -8,9 +8,11 @@ import { LoginSignup } from './pages/LoginSignup'
 import { TaskDetails } from './cmps/Task/TaskDetails/TaskDetails'
 import { SearchBoard } from './pages/SearchBoard'
 import { useState, useEffect } from 'react';
+import { HomeHeader } from './cmps/HomeHeader'
+import { useLocation } from 'react-router-dom/dist'
 export function App() {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
+    const location = useLocation();
 
     useEffect(() => {
         const handleResize = () => {
@@ -22,7 +24,7 @@ export function App() {
 
     return (
         <div>
-            <AppHeader />
+            {(location.pathname !== '/login') && ((location.pathname === '/') ? <HomeHeader /> : <AppHeader />)}
             <main>
                 <Routes>
                     {windowWidth < 920 ? (

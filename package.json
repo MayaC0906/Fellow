@@ -20,7 +20,6 @@
     "@popperjs/core": "^2.11.8",
     "axios": "^1.5.0",
     "dayjs": "^1.11.10",
-    "lodash": "^4.17.21",
     "plotly.js": "^2.27.0",
     "polished": "^4.2.2",
     "react": "^18.2.0",
