@@ -105,10 +105,10 @@ async function getGroupById(groupId, boardId) {
 }
 
 async function saveGroup(group, boardId, user, txt, task) {
-    console.log('user:', user)
+    console.log('boardId:', boardId)
     try {
         let board = await getById(boardId)
-
+        console.log('board:', board)
         if (group.id) {
             const idx = board.groups.findIndex((currGroup) => currGroup.id === group.id)
             board.groups.splice(idx, 1, group)

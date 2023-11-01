@@ -46,7 +46,7 @@ export function LoginSignup() {
 
     async function onConnectAsAUser() {
         try {
-            await login({ username: 'Guest', password: '1234' })
+            await login({ username: 'Guest', password: "1234" })
             navigate('/workspace')
         } catch (err) {
             console.log('Could not connect as a guest', err);

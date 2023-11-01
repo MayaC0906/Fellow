@@ -1,4 +1,4 @@
-import { boardService } from "../../services/board.service.local.js";
+import { boardService } from "../../services/board.service.js";
 import { store } from '../store.js'
 import { showSuccessMsg, showErrorMsg } from '../../services/event-bus.service.js'
 import { ADD_BOARD, REMOVE_BOARD, SET_BOARD, SET_BOARDS, UNDO_REMOVE_BOARD, UPDATE_BOARD } from "../reducers/board.reducer.js";

@@ -1,4 +1,5 @@
-import { boardService } from "./board.service.local"
+import { boardService } from "./board.service.js"
+// import { boardService } from "./board.service.local.js" //local 
 import { utilService } from "./util.service"
 export const taskService = {
     getById,
@@ -23,6 +24,7 @@ async function getById(boardId, groupId, taskId) {
 async function saveTask(boardId, groupId, newTask, user, txt) {
     try {
         let group = await boardService.getGroupById(groupId, boardId)
+        console.log('group:', group)
         if (newTask.id) {
             const taskIdx = group.tasks.findIndex(task => task.id === newTask.id)
             group.tasks[taskIdx] = newTask
