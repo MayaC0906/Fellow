@@ -6,7 +6,6 @@ import { AddBoard } from './Board/AddBoard'
 import { loadUsers, login } from '../store/actions/user.actions'
 import { UserDetailsDisplay } from './UserDetailsDisplay'
 import { updateBoards } from '../store/actions/board.actions'
-import { loadUsers } from '../store/actions/user.actions'
 export function AppHeader() {
     const boardStyle = useSelector((storeState) => storeState.boardModule.board.style) || null
     const user = useSelector(storeState => storeState.userModule.user)
@@ -23,21 +22,6 @@ export function AppHeader() {
     const [isSearchOpen, setIsSearchOpen] = useState(false)
     const [isPhoneDisplay, setIsPhoneDisplay] = useState({ isDisplay: false, isSearch: true })
     const [extandedWidthSearch, setExtandedWidthSearch] = useState('160px')
-
-    useEffect(() => {
-        onLoadUsers()
-    }, [])
-
-    async function onLoadUsers() {
-        try {
-            const users = await loadUsers()
-            console.log(users);
-            if (!user) login({ username: 'Guest', password: '1234' })
-
-        } catch (err) {
-            console.log();
-        }
-    }
 
     useEffect(() => {
         window.addEventListener('resize', handleResize);
@@ -154,7 +138,7 @@ export function AppHeader() {
                             {starredBoards.length > 0 && <section className='starred-board-list'>
                                 {starredBoards.map(board => {
                                     return <div
-                                    key={board._id}
+                                        key={board._id}
                                         onClick={(event) => { onOpenBoard(event, board._id) }}
                                         className='starred-board'>
                                         <section className='board-info'>
@@ -172,7 +156,7 @@ export function AppHeader() {
                 </section>
                 <button onClick={onCreateBoard}
                     className={'create-btn' + (brightClass ? ' dark-btn' : ' light-btn')}
-                    // onBlur={() => (setModalState(prevState => ({ ...prevState, isOpen: false, modal: '' })))}
+                // onBlur={() => (setModalState(prevState => ({ ...prevState, isOpen: false, modal: '' })))}
                 >{isPhoneDisplay.isDisplay ? sideBar.plus : 'Create board'}
                     {modalState.isOpen && modalState.modal === 'create' &&
                         <div className='add-board-container-header'

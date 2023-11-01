@@ -7,7 +7,7 @@ import { ShareBoard } from "../Board/ShareBoard";
 import { OurSiri } from "../OurSiri";
 import { Dashboard } from "../Dashboard";
 
-export function GroupHeader({ isMenuOpen, setMenu }) {
+export function GroupHeader({ isMenuOpen, setMenu, setIsFiltersOpen, isFiltersOpen }) {
     const { boardId } = useParams()
     const user = useSelector((storeState) => storeState.userModule.user)
     const boardFromState = useSelector(storeState => storeState.boardModule.board)
@@ -58,7 +58,7 @@ export function GroupHeader({ isMenuOpen, setMenu }) {
             const txt = `changed this board title from ${board.title} to ${value}.`
             await updateBoard(board, user, txt)
         } catch (err) {
-            console.log(err);
+            console.log(err)
             throw err
         }
     }
@@ -70,7 +70,7 @@ export function GroupHeader({ isMenuOpen, setMenu }) {
             await updateBoard(board, user, txt)
             setIsBoardStarred(board.isStarred)
         } catch (err) {
-            console.log(`Could'nt change isStarred`, err);
+            console.log(`Could'nt change isStarred`, err)
         }
     }
 
@@ -78,9 +78,6 @@ export function GroupHeader({ isMenuOpen, setMenu }) {
 
     const { isBright } = board.style
     const isBlackOrWhite = isBright ? 'brightColor' : 'darkColor'
-
-    console.log('board from groupheader:', board);
-
 
     return (
         <>
@@ -99,7 +96,6 @@ export function GroupHeader({ isMenuOpen, setMenu }) {
 
                     <span className="separate-line"></span>
                     <section className="group-header img">
-                        {console.log(board.members)}
                         {!isPhoneDisplay &&
                             boardFromState.members.map(member => (
                                 <section className="member-img-container flex align-center">
