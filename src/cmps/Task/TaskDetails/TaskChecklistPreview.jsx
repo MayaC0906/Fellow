@@ -143,8 +143,8 @@ export function TaskChecklistPreview({ onDeleteList, onAddTodo, onUpdateListTitl
                     <div className='progress-bar'>
                         <span>{progressbarCalc[idx] ? progressbarCalc[idx].toFixed() : 0}%</span>
                         <div className='progress-bar-container'>
-                        <div className="fill" 
-                                style={{ 
+                            <div className="fill"
+                                style={{
                                     width: `${progressbarCalc[idx] ? progressbarCalc[idx] : 0}%`,
                                     backgroundColor: progressbarCalc[idx] === 100 ? 'green' : ''
                                 }}>
@@ -156,11 +156,17 @@ export function TaskChecklistPreview({ onDeleteList, onAddTodo, onUpdateListTitl
 
                         <li key={todo.id} className={`checklist-item ${todo.isDone ? 'done' : ''}`}>
                             <div className='checkbox'>
-                                <Checkbox sx={{ '& .MuiSvgIcon-root': { fontSize: 16 } }} checked={todo.isDone} onClick={(event) => {
-                                    handleToggle(list.id, todo.id, !todo.isDone, event)
-                                }} />
+                                <Checkbox sx={{
+                                    '& .MuiSvgIcon-root': {
+                                        fontSize: 16
+                                    },
+                                    color: 'rgba(23, 43, 77, 0.2)'
+                                }
+                                }
+                                    checked={todo.isDone} onClick={(event) => {
+                                        handleToggle(list.id, todo.id, !todo.isDone, event)
+                                    }} />
                             </div>
-
                             {expandedTodo.listId === list.id && expandedTodo.todoId === todo.id ?
                                 <form >
                                     <textarea

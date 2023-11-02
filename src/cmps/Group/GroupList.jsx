@@ -47,7 +47,10 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
     const addListInput = useRef(null)
     const user = useSelector((storeState) => storeState.userModule.user)
     const [taskFilterBy, setTaskFilterby] = useState(getEmptyFilter())
-    const [filteredGroups, setFilteredGroups] = useState(groups);
+    const [filteredGroups, setFilteredGroups] = useState(groups)
+
+    const [checkboxContainer, setCheckboxContainer] = useState([])
+
 
     useEffect(() => {
         const filteredGroups = onFilterGroups(taskFilterBy)
@@ -55,7 +58,6 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
     }, [taskFilterBy, groups])
 
     function onFilterGroups(filterBy) {
-        console.log('filter,', filterBy);
         const { txt, byMembers, byDuedate, byLabels } = filterBy
         groups = groups.map(group => {
             let filteredTasks = group.tasks
@@ -101,6 +103,17 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
 
         return groups
     }
+
+    function handelCheckBox(checkboxName) {
+        setCheckboxContainer((prevChecked) => {
+            if (prevChecked.includes(checkboxName)) {
+                return prevChecked.filter((name) => name !== checkboxName)
+            } else {
+                return [...prevChecked, checkboxName]
+            }
+        })
+    }
+
 
     function handleChange(ev) {
         let { value, name: field } = ev.target
@@ -224,6 +237,9 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
                 groups={groups}
                 setTaskFilterby={setTaskFilterby}
                 taskFilterBy={taskFilterBy}
+                checkboxContainer={checkboxContainer}
+                handelCheckBox={handelCheckBox}
+                setCheckboxContainer={setCheckboxContainer}
             />}
             <DragDropContext onDragEnd={handleDrag}>
                 <Droppable droppableId="groups" type="groups" key="groups" direction="horizontal">
