@@ -1,0 +1,251 @@
+.group-header {
+    position: sticky;
+    top: 0;
+    z-index: 40; // Ensures the header is above other content.
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: rem(56px);
+    container-name: groupHeader;
+
+    &.container {
+        backdrop-filter: blur(4px);
+        background: rgba(0, 0, 0, 0.24);
+    }
+
+    .board-edit {
+        gap: 4px;
+        margin-left: 20px;
+        align-items: center;
+
+        div {
+            font-size: rem(18px);
+            font-weight: 700;
+            font-family: inherit;
+            line-height: 32px;
+            border-radius: 3px;
+            border: none;
+            color: white;
+            background: none;
+            outline: none;
+            cursor: pointer;
+            padding: 0 10px;
+            margin-block-end: 5px;
+
+            &:hover {
+                background: hsla(0, 0%, 100%, .239);
+            }
+
+            &:focus {
+                border: 2px solid #0c66e4;
+                background-color: white;
+                color: black;
+                cursor: text;
+            }
+
+            &.brightColor {
+                color: rgb(23, 43, 77);
+
+                &:hover {
+                    background-color: rgba(9, 30, 66, 0.14);
+                }
+            }
+        }
+
+        button {
+            width: 32px;
+            justify-content: center;
+            margin-block-end: 2px;
+
+            svg {
+                width: 17px;
+                height: 17px;
+
+                &:hover {
+                    scale: 1.2;
+                }
+            }
+        }
+    }
+
+    svg {
+        width: 16px;
+        height: 16px;
+        color: rgb(255, 255, 255);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        path {
+            fill: white
+        }
+    }
+
+    button {
+        display: flex;
+        align-items: center;
+        margin: 0 4px 0 0;
+        background: none;
+        height: 32px;
+        border: none;
+        font-size: rem(14px);
+        border-radius: 3px;
+        height: 32px;
+        font-family: inherit;
+
+        &:hover {
+            cursor: pointer;
+            background-color: rgba(166, 197, 226, 0.16);
+        }
+    }
+
+    .btn {
+        gap: 8px;
+        padding: 6px 10px 6px 12px;
+
+        .dashboard,
+        .share,
+        .filters {
+            align-items: baseline;
+            position: relative;
+        }
+
+        &.share {
+            margin-inline-start: 6px;
+        }
+    }
+
+    .brightColor {
+        color: rgb(23, 43, 77);
+        font-weight: 500;
+
+        &.share {
+            background-color: rgba(0, 0, 0, 0.45);
+            color: white;
+
+            svg {
+                color: white;
+
+                path {
+                    fill: white
+                }
+            }
+
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.6);
+            }
+        }
+
+        svg {
+            color: rgb(23, 43, 77);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            path {
+                fill: rgb(23, 43, 77);
+            }
+        }
+
+        &:hover {
+            background-color: rgba(9, 30, 66, 0.14);
+        }
+
+        &:active {
+            background-color: rgba(9, 30, 66, 0.31);
+        }
+
+    }
+
+    .darkColor {
+        font-weight: 500;
+
+        &.share {
+            background-color: #DFE1E6;
+            color: rgb(23, 43, 77);
+
+            svg {
+                color: rgb(23, 43, 77);
+
+                path {
+                    fill: rgb(23, 43, 77);
+                }
+            }
+
+            &:hover {
+                background-color: #FFFFFF;
+            }
+        }
+
+        &:active {
+            background-color: rgba(191, 219, 248, 0.28);
+        }
+
+    }
+
+
+    .img {
+        gap: 4px;
+
+        .member-img-container {
+            position: relative;
+
+            .member-img {
+                width: 28px;
+                height: 28px;
+                position: relative;
+                border-radius: 50%;
+                margin-inline-start: -5px;
+                cursor: pointer;
+                object-fit: cover;
+
+                &:hover {
+                    filter: contrast(70%) brightness(120%);
+                }
+            }
+
+            span {
+                width: 9px;
+                height: 9px;
+                position: absolute;
+                bottom: 0px;
+                left: 13px;
+                z-index: 20;
+                background-size: cover;
+                background-image: url(https://trello.com/assets/88a4454280d68a816b89.png);
+            }
+        }
+    }
+
+    >* {
+        font-weight: 700;
+        color: white;
+    }
+
+    .separate-line {
+        color: hsla(0, 0%, 100%, .31);
+        margin-inline: 4px 6px;
+    }
+
+
+        @media (max-width: 520px) {
+            .board-edit {
+                div {
+                    font-size: rem(16px);
+                    max-width: 163px;
+                    height: 42px;
+                    line-height: 40px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    margin-block-end: 0;
+                    display: block;
+                    &:focus {
+                        line-height: 20px;
+                        white-space: wrap;
+                    }
+                }
+            }
+        }
+    
+}

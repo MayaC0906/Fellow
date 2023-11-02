@@ -1,0 +1,40 @@
+.edit-modal {
+    position: fixed;
+
+    &.img {
+        right: 20px;
+    }
+
+    .title-container {
+        &.img-display {
+            border-bottom: 1px solid #091e4224;
+
+            p {
+                font-weight: 400;
+            }
+
+            button {
+                &:hover {
+                    background: none;
+                    color: black;
+                }
+            }
+        }
+    }
+
+    &-content {
+        .member-img-diplay {
+            width: 128px;
+            height: 128px;
+            margin-block-start: 4px;
+            border-radius: 0%;
+            cursor: auto;
+
+            &:hover {
+                filter: none;
+            }
+
+        }
+
+    }
+}

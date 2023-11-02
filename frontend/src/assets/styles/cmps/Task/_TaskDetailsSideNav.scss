@@ -1,0 +1,57 @@
+.add-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    grid-column: 2;
+
+    h3 {
+        font-size: rem(12px);
+        color: #44546F;
+        margin: 0 0 -4px;
+        font-weight: 600;
+    }
+
+    .btn {
+        width: 168px;
+        height: 32px;
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        background-color: rgba(9, 30, 66, 0.06);
+        border-radius: 3px;
+        border: none;
+        padding: 6px 12px;
+        cursor: pointer;
+        color: #172B4D;
+        
+        
+        svg {
+            width: 16px;
+            height: 16px;
+            font-size: rem(16px);
+            font-weight: 500;
+            path {
+                fill: #44546f;
+            }
+        }
+
+        span {
+            font-size: rem(14px);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", Ubuntu, "Droid Sans", "Helvetica Neue", sans-serif;
+        }
+
+        >* {
+            font-weight: 500;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", Ubuntu, "Droid Sans", "Helvetica Neue", sans-serif;
+        }
+
+        &:hover {
+            background-color: #091E4224;
+        }
+
+        &:active {
+            background-color: #091E424F;
+        }
+
+    }
+}

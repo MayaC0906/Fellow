@@ -1,0 +1,51 @@
+.labels {
+    margin: 0 8px 8px 0;
+
+    &-detail {
+        gap: 4px;
+    }
+
+    &-display {
+        // width: max-content;
+        min-width: 48px;
+        height: 32px;
+        padding: 0 12px;
+        font-size: rem(14px);
+        font-weight: 500;
+        border: none;
+        cursor: pointer;
+
+        &:hover {
+            filter: brightness(0.9);
+        }
+
+        &:focus {
+            outline: auto 5px;
+        }
+    }
+
+    button {
+        border-radius: 3px;
+    }
+
+    &-add {
+        padding: 8px;
+        background-color: #091e420f;
+
+        &:hover {
+            background-color: #091E4224;
+        }
+
+        &:active {
+            background-color: #091E424F;
+
+        }
+
+        svg {
+            width: 16px;
+            height: 16px;
+            color: #172b4d;
+        }
+    }
+
+}

@@ -1,0 +1,180 @@
+.bgc-modal-layout {
+    box-sizing: border-box;
+    flex: 1 auto;
+    padding: 12px 12px 8px;
+    transform: translateX(0);
+    transition-duration: .12s;
+    transition-property: transform,opacity;
+    transition-timing-function: ease-in;
+    width: 100%;
+    overflow: auto;
+    height: 600px;
+    position: relative;
+
+    .upper-section {
+        gap: 10px;
+        display: grid;
+        /* margin: 0 auto; */
+        grid-template-columns: 1fr 1fr;
+        /* align-items: center; */
+        /* justify-content: center; */
+        height: max-content;
+
+        .colors {
+
+            &:hover {
+                opacity: 0.7;
+            }
+        }
+    }
+    .unsplash  {
+        position: relative;
+        flex: 1;
+        overflow-x: hidden;
+        overflow-y: auto;
+        margin: 0 -4px;
+        img{
+
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 3px; 
+           
+        }
+        &:hover a {
+            opacity: 1;
+        }
+    }
+    .sq{
+        box-sizing: border-box;
+        /* float: left; */
+        padding: 0 4px;
+        position: relative;
+        text-align: center;
+        display: flex;
+        // width: 50%;
+        flex-direction: column;
+        // align-items: flex-end;
+        img{
+            cursor: pointer;
+            background-color: #091e420f;
+            background-size: cover;
+            border-radius: 8px;
+            height: 96px;
+            // margin-bottom: 8px;
+            position: relative;
+            width: 100%;
+        }
+
+        span {
+            display: flex;
+            justify-content: center;
+            // margin-top: 8px;
+            color: #172b4d;
+            font-display: swap;
+            font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Droid Sans,Helvetica Neue,sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 20px;
+            margin-bottom: 10px;
+        }
+
+        a {
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 0 0 8px 8px;
+            box-sizing: border-box;
+            color: #ffffff;
+            font-size: 12px;
+            line-height: 16px;
+            text-align: left;
+            cursor: pointer;
+            opacity: 0;
+            overflow: hidden;
+            padding: 2px 4px;
+            position: absolute;
+            z-index: 1;
+            text-decoration: underline;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 95%;
+            height: 20px;
+            left: 4px;
+            bottom: 7px;
+        }
+    }
+
+    .custom-section {
+        position: relative;
+        .sq3 {
+            margin-top: 6px;
+            text-align: left;
+            div {
+                background-color: #091e420f;
+                background-size: cover;
+                border-radius: 8px;
+                height: 96px;
+                margin-bottom: 8px;
+                position: relative;
+                width: 100%;
+                align-items: center;
+                display: flex;
+                justify-content: center;
+                svg {
+                    color: #091e42b3;
+                }
+            }
+            h2{
+                font-weight: 600;
+                margin: 0 0 8px;   
+                font-size: 20px;
+                line-height: 24px;
+                
+            }
+        }
+    }
+
+    .input-section {
+        margin: 1px;
+        position: relative;
+
+        input {
+            background-color: #fff;
+            border: none;
+            border-radius: 3px;
+            box-shadow: inset 0 0 0 2px #091e4224;
+            box-sizing: border-box;
+            display: block;
+            line-height: 20px;
+            margin-bottom: 12px;
+            outline: none;
+            padding: 8px 12px;
+            transition-duration: 85ms;
+            transition-property: background-color,border-color,box-shadow;
+            transition-timing-function: ease;
+            width: 100%;
+            padding-left: 32px;
+            color: #172b4d;
+        }
+        
+        svg {
+            left: 8px;
+            position: absolute;
+            top: 8px;
+            height: 18px;
+            width: 16px;
+            color: #172b4d;
+        }
+    }
+
+    // footer {
+    //     position: sticky;
+    //     color: #172b4d;
+    //     font-display: swap;
+    //     font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Droid Sans,Helvetica Neue,sans-serif;
+    //     font-size: 14px;
+    //     font-weight: 400;
+    //     line-height: 20px;
+    //     bottom: 0;
+    //     height: 30px;
+    // }
+}

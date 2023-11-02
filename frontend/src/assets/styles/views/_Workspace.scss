@@ -1,0 +1,110 @@
+.workspace-container {
+    margin: auto;
+    margin-block-start: rem(40px);
+    width: rem(825px);
+
+    .boards {
+
+        flex-direction: column;
+        gap: rem(48px);
+
+        &-workspace-container {
+
+            .container-title {
+                gap: rem(8px);
+                padding: 0 0 11px;
+
+                .header-title {
+                    font-size: rem(16px);
+                    font-weight: 700;
+                    color: rgb(23, 43, 77);
+                }
+
+                .svg {
+                    width: 32px;
+                    height: 32px;
+                    font-size: rem(24px);
+                    color: rgb(68, 84, 111);
+
+                    svg {
+                        width: 25px;
+                        height: 25px;
+                    }
+                }
+
+            }
+
+        }
+
+        &-add {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            position: relative; // adding
+            width: rem(190px);
+            height: rem(100px);
+            background-color: rgba(9, 30, 66, 0.06);
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: rem(16px);
+            font-weight: 400;
+            line-height: rem(20px);
+
+            >* {
+                font-weight: 400;
+                line-height: rem(20px);
+                color: rgb(23, 43, 77);
+                margin: 0;
+            }
+
+            &:hover {
+                background-color: rgba(9, 30, 66, 0.14);
+            }
+
+            &:active {
+                background-color: rgba(9, 30, 66, 0.31);
+            }
+
+            &.disable {
+                cursor: not-allowed;
+                background-color: #f0f0f0;
+                opacity: 0.6;
+                color: #999;
+            }
+        }
+    }
+
+    .no-board-container {
+        position: relative; // adding
+        width: rem(190px);
+        height: rem(100px);
+        background-color: rgba(9, 30, 66, 0.06);
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: rem(16px);
+        font-weight: 400;
+        line-height: rem(20px);
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+
+        >* {
+            font-weight: 400;
+            line-height: rem(20px);
+            color: rgb(23, 43, 77);
+            margin: 0;
+        }
+
+        &:hover {
+            background-color: rgba(9, 30, 66, 0.14);
+        }
+
+        &:active {
+            background-color: rgba(9, 30, 66, 0.31);
+        }
+    }
+}

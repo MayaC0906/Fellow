@@ -1,0 +1,8 @@
+[
+    
+        { "_id": "r101", "username": "Reut", "password": 1234, "fullname": "Reut Edry", "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367856/WhatsApp_Image_2023-10-04_at_00.17.06_fd94b6.jpg" },
+        { "_id": "s101", "username": "Sahar", "password": 1234, "fullname": "Sahar Machpud", "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg" },
+        { "_id": "m101", "username": "Maya", "password": 1234, "fullname": "Maya Cohen", "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367862/WhatsApp_Image_2023-10-04_at_00.10.22_fkybop.jpg" },
+        { "_id": "guest", "username": "Guest", "password": 1234, "fullname": "Guest", "imgUrl": "https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg" }
+    
+]

@@ -1,0 +1,87 @@
+// Setup
+@import "setup/variables";
+@import "setup/functions";
+@import "setup/mixins";
+@import "setup/typography";
+
+
+// Basics
+@import "basics/helpers";
+@import "basics/layout";
+@import "basics/base";
+@import "basics/links";
+@import "basics/forms";
+
+
+// Views
+@import "views/AboutUs";
+@import "views/HomePage";
+@import "views/BoardDetails";
+@import "views/ReviewIndex";
+// @import "views/UserDetails";
+@import "views/Workspace";
+@import "views/SearchBoard";
+
+
+// Components
+@import "cmps/UserMsg";
+@import "cmps/UserMsg.scss";
+@import "cmps/_LoginSignup";
+@import "cmps/ImgUploader";
+@import "cmps/UserDetailsDisplay.scss";
+@import "cmps/OurSiri.scss";
+@import "cmps/Dashboard.scss";
+@import "cmps/UserActivity.scss";
+
+
+// Board
+@import "cmps/Board/AddBoard";
+@import "cmps/Board/BoardList";
+@import "cmps/Board/BoardSidebar";
+@import "cmps/Board/BoardMenu";
+@import "cmps/Board/AboutBoard";
+@import "cmps/Board/BoardChangeBgc";
+@import "cmps/Board/BoardActivity";
+@import "cmps/Board/SharedBoard";
+
+
+// Group
+@import "cmps/Group/GroupList";
+@import "cmps/Group/GroupPreview";
+@import "cmps/Group/GroupHeader";
+@import "cmps/Group/GroupMenu";
+
+// Task
+@import "cmps/Task/TaskList";
+@import "cmps/Task/TaskDetails";
+@import "cmps/Task/TaskDetailsSideNav";
+@import "cmps/Task/TaskChecklist";
+@import "cmps/Task/TaskMembers";
+@import "cmps/Task/TaskDate";
+@import "cmps/Task/TaskDetailsHeader";
+@import "cmps/Task/TaskLabels";
+@import "cmps/Task/TaskMemberImage";
+@import "cmps/Task/TaskMemberDetail";
+@import "cmps/Task/TaskAttachments";
+@import "cmps/Task/TaskActvities";
+@import "cmps/Task/TaskFilters";
+@import "cmps/Task/TaskComments";
+
+// Dynamic
+@import "cmps/Dynamic/DynamicTaskEdit";
+@import "cmps/Dynamic/Dates";
+@import "cmps/Dynamic/LabelEdit";
+@import "cmps/Dynamic/AddLabel";
+@import "cmps/Dynamic/MemberEdit";
+@import "cmps/Dynamic/AttachmentEdit";
+@import "cmps/Dynamic/CoverEdit";
+
+// Home
+@import "cmps/Home/HomeFeatures";
+@import "cmps/Home/HomeFooter";
+@import "cmps/Home/HomeProductivity";
+@import "cmps/Home/AppHeader";
+@import "cmps/Home/AppFooter";
+
+
+@import "setup/mq";
