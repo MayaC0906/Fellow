@@ -18,7 +18,8 @@ export const boardService = {
     getEmptyLabel,
     getEmptyBoard,
     addActivity,
-    getEmptyComment 
+    getEmptyComment,
+    getEmptyFilter
 }
 
 window.bs = boardService
@@ -96,8 +97,8 @@ async function saveGroup(group, boardId, user, txt, task) {
             group.id = utilService.makeId()
             board.groups.push(group)
         }
-        
-        addActivity(board, user, txt, {group, task})
+
+        addActivity(board, user, txt, { group, task })
         return save(board)
     } catch (err) {
         console.log('couldnt save group', err)
@@ -120,7 +121,7 @@ async function removeGroup(group, boardId, user, txt) {
     }
 }
 
-function addActivity(board, user, txt, { group, task } = {}) { 
+function addActivity(board, user, txt, { group, task } = {}) {
     if (!user || !board || !txt) return
     const activity = {
         id: utilService.makeId(),
@@ -139,7 +140,7 @@ function addActivity(board, user, txt, { group, task } = {}) {
     board.activities.unshift(activity);
 }
 
-function getEmptyComment (user, txt, groupId, taskId) {
+function getEmptyComment(user, txt, groupId, taskId) {
     if (!user || !txt || !groupId || !taskId) return
     const comment = {
         id: utilService.makeId(),
@@ -226,3 +227,26 @@ function getEmptyBoard() {
     }
 }
 
+function getEmptyFilter() {
+    return {
+        txt: '',
+        byMembers: {
+            isAll: false,
+            isMe: false,
+            isNoOne: false,
+            someMembers: []
+        },
+        byDuedate: {
+            isDate: false,
+            isOverdue: false,
+            isDuesoon: false,
+            isComplete: false
+        },
+        byLabels: {
+            isNoOne: false,
+            isAll: false,
+            someLabel: []
+        }
+    }
+
+}

@@ -2,6 +2,7 @@ import { Checkbox } from "@mui/joy";
 import { additionTaskEdiSvg, additionTaskSvg, appHeaderSvg, taskSvg, workspaceSvg } from "../Svgs";
 import { useSelector } from "react-redux";
 import { useState } from "react";
+import { boardService } from "../../services/board.service.local";
 
 export function TaskFilter({ setIsFiltersOpen, taskFilterBy, setTaskFilterby, checkboxContainer, handelCheckBox, setCheckboxContainer }) {
     const user = useSelector(storeState => storeState.userModule.user)
@@ -70,26 +71,7 @@ export function TaskFilter({ setIsFiltersOpen, taskFilterBy, setTaskFilterby, ch
     }
 
     function onClearTaskFilterBy() {
-        setTaskFilterby({
-            txt: '',
-            byMembers: {
-                isAll: false,
-                isMe: false,
-                isNoOne: false,
-                someMembers: []
-            },
-            byDuedate: {
-                isDate: false,
-                isOverdue: false,
-                isDuesoon: false,
-                isComplete: false
-            },
-            byLabels: {
-                isNoOne: false,
-                isAll: false,
-                someLabel: []
-            }
-        })
+        setTaskFilterby(boardService.getEmptyFilter())
         setCheckboxContainer([])
     }
 

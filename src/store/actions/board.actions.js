@@ -1,4 +1,4 @@
-import { boardService } from "../../services/board.service.js";
+import { boardService } from "../../services/board.service.local.js";
 import { store } from '../store.js'
 import { showSuccessMsg, showErrorMsg } from '../../services/event-bus.service.js'
 import { ADD_BOARD, REMOVE_BOARD, SET_BOARD, SET_BOARDS, UNDO_REMOVE_BOARD, UPDATE_BOARD } from "../reducers/board.reducer.js";
@@ -73,7 +73,7 @@ export async function addBoard(board, user, txt) {
 }
 
 export async function updateBoard(board, user, txt) {
-    console.log('txt:', txt)
+    // console.log('txt:', txt)
     try {
         const savedBoard = await boardService.save(board, user, txt)
         store.dispatch(getActionUpdateBoard(savedBoard))

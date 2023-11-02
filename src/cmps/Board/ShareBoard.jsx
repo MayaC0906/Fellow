@@ -13,7 +13,7 @@ export function ShareBoard({ setIsOpenShareBoard }) {
 
 
     function onUserSearch({ target }) {
-        console.log(users);
+        // console.log(users);
         const filteredMembers = users.filter(user =>
             user.fullname.toLowerCase().includes(target.value.toLowerCase())
         )

@@ -32,7 +32,7 @@ export function BoardSidebar() {
     if (type === 'addBoard') {
       if (boards.length === 10) return
     }
-    console.log('hey');
+    // console.log('hey');
     const rect = ev.target.getBoundingClientRect()
     setModalState({
       isOpen: type === 'sort' ? true : !modalState.isOpen,

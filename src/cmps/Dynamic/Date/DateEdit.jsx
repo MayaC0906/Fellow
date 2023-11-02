@@ -82,7 +82,7 @@ export function DateEdit({ pos, editName, onCloseEditTask, onSaveTask, task }) {
         }
     }
 
-    console.log('due date', task.dueDate.date);
+    // console.log('due date', task.dueDate.date);
 
     return (
         <section style={{ top: pos.top, left: pos.left }} className="edit-modal">

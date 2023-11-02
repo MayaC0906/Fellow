@@ -1,8 +1,10 @@
 import { Fragment, useState } from 'react'
 import { additionTaskSvg, taskSvg } from '../../Svgs'
 import { utilService } from '../../../services/util.service.js'
+import { useSelector } from 'react-redux'
 
 export function AttachmentEdit({ pos, editName, onCloseEditTask, task, onSaveTask }) {
+    const board = useSelector(storeState => storeState.boardModule.board)
     const [uploadedUrl, setUploadedUrl] = useState('')
     const [isUploading, setIsUploading] = useState('')
 
@@ -46,13 +48,14 @@ export function AttachmentEdit({ pos, editName, onCloseEditTask, task, onSaveTas
         } else {
             newTask = { ...task, attachments: task.attachments, }
         }
-        await onSaveTask(newTask)
+        const txt = `attached ${utilService.getFileNameFromUrl(newAttachment.imgUrl)} to ${board.title}`
+        await onSaveTask(newTask, txt)
         onCloseEditTask()
     }
 
     return (
         <Fragment>
-            <section style={{top:pos.top, left: pos.left}} className="edit-modal">
+            <section style={{ top: pos.top, left: pos.left }} className="edit-modal">
                 <div className="title-container">
                     <p>{editName}</p>
                     <button onClick={onCloseEditTask} className="close-modal">{additionTaskSvg.close}</button>
@@ -74,7 +77,7 @@ export function AttachmentEdit({ pos, editName, onCloseEditTask, task, onSaveTas
                             <div className='attachment-actions'>
                                 <button className='cancel-btn' onClick={onCloseEditTask}>Cancel</button>
                                 <button onClick={onSaveAttachment} className={isUploading === 'uploading' ? 'disable insert-btn' : 'insert-btn'}
->Insert</button>
+                                >Insert</button>
                             </div>
                         </section>
                     </div>

@@ -17,7 +17,8 @@ export const boardService = {
     getEmptyLabel,
     getEmptyBoard,
     addActivity,
-    getEmptyComment
+    getEmptyComment,
+    getEmptyFilter
 }
 
 window.bs = boardService
@@ -229,6 +230,30 @@ function getEmptyBoard() {
         activities: [],
         cmpsOrder: ["StatusPicker", "MemberPicker", "DatePicker"]
     }
+}
+
+function getEmptyFilter() {
+    return {
+        txt: '',
+        byMembers: {
+            isAll: false,
+            isMe: false,
+            isNoOne: false,
+            someMembers: []
+        },
+        byDuedate: {
+            isDate: false,
+            isOverdue: false,
+            isDuesoon: false,
+            isComplete: false
+        },
+        byLabels: {
+            isNoOne: false,
+            isAll: false,
+            someLabel: []
+        }
+    }
+
 }
 
 

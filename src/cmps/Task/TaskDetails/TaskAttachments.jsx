@@ -1,17 +1,21 @@
+import { useSelector } from "react-redux";
 import { utilService } from "../../../services/util.service"
 import { taskSvg } from "../../Svgs";
 
 export function TaskAttachments({ task, setEditName, onSaveTask }) {
+    const board = useSelector(storeState => storeState.boardModule.board)
 
     async function onRemoveAttachment(attachmentId, url) {
         try {
+            const attachment = task.attachments.find(attachment => attachment.id === attachmentId)
+            const txt = `deleted the ${utilService.getFileNameFromUrl(attachment.imgUrl)} attachment from ${board.title}}`
             const attachmentIdx = task.attachments.findIndex(attachment => attachment.id === attachmentId)
             task.attachments.splice(attachmentIdx, 1)
             let newTask = { ...task, attachments: task.attachments }
             if (task.cover.img === url) {
                 newTask = { ...task, cover: { ...task.cover, img: '' } }
             }
-            onSaveTask(newTask)
+            onSaveTask(newTask, txt)
 
         } catch (err) {
             console.log('Cannot remove task attachment', err)

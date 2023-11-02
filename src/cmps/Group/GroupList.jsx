@@ -13,29 +13,6 @@ import { GroupPreview } from './GroupPreview.jsx'
 import { checkList } from '../Svgs.jsx'
 import { TaskFilter } from '../Task/TaskFilter.jsx'
 
-function getEmptyFilter() {
-    return {
-        txt: '',
-        byMembers: {
-            isAll: false,
-            isMe: false,
-            isNoOne: false,
-            someMembers: []
-        },
-        byDuedate: {
-            isDate: false,
-            isOverdue: false,
-            isDuesoon: false,
-            isComplete: false
-        },
-        byLabels: {
-            isNoOne: false,
-            isAll: false,
-            someLabel: []
-        }
-    }
-
-}
 
 export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
     const [isInputExpand, setInputExpand] = useState(false)
@@ -46,9 +23,8 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
     const [openMenuGroupId, setOpenMenuGroupId] = useState(null);
     const addListInput = useRef(null)
     const user = useSelector((storeState) => storeState.userModule.user)
-    const [taskFilterBy, setTaskFilterby] = useState(getEmptyFilter())
+    const [taskFilterBy, setTaskFilterby] = useState(boardService.getEmptyFilter())
     const [filteredGroups, setFilteredGroups] = useState(groups)
-
     const [checkboxContainer, setCheckboxContainer] = useState([])
 
 

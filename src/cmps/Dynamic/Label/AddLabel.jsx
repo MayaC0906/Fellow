@@ -18,7 +18,6 @@ export function AddLabel({ pos, onCloseEditTask, onAddLabel, labelToEdit, onSave
     }
 
     async function onSaveLabel() {
-        console.log('task before:', task);
 
         let newLabel = boardService.getEmptyLabel()
         let savedLabel

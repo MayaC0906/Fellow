@@ -8,13 +8,14 @@ import { OurSiri } from "../OurSiri";
 import { Dashboard } from "../Dashboard";
 
 export function GroupHeader({ isMenuOpen, setMenu, setIsFiltersOpen, isFiltersOpen }) {
-    const { boardId } = useParams()
+    // const { boardId } = useParams()
+    const board = useSelector(storeState => storeState.boardModule.board)
     const user = useSelector((storeState) => storeState.userModule.user)
     const boardFromState = useSelector(storeState => storeState.boardModule.board)
-    const boards = useSelector(storeState => storeState.boardModule.boards)
-    const [board, onSetBoard] = useState({})
-    const [isBoardStarred, setIsBoardStarred] = useState(null)
-    const [content, setContent] = useState('')
+    // const boards = useSelector(storeState => storeState.boardModule.boards)
+    // const [board, onSetBoard] = useState({})
+    const [isBoardStarred, setIsBoardStarred] = useState(board.isStarred)
+    // const [content, setContent] = useState('')
     const [isOpenShareBoard, setIsOpenShareBoard] = useState(false)
     const [isSiriOpen, setSiriOpen] = useState(false)
     const [isPhoneDisplay, setIsPhoneDisplay] = useState(false)
@@ -31,7 +32,6 @@ export function GroupHeader({ isMenuOpen, setMenu, setIsFiltersOpen, isFiltersOp
     }, [])
 
 
-
     function handleResize() {
         const screenWidth = window.innerWidth
         if (screenWidth > 980) {
@@ -40,23 +40,23 @@ export function GroupHeader({ isMenuOpen, setMenu, setIsFiltersOpen, isFiltersOp
         else setIsPhoneDisplay(true)
     }
 
-    useEffect(() => {
-        onLoadBoard()
-    }, [boardId])
+    // useEffect(() => {
+    //     onLoadBoard()
+    // }, [boardId])
 
-    async function onLoadBoard() {
-        const boardToFind = boards.find(board => board._id === boardId)
-        onSetBoard(boardToFind)
-        setIsBoardStarred(boardToFind.isStarred)
-        setContent(boardToFind.title)
-    }
+    // async function onLoadBoard() {
+    //     const boardToFind = boards.find(board => board._id === boardId)
+    //     onSetBoard(boardToFind)
+    //     setIsBoardStarred(boardToFind.isStarred)
+    //     setContent(boardToFind.title)
+    // }
 
     async function onEditBoardTitle() {
         let value = event.target.textContent
         const txt = `renamed this board from (${board.title}).`
-        board.title = value
+        const newBoard = { ...board, title: value }
         try {
-            await updateBoard(board, user, txt)
+            await updateBoard(newBoard, user, txt)
         } catch (err) {
             console.log(err)
             throw err
@@ -64,11 +64,11 @@ export function GroupHeader({ isMenuOpen, setMenu, setIsFiltersOpen, isFiltersOp
     }
 
     async function onToggleBoardStar() {
-        board.isStarred = !board.isStarred
+        const newBoard = { ...board, isStarred: !board.isStarred }
         try {
-            const txt = `${board.isStarred ? 'starred' : 'unstarred'} this board.`
-            await updateBoard(board, user, txt)
-            setIsBoardStarred(board.isStarred)
+            const txt = `${newBoard.isStarred ? 'starred' : 'unstarred'} this board.`
+            await updateBoard(newBoard, user, txt)
+            setIsBoardStarred(newBoard.isStarred)
         } catch (err) {
             console.log(`Could'nt change isStarred`, err)
         }
@@ -84,7 +84,7 @@ export function GroupHeader({ isMenuOpen, setMenu, setIsFiltersOpen, isFiltersOp
             <header className="group-header container">
                 <section className="board-edit flex">
                     <div tabIndex="0" onBlur={onEditBoardTitle}
-                        contentEditable={true}>{content}</div>
+                        contentEditable={true}>{board.title}</div>
                     {!isBoardStarred && (<button className={isBlackOrWhite} onClick={onToggleBoardStar}>{workspaceSvg.star}</button>)}
                     {isBoardStarred && (<button className={isBlackOrWhite} onClick={onToggleBoardStar}>{groupHeaderSvg.fullStar}</button>)}
                 </section>
