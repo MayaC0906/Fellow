@@ -15,17 +15,18 @@ import { useSelector } from 'react-redux'
 export function App() {
     const user = useSelector(storeState => storeState.userModule.user)
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-    const location = useLocation();
+    const location = useLocation()
+
     useEffect(() => {
         onLoadUsers()
-    }, [])
+    }, [user])
 
     async function onLoadUsers() {
         try {
-            const users = await loadUsers()
+            await loadUsers()
             if (!user) login({ username: 'Guest', password: '1234' })
         } catch (err) {
-            console.log()
+            console.log('Can not load users', err)
         }
     }
 

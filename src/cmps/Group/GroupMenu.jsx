@@ -1,47 +1,47 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { groupMenu, taskSvg } from '../Svgs';
+import { additionTaskSvg, groupMenu, taskSvg } from '../Svgs';
 import dayjs from 'dayjs';
 
 export function GroupMenu({
-    setInputExpand,
-    onDuplicateGroup,
-    group,
-    onRemoveGroup,
-    setToggleGroupMenu,
-    groupMenuPosition,
-    setOpenMenuGroupId,
-    openMenuGroupId,
-    onUpdateGroup,
-    onUpdateBoard
-    }) {
-    const board = useSelector((storeState) => storeState.boardModule.board)
-    const groups = board?.groups
-    const { tasks } = group
-    const [menuContent, setMenuContent] = useState('');
-    const user = useSelector((storeState) => storeState.userModule.user)
+  setInputExpand,
+  onDuplicateGroup,
+  group,
+  onRemoveGroup,
+  setToggleGroupMenu,
+  groupMenuPosition,
+  setOpenMenuGroupId,
+  openMenuGroupId,
+  onUpdateGroup,
+  onUpdateBoard
+}) {
+  const board = useSelector((storeState) => storeState.boardModule.board)
+  const groups = board?.groups
+  const { tasks } = group
+  const [menuContent, setMenuContent] = useState('');
+  const user = useSelector((storeState) => storeState.userModule.user)
 
 
-    useEffect(()=> {
-      setMenuContent('default')
-    },[])
+  useEffect(() => {
+    setMenuContent('default')
+  }, [])
 
-    const defaultContent = (
-      <ul className="clean-list">
-        <li onClick={() => onRemoveGroup(group)}>Delete...</li>
-        <li onClick={() => onDuplicateGroup(group)}>Copy list...</li>
-        {group.id === openMenuGroupId && (
-          <li onClick={() => setInputExpand(true)}>Add card...</li>
-        )}
-        <li onClick={onSetGroupWatch}>Watch {group.isWatch && <span className=''>{taskSvg.check}</span>}</li>
-        <hr />
-        <li onClick={() => setMenuContent('sortBy')}>Sort By...</li>
-        <hr />
-        <li onClick={() => setMenuContent('moveCards')}>Move all cards in this list...</li>
-      </ul>
-    );
+  const defaultContent = (
+    <ul className="clean-list">
+      <li onClick={() => onRemoveGroup(group)}>Delete...</li>
+      <li onClick={() => onDuplicateGroup(group)}>Copy list...</li>
+      {group.id === openMenuGroupId && (
+        <li onClick={() => setInputExpand(true)}>Add card...</li>
+      )}
+      <li onClick={onSetGroupWatch}>Watch {group.isWatch && <span className=''>{taskSvg.check}</span>}</li>
+      <hr />
+      <li onClick={() => setMenuContent('sortBy')}>Sort By...</li>
+      <hr />
+      <li onClick={() => setMenuContent('moveCards')}>Move all cards in this list...</li>
+    </ul>
+  );
   async function onSetGroupWatch() {
-    const updatedGroup = {...group, isWatch: !group.isWatch}
+    const updatedGroup = { ...group, isWatch: !group.isWatch }
     // console.log('update', updatedBoard);
     onUpdateGroup(updatedGroup)
   }
@@ -79,8 +79,7 @@ export function GroupMenu({
   async function sortByAlphaB() {
     const { tasks } = group
     const sortedGroup = {
-      ...group, tasks: tasks.sort((a, b) => 
-      {
+      ...group, tasks: tasks.sort((a, b) => {
         const firstTitle = a.title.toUpperCase()
         const secondTitle = b.title.toUpperCase()
         return firstTitle.localeCompare(secondTitle)
@@ -98,17 +97,17 @@ export function GroupMenu({
   );
 
   async function moveTasks({ target }) {
-      console.log('target', target.value);
-      const currGroupPosIdx = groups.findIndex(g => g.id === group.id)
-      const groupTargetIdx = target.value
-      const currGroupTasks = [...group.tasks]
-      console.log('curr', currGroupTasks);
-      groups[currGroupPosIdx].tasks.splice(0, group.tasks.length)
-      // console.log('target group tasks', targetGroupTasks);
-      board.groups[groupTargetIdx].tasks.push(...currGroupTasks)
-      console.log('group', groups[groupTargetIdx].tasks);
-      
-      await onUpdateBoard(board)
+    console.log('target', target.value);
+    const currGroupPosIdx = groups.findIndex(g => g.id === group.id)
+    const groupTargetIdx = target.value
+    const currGroupTasks = [...group.tasks]
+    console.log('curr', currGroupTasks);
+    groups[currGroupPosIdx].tasks.splice(0, group.tasks.length)
+    // console.log('target group tasks', targetGroupTasks);
+    board.groups[groupTargetIdx].tasks.push(...currGroupTasks)
+    console.log('group', groups[groupTargetIdx].tasks);
+
+    await onUpdateBoard(board)
   }
 
   async function sortByCreatedNew() {
@@ -122,19 +121,19 @@ export function GroupMenu({
     onUpdateGroup(sortedByDuedate)
   }
   const style = {
-      position: 'fixed',
-      top: groupMenuPosition.top + 'px',
-      left: groupMenuPosition.left + 'px',
+    position: 'fixed',
+    top: groupMenuPosition.top + 'px',
+    left: groupMenuPosition.left + 'px',
   };
   const sortByContent = (
     <ul className="clean-list">
-        <li onClick={sortByCreatedNew}>Date created (newest first)</li>
-        <li onClick={sortByCreatedOld}>Date created (oldest first)</li>
-        <li onClick={sortByAlphaB}>Card name (alphabetically)</li>
-        <li onClick={sortByDuedate}>Due Date</li>
+      <li onClick={sortByCreatedNew}>Date created (newest first)</li>
+      <li onClick={sortByCreatedOld}>Date created (oldest first)</li>
+      <li onClick={sortByAlphaB}>Card name (alphabetically)</li>
+      <li onClick={sortByDuedate}>Due Date</li>
     </ul>
   );
-  
+
   let contentToDisplay;
   let headerText;
   switch (menuContent) {
@@ -152,23 +151,23 @@ export function GroupMenu({
       break;
   }
 
- 
- console.log('menu-content', menuContent);
-  return (
-      <section className="group-edit-modal" style={style}>
-        <header>
-          {menuContent !== 'default' && (
-            <button onClick={() => setMenuContent('default')} className="back-btn clean-btn">
-              {groupMenu.backArr}</button>
-          )}
-          <div>{headerText}</div>
-          <button onClick={() => {
-            setOpenMenuGroupId(null)
-            setMenuContent('default')
-          }} className="close-btn">X</button>
 
-        </header>
-        {contentToDisplay}
-      </section>
+  console.log('menu-content', menuContent);
+  return (
+    <section className="group-edit-modal" style={style}>
+      <header>
+        {menuContent !== 'default' && (
+          <button onClick={() => setMenuContent('default')} className="back-btn clean-btn">
+            {groupMenu.backArr}</button>
+        )}
+        <div>{headerText}</div>
+        <button onClick={() => {
+          setOpenMenuGroupId(null)
+          setMenuContent('default')
+        }} className="close-btn">{additionTaskSvg.close}</button>
+
+      </header>
+      {contentToDisplay}
+    </section>
   );
 }

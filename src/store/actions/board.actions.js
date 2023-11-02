@@ -27,7 +27,7 @@ export function getActionUpdateBoard(board) {
 
 export async function loadBoards() {
     try {
-        const boards = await boardService.query()
+        let boards = await boardService.query()
         store.dispatch({
             type: SET_BOARDS,
             boards

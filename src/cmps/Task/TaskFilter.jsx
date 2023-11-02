@@ -13,6 +13,7 @@ export function TaskFilter({ setIsFiltersOpen, groups, taskFilterBy, setTaskFilt
     const firstLabels = board.labels.slice(0, 3)
     const [checkboxContainer, setCheckboxContainer] = useState([])
 
+    console.log('checkboxContainer', checkboxContainer);
     function getCheckBox(func, name) {
         return (
             <section className='checkbox no-labels'>
@@ -139,7 +140,7 @@ export function TaskFilter({ setIsFiltersOpen, groups, taskFilterBy, setTaskFilt
             } else {
                 return [...prevChecked, checkboxName]
             }
-        });
+        })
     }
 
     const { txt } = taskFilterBy

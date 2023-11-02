@@ -21,7 +21,6 @@ export function userReducer(state = initialState, action) {
     switch (action.type) {
         case SET_USERS:
             newState = { ...state, users: action.users }
-            console.log(newState.users);
             break
         case SET_USER:
             newState = { ...state, user: action.user }

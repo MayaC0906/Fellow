@@ -63,14 +63,8 @@ async function login(userCred) {
     // const user = users.find(user => user.username.toLowerCase() === userCred.username.toLowerCase())
     const user = await httpService.post('auth/login', userCred)
     if (user) {
-        if (user.password === userCred.password) {
-            return saveLocalUser(user)
-        } else {
-            return alert('Username or passward are wrong')
-        }
-    } else {
-        return alert('Username or passward are wrong')
-    }
+            return saveLocalUser(user) 
+    } else return alert('Username or passward are wrong')
 }
 
 async function signup(userCred) {
