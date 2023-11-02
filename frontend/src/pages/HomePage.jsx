@@ -20,19 +20,21 @@ export function HomePage() {
     const hs2 = 'https://images.ctfassets.net/rz1oowkt5gyp/3ZjLCD2fANfXYSN3ar9WpE/dc84a408c6a3ee89bee4a646ff6d5966/Lists_2x.png'
     const hs3 = 'https://images.ctfassets.net/rz1oowkt5gyp/26CA6JZeRgoOK4nuRHnIlY/060702a80cf7c3be3651d9297d196267/Carousel_Image_Cards_2x.png'
     const [img, setImg] = useState(hs1)
-    const user = useSelector(storeState => storeState.userModule.user)
-    useEffect(() => {
-        onLoadUsers()
-    }, [user])
+    // const user = useSelector(storeState => storeState.userModule.user)
+    // useEffect(() => {
+    //     onLoadUsers()
+    // }, [])
 
-    async function onLoadUsers() {
-        try {
-            await loadUsers()
-            if (!user) login({ username: 'Guest', password: '1234' })
-        } catch (err) {
-            console.log('Can not load users', err)
-        }
-    }
+    // async function onLoadUsers() {
+    //     try {
+    //         await loadUsers()
+    //         console.log('home page');
+    //         if (!user) login({ username: 'Guest', password: '1234' })
+    //     } catch (err) {
+    //         console.log('Can not load users', err)
+    //     }
+    // }
+
     return (
         <section className='home-container'>
             <div className='hero-container'>

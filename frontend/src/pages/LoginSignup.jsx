@@ -25,12 +25,16 @@ export function LoginSignup() {
         setCredentials({ ...credentials, [field]: value })
     }
 
-    async function onConnect(ev = null) {
-        if (ev) ev.preventDefault()
+    async function onConnect() {
+        event.preventDefault()
+        console.log('on connect');
         try {
             if (!isSignup) {
+                console.log(1);
                 if (!credentials.username) return
+                console.log(2);
                 const user = await login(credentials)
+                console.log('login', credentials);
                 if (user) navigate('/workspace')
             } else {
                 if (!credentials.username || !credentials.password || !credentials.fullname) return

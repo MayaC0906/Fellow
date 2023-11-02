@@ -12,9 +12,33 @@ import { HomeHeader } from './cmps/HomeHeader'
 import { useLocation } from 'react-router-dom/dist'
 import { loadUsers, login } from './store/actions/user.actions'
 import { useSelector } from 'react-redux'
+
 export function App() {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const location = useLocation()
+    const user = useSelector(storeState => storeState.userModule.user)
+    const [isLogin, setIsLogin] = useState(true)
+
+
+    useEffect(() => {
+        onLoadUsers()
+    }, [user])
+
+    async function onLoadUsers() {
+        console.log('app:', user);
+        if (user?.fullname === 'Guest') return
+        try {
+            await loadUsers()
+            if (!user) {
+                await login({ username: 'Guest', password: '1234' })
+                setIsLogin(true)
+            } else {
+                setIsLogin(false)
+            }
+        } catch (err) {
+            console.log('Can not load users', err)
+        }
+    }
 
 
 
@@ -28,7 +52,7 @@ export function App() {
 
     return (
         <div>
-            {(location.pathname !== '/login') && ((location.pathname === '/') ? <HomeHeader /> : <AppHeader />)}
+            {(location.pathname !== '/login') && ((location.pathname === '/') ? <HomeHeader isLogin={isLogin} /> : <AppHeader />)}
             <main>
                 <Routes>
                     {windowWidth < 920 ? (
