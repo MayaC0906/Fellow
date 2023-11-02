@@ -92,7 +92,6 @@
         }
 
         .members {
-            // background-color: rgba(255, 0, 0, 0.427);
 
             ul {
                 position: relative;
@@ -138,7 +137,7 @@
                         font-family: inherit;
                         width: 100%;
 
-                        .select-input {
+                        .select-member {
 
                             display: flex;
                             align-items: center;
@@ -146,8 +145,9 @@
                             margin-inline-start: 16px;
                             width: 100%;
                             background-color: rgba(9, 30, 66, 0.06);
+                            border-radius: 3px;
 
-                            input {
+                            .select-title {
                                 padding: 8px 12px;
                                 border: none;
                                 cursor: pointer;
@@ -190,6 +190,17 @@
                         }
 
                     }
+
+                    // .member-select-picker {
+                    //     .select-input {
+                    //         input {
+                    //             &::placeholder {
+                    //                 font-family: inherit;
+                    //             }
+                    //         }
+                    //     }
+                    // }
+
 
                     .checkbox {
                         height: 16px;
@@ -254,6 +265,7 @@
 
                     button {
                         width: 100%;
+                        height: 32px;
                         margin-inline-start: 16px;
                         font-size: rem(14px);
                         font-weight: 500;

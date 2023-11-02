@@ -1,20 +1,16 @@
 import { Checkbox } from "@mui/joy";
 import { additionTaskEdiSvg, additionTaskSvg, appHeaderSvg, taskSvg, workspaceSvg } from "../Svgs";
 import { useSelector } from "react-redux";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
-
-
-export function TaskFilter({ setIsFiltersOpen, groups, taskFilterBy, setTaskFilterby }) {
+export function TaskFilter({ setIsFiltersOpen, taskFilterBy, setTaskFilterby, checkboxContainer, handelCheckBox, setCheckboxContainer }) {
     const user = useSelector(storeState => storeState.userModule.user)
     const board = useSelector(storeState => storeState.boardModule.board)
     const [isOpenMemberSelect, setIsOpenMemberSelect] = useState(false)
     const [isLabelSelectOpen, setIsLabelSelectOpen] = useState(false)
     const firstLabels = board.labels.slice(0, 3)
-    const [checkboxContainer, setCheckboxContainer] = useState([])
 
-    console.log('checkboxContainer', checkboxContainer);
-    function getCheckBox(func, name) {
+    function getCheckBox(type, name, key) {
         return (
             <section className='checkbox no-labels'>
                 <Checkbox sx={{
@@ -27,83 +23,49 @@ export function TaskFilter({ setIsFiltersOpen, groups, taskFilterBy, setTaskFilt
                         },
                     }
                 }}
-                    onClick={() => func(name)}
+                    onClick={() => toggleFilterOptions(type, name, key)}
                     checked={checkboxContainer.includes(name)} />
             </section >
         )
     }
 
-    function onHandelFilterChange(ev) {
+    function onHandelTxtFilterChange(ev) {
         const field = ev.target.name
         let value = ev.target.value
-
-        if (field === 'txt') {
-            setTaskFilterby(prevFilter => ({ ...prevFilter, [field]: value }))
-        }
+        setTaskFilterby(prevFilter => ({ ...prevFilter, [field]: value }))
     }
 
-    function onToggleMember(name) {
-        console.log(name);
+    function toggleFilterOptions(type, name, key) {
         let checkboxName = ''
-        if (name === 'me') {
-            setTaskFilterby(prevFilter => ({ ...prevFilter, byMembers: { ...prevFilter.byMembers, isMe: !prevFilter.byMembers.isMe } }))
-            checkboxName = 'me'
-        } else if (name === 'all-members') {
-            setTaskFilterby(prevFilter => ({ ...prevFilter, byMembers: { ...prevFilter.byMembers, isAll: !prevFilter.byMembers.isAll } }))
-            checkboxName = 'all-members'
-        } else if (name === 'no-members') {
-            setTaskFilterby(prevFilter => ({ ...prevFilter, byMembers: { ...prevFilter.byMembers, isNoOne: !prevFilter.byMembers.isNoOne } }))
-            checkboxName = 'no-members'
-        } else {
-            const someMembersArr = taskFilterBy.byMembers.someMembers
-            if (someMembersArr.includes(name)) {
-                const updatedSomeMembers = someMembersArr.filter(memberId => memberId !== name);
-                setTaskFilterby(prevFilter => ({ ...prevFilter, byMembers: { ...prevFilter.byMembers, someMembers: updatedSomeMembers } }))
-            } else {
-                setTaskFilterby(prevFilter => ({ ...prevFilter, byMembers: { ...prevFilter.byMembers, someMembers: [...prevFilter.byMembers.someMembers, name] } }))
-                checkboxName = name
-            }
+        switch (name) {
+            case 'me':
+            case 'all-members':
+            case 'no-members':
+            case 'no-label':
+            case 'all-labels':
+            case 'no-date':
+            case 'overdue':
+            case 'duesoon':
+            case 'complete':
+                setTaskFilterby(prevFilter => ({ ...prevFilter, [type]: { ...prevFilter[type], [key]: !prevFilter[type][key] } }))
+                break;
+            default:
         }
-        if (checkboxName) handelCheckBox(checkboxName)
-    }
 
-    function onToggleDuedate(name) {
-        let checkboxName = ''
-        if (name === 'no-date') {
-            setTaskFilterby(prevFilter => ({ ...prevFilter, byDuedate: { ...prevFilter.byDuedate, isDate: !prevFilter.byDuedate.isDate } }))
-            checkboxName = 'no-date'
-        } else if (name === 'overdue') {
-            setTaskFilterby(prevFilter => ({ ...prevFilter, byDuedate: { ...prevFilter.byDuedate, isOverdue: !prevFilter.byDuedate.isOverdue } }))
-            checkboxName = 'overdue'
-        } else if (name === 'duesoon') {
-            setTaskFilterby(prevFilter => ({ ...prevFilter, byDuedate: { ...prevFilter.byDuedate, isDuesoon: !prevFilter.byDuedate.isDuesoon } }))
-            checkboxName = 'duesoon'
-        } else if (name === 'complete') {
-            setTaskFilterby(prevFilter => ({ ...prevFilter, byDuedate: { ...prevFilter.byDuedate, isComplete: !prevFilter.byDuedate.isComplete } }))
-            checkboxName = 'complete'
+        switch (key) {
+            case 'someMembers':
+            case 'someLabel':
+                const someOptions = taskFilterBy[type][key]
+                if (someOptions.includes(name)) {
+                    const updated = someOptions.filter(id => id !== name);
+                    setTaskFilterby(prevFilter => ({ ...prevFilter, [type]: { ...prevFilter[type], [key]: updated } }))
+                } else {
+                    setTaskFilterby(prevFilter => ({ ...prevFilter, [type]: { ...prevFilter[type], [key]: [...prevFilter[type][key], name] } }))
+                }
+                break;
         }
-        if (checkboxName) handelCheckBox(checkboxName)
-    }
 
-    function onToggleLabel(name) {
-        let checkboxName = ''
-        if (name === 'no-label') {
-            setTaskFilterby(prevFilter => ({ ...prevFilter, byLabels: { ...prevFilter.byLabels, isNoOne: !prevFilter.byLabels.isNoOne } }))
-            checkboxName = 'no-label'
-        } else if (name === 'all-labels') {
-            setTaskFilterby(prevFilter => ({ ...prevFilter, byLabels: { ...prevFilter.byLabels, isAll: !prevFilter.byLabels.isAll } }))
-            checkboxName = 'all-labels'
-        } else {
-            const someLabelsArr = taskFilterBy.byLabels.someLabel
-            if (someLabelsArr.includes(name)) {
-                const updatedSomeLabels = someLabelsArr.filter(memberId => memberId !== name);
-                setTaskFilterby(prevFilter => ({ ...prevFilter, byLabels: { ...prevFilter.byLabels, someLabel: updatedSomeLabels } }))
-            } else {
-                console.log(name);
-                setTaskFilterby(prevFilter => ({ ...prevFilter, byLabels: { ...prevFilter.byLabels, someLabel: [...prevFilter.byLabels.someLabel, name] } }))
-                checkboxName = name
-            }
-        }
+        checkboxName = name
         if (checkboxName) handelCheckBox(checkboxName)
     }
 
@@ -114,7 +76,6 @@ export function TaskFilter({ setIsFiltersOpen, groups, taskFilterBy, setTaskFilt
                 isAll: false,
                 isMe: false,
                 isNoOne: false,
-                // name: false,
                 someMembers: []
             },
             byDuedate: {
@@ -123,7 +84,6 @@ export function TaskFilter({ setIsFiltersOpen, groups, taskFilterBy, setTaskFilt
                 isDuesoon: false,
                 isComplete: false
             },
-            // byDuedate: byDate,
             byLabels: {
                 isNoOne: false,
                 isAll: false,
@@ -132,16 +92,7 @@ export function TaskFilter({ setIsFiltersOpen, groups, taskFilterBy, setTaskFilt
         })
         setCheckboxContainer([])
     }
-
-    function handelCheckBox(checkboxName) {
-        setCheckboxContainer((prevChecked) => {
-            if (prevChecked.includes(checkboxName)) {
-                return prevChecked.filter((name) => name !== checkboxName)
-            } else {
-                return [...prevChecked, checkboxName]
-            }
-        })
-    }
+    console.log('check', checkboxContainer);
 
     const { txt } = taskFilterBy
     return (
@@ -159,7 +110,7 @@ export function TaskFilter({ setIsFiltersOpen, groups, taskFilterBy, setTaskFilt
                         name='txt'
                         value={txt}
                         placeholder="Enter a keyword..."
-                        onChange={(event) => onHandelFilterChange(event)}
+                        onChange={(event) => onHandelTxtFilterChange(event)}
                     />
                     <h2>search cards, members, labels, and more.</h2>
                 </section>
@@ -167,24 +118,24 @@ export function TaskFilter({ setIsFiltersOpen, groups, taskFilterBy, setTaskFilt
                     <p>Members</p>
                     <ul className="clean-list">
                         <li>
-                            {getCheckBox(onToggleMember, 'no-members')}
-                            <section className="titles" onClick={() => onToggleMember('no-members')}>
+                            {getCheckBox('byMembers', 'no-members', 'isNoOne')}
+                            <section className="titles" onClick={() => toggleFilterOptions('byMembers', 'no-members', 'isNoOne')}>
                                 <span>{workspaceSvg.member}</span>
                                 <h2>No Members</h2>
                             </section>
                         </li>
                         <li>
-                            {getCheckBox(onToggleMember, 'me')}
-                            <section className="titles" onClick={() => onToggleMember('me')}>
+                            {getCheckBox('byMembers', 'me', 'isMe')}
+                            <section className="titles" onClick={() => toggleFilterOptions('byMembers', 'me', 'isMe')}>
                                 <img src={user.imgUrl} alt="" />
                                 <h2>Cards assign to me</h2>
                             </section>
                         </li>
                         <li>
                             <div className="member-select-picker">
-                                {getCheckBox(onToggleMember, 'all-members')}
-                                <section className="select-input" onClick={() => setIsOpenMemberSelect(!isOpenMemberSelect)}>
-                                    <input type="text" placeholder="Select members" />
+                                {getCheckBox('byMembers', 'all-members', 'isAll')}
+                                <section className="select-member" onClick={() => setIsOpenMemberSelect(!isOpenMemberSelect)}>
+                                    <div className="select-title">Select members</div>
                                     <span>{appHeaderSvg.arrowDown}</span>
                                 </section>
                             </div>
@@ -195,21 +146,9 @@ export function TaskFilter({ setIsFiltersOpen, groups, taskFilterBy, setTaskFilt
                                 (
                                     <li>
                                         <section className='checkbox user-place'>
-                                            <Checkbox sx={{
-                                                '& .MuiSvgIcon-root': { fontSize: 10 }, padding: 0, width: 16, height: 16, color: 'rgba(23, 43, 77, 0.2)',
-                                                '&:checked': {
-                                                    '& .MuiSvgIcon-root': {
-                                                        '&.css-i4bv87-MuiSvgIcon-root': {
-                                                            color: 'initial'
-                                                        }
-                                                    },
-                                                }
-                                            }}
-                                                onClick={() => onToggleMember(boardMember._id)}
-                                                checked={checkboxContainer.includes(boardMember._id)}
-                                            />
+                                            {getCheckBox('byMembers', boardMember._id, 'someMembers')}
                                         </section >
-                                        <section className="titles" onClick={() => onToggleMember(boardMember._id)}>
+                                        <section className="titles" onClick={() => toggleFilterOptions('byMembers', boardMember._id, 'someMembers')}>
                                             <img src={boardMember.imgUrl} alt="" />
                                             <h2>{boardMember.fullname}</h2>
                                             <h2 className="username">@{boardMember.username}</h2>
@@ -226,29 +165,29 @@ export function TaskFilter({ setIsFiltersOpen, groups, taskFilterBy, setTaskFilt
                     <p>Due date</p>
                     <ul className="clean-list">
                         <li>
-                            {getCheckBox(onToggleDuedate, 'no-date')}
-                            <section className="titles" onClick={() => onToggleDuedate('no-date')}>
+                            {getCheckBox('byDuedate', 'no-date', 'isDate')}
+                            <section className="titles" onClick={() => toggleFilterOptions('byDuedate', 'no-date', 'isDate')}>
                                 <span className="calender">{taskSvg.calender}</span>
                                 <h2>No dates</h2>
                             </section>
                         </li>
                         <li>
-                            {getCheckBox(onToggleDuedate, 'overdue')}
-                            <section className="titles" onClick={() => onToggleDuedate('overdue')}>
+                            {getCheckBox('byDuedate', 'overdue', 'isOverdue')}
+                            <section className="titles" onClick={() => toggleFilterOptions('byDuedate', 'overdue', 'isOverdue')}>
                                 <span className="overdue-svg">{taskSvg.clock}</span>
                                 <h2>Overdue</h2>
                             </section>
                         </li>
                         <li>
-                            {getCheckBox(onToggleDuedate, 'duesoon')}
-                            <section className="titles" onClick={() => onToggleDuedate('duesoon')}>
+                            {getCheckBox('byDuedate', 'duesoon', 'isDuesoon')}
+                            <section className="titles" onClick={() => toggleFilterOptions('byDuedate', 'duesoon', 'isDuesoon')}>
                                 <span className="duesoon-svg">{taskSvg.clock}</span>
                                 <h2>Due in next day</h2>
                             </section>
                         </li>
                         <li>
-                            {getCheckBox(onToggleDuedate, 'complete')}
-                            <section className="titles" onClick={() => onToggleDuedate('complete')}>
+                            {getCheckBox('byDuedate', 'complete', 'isComplete')}
+                            <section className="titles" onClick={() => toggleFilterOptions('byDuedate', 'complete', 'isComplete')}>
                                 <span className="complete-svg">{taskSvg.clock}</span>
                                 <h2>Complete</h2>
                             </section>
@@ -259,8 +198,8 @@ export function TaskFilter({ setIsFiltersOpen, groups, taskFilterBy, setTaskFilt
                     <p>Labels</p>
                     <ul className="clean-list ul-labels">
                         <li>
-                            {getCheckBox(onToggleLabel, 'no-label')}
-                            <section className="titles" onClick={() => onToggleLabel('no-label')}>
+                            {getCheckBox('byLabels', 'no-label', 'isNoOne')}
+                            <section className="titles" onClick={() => toggleFilterOptions('byLabels', 'no-label', 'isNoOne')}>
                                 <span>{additionTaskEdiSvg.label}</span>
                                 <h2>No labels</h2>
                             </section>
@@ -269,29 +208,16 @@ export function TaskFilter({ setIsFiltersOpen, groups, taskFilterBy, setTaskFilt
                         (
                             <li key={firstLabel.id}>
                                 <section className='checkbox no-labels'>
-                                    <Checkbox sx={{
-                                        '& .MuiSvgIcon-root': { fontSize: 10 }, padding: 0, width: 16, height: 16, color: 'rgba(23, 43, 77, 0.2)',
-                                        '&:checked': {
-                                            '& .MuiSvgIcon-root': {
-                                                '&.css-i4bv87-MuiSvgIcon-root': {
-                                                    color: 'initial'
-                                                }
-                                            },
-                                        }
-                                    }}
-                                        onClick={() => onToggleLabel(firstLabel.id)}
-                                        checked={checkboxContainer.includes(firstLabel.id)}
-                                    />
+                                    {getCheckBox('byLabels', firstLabel.id, 'someLabel')}
                                 </section >
-                                {/* {getCheckBox(onToggleLabel, firstLabel.id)} */}
-                                <button onClick={() => onToggleLabel(firstLabel.id)} className='color clean-btn' style={{ backgroundColor: firstLabel.color }}>{firstLabel.title}</button>
+                                <button onClick={() => toggleFilterOptions('byLabels', firstLabel.id, 'someLabel')} className='color clean-btn' style={{ backgroundColor: firstLabel.color }}>{firstLabel.title}</button>
                             </li>
                         ))}
                         <li>
                             <div className="member-select-picker">
-                                {getCheckBox(onToggleLabel, 'all-labels')}
-                                <section className="select-input" onClick={() => setIsLabelSelectOpen(!isLabelSelectOpen)}>
-                                    <input type="text" placeholder="Select labls" />
+                                {getCheckBox('byLabels', 'all-labels', 'isAll')}
+                                <section className="select-member" onClick={() => setIsLabelSelectOpen(!isLabelSelectOpen)}>
+                                    <div className="select-title">Select labels</div>
                                     <span>{appHeaderSvg.arrowDown}</span>
                                 </section>
                             </div>
@@ -301,23 +227,8 @@ export function TaskFilter({ setIsFiltersOpen, groups, taskFilterBy, setTaskFilt
                                 {board.labels.map(boardLabel =>
                                 (
                                     <li>
-                                        {/* <section className='checkbox label-picker'>
-                                            <Checkbox sx={{
-                                                '& .MuiSvgIcon-root': { fontSize: 10 }, padding: 0, width: 16, height: 16, color: 'rgba(23, 43, 77, 0.2)',
-                                                '&:checked': {
-                                                    '& .MuiSvgIcon-root': {
-                                                        '&.css-i4bv87-MuiSvgIcon-root': {
-                                                            color: 'initial'
-                                                        }
-                                                    },
-                                                }
-                                            }}
-                                                onClick={getCheckBox(onToggleLabel, boardLabel.id)}
-                                                checked={checkboxContainer.includes(boardLabel.id)}
-                                            />
-                                        </section > */}
-                                        {getCheckBox(onToggleLabel, boardLabel.id)}
-                                        <button onClick={() => onToggleLabel(boardLabel.id)} className='color clean-btn' style={{ backgroundColor: boardLabel.color }}>{boardLabel.title} jj</button>
+                                        {getCheckBox('byLabels', boardLabel.id, 'someLabel')}
+                                        <button onClick={() => toggleFilterOptions('byLabels', boardLabel.id, 'someLabel')} className='color clean-btn' style={{ backgroundColor: boardLabel.color }}>{boardLabel.title}</button>
                                     </li>
 
                                 )

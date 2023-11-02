@@ -136,7 +136,7 @@ function addActivity(board, user, txt, { group, task } = {}) {
             title: task?.title || '',
         }
     };
-    board.activities.push(activity);
+    board.activities.unshift(activity);
 }
 
 function getEmptyComment (user, txt, groupId, taskId) {
