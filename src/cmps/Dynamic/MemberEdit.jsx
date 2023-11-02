@@ -4,8 +4,8 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 export function MemberEdit({ pos, editName, onCloseEditTask, onSaveTask, task }) {
-    console.log(pos);
     const board = useSelector(storeState => storeState.boardModule.board)
+    const user = useSelector(storeState => storeState.userModule.user)
     const [filterMembers, setFilterdMembers] = useState(board.members)
     const [connectMembers, setConnectMembers] = useState(task.memberIds)
 
@@ -17,25 +17,42 @@ export function MemberEdit({ pos, editName, onCloseEditTask, onSaveTask, task })
     }
 
     async function onToggleMemberToTask(memberId) {
+        let txt
         let newTask
         try {
             const memberIdx = task.memberIds.findIndex(id => id === memberId)
             if (memberIdx === -1) {
                 newTask = { ...task, memberIds: [...task.memberIds, memberId] }
+                if (user._id === memberId) txt = setUserTxt(memberId, 'joined')
+                else txt = setUserTxt(memberId, 'added', 'to')
             } else {
                 const updatedMembers = [...task.memberIds]
                 updatedMembers.splice(memberIdx, 1)
                 newTask = { ...task, memberIds: updatedMembers }
+                if (user._id === memberId) txt = setUserTxt(memberId, 'left')
+                else txt = setUserTxt(memberId, 'removed', 'from')
             }
-            onSaveTask(newTask)
+            onSaveTask(newTask, txt)
             setConnectMembers(newTask.memberIds)
         } catch (err) {
             console.log('Could not save date =>', err)
         }
     }
 
+    function setUserTxt(memberId, txtValue, option) {
+        let txt
+        if (user._id === memberId) {
+            txt = `${txtValue} to ${task.title}`
+        } else {
+            const addedMembr = board.members.find(member => member._id === memberId)
+            if (!addedMembr) return
+            else txt = `${txtValue} ${addedMembr.fullname} ${option} ${task.title}`
+        }
+        return txt
+    }
+
     return (
-        <section style={{top: pos.top, left: pos.left}}  className="edit-modal">
+        <section style={{ top: pos.top, left: pos.left }} className="edit-modal">
             <div className="title-container">
                 <p>{editName}</p>
                 <button onClick={onCloseEditTask} className="close-modal">{additionTaskSvg.close}</button>

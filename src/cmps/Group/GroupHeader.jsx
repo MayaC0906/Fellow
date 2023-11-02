@@ -23,12 +23,12 @@ export function GroupHeader({ isMenuOpen, setMenu, setIsFiltersOpen, isFiltersOp
     let zIndexCount = 10
 
     useEffect(() => {
-        window.addEventListener('resize', handleResize);
+        window.addEventListener('resize', handleResize)
         handleResize()
         return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
+            window.removeEventListener('resize', handleResize)
+        }
+    }, [])
 
 
 
@@ -53,9 +53,9 @@ export function GroupHeader({ isMenuOpen, setMenu, setIsFiltersOpen, isFiltersOp
 
     async function onEditBoardTitle() {
         let value = event.target.textContent
+        const txt = `renamed this board from (${board.title}).`
         board.title = value
         try {
-            const txt = `changed this board title from ${board.title} to ${value}.`
             await updateBoard(board, user, txt)
         } catch (err) {
             console.log(err)

@@ -16,10 +16,10 @@ export function AddLabel({ pos, onCloseEditTask, onAddLabel, labelToEdit, onSave
         let value = event.target.value
         setTitle(value)
     }
-    
+
     async function onSaveLabel() {
         console.log('task before:', task);
-        
+
         let newLabel = boardService.getEmptyLabel()
         let savedLabel
         if (labelToEdit.id) {
@@ -28,7 +28,7 @@ export function AddLabel({ pos, onCloseEditTask, onAddLabel, labelToEdit, onSave
             savedLabel = { ...newLabel, color: colorSelected, title: labelTitle }
         }
         task = { ...task, labelIds: [...task.labelIds, savedLabel.id] }
-        
+
         try {
             const labelIdx = board.labels.findIndex(labels => labels.id === savedLabel.id)
             if (labelIdx === -1) {
@@ -36,13 +36,13 @@ export function AddLabel({ pos, onCloseEditTask, onAddLabel, labelToEdit, onSave
             } else {
                 board.labels.splice(labelIdx, 1, savedLabel)
             }
-            
+
             const newBoard = { ...board, labels: board.labels }
-            
+
             const txt = `added label to ${task.title}.`
             await updateBoard(newBoard)
             await onSaveTask(task, txt)
-            console.log('task after:', task);
+            // console.log('task after:', task);
             setCheckedLabelsStart(task.labelIds)
             onAddLabel('')
         } catch (err) {

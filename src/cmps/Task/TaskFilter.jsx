@@ -92,7 +92,6 @@ export function TaskFilter({ setIsFiltersOpen, taskFilterBy, setTaskFilterby, ch
         })
         setCheckboxContainer([])
     }
-    console.log('check', checkboxContainer);
 
     const { txt } = taskFilterBy
     return (
