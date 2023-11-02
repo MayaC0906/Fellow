@@ -30,8 +30,7 @@ export function BoardDetails() {
 
     async function onLoadBoard() {
         try {
-            const board = await loadBoard(boardId)
-            dispatch({ type: SET_BOARD, board })
+            await loadBoard(boardId)
             console.log('board loaded')
             // setBoard(board)
         } catch (err) {

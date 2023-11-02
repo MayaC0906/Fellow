@@ -23,7 +23,7 @@ export function HomePage() {
     const user = useSelector(storeState => storeState.userModule.user)
     useEffect(() => {
         onLoadUsers()
-    }, [user])
+    }, [])
 
     async function onLoadUsers() {
         try {
