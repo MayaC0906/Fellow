@@ -42,7 +42,7 @@ export function GroupHeader({ isMenuOpen, setMenu, setIsFiltersOpen, isFiltersOp
 
     useEffect(() => {
         onLoadBoard()
-    }, [boardId, board])
+    }, [boardId])
 
     async function onLoadBoard() {
         const boardToFind = boards.find(board => board._id === boardId)
