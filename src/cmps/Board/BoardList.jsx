@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { BoardPreview } from "./BoardPreview";
 
 export function BoardList({ boards, onStarredBoard }) {
-
     return (
         <>
             {boards && boards.map(board =>

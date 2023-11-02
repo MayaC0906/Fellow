@@ -46,19 +46,19 @@ export function Workspace() {
     }
 
     async function onStarredBoard(event, boardToChange) {
-        event.preventDefault()
-        boardToChange.isStarred = !boardToChange.isStarred
+        event.preventDefault();
+        boardToChange.isStarred = !boardToChange.isStarred;
         try {
             await updateBoards(boards, boardToChange, user, 'starrd')
             getStarredBoards()
         } catch (err) {
-            console.log('could not star the board', err)
+            console.log('could not star the board', err);
         }
     }
 
-    function onSetIsBoardAdded(ev) {
-        getBounds(ev)
-        setIsBoardAdded(!isBoardAdded)
+    function onSetIsBoardAdded() {
+        getBounds();
+        setIsBoardAdded(!isBoardAdded);
     }
 
     function getBounds() {
@@ -94,15 +94,14 @@ export function Workspace() {
     if (!boards) return <div className="loader board"><div>{loaderSvg.loader}</div></div>
     if (boards.length === 0) return (
         <div className="workspace-container">
-            <section ref={createBoardRef} className="no-board-container" onClick={() => onSetIsBoardAdded()}>
+            <section ref={createBoardRef} className="no-board-container" onClick={onSetIsBoardAdded}>
                 <h2 className="fs14">Create new board</h2>
                 <h3 className="fs12">{count} remaining</h3>
                 {/* <h3 className="fs12">{boardCount.current} remaining</h3> */}
             </section>
             {isBoardAdded && <AddBoard setIsBoardAdded={setIsBoardAdded} addBoardPosition={addBoardPosition} />}
         </div>
-    )
-    return (
+    ); return (
         <section className="workspace-container flex">
             <section className="boards flex">
                 {starredBoards.length > 0 &&
@@ -137,7 +136,7 @@ export function Workspace() {
                 </section>
             </section>
         </section>
-    )
+    );
 }
 
 
