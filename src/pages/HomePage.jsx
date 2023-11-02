@@ -4,11 +4,12 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Textarea } from '@mui/joy'
 import { Button } from '@mui/joy'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import hero from '../assets/img/hero.png'
 // import hs1 from '../assets/img/hs1.png'
 // import hs2 from '../assets//img/hs2.png'
 import hs3 from '../assets//img/hs3.png'
+import { loadUsers, login } from '../store/actions/user.actions'
 // import logo from '../assets/img/logo.png'
 import { homePage } from '../cmps/Svgs'
 import { useSelector } from 'react-redux'
@@ -19,7 +20,19 @@ export function HomePage() {
     const hs2 = 'https://images.ctfassets.net/rz1oowkt5gyp/3ZjLCD2fANfXYSN3ar9WpE/dc84a408c6a3ee89bee4a646ff6d5966/Lists_2x.png'
     const hs3 = 'https://images.ctfassets.net/rz1oowkt5gyp/26CA6JZeRgoOK4nuRHnIlY/060702a80cf7c3be3651d9297d196267/Carousel_Image_Cards_2x.png'
     const [img, setImg] = useState(hs1)
+    const user = useSelector(storeState => storeState.userModule.user)
+    useEffect(() => {
+        onLoadUsers()
+    }, [user])
 
+    async function onLoadUsers() {
+        try {
+            await loadUsers()
+            if (!user) login({ username: 'Guest', password: '1234' })
+        } catch (err) {
+            console.log('Can not load users', err)
+        }
+    }
     return (
         <section className='home-container'>
             <div className='hero-container'>
@@ -30,7 +43,7 @@ export function HomePage() {
                                 together</h2>
                             <p>Keep everything in the same place-even if your team isn't.</p>
                         </span>
-                        <Link className='demo-btn' to="/workspace"><span style={{fontSize:'20px', letterSpacing:'1px'}}>Try it now - it's free!</span></Link>
+                        <Link className='demo-btn' to="/workspace"><span style={{ fontSize: '20px', letterSpacing: '1px' }}>Try it now - it's free!</span></Link>
                     </section>
                     <section className='hero'>
                         <img src={hero} alt="img" />
@@ -164,8 +177,8 @@ export function HomePage() {
             <section className='signup'>
                 <h2>Get started with Fellow today</h2>
                 <form action="">
-                    <Textarea size="md" name="Size" sx={{width:'300px'}} placeholder="Email" />
-                    <Button sx={{width:'150px'}}>Sign up - it's free!</Button>
+                    <Textarea size="md" name="Size" sx={{ width: '300px' }} placeholder="Email" />
+                    <Button sx={{ width: '150px' }}>Sign up - it's free!</Button>
                 </form>
             </section>
             <footer >

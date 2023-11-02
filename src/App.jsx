@@ -13,22 +13,10 @@ import { useLocation } from 'react-router-dom/dist'
 import { loadUsers, login } from './store/actions/user.actions'
 import { useSelector } from 'react-redux'
 export function App() {
-    const user = useSelector(storeState => storeState.userModule.user)
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const location = useLocation()
 
-    useEffect(() => {
-        onLoadUsers()
-    }, [user])
 
-    async function onLoadUsers() {
-        try {
-            await loadUsers()
-            if (!user) login({ username: 'Guest', password: '1234' })
-        } catch (err) {
-            console.log('Can not load users', err)
-        }
-    }
 
     useEffect(() => {
         const handleResize = () => {
