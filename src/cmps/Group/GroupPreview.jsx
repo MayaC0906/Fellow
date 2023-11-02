@@ -87,7 +87,7 @@ export function GroupPreview({
 		setInputExpand(false)
 		if (!newTask.title) return
 		try {
-			const txt = `saved new task titled ${newTask.title} in ${group.title}`
+			const txt = `added ${newTask.title} to ${group.title}`
 			await saveNewTask(board._id, group.id, newTask, user, txt)
 			setNewTask(taskService.getEmptyTask())
 			showSuccessMsg('New task added')

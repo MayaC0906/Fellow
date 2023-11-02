@@ -6,10 +6,12 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { useEffect, useRef, useState } from 'react'
 import { Button } from '@mui/joy'
 import { Checkbox } from '@mui/material'
+import { useSelector } from 'react-redux'
 
 
 
 export function DateEdit({ pos, editName, onCloseEditTask, onSaveTask, task }) {
+    const board = useSelector(storeState => storeState.boardModule.board)
     const [selectedDate, setSelectedDate] = useState(null)
     const [isDateSelected, setIsDateSelected] = useState(false)
     let lastDate = useRef(null)
@@ -41,13 +43,15 @@ export function DateEdit({ pos, editName, onCloseEditTask, onSaveTask, task }) {
     }
 
     async function onSaveDate() {
+        let txt
         if (selectedDate === null) return
-        console.log('selectedDate', selectedDate);
         const formatedDate = selectedDate.format('MMM D YYYY [at] h:mm A')
-        // task.dueDate.date = formatedDate
+        if (task.dueDate.date) {
+            txt = `changed the due date of this card to ${formatedDate}`
+        }
         task = { ...task, dueDate: { ...task.dueDate, date: formatedDate } }
         try {
-            onSaveTask(task)
+            onSaveTask(task, txt)
             setSelectedDate(selectedDate)
             setIsDateSelected(true)
             onCloseEditTask('')
@@ -59,7 +63,8 @@ export function DateEdit({ pos, editName, onCloseEditTask, onSaveTask, task }) {
     async function onRemoveDate() {
         try {
             task.dueDate.date = null
-            onSaveTask(task)
+            const txt = `removed the due date from ${board.title}`
+            onSaveTask(task, txt)
             setIsDateSelected(false)
             onCloseEditTask('')
         } catch (err) {
@@ -77,8 +82,10 @@ export function DateEdit({ pos, editName, onCloseEditTask, onSaveTask, task }) {
         }
     }
 
+    console.log('due date', task.dueDate.date);
+
     return (
-        <section style={{top:pos.top, left: pos.left}} className="edit-modal">
+        <section style={{ top: pos.top, left: pos.left }} className="edit-modal">
             <div className="title-container">
                 <p>{editName}</p>
                 <button onClick={onCloseEditTask} className="close-modal">{additionTaskSvg.close}</button>

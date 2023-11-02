@@ -6,6 +6,7 @@ import { TaskMemberDetail } from "./TaskMemberDetail";
 
 export function TaskMember({ taskMembersId, setEditName, editName, onSaveTask, task }) {
     const board = useSelector(storeState => storeState.boardModule.board)
+    const user = useSelector(storeState => storeState.userModule.user)
     const [isMemberDetailOpen, setMemberDetailOpen] = useState(false)
     const [members, setMembers] = useState([])
     const [member, setMember] = useState([])
@@ -31,10 +32,13 @@ export function TaskMember({ taskMembersId, setEditName, editName, onSaveTask, t
     }
 
     async function removeMemberFromTask() {
+        let txt
         try {
             const updatedMembers = task.memberIds.filter(taskMember => taskMember !== member._id)
             const newTask = { ...task, memberIds: updatedMembers }
-            onSaveTask(newTask)
+            if (user._id === member._id) txt = `left ${task.title}`
+            else txt = `removed ${member.fullname} from ${task.title}`
+            onSaveTask(newTask, txt)
             setMemberDetailOpen(false)
         } catch (err) {
             console.log('Cannot remove member', err)

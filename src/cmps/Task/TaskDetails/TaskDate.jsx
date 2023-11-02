@@ -11,8 +11,6 @@ export function TaskDate({ task, setEditName, editName, onSaveTask }) {
     }, [dueDate.date])
 
     async function onSettingIsOverdue() {
-        console.log('1: task from overdue:', task);
-        // if (dueDate.isDueSoon) return
         let updatedOverdue
         const taskDueDate = dayjs(dueDate.date, 'MMM D YYYY [at] h:mm A').format('YYYY-MM-DD')
         const inputDate = new Date(`${taskDueDate}`);
@@ -23,18 +21,15 @@ export function TaskDate({ task, setEditName, editName, onSaveTask }) {
             updatedOverdue = false
         }
         const newTask = { ...task, dueDate: { ...task.dueDate, isOverdue: updatedOverdue } }
-        console.log('1: new task overdue:', newTask);
 
         try {
             await onSaveTask(newTask)
             onSettingIsDueSoon(newTask)
         } catch (err) {
-            console.log(`Couldn't set isOverDue`, err);
         }
     }
 
     async function onSettingIsDueSoon(task) {
-        // if (task.dueDate.isOverdue) return
         const myDate = dayjs(task.dueDate.date, 'MMM D YYYY [at] h:mm A')
         const tomorrow = dayjs().add(1, 'day').startOf('day')
         const isDateDueSoon = myDate.isSame(tomorrow, 'day')
@@ -47,16 +42,15 @@ export function TaskDate({ task, setEditName, editName, onSaveTask }) {
     }
 
     function onCompleteDueDate() {
-        const newTask = { ...task, dueDate: { ...task.dueDate, isComplete: !task.dueDate.isComplete } };
-        onSaveTask(newTask)
+        const newTask = { ...task, dueDate: { ...task.dueDate, isComplete: !task.dueDate.isComplete } }
+        const txt = `marked the due date ${task.dueDate.isComplete ? 'incomplete' : 'complete'}`
+        onSaveTask(newTask, txt)
     }
 
     function toggleDateDisplay() {
         if (editName === 'Dates') setEditName('')
         else if (editName === '') setEditName('Dates')
     }
-
-    console.log('task:', task);
 
     return (
 
@@ -69,7 +63,7 @@ export function TaskDate({ task, setEditName, editName, onSaveTask }) {
                     </div>
                     <div className={`task-date flex align-center ${dueDate.isComplete ? 'complete-open' : ''}`} onClick={toggleDateDisplay}>
                         <span className="task-date-data">
-                            {dayjs(dueDate.date, 'MMM D YYYY [at] h:mm A').format(`${dueDate.isDueSoon ? '[tomorrow]' : 'MMM '} [at] h:mm A`)}
+                            {dayjs(dueDate.date, 'MMM D YYYY [at] h:mm A').format(`${dueDate.isDueSoon ? '[tomorrow]' : 'MMM D'} [at] h:mm A`)}
                         </span>
                         {dueDate.isComplete && (<span className="task-date-complete flex align-center">Complete</span>)}
                         {dueDate.isOverdue && !dueDate.isComplete && (<span className="task-date-complete overdue flex align-center">Overdue</span>)}
