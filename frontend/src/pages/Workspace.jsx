@@ -8,32 +8,22 @@ import { BoardList } from "../cmps/Board/BoardList"
 export function Workspace() {
     let boards = useSelector(storeState => storeState.boardModule.boards)
     const user = useSelector(storeState => storeState.userModule.user)
-    filteredBoards()
+    // filteredBoards()
     const [isBoardAdded, setIsBoardAdded] = useState(false)
     const [addBoardPosition, setAddBoardPosition] = useState({ top: '', left: '' })
     const createBoardRef = useRef()
     const [count, setCount] = useState(10 - boards.length)
 
-    function filteredBoards() {
-        if (user) {
-            if (user.username === 'Guest') {
-                boards = boards
-            } else {
-                console.log('hey');
-                boards = boards.filter(board => {
-                    const isUserMember = board.members.some(boardMember => boardMember._id === user._id);
-                    return isUserMember
-                })
-            }
-        }
-    }
+    // function filteredBoards() {
+
+    // }
 
     useEffect(() => {
         onLoadBoars()
     }, [])
 
     async function onLoadBoars() {
-        const boards = await loadBoards()
+        const boards = await loadBoards(user)
         console.log('boards loaded');
         setCount(10 - boards.length)
     }

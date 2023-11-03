@@ -63,7 +63,8 @@ async function save(board) {
     if (board._id) {
         return httpService.put(BASE_URL + board._id, board)
     } else {
-        return httpService.post(BASE_URL, board)
+        let boardToSave = {...board, createdBy: userService.getLoggedinUser()}
+        return httpService.post(BASE_URL, boardToSave)
     }
 }
 

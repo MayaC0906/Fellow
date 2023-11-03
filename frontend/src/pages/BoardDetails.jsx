@@ -10,8 +10,8 @@ import { GroupHeader } from "../cmps/Group/GroupHeader.jsx";
 import { GroupList } from "../cmps/Group/GroupList.jsx";
 import { BoardMenu } from "../cmps/Board/BoardMenu.jsx";
 import { loaderSvg } from "../cmps/Svgs.jsx";
-
-
+import { socketService, SOCKET_EMIT_SET_TOPIC, SOCKET_EVENT_UPDATE_BOARD } from "../services/socket.service.js";
+import { getActionUpdateBoard } from "../store/actions/board.actions.js";
 
 export function BoardDetails() {
     const dispatch = useDispatch()
@@ -23,9 +23,14 @@ export function BoardDetails() {
 
 
     useEffect(() => {
-        loadBoards()
+        socketService.emit(SOCKET_EMIT_SET_TOPIC, boardId)
+
+
         onLoadBoard()
+        loadBoards()
+
     }, [boardId])
+
 
 
     async function onLoadBoard() {

@@ -13,7 +13,6 @@ import { GroupPreview } from './GroupPreview.jsx'
 import { checkList } from '../Svgs.jsx'
 import { TaskFilter } from '../Task/TaskFilter.jsx'
 
-
 export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
     const [isInputExpand, setInputExpand] = useState(false)
     const [newGroup, setNewGroup] = useState(boardService.getEmptyGroup())
@@ -26,7 +25,6 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
     const [taskFilterBy, setTaskFilterby] = useState(boardService.getEmptyFilter())
     const [filteredGroups, setFilteredGroups] = useState(groups)
     const [checkboxContainer, setCheckboxContainer] = useState([])
-
 
     useEffect(() => {
         const filteredGroups = onFilterGroups(taskFilterBy)
