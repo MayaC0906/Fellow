@@ -21,15 +21,14 @@ export function App() {
 
 
     useEffect(() => {
-        onLoadUsers()
+        onLoadUser()
     }, [user])
 
-    async function onLoadUsers() {
-        console.log('app:', user);
+    async function onLoadUser() {
+        console.log('user:', user);
         if (user?.fullname === 'Guest') return
         try {
-            await loadUsers()
-            if (!user) {
+            if (user === null) {
                 await login({ username: 'Guest', password: '1234' })
                 setIsLogin(true)
             } else {
@@ -41,7 +40,6 @@ export function App() {
     }
 
 
-
     useEffect(() => {
         const handleResize = () => {
             setWindowWidth(window.innerWidth)
@@ -49,6 +47,7 @@ export function App() {
         window.addEventListener('resize', handleResize)
         return () => window.removeEventListener('resize', handleResize)
     }, []);
+
 
     return (
         <div>

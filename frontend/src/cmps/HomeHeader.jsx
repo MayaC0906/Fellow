@@ -30,7 +30,6 @@ export function HomeHeader({ isLogin }) {
         }
     }
 
-    console.log('is log in?', isLogin);
 
     return (
         <header className="home-header">

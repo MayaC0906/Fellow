@@ -10,9 +10,9 @@ export function LoginSignup() {
     const navigate = useNavigate()
 
 
-    useEffect(() => {
-        loadUsers()
-    }, [])
+    // useEffect(() => {
+    //     loadUsers()
+    // }, [])
 
     function clearState() {
         setCredentials({ username: '', password: '', fullname: '', imgUrl: '' })

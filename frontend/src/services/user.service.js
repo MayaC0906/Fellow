@@ -28,6 +28,8 @@ const usersStorage = [
 
 
 async function getUsers() {
+    console.log('from getusers')
+
     // let users = utilService.loadFromStorage(STORAGE_KEY)
     // if (!users || !users.length) utilService.saveToStorage(STORAGE_KEY, usersStorage)
     // users = await storageService.query(STORAGE_KEY)
@@ -37,12 +39,16 @@ async function getUsers() {
 }
 
 async function getById(userId) {
+    console.log('from lget by Id')
+
     // const user = await storageService.get(STORAGE_KEY, userId)
     const user = await httpService.get(`user/${userId}`)
     return user
 }
 
 function remove(userId) {
+    console.log('from remove')
+
     // return storageService.remove(STORAGE_KEY, userId)
     return httpService.delete(`user/${userId}`)
 }
@@ -61,7 +67,7 @@ function remove(userId) {
 async function login(userCred) {
     // const users = await storageService.query(STORAGE_KEY)
     // const user = users.find(user => user.username.toLowerCase() === userCred.username.toLowerCase())
-    console.log('from servuce', userCred);
+    console.log('from login')
     const user = await httpService.post('auth/login', userCred)
     if (user) {
         return saveLocalUser(user)
@@ -69,6 +75,7 @@ async function login(userCred) {
 }
 
 async function signup(userCred) {
+    console.log('from signup')
     if (!userCred.imgUrl) userCred.imgUrl = 'https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png'
     // const user = await storageService.post(STORAGE_KEY, userCred)
     const user = await httpService.post('auth/signup', userCred)
@@ -76,6 +83,7 @@ async function signup(userCred) {
 }
 
 async function logout() {
+    console.log('from logout')
     sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER)
     return await httpService.post('auth/logout')
 }
@@ -90,12 +98,14 @@ async function logout() {
 
 
 function saveLocalUser(user) {
+    // console.log('save local user');
     user = { _id: user._id, fullname: user.fullname, imgUrl: user.imgUrl, username: user.username }
     sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
     return user
 }
 
 function getLoggedinUser() {
+    // console.log('get logged in uder');
     return JSON.parse(sessionStorage.getItem(STORAGE_KEY_LOGGEDIN_USER))
 }
 

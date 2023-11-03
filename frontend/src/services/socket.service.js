@@ -25,6 +25,7 @@ window.socketService = socketService
 socketService.setup()
 
 
+// console.log('socket service');
 function createSocketService() {
   var socket = null;
   const socketService = {
@@ -34,6 +35,7 @@ function createSocketService() {
       if (user) this.login(user._id)
     },
     on(eventName, cb) {
+      console.log('from on', eventName, cb);
       socket.on(eventName, cb)
     },
     off(eventName, cb = null) {
