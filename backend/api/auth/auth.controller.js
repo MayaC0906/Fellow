@@ -2,7 +2,7 @@ import { authService } from './auth.service.js'
 import { logger } from '../../services/logger.service.js'
 
 export async function login(req, res) {
-    console.log();
+    console.log('h');
     const { username, password } = req.body
     console.log('username,password:', username, password)
     try {
