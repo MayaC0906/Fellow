@@ -8,14 +8,16 @@ export const SOCKET_EMIT_USER_WATCH = 'user-watch'
 export const SOCKET_EVENT_USER_UPDATED = 'user-updated'
 export const SOCKET_EVENT_REVIEW_ADDED = 'review-added'
 export const SOCKET_EVENT_REVIEW_ABOUT_YOU = 'review-about-you'
+export const SOCKET_EVENT_UPDATE_BOARD = 'update-board'
+export const SOCKET_EMIT_UPDATE_BOARD = 'update-board'
 
 const SOCKET_EMIT_LOGIN = 'set-user-socket'
 const SOCKET_EMIT_LOGOUT = 'unset-user-socket'
 
 
 const baseUrl = (process.env.NODE_ENV === 'production') ? '' : '//localhost:3030'
-// export const socketService = createSocketService()
-export const socketService = createDummySocketService()
+export const socketService = createSocketService()
+// export const socketService = createDummySocketService()
 
 // for debugging from console
 window.socketService = socketService
@@ -23,6 +25,7 @@ window.socketService = socketService
 socketService.setup()
 
 
+// console.log('socket service');
 function createSocketService() {
   var socket = null;
   const socketService = {
@@ -32,6 +35,7 @@ function createSocketService() {
       if (user) this.login(user._id)
     },
     on(eventName, cb) {
+      console.log('from on', eventName, cb);
       socket.on(eventName, cb)
     },
     off(eventName, cb = null) {

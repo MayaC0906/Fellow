@@ -13,13 +13,13 @@ export function Workspace() {
     const [addBoardPosition, setAddBoardPosition] = useState({ top: '', left: '' })
     const createBoardRef = useRef()
     const [count, setCount] = useState(10 - boards.length)
-    const boardCount = useRef(10 - boards.length)
 
     function filteredBoards() {
         if (user) {
-            if (user._id === 'guest') {
+            if (user.username === 'Guest') {
                 boards = boards
             } else {
+                console.log('hey');
                 boards = boards.filter(board => {
                     const isUserMember = board.members.some(boardMember => boardMember._id === user._id);
                     return isUserMember

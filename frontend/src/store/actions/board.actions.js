@@ -3,6 +3,7 @@ import { store } from '../store.js'
 import { showSuccessMsg, showErrorMsg } from '../../services/event-bus.service.js'
 import { ADD_BOARD, REMOVE_BOARD, SET_BOARD, SET_BOARDS, UNDO_REMOVE_BOARD, UPDATE_BOARD } from "../reducers/board.reducer.js";
 import { taskService } from "../../services/task.service.local.js";
+import { SOCKET_EMIT_UPDATE_BOARD, socketService } from "../../services/socket.service.js";
 
 // Action Creators:
 export function getActionRemoveBoard(boardId) {
@@ -105,6 +106,7 @@ export async function updateBoards(boards, newBoard, user, txt) {
 export async function removeGroup(group, boardId, user, txt) {
     try {
         const savedBoard = await boardService.removeGroup(group, boardId, user, txt)
+        // socketService.emit(SOCKET_EMIT_UPDATE_BOARD, savedBoard)
         store.dispatch(getActionUpdateBoard(savedBoard))
         return group
     } catch (err) {
