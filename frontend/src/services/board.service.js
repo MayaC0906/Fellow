@@ -3,6 +3,7 @@ import { storageService } from './async-storage.service.js'
 import { utilService } from './util.service.js'
 import { userService } from './user.service.js'
 import { httpService } from './http.service.js'
+import { socketService } from './socket.service.js'
 
 const BASE_URL = 'board/'
 export const boardService = {
@@ -59,11 +60,13 @@ async function remove(boardId) {
 }
 
 async function save(board) {
-    // console.log(':', )
     if (board._id) {
-        return httpService.put(BASE_URL + board._id, board)
+        const updatedBoard =  await httpService.put(BASE_URL + board._id, board)
+        socketService.emit('update-board', updatedBoard)
+        return updatedBoard
     } else {
-        return httpService.post(BASE_URL, board)
+        const updatedBoard =  await httpService.post(BASE_URL, board)
+        return updatedBoard
     }
 }
 

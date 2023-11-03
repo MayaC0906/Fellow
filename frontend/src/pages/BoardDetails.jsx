@@ -28,7 +28,6 @@ export function BoardDetails() {
     }, [boardId])
 
     useEffect(() => {
-        // socketService.emit(SOCKET_EMIT_SET_TOPIC, boardId)
         socketService.on(SOCKET_EVENT_UPDATE_BOARD, ((board) => {
             console.log('board from inside:', board);
             dispatch({ type: SET_BOARD, board })
