@@ -4,12 +4,14 @@ import { Server } from 'socket.io'
 var gIo = null
 
 export function setupSocketAPI(http) {
+    console.log('i enterd setup socket back')
     gIo = new Server(http, {
         cors: {
             origin: '*',
         }
     })
     gIo.on('connection', socket => {
+        console.log('socket it back', socket);
         logger.info(`New connected socket [id: ${socket.id}]`)
         socket.on('disconnect', socket => {
             logger.info(`Socket disconnected [id: ${socket.id}]`)
@@ -45,7 +47,7 @@ export function setupSocketAPI(http) {
         })
         socket.on('update-board', (board) => {
             console.log('ey');
-            logger.info(`${username} is typing... in socket [id: ${socket.id}]`)
+            logger.info(`board ${board.title} updated in socket [id: ${socket.id}]`)
             gIo.to(socket.myTopic).emit('update-board', board);
         })
     })

@@ -69,7 +69,7 @@ app.get('/**', (req, res) => {
 
 // Listen will always be the last line in our server!
 const port = process.env.PORT || 3030
-app.listen(port, () => {
+server.listen(port, () => {
     logger.info(`Server listening on port http://127.0.0.1:${port}/`)
 })
 
