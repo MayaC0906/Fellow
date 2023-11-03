@@ -12,6 +12,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { GroupPreview } from './GroupPreview.jsx'
 import { checkList } from '../Svgs.jsx'
 import { TaskFilter } from '../Task/TaskFilter.jsx'
+import { SOCKET_EMIT_UPDATE_BOARD, socketService } from '../../services/socket.service.js'
 
 export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
     const [isInputExpand, setInputExpand] = useState(false)
@@ -134,6 +135,8 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
     async function onUpdateBoard(board) {
         try {
             await updateBoard(board)
+            console.log('on pdate board');
+            socketService.emit(SOCKET_EMIT_UPDATE_BOARD, board)
         } catch (err) {
             console.log('cant update board from group list', err);
             throw err
@@ -151,6 +154,7 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
             // await saveGroup(newGroup, board._id, user, txt)
             const txt = `deleted a group titled "${group.title}".`;
             await removeGroup(group, board._id, user, txt)
+            // socketService.emit(SOCKET_EMIT_UPDATE_BOARD, board)
         } catch (err) {
             console.log('Failed to remove group', err)
         }

@@ -110,7 +110,7 @@ export function GroupHeader({ isMenuOpen, setMenu, setIsFiltersOpen, isFiltersOp
                 </section>
             </header>
             {isSiriOpen && <OurSiri isSiriOpen={isSiriOpen} setSiriOpen={setSiriOpen} />}
-            {isDashboardOpen && <Dashboard board={board} setDashBoardOpen={setDashBoardOpen} isDashboardOpen={isDashboardOpen} />}
+            {isDashboardOpen && <Dashboard setDashBoardOpen={setDashBoardOpen} />}
         </>
     )
 }

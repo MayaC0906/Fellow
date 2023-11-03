@@ -1,15 +1,17 @@
-import {logger} from './logger.service.js'
-import {Server} from 'socket.io'
+import { logger } from './logger.service.js'
+import { Server } from 'socket.io'
 
 var gIo = null
 
 export function setupSocketAPI(http) {
+    console.log('i enterd setup socket back')
     gIo = new Server(http, {
         cors: {
             origin: '*',
         }
     })
     gIo.on('connection', socket => {
+        console.log('socket it back', socket);
         logger.info(`New connected socket [id: ${socket.id}]`)
         socket.on('disconnect', socket => {
             logger.info(`Socket disconnected [id: ${socket.id}]`)
@@ -33,7 +35,7 @@ export function setupSocketAPI(http) {
         socket.on('user-watch', userId => {
             logger.info(`user-watch from socket [id: ${socket.id}], on user ${userId}`)
             socket.join('watching:' + userId)
-            
+
         })
         socket.on('set-user-socket', userId => {
             logger.info(`Setting socket.userId = ${userId} for socket [id: ${socket.id}]`)
@@ -43,13 +45,11 @@ export function setupSocketAPI(http) {
             logger.info(`Removing socket.userId for socket [id: ${socket.id}]`)
             delete socket.userId
         })
-        socket.on('typing', (username) => {
-            logger.info(`${username} is typing... in socket [id: ${socket.id}]`)
-            gIo.to(socket.myTopic).emit('user-typing', username);
-        });
-        
-        
-
+        socket.on('update-board', (board) => {
+            console.log('ey');
+            logger.info(`board ${board.title} updated in socket [id: ${socket.id}]`)
+            gIo.to(socket.myTopic).emit('update-board', board);
+        })
     })
 }
 
@@ -65,7 +65,7 @@ async function emitToUser({ type, data, userId }) {
     if (socket) {
         logger.info(`Emiting event: ${type} to user: ${userId} socket [id: ${socket.id}]`)
         socket.emit(type, data)
-    }else {
+    } else {
         logger.info(`No active socket for user: ${userId}`)
         // _printSockets()
     }
@@ -75,7 +75,7 @@ async function emitToUser({ type, data, userId }) {
 // Optionally, broadcast to a room / to all
 async function broadcast({ type, data, room = null, userId }) {
     userId = userId.toString()
-    
+
     logger.info(`Broadcasting event: ${type}`)
     const excludedSocket = await _getUserSocket(userId)
     if (room && excludedSocket) {
@@ -117,9 +117,9 @@ export const socketService = {
     // set up the sockets service and define the API
     setupSocketAPI,
     // emit to everyone / everyone in a specific room (label)
-    emitTo, 
+    emitTo,
     // emit to a specific user (if currently active in system)
-    emitToUser, 
+    emitToUser,
     // Send to all sockets BUT not the current socket - if found
     // (otherwise broadcast to a room / to all)
     broadcast,
