@@ -3,7 +3,7 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  width: 300px; /* Adjust the width as needed */
+  width: 300px;
   margin: auto;
   position: relative;
 }
@@ -37,14 +37,15 @@
   border-radius: 5px;
 }
 
-// .search-btn {
-//   padding: 10px 15px;
-//   background-color: #007bff;
-//   color: white;
-//   border: none;
-//   border-radius: 5px;
-//   cursor: pointer;
-// }
+.search-music-input {
+  padding: 2px 8px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+
+  border-radius: 5px;
+  cursor: pointer;
+}
 
 .current-song {
   text-align: center;
@@ -52,7 +53,9 @@
 }
 
 .song-thumbnail {
-  max-width: 100%;
+  // max-width: 100%;
+  height: 40px;
+  width: 60px;
   height: auto;
   border-radius: 5px;
 }
@@ -72,7 +75,7 @@
 .control-btn {
   background-color: #f0f0f0;
   border: none;
-  padding: 10px;
+  padding: 8px;
   border-radius: 5px;
   cursor: pointer;
   font-size: 0.9rem;
@@ -91,7 +94,6 @@
   color: #6c757d;
 }
 
-/* Additional styling for the button interaction */
 .control-btn:hover {
   background-color: #e2e6ea;
 }

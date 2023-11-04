@@ -68,7 +68,7 @@ export function BoardMenu({ setMenu, isMenuOpen }) {
                             <p className="nav-item" onClick={deleteBoard}>Delete board</p>
                         </section>
                         <section>
-                            <MusicModal />
+                            {/* <MusicModal /> */}
                         </section>
                     </section>
                 )

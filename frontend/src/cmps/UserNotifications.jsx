@@ -5,51 +5,72 @@ export function UserNotifications({ setNewActivity, newActivity, user, isNotific
     const [groupedByTask, setGroupedByTask] = useState({})
 
     useEffect(() => {
-        const groupByTask = notifications.reduce((acc, newActivity) => {
-            const groupingId = newActivity.task?.id || newActivity.group?.id || newActivity.id
-            if (!acc[groupingId]) {
-                acc[groupingId] = {
-                    activities: [],
-                    taskTitle: newActivity.task?.title || '',
-                    groupTitle: newActivity.group?.title || '',
-                    boardTitle: newActivity.board?.title || '',
-                    boardBgc: newActivity.board?.bgc || '',
-                    isGroupedByTask: !!newActivity.task?.id
-                };
+        const groupByTask = notifications.reduce((acc, activity) => {
+            const groupingId = activity.task?.id || activity.group?.id || activity.id
+            const existingGroup = acc.find(group => group.id === groupingId)
+            if (existingGroup) {
+                existingGroup.activities.unshift(activity)
+            } else {
+                acc.push({
+                    id: groupingId,
+                    activities: [activity],
+                    taskTitle: activity.task?.title || '',
+                    groupTitle: activity.group?.title || '',
+                    boardTitle: activity.board?.title || '',
+                    boardBgc: activity.board?.bgc || '',
+                    isGroupedByTask: !!activity.task?.id,
+                })
             }
-            acc[groupingId].activities.unshift(newActivity)
             return acc
-        }, {});
+        }, [])
+
+        groupByTask.sort((a, b) => {
+            const lastActivityA = a.activities[0].createdAt
+            const lastActivityB = b.activities[0].createdAt;
+            return lastActivityB - lastActivityA
+        });
+
         setGroupedByTask(groupByTask)
-    }, [notifications])
+    }, [notifications]);
 
     useEffect(() => {
         if (!newActivity) return
+
         setGroupedByTask(prevGroupedByTask => {
-            const groupId = newActivity.task?.id
-            if (!newActivity.board.id) {
-                console.error('Activity does not have a task ID:', newActivity)
-                return prevGroupedByTask
-            }
-            const updatedGroupedByTask = { ...prevGroupedByTask }
-            if (updatedGroupedByTask[groupId]) {
-                updatedGroupedByTask[groupId].activities = [
-                    newActivity,
-                    ...updatedGroupedByTask[groupId].activities,
-                ];
-            } else {
-                updatedGroupedByTask[groupId] = {
+            const groupId = newActivity.task?.id || newActivity.group?.id || newActivity.id
+            let groupExists = false;
+
+            const updatedGroups = prevGroupedByTask.map(group => {
+                if (group.id === groupId) {
+                    groupExists = true
+                    return {
+                        ...group,
+                        activities: [newActivity, ...group.activities],
+                    };
+                }
+                return group
+            });
+
+            if (!groupExists) {
+                updatedGroups.unshift({
+                    id: groupId,
                     activities: [newActivity],
                     taskTitle: newActivity.task?.title || '',
                     groupTitle: newActivity.group?.title || '',
                     boardTitle: newActivity.board?.title || '',
                     boardBgc: newActivity.board?.bgc || '',
-                    isGroupedByTask: true,
-                }
+                    isGroupedByTask: !!newActivity.task?.id,
+                })
             }
 
-            return updatedGroupedByTask
-        });
+            updatedGroups.sort((a, b) => {
+                const lastActivityA = a.activities[0].createdAt
+                const lastActivityB = b.activities[0].createdAt
+                return lastActivityB - lastActivityA
+            })
+            return updatedGroups
+        })
+
     }, [newActivity])
 
     const notificationCount = Object.values(groupedByTask).reduce((acc, group) => acc + group.activities.length, 0)
