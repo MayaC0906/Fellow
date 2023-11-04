@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { utilService } from "../services/util.service";
 
 export function UserNotifications({ setNewActivity, newActivity, user, isNotificationsOpen, setNotificationsOpen, notifications }) {
-    // This will group notifications by their task ID into an object
     const [groupedByTask, setGroupedByTask] = useState({})
 
     useEffect(() => {
@@ -56,7 +55,7 @@ export function UserNotifications({ setNewActivity, newActivity, user, isNotific
     const notificationCount = Object.values(groupedByTask).reduce((acc, group) => acc + group.activities.length, 0)
 
     return (
-        <div style={{ width: '420px', position: 'absolute', zIndex: '45', height: '888px', overflow: 'auto' }} className={`board-menu notifications-modal ${isNotificationsOpen ? 'translate' : ''}`}>
+        <div style={{ right: '0', width: '420px', position: 'absolute', zIndex: '45', height: '888px', overflow: 'auto' }} className={`board-menu notifications-modal ${isNotificationsOpen ? 'translate' : ''}`}>
             <div className="board-menu-container notifications">
                 <div className="board-menu-notification-content">
                     <header className="board-menu-header">
