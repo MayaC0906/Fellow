@@ -6,6 +6,9 @@ import { AddBoard } from './Board/AddBoard'
 import { loadUsers, login } from '../store/actions/user.actions'
 import { UserDetailsDisplay } from './UserDetailsDisplay'
 import { updateBoards } from '../store/actions/board.actions'
+import { UserNotifications } from './UserNotifications'
+import { socketService } from '../services/socket.service'
+
 
 export function AppHeader() {
     const boardStyle = useSelector((storeState) => storeState.boardModule.board.style) || null
@@ -23,15 +26,63 @@ export function AppHeader() {
     const [isSearchOpen, setIsSearchOpen] = useState(false)
     const [isPhoneDisplay, setIsPhoneDisplay] = useState({ isDisplay: false, isSearch: true })
     const [extandedWidthSearch, setExtandedWidthSearch] = useState('160px')
+    const [isNotificationsOpen, setNotificationsOpen] = useState(false)
+    let [notifications, setNotifications] = useState([])
+    let [newActivity, setNewActivity] = useState(null)
+    const [hasUnseenActivities, setHasUnseenActivities] = useState(false)
+    const [unseenActivityCount, setUnseenActivityCount] = useState(0)
+
 
     useEffect(() => {
-        window.addEventListener('resize', handleResize);
+        const allActivities = boards.flatMap(board =>
+            board.activities.filter(activity => activity.byMember._id !== user._id)
+        );
+        const sortedActivities = allActivities.sort((a, b) => b.createdAt - a.createdAt)
+        setNotifications(sortedActivities)
+        const unseenCount = sortedActivities.reduce((count, activity) => {
+            return count + (localStorage.getItem(`seenActivity_${activity.id}`) ? 0 : 1)
+        }, 0);
+        setUnseenActivityCount(unseenCount)
+    }, [boards, user?._id]);
+
+    useEffect(() => {
+        const hasUnseen = localStorage.getItem('hasUnseenActivities') === 'true'
+        setHasUnseenActivities(hasUnseen)
+    }, [])
+
+    useEffect(() => {
+        const handleNewActivity = (activity) => {
+            if (activity.byMember._id === user._id) return
+            setNewActivity(activity);
+            localStorage.setItem('hasUnseenActivities', 'true')
+            setHasUnseenActivities(true)
+            setUnseenActivityCount(prevCount => prevCount + 1)
+        };
+
+        socketService.on('board-activity', handleNewActivity)
+        return () => {
+            socketService.off('board-activity', handleNewActivity)
+        };
+    }, [user._id])
+
+    const handleNotificationsOpen = () => {
+        setNotificationsOpen(!isNotificationsOpen)
+        if (!isNotificationsOpen) {
+            notifications.forEach(activity => {
+                localStorage.setItem(`seenActivity_${activity.id}`, 'true')
+            });
+            setUnseenActivityCount(0);
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener('resize', handleResize)
         handleResize()
 
         return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
+            window.removeEventListener('resize', handleResize)
+        }
+    }, [])
 
 
 
@@ -111,121 +162,137 @@ export function AppHeader() {
     }
 
     return (
-        <header className='app-header' style={{ backgroundColor: `rgb(${boardStyle?.dominantColor.rgb})` || 'white' }}>
-            <section className='nav-links'>
-                <NavLink to={isPhoneDisplay.isDisplay ? "/workspace" : "/"}>
-                    <div onClick={() => { setModalState(prevState => ({ ...prevState, isOpen: false, modal: '' })) }}
-                        className={'logo' + (brightClass ? ' dark-btn' : ' light-btn')}>
-                        FELLOW
-                    </div>
-                </NavLink>
-                <section className='links'>
-                    {!isPhoneDisplay.isDisplay && <NavLink to={"/workspace"}>
-                        <button onClick={() => { setModalState(prevState => ({ ...prevState, isOpen: false, modal: '' })) }}
-                            className={'app-header-btn nav-link-btn link ' +
-                                (brightClass ? ' dark-btn' : ' light-btn')}><span>My workspace</span></button>
-                    </NavLink>}
-                    {!isPhoneDisplay.isDisplay && <button className={'app-header-btn nav-link-btn link starred-btn' +
-                        (brightClass ? ' dark-btn' : ' light-btn')}
-                        onClick={onOpenStarredBoard}>
-                        <span>Starred</span> {appHeaderSvg.arrowDown}
-                        {modalState.isOpen && modalState.modal === 'starred' && <section className='starred-boards'>
-                            {starredBoards.length === 0 &&
-                                <>
-                                    <img className='empty-img' src="https://trello.com/assets/cc47d0a8c646581ccd08.svg" alt="" />
-                                    <h3>Star important boards to access them quickly and easily.</h3>
-                                </>}
+        <>
+            <header className='app-header' style={{ backgroundColor: `rgb(${boardStyle?.dominantColor.rgb})` || 'white' }}>
+                <section className='nav-links'>
+                    <NavLink to={isPhoneDisplay.isDisplay ? "/workspace" : "/"}>
+                        <div onClick={() => { setModalState(prevState => ({ ...prevState, isOpen: false, modal: '' })) }}
+                            className={'logo' + (brightClass ? ' dark-btn' : ' light-btn')}>
+                            FELLOW
+                        </div>
+                    </NavLink>
+                    <section className='links'>
+                        {!isPhoneDisplay.isDisplay && <NavLink to={"/workspace"}>
+                            <button onClick={() => { setModalState(prevState => ({ ...prevState, isOpen: false, modal: '' })) }}
+                                className={'app-header-btn nav-link-btn link ' +
+                                    (brightClass ? ' dark-btn' : ' light-btn')}><span>My workspace</span></button>
+                        </NavLink>}
+                        {!isPhoneDisplay.isDisplay && <button className={'app-header-btn nav-link-btn link starred-btn' +
+                            (brightClass ? ' dark-btn' : ' light-btn')}
+                            onClick={onOpenStarredBoard}>
+                            <span>Starred</span> {appHeaderSvg.arrowDown}
+                            {modalState.isOpen && modalState.modal === 'starred' && <section className='starred-boards'>
+                                {starredBoards.length === 0 &&
+                                    <>
+                                        <img className='empty-img' src="https://trello.com/assets/cc47d0a8c646581ccd08.svg" alt="" />
+                                        <h3>Star important boards to access them quickly and easily.</h3>
+                                    </>}
 
-                            {starredBoards.length > 0 && <section className='starred-board-list'>
-                                {starredBoards.map(board => {
-                                    return <div
-                                        key={board._id}
-                                        onClick={(event) => { onOpenBoard(event, board._id) }}
-                                        className='starred-board'>
-                                        <section className='board-info'>
-                                            <img className='board-img' src={board.style.backgroundImage} alt="Board background" />
-                                            <span>{board.title}</span>
-                                        </section>
-                                        <span className='full-star-icon'>{workspaceSvg.fullStar}
-                                            <span onClick={(event) => { onStarredBoard(event, board) }} className='empty-star-icon'>{workspaceSvg.star}</span>
-                                        </span>
-                                    </div>
-                                })}
-                            </section>}
-                        </section>}
-                    </button>}
-                </section>
-                <button onClick={onCreateBoard}
-                    className={'create-btn' + (brightClass ? ' dark-btn' : ' light-btn')}
-                // onBlur={() => (setModalState(prevState => ({ ...prevState, isOpen: false, modal: '' })))}
-                >{isPhoneDisplay.isDisplay ? sideBar.plus : 'Create board'}
-                    {modalState.isOpen && modalState.modal === 'create' &&
-                        <div className='add-board-container-header'
-                            style={{
-                                top: '40px',
-                                left: isPhoneDisplay.isDisplay ? '-120px' : '-15px',
-                                position: 'absolute',
-                                zIndex: '1000'
-                            }}>
-                            <AddBoard pos={true} setModalState={setModalState} />
-                        </div>}
-                </button>
-            </section>
-
-            <section className='nav-info'>
-                {isPhoneDisplay.isSearch &&
-                    <div className={'search-app-header' +
-                        (brightClass ? ' dark-btn' : ' light-btn') +
-                        (isSearchOpen ? ' open' : '')}
-                        onClick={onOpenHeaderSearch}                >
-                        <div className='search-input'
-                            onBlur={() => {
-                                setIsSearchOpen(false)
-                                setModalState(prevState => ({ ...prevState, isOpen: false, modal: '' }))
-                            }}>
-                            <span>{appHeaderSvg.search}</span>
-                            <input type="text" placeholder={isSearchOpen ? 'Search trello' : 'Search'} ref={inputRef}
-                                onChange={(event) => { setSearchInput(event.target.value) }}
-                                style={{ width: isSearchOpen ? `${extandedWidthSearch - 35}px` : '200px' }} />
-
-                            {isSearchOpen &&
-                                <div
-                                    style={{ right: '0px', top: '38px', width: `${extandedWidthSearch}px` }}
-                                    className='searched-boards-header'>
-                                    <span>BOARDS</span>
-                                    {filterdBoards.map(board => {
+                                {starredBoards.length > 0 && <section className='starred-board-list'>
+                                    {starredBoards.map(board => {
                                         return <div
-                                            onMouseDown={(event) => {
-                                                event.preventDefault()
-                                                onOpenBoard(event, board._id)
-                                            }}
-                                            className='searched-board'>
-                                            <img src={board.style.backgroundImage} alt="Board background" />
-                                            <span>{board.title}</span>
+                                            key={board._id}
+                                            onClick={(event) => { onOpenBoard(event, board._id) }}
+                                            className='starred-board'>
+                                            <section className='board-info'>
+                                                <img className='board-img' src={board.style.backgroundImage} alt="Board background" />
+                                                <span>{board.title}</span>
+                                            </section>
+                                            <span className='full-star-icon'>{workspaceSvg.fullStar}
+                                                <span onClick={(event) => { onStarredBoard(event, board) }} className='empty-star-icon'>{workspaceSvg.star}</span>
+                                            </span>
                                         </div>
                                     })}
-                                </div>
-                            }
-                        </div>
-                    </div>}
-
-                {isPhoneDisplay.isDisplay && !isPhoneDisplay.isSearch && <NavLink to={'/search'}>
-                    <button className={'search-btn' +
-                        (brightClass ? ' dark-btn' : ' light-btn')}>
-                        {appHeaderSvg.search}
+                                </section>}
+                            </section>}
+                        </button>}
+                    </section>
+                    <button onClick={onCreateBoard}
+                        className={'create-btn' + (brightClass ? ' dark-btn' : ' light-btn')}
+                    // onBlur={() => (setModalState(prevState => ({ ...prevState, isOpen: false, modal: '' })))}
+                    >{isPhoneDisplay.isDisplay ? sideBar.plus : 'Create board'}
+                        {modalState.isOpen && modalState.modal === 'create' &&
+                            <div className='add-board-container-header'
+                                style={{
+                                    top: '40px',
+                                    left: isPhoneDisplay.isDisplay ? '-120px' : '-15px',
+                                    position: 'absolute',
+                                    zIndex: '1000'
+                                }}>
+                                <AddBoard pos={true} setModalState={setModalState} />
+                            </div>}
                     </button>
-                </NavLink>}
-                <button className={'app-header-btn user-info' + (brightClass ? ' dark-btn' : ' light-btn')}>
-                    {appHeaderSvg.notifications}</button>
-                {user &&
-                    <>
-                        <div className={'app-header-btn user-info' + (brightClass ? ' dark-btn' : ' light-btn')} >
-                            <img onClick={() => setIsUserDetailOpen(!isUserDetailOpen)} src={user.imgUrl} alt="" />
-                        </div>
-                        {isUserDetailOpen && (<UserDetailsDisplay isUserDetailOpen={isUserDetailOpen} setIsUserDetailOpen={setIsUserDetailOpen} user={user} />)}
-                    </>
-                }
-            </section>
-        </header>
+                </section>
+
+                <section className='nav-info'>
+                    {isPhoneDisplay.isSearch &&
+                        <div className={'search-app-header' +
+                            (brightClass ? ' dark-btn' : ' light-btn') +
+                            (isSearchOpen ? ' open' : '')}
+                            onClick={onOpenHeaderSearch}                >
+                            <div className='search-input'
+                                onBlur={() => {
+                                    setIsSearchOpen(false)
+                                    setModalState(prevState => ({ ...prevState, isOpen: false, modal: '' }))
+                                }}>
+                                <span>{appHeaderSvg.search}</span>
+                                <input type="text" placeholder={isSearchOpen ? 'Search trello' : 'Search'} ref={inputRef}
+                                    onChange={(event) => { setSearchInput(event.target.value) }}
+                                    style={{ width: isSearchOpen ? `${extandedWidthSearch - 35}px` : '200px' }} />
+
+                                {isSearchOpen &&
+                                    <div
+                                        style={{ right: '0px', top: '38px', width: `${extandedWidthSearch}px` }}
+                                        className='searched-boards-header'>
+                                        <span>BOARDS</span>
+                                        {filterdBoards.map(board => {
+                                            return <div
+                                                onMouseDown={(event) => {
+                                                    event.preventDefault()
+                                                    onOpenBoard(event, board._id)
+                                                }}
+                                                className='searched-board'>
+                                                <img src={board.style.backgroundImage} alt="Board background" />
+                                                <span>{board.title}</span>
+                                            </div>
+                                        })}
+                                    </div>
+                                }
+                            </div>
+                        </div>}
+
+                    {isPhoneDisplay.isDisplay && !isPhoneDisplay.isSearch && <NavLink to={'/search'}>
+                        <button className={'search-btn' +
+                            (brightClass ? ' dark-btn' : ' light-btn')}>
+                            {appHeaderSvg.search}
+                        </button>
+                    </NavLink>}
+                    <button style={{ position: 'relative' }} onClick={handleNotificationsOpen} className={'app-header-btn user-info' + (brightClass ? ' dark-btn' : ' light-btn')}>
+                        {appHeaderSvg.notifications}</button>
+                    {unseenActivityCount > 0 && (
+                        <span className="notification-indicator">{unseenActivityCount}</span>
+                    )}
+                    {user &&
+                        <>
+                            <div className={'app-header-btn user-info' + (brightClass ? ' dark-btn' : ' light-btn')} >
+                                <img onClick={() => setIsUserDetailOpen(!isUserDetailOpen)} src={user.imgUrl} alt="" />
+                            </div>
+                            {isUserDetailOpen && (<UserDetailsDisplay isUserDetailOpen={isUserDetailOpen} setIsUserDetailOpen={setIsUserDetailOpen} user={user} />)}
+                        </>
+                    }
+                </section>
+            </header>
+            {isNotificationsOpen && (
+                <UserNotifications
+                    user={user}
+                    isNotificationsOpen={isNotificationsOpen}
+                    setNotificationsOpen={setNotificationsOpen}
+                    boards={boards}
+                    notifications={notifications}
+                    newActivity={newActivity} // Pass new activity as props to UserNotifications
+                    setNewActivity={setNewActivity}
+                />
+            )}
+        </>
     )
 }

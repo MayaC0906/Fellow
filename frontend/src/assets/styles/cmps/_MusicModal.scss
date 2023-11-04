@@ -1,0 +1,101 @@
+.music-modal {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 300px; /* Adjust the width as needed */
+  margin: auto;
+  position: relative;
+}
+
+.ios-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.ios-modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.close {
+  cursor: pointer;
+}
+
+.search-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.search-form input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+// .search-btn {
+//   padding: 10px 15px;
+//   background-color: #007bff;
+//   color: white;
+//   border: none;
+//   border-radius: 5px;
+//   cursor: pointer;
+// }
+
+.current-song {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.song-thumbnail {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.song-title {
+  margin-top: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.player-controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.control-btn {
+  background-color: #f0f0f0;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.control-btn.play {
+  color: #28a745;
+}
+
+.control-btn.pause {
+  color: #dc3545;
+}
+
+.control-btn.rewind,
+.control-btn.forward {
+  color: #6c757d;
+}
+
+/* Additional styling for the button interaction */
+.control-btn:hover {
+  background-color: #e2e6ea;
+}
+
+.control-btn:active {
+  background-color: #d6d8db;
+}
