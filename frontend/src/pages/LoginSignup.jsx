@@ -77,7 +77,7 @@ export function LoginSignup() {
                         type="text"
                         name="username"
                         // value={username}
-                        placeholder="Enter your email"
+                        placeholder="Enter username"
                         onChange={handleChange}
                         required
                         autoFocus

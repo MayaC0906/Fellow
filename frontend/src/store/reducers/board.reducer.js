@@ -25,7 +25,7 @@ export function boardReducer(state = initialState, action) {
     switch (action.type) {
         case SET_BOARDS:
             newState = { ...state, boards: action.boards }
-
+            console.log('newstate:', newState.boards);
             break
         case REMOVE_BOARD:
             const lastRemovedBoard = state.boards.find(board => board._id === action.boardId)
@@ -56,7 +56,6 @@ export function boardReducer(state = initialState, action) {
         //     break
         case SET_BOARD:
             newState = { ...state, board: action.board }
-            console.log('newState.board', newState.board);
             break
         default:
     }

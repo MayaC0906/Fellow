@@ -27,6 +27,8 @@ export function getActionUpdateBoard(board) {
 }
 
 export async function loadBoards(user) {
+    console.log('hey');
+    console.log('user', user);
     try {
         const boards = await boardService.query();
         console.log('Boards loaded:', boards);
@@ -34,10 +36,10 @@ export async function loadBoards(user) {
         let filteredBoards = boards;
         if (user) {
             if (user.username !== 'Guest') {
-                filteredBoards = boards.filter(board => 
+                filteredBoards = boards.filter(board =>
                     board.members.some(boardMember => boardMember._id === user._id)
                 );
-                console.log('Filtered boards:', filteredBoards);
+                // console.log('Filtered boards:', filteredBoards);
             }
             // else case for Guest user is implicit, no need to filter boards
         } else {
