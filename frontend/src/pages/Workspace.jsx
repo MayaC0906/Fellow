@@ -50,6 +50,7 @@ export function Workspace() {
 
     function getBounds() {
         const addBoarddRect = createBoardRef.current.getBoundingClientRect()
+        console.log(addBoarddRect);
 
         //DO NOT DELETE!!!!
 
@@ -59,24 +60,48 @@ export function Workspace() {
         //         left: addBoarddRect.left + 205
         //     })
         // }
-        if (addBoarddRect.x > 590) {
-            setAddBoardPosition({
-                top: addBoarddRect.top,
-                left: addBoarddRect.left + 200
-            })
-        }
+        // if (addBoarddRect.x > 590) {
+        //     console.log(1);
+        //     setAddBoardPosition({
+        //         top: addBoarddRect.top,
+        //         left: addBoarddRect.left + 200
+        //     })
+        // }
+        // if (addBoarddRect.x < 540) {
+        //     console.log(2);
+        //     setAddBoardPosition({
+        //         top: addBoarddRect.top,
+        //         left: addBoarddRect.left - 317
+        //     })
         if (addBoarddRect.y > 540) {
+            console.log(3);
             setAddBoardPosition({
-                top: addBoarddRect.top - 345,
+                top: addBoarddRect.top - 350,
                 left: addBoarddRect.left + 200
             })
-        }
-        else {
+
+            if (addBoarddRect.y > 540 && addBoarddRect.x < 550) {
+                console.log(4);
+                setAddBoardPosition({
+                    top: addBoarddRect.top - 350,
+                    left: addBoarddRect.left - 317
+                })
+            }
+            if (addBoarddRect.y > 540 && addBoarddRect.x < 270) {
+                console.log(5);
+                setAddBoardPosition({
+                    top: addBoarddRect.top - 350,
+                    left: addBoarddRect.left
+                })
+            }
+        } else {
+            console.log('else');
             setAddBoardPosition({
                 top: addBoarddRect.top,
                 left: addBoarddRect.left + 205
             })
         }
+        console.log(addBoardPosition);
     }
 
     if (isLoading) return <div className="loader board"><div>{loaderSvg.loader}</div></div>
@@ -111,7 +136,7 @@ export function Workspace() {
                         <span className="svg flex align-center justify-center">{workspaceSvg.member}</span>
                         <span className="header-title">Your boards</span>
                     </div>
-                    <ul className="board-list clean-list flex">
+                    <ul className="second-ul board-list clean-list flex">
                         <BoardList
                             boards={boards}
                             onStarredBoard={onStarredBoard}

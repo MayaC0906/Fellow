@@ -32,7 +32,6 @@ export function AppHeader() {
     const [hasUnseenActivities, setHasUnseenActivities] = useState(false)
     const [unseenActivityCount, setUnseenActivityCount] = useState(0)
 
-
     useEffect(() => {
         const allActivities = boards.flatMap(board =>
             board.activities.filter(activity => activity.byMember._id !== user?._id)

@@ -12,10 +12,28 @@
     .user-details {
         padding-inline: rem(20px);
 
+        .close-modal {
+            display: flex;
+            align-items: center;
+            width: 30px;
+            height: 30px;
+            position: relative;
+            left: 175px;
+            padding: 8px;
+            border-radius: 3px;
+
+            svg {
+                width: 16px;
+                height: 16px;
+                color: rgb(23, 43, 77);
+            }
+        }
+
         p {
             font-size: rem(11px);
             font-weight: 700;
             margin-block: rem(16px) rem(8px);
+            margin-block-start: -11px;
             color: rgb(98, 111, 134);
         }
 
@@ -27,6 +45,7 @@
                 height: rem(40px);
                 border-radius: 50%;
                 margin-inline-end: 8px;
+                object-fit: cover;
             }
 
             h2 {
@@ -48,6 +67,11 @@
 
             .username {
                 font-size: rem(12px);
+            }
+
+            .insdie-img {
+                width: rem(32px);
+                height: rem(32px);
             }
 
         }

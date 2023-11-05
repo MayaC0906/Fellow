@@ -1,8 +1,10 @@
 import { Checkbox } from "@mui/joy";
-import { additionTaskEdiSvg, additionTaskSvg, appHeaderSvg, taskSvg, workspaceSvg } from "../Svgs";
+import { additionTaskEdiSvg, additionTaskSvg, appHeaderSvg, checkList, taskSvg, workspaceSvg } from "../Svgs";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import { boardService } from "../../services/board.service.local";
+import { useRef } from "react";
+import { useEffect } from "react";
 
 export function TaskFilter({ setIsFiltersOpen, taskFilterBy, setTaskFilterby, checkboxContainer, handelCheckBox, setCheckboxContainer }) {
     const user = useSelector(storeState => storeState.userModule.user)
@@ -79,9 +81,9 @@ export function TaskFilter({ setIsFiltersOpen, taskFilterBy, setTaskFilterby, ch
     return (
         <div className="filter-container">
             <header>
+                <span className="close-filter" onClick={onClearTaskFilterBy}>{checkList.garbage}</span>
                 <h2>Filters</h2>
                 <span onClick={() => setIsFiltersOpen(false)}>{additionTaskSvg.close}</span>
-                <h2 onClick={onClearTaskFilterBy}>Clear all</h2>
             </header>
             <div className="content">
                 <section className="search-key">

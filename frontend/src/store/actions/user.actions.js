@@ -32,7 +32,7 @@ export async function removeUser(userId) {
 }
 
 export async function login(credentials) {
-    console.log(credentials);
+    // console.log(credentials);
     try {
         const user = await userService.login(credentials)
         store.dispatch({

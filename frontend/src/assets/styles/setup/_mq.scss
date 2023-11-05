@@ -1,7 +1,7 @@
 @media only screen and (max-width: 900px) {
     .workspace-container {
         .boards {
-            width: 90%;
+            width: rem(607px);
         }
     }
 
@@ -16,12 +16,98 @@
     }
 }
 
-@media only screen and (max-width: 450px) {
+@media only screen and (max-width: 660px) {
     .workspace-container {
         .boards {
-            width: 50%;
+            width: 90%;
+
+            .board-preview,
+            .boards-add,
+            .no-board-container {
+                width: 48%;
+            }
+        }
+
+        .add-board {
+            top: unset !important;
+            bottom: 16px !important;
+            width: 87%;
+
+            &-display {
+                .display-container {
+                    width: rem(250px);
+                    height: rem(150px);
+
+                    img {
+                        width: rem(225px);
+                        height: rem(125px);
+                    }
+                }
+            }
+
+            .img-option {
+                img {
+                    width: 100%;
+                    height: rem(75px);
+                }
+            }
+
+            .color-option {
+                img {
+                    width: 15.5%;
+                    height: rem(50px);
+                }
+            }
+
+            .board-title-input {
+                input {
+                    height: rem(40px);
+                    font-size: rem(16px);
+                }
+
+            }
+
+            .create-board {
+                height: rem(40px);
+            }
         }
     }
+}
+
+@media only screen and (max-width: 490px) {
+    .workspace-container {
+        .boards {
+            width: 80%;
+
+            .board-preview,
+            .boards-add,
+            .no-board-container {
+                width: 100%;
+            }
+
+        }
+
+        .add-board {
+            left: 25.5px !important;
+
+            .img-option {
+                img {
+                    width: rem(70px);
+                    height: rem(50px);
+                }
+            }
+
+            .color-option {
+                img {
+                    width: 14.5%;
+                    height: rem(34px);
+                }
+            }
+        }
+
+    }
+
+
 
     .login-page-container {
         .login-page {
