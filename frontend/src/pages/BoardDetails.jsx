@@ -23,7 +23,7 @@ export function BoardDetails() {
     const user = useSelector(storeState => storeState.userModule.user)
     const [isMenuOpen, setMenu] = useState(false)
     const [isFiltersOpen, setIsFiltersOpen] = useState(false)
-
+    console.log('entered BOARDDETAILS');
     useEffect(() => {
         socketService.emit(SOCKET_EMIT_SET_TOPIC, boardId)
     }, [boardId])
@@ -37,11 +37,10 @@ export function BoardDetails() {
         onLoadBoard()
         loadBoards(user)
         return () => {
-            socketService.off(SOCKET_EVENT_UPDATE_BOARD, dispatch({ type: SET_BOARD, board }));
+            socketService.off(SOCKET_EVENT_UPDATE_BOARD, board);
         };
-        // return (() => {
-        // socketService.off(SOCKET_EMIT_UPDATE_BOARD, board)
-        // })
+
+
         // loadBoards()
         // onLoadBoard()
     }, [boardId])

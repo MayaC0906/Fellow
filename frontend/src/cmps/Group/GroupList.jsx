@@ -13,7 +13,9 @@ import { GroupPreview } from './GroupPreview.jsx'
 import { checkList } from '../Svgs.jsx'
 import { TaskFilter } from '../Task/TaskFilter.jsx'
 import { SOCKET_EMIT_UPDATE_BOARD, socketService } from '../../services/socket.service.js'
-
+import { store } from '../../store/store.js'
+import { getActionUpdateBoard } from '../../store/actions/board.actions.js'
+import { async } from 'regenerator-runtime'
 export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
     const [isInputExpand, setInputExpand] = useState(false)
     const [newGroup, setNewGroup] = useState(boardService.getEmptyGroup())
@@ -102,7 +104,6 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
             const txt = `added a new group titled '${newGroup.title}'.`;
             await saveGroup(newGroup, board._id, user, txt)
             setNewGroup(boardService.getEmptyGroup())
-            showSuccessMsg('New group')
             if (addListInput.current) {
                 addListInput.current.focus();
             }
@@ -136,7 +137,6 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
         try {
             await updateBoard(board)
             console.log('on pdate board');
-            socketService.emit(SOCKET_EMIT_UPDATE_BOARD, board)
         } catch (err) {
             console.log('cant update board from group list', err);
             throw err
@@ -172,18 +172,20 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
         }
     }
 
-    function handleDrag(result) {
+
+
+    async function handleDrag(result) {
         const { destination, source, type } = result
         if (!destination || (destination.droppableId === source.droppableId && destination.index === source.index)) return
-        const clonedBoard = { ...board }
+        const clonedBoard = structuredClone(board)
         if (type === 'groups') {
             const updatedGroups = [...clonedBoard.groups]
             const [movedGroup] = updatedGroups.splice(source.index, 1)
             updatedGroups.splice(destination.index, 0, movedGroup)
             clonedBoard.groups = updatedGroups;
-            updateBoard(clonedBoard);
-            return;
+            await updateBoard(clonedBoard);
         }
+
         if (type === 'tasks') {
             const originalGroup = clonedBoard.groups.find(group => group.id === source.droppableId)
             const targetGroup = clonedBoard.groups.find(group => group.id === destination.droppableId)
@@ -192,8 +194,7 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
                 const [movedTask] = updatedTasks.splice(source.index, 1)
                 updatedTasks.splice(destination.index, 0, movedTask)
                 originalGroup.tasks = updatedTasks
-                updateBoard(clonedBoard)
-                return
+                await updateBoard(clonedBoard);
             } else {
                 const tasksFromOriginalGroup = [...originalGroup.tasks]
                 const tasksForTargetGroup = [...targetGroup.tasks]
@@ -201,8 +202,7 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
                 tasksForTargetGroup.splice(destination.index, 0, movedTask)
                 originalGroup.tasks = tasksFromOriginalGroup
                 targetGroup.tasks = tasksForTargetGroup
-                updateBoard(clonedBoard)
-                return
+                await updateBoard(clonedBoard);
             }
         }
     }

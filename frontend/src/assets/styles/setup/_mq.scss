@@ -118,17 +118,27 @@
 
 @media only screen and (max-width: 670px) {
     .task-details {
+        overflow-y: auto;
+
         .modal-container {
             display: flex;
+            height: 100%;
 
             .task-modal {
+                overflow-y: auto;
+                height: 100%;
                 border-radius: 0px;
 
                 .task-detail-screen {
                     .task-title {
+                        padding-left: 27px;
                         padding-top: 8px;
                         border-bottom: 2px solid #dcdcdc;
                         margin-block-end: 8px;
+
+                        svg {
+                            left: 5px
+                        }
 
                         div {
                             height: auto;
@@ -140,21 +150,22 @@
                         flex-direction: column;
 
                         .actions-show-btn {
+                            display: flex;
+                            justify-content: space-between;
                             cursor: pointer;
                             font-weight: 500;
-                            color: white;
+                            color: $h-h-txt1;
                             border: none;
-                            width: max-content;
-                            margin: 0 0 10px 56px;
-                            display: flex;
+                            width: calc(100% - 47px);
+                            margin: 0 0 10px 37px;
                             padding: 6px 12px;
                             font-size: rem(16px);
                             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-                            justify-content: flex-start;
                             gap: 10px;
-                            border-radius: 3px;
                             align-items: center;
-                            background-color: #172b4d9a;
+                            background: none;
+                            border-top: 1px solid $clr7;
+                            border-bottom: 1px solid $clr7;
 
                             span {
                                 display: flex;
@@ -166,24 +177,40 @@
                                 display: flex;
                                 justify-content: center;
                                 align-items: center;
-                                height: 20px;
-                                width: 20px;
+                                height: 25px;
+                                width: 25px;
 
                                 path {
-                                    fill: white
+                                    fill: $h-h-txt1
                                 }
                             }
 
                             &:hover {
-                                background-color: lighten(#172b4d9a, 3%)
+                                background-color: lighten(#172b4d0e, 3%)
                             }
 
                             &:active {
-                                background-color: darken(#172b4d9a, 3%)
+                                background-color: darken(#172b4d0e, 3%)
                             }
                         }
 
                         .task-info {
+                            .task-items-display {
+                                margin-inline-start: 37px;
+                            }
+
+                            .task-date-show {
+                                margin-inline-start: 37px;
+                            }
+
+                            .task-details-title {
+                                margin-inline-start: 37px;
+
+                                svg {
+                                    left: 2px
+                                }
+                            }
+
                             .task-content {
                                 >* {
                                     border-bottom: 1px solid #e5e7eb;
@@ -195,24 +222,111 @@
 
                                 .task-descriptoin {
                                     .desc-actions {
+                                        margin-inline-start: 37px;
                                         margin-block-end: 10px;
                                     }
 
+                                    .description-input {
+                                        margin-inline-start: 25px;
+                                        width: calc(100% - 20px)
+                                    }
+
                                     .description-input.add-description {
+                                        margin-inline-start: 37px;
                                         margin-block-end: 10px;
+                                        width: calc(100% - 37px)
                                     }
                                 }
 
                                 .task-checklist {
                                     margin-block-end: 10px;
+
+                                    .checklist-item {
+                                        margin-inline-start: -3px;
+                                    }
+
+                                    .checklist-svg {
+                                        left: 2px
+                                    }
+
+                                    .list-title {
+                                        .title {
+                                            margin-inline-start: 37px;
+                                        }
+                                    }
+
+                                    .add-group-input-expanded {
+                                        margin-inline-start: 37px;
+                                    }
+
+                                    .progress-bar {
+                                        margin-inline-start: 0;
+
+                                        .progress-bar-container {
+                                            margin-inline-start: 37px;
+                                        }
+
+                                        span {
+                                            width: 30px;
+                                        }
+                                    }
+
+                                    .add-todo-container {
+                                        margin-inline-start: 37px;
+
+                                        div {
+                                            width: calc(100% - 10px);
+                                        }
+                                    }
+
+                                    .add-todo {
+                                        margin-inline-start: 37px;
+                                    }
                                 }
 
                                 .task-activities {
                                     margin-block-start: 8px;
 
-                                    .write-comment {
-                                        width: calc(100% - 56px);
+                                    header {
+                                        svg {
+                                            margin-inline-start: 3px;
+                                        }
+
+                                        span {
+                                            margin-inline-start: 37px;
+                                        }
                                     }
+
+                                    .task-descriptoin {
+                                        img {
+                                            margin-inline-start: 1px !important;
+                                        }
+
+                                        .write-comment {
+                                            margin-inline-start: 37px;
+                                            width: calc(100% - 37px);
+                                        }
+                                    }
+
+                                    .comment-item {
+                                        margin-inline-start: 37px !important;
+
+                                        img {
+                                            left: -36px;
+                                            top: 5px;
+                                            margin-inline-end: 2px;
+                                        }
+                                    }
+
+                                    .activity {
+                                        margin-inline-start: 21px;
+
+                                        img {
+                                            left: -32px;
+                                            margin-inline-end: 2px;
+                                        }
+                                    }
+
                                 }
 
                                 .task-attachments {
@@ -221,8 +335,16 @@
                                     }
 
                                     .task-attachment {
+                                        margin-inline-start: 37px;
+
                                         .img-info {
                                             padding-top: 0;
+
+                                            .img-actions {
+                                                h3 {
+                                                    font-size: rem(13px);
+                                                }
+                                            }
 
                                             h2 {
                                                 white-space: nowrap;
@@ -241,22 +363,45 @@
                             border-bottom: 1px solid #e5e7eb;
 
                             .add-container {
+                                margin-inline-start: 27px;
+                                flex-direction: row;
+                                flex-wrap: wrap;
+
                                 .edit-modal {
+                                    transition: transform 0.2s ease-in;
                                     position: fixed;
+                                    width: 100%;
+                                    bottom: 0 !important;
+                                    left: 0 !important;
+                                    top: unset !important;
+                                    box-shadow: 0px -10px 6px -4px rgba(0, 0, 0, 0.3);
+
+                                    .edit-modal-content {
+                                        width: 100%;
+
+                                        .add-attachment-container {
+
+                                            label,
+                                            input {
+                                                width: 100%;
+                                            }
+                                        }
+
+                                        .label-edit {
+                                            .color {
+                                                width: 100%;
+                                            }
+                                        }
+                                    }
                                 }
 
                                 .btn {
                                     width: 130px
                                 }
 
-                                margin-inline-start: 46px;
-
                                 h3 {
                                     display: none;
                                 }
-
-                                flex-direction: row;
-                                flex-wrap: wrap;
                             }
 
                         }
@@ -272,4 +417,18 @@
         font-size: rem(13px);
     }
 
+
+    .slide-up {
+        animation: slideUp 0.2s ease-in;
+    }
+
+    @keyframes slideUp {
+        from {
+            transform: translateY(100%);
+        }
+
+        to {
+            transform: translateY(0);
+        }
+    }
 }

@@ -12,6 +12,7 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
     const { boardId } = useParams()
     let [editName, setEditName] = useState('')
     const [isQuickEdit, setIsQuickEdit] = useState(false)
+    const [ev, setEv] = useState(null)
     let taskRef = useRef(null)
     const [quickEditPosition, setQuickEditPosition] = useState({ top: '', left: '' })
     const [rtl, setRtl] = useState(false)
@@ -177,6 +178,8 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
                             Open card
                         </button>
                         <TaskDetailsSideNav
+                            setEv={setEv}
+                            ev={ev}
                             rtl={rtl}
                             onActionDeleteTask={onActionDeleteTask}
                             isQuickEdit={true}

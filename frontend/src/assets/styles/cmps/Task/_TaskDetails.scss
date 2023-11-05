@@ -108,7 +108,7 @@
 
             .task-detail-screen {
                 height: 100%;
-                background-color: $dtl-bgc4;
+                background: none;
 
                 .task-title {
                     display: flex;
@@ -212,7 +212,7 @@
 
 
                         .description-input {
-                            padding: 8px 0 8px 12px;
+                            padding: 0 0 8px 12px;
                             margin-inline-start: 44px;
                             width: calc(100% - 40px);
                             color: #172b4d;
