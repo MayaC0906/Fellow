@@ -25,8 +25,8 @@ export function TaskDetails() {
     let [editName, setEditName] = useState('')
     const user = useSelector((storeState) => storeState.userModule.user)
     const navigate = useNavigate()
-    const coverBtnRef = useRef(null)
-    const [isPhoneDisplay, setIsPhoneDisplay] = useState({ isDisplay: false,  isActionsShown: false })
+    const [isPhoneDisplay, setIsPhoneDisplay] = useState({ isDisplay: false, isActionsShown: false })
+    const [ev, setEv] = useState(null)
 
 
     useEffect(() => {
@@ -110,11 +110,19 @@ export function TaskDetails() {
                     </Link>
 
                     {task.cover?.backgroundColor && <div className="color-cover" style={{ backgroundColor: task.cover.backgroundColor }}>
-                        <div ref={coverBtnRef} className="cover-btn dark-btn" onClick={() => setEditName('Cover')}><span>{taskSvg.cover}</span> <span></span>Cover</div>
+                        <div className="cover-btn dark-btn" onClick={(event) => {
+                            setEditName('Cover')
+                            setEv(event)
+                        }}>
+                            <span>{taskSvg.cover}</span> <span></span>Cover</div>
                     </div>}
                     {task.cover?.img && (
-                        <div ref={coverBtnRef} style={{ backgroundColor: imgBackground }} className="img-cover">
-                            <div className="cover-btn dark-btn" onClick={() => setEditName('Cover')}><span>{taskSvg.cover}</span>Cover</div>
+                        <div style={{ backgroundColor: imgBackground }} className="img-cover">
+                            <div className="cover-btn dark-btn" onClick={(event) => {
+                                setEv(event)
+                                setEditName('Cover')
+                            }}>
+                                <span>{taskSvg.cover}</span>Cover</div>
                             <img src={task.cover.img} alt="" />
                         </div>
                     )}
@@ -123,7 +131,7 @@ export function TaskDetails() {
                         <TaskTitle className="task-detail-title" onSaveTask={onSaveTask} task={task} />
                         <section className="task-main">
 
-                            {isPhoneDisplay.isDisplay && <button 
+                            {isPhoneDisplay.isDisplay && <button
                                 className="actions-show-btn"
                                 onClick={() => {
                                     setIsPhoneDisplay((prevState => ({
@@ -136,7 +144,8 @@ export function TaskDetails() {
                             {(!isPhoneDisplay.isDisplay || isPhoneDisplay.isActionsShown) &&
                                 <section className="edit-task-nav">
                                     <TaskDetailsSideNav
-                                        coverRef={coverBtnRef}
+                                        ev={ev}
+                                        setEv={setEv}
                                         onActionDeleteTask={onActionDeleteTask}
                                         onDeleteTask={onDeleteTask}
                                         setTask={setTask}
@@ -149,6 +158,7 @@ export function TaskDetails() {
                             <section className="task-info">
                                 <section className="task-items-display flex">
                                     <TaskMember
+                                        setEv={setEv}
                                         taskMembersId={task.memberIds}
                                         setEditName={setEditName}
                                         editName={editName}
@@ -156,6 +166,7 @@ export function TaskDetails() {
                                         task={task}
                                     />
                                     <TaskLabel
+                                        setEv={setEv}
                                         taskLabelsId={task.labelIds}
                                         setEditName={setEditName}
                                         editName={editName}

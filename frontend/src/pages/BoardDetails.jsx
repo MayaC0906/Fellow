@@ -29,19 +29,22 @@ export function BoardDetails() {
     }, [boardId])
 
     useEffect(() => {
+
+
         socketService.on(SOCKET_EVENT_UPDATE_BOARD, ((board) => {
             dispatch({ type: SET_BOARD, board })
         }))
         onLoadBoard()
         loadBoards(user)
-
+        return () => {
+            socketService.off(SOCKET_EVENT_UPDATE_BOARD, dispatch({ type: SET_BOARD, board }));
+        };
         // return (() => {
         // socketService.off(SOCKET_EMIT_UPDATE_BOARD, board)
         // })
         // loadBoards()
         // onLoadBoard()
-    }, [])
-
+    }, [boardId])
 
 
 

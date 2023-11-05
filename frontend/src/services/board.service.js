@@ -5,6 +5,7 @@ import { userService } from './user.service.js'
 import { httpService } from './http.service.js'
 import { socketService } from './socket.service.js'
 
+
 const BASE_URL = 'board/'
 export const boardService = {
     query,
@@ -40,8 +41,20 @@ function getCheckListStatus(checkLists) {
 
 
 async function query() {
-    return httpService.get(BASE_URL)
 
+    let boards = await httpService.get(BASE_URL)
+    let user = userService.getLoggedinUser()
+    if (user) {
+        if (user.username !== 'Guest') {
+            boards = boards.filter(board => 
+                board.members.some(boardMember => boardMember._id === user._id)
+            );
+        }
+        // else case for Guest user is implicit, no need to filter boards
+    } else {
+        console.log('No user provided, no boards will be filtered.');
+    }
+    console.log('boards: from load', boards)
     // if (filterBy.txt) {
     //     const regex = new RegExp(filterBy.txt, 'i')
     //     boards = boards.filter(board => regex.test(board.title) || regex.test(board.description))
@@ -49,6 +62,7 @@ async function query() {
     // if (filterBy.price) {
     //     boards = boards.filter(board => board.price <= filterBy.price)
     // }
+    return boards
 }
 
 function getById(boardId) {
@@ -131,6 +145,11 @@ function addActivity(board, user, txt, { group, task } = {}) {
         txt,
         createdAt: Date.now(),
         byMember: user,
+        board: {
+            id: board?._id || '',
+            title: board?.title || '',
+            bgc: board?.style.backgroundImage
+        },
         group: {
             id: group?.id || '',
             title: group?.title || '',
@@ -139,8 +158,11 @@ function addActivity(board, user, txt, { group, task } = {}) {
             id: task?.id || '',
             title: task?.title || '',
         }
+       
     };
     board.activities.unshift(activity);
+    socketService.emit('board-activity', activity)
+
 }
 
 function getEmptyComment(user, txt, groupId, taskId) {

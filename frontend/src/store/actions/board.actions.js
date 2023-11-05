@@ -48,13 +48,12 @@ export async function loadBoards(user) {
 
         store.dispatch({
             type: SET_BOARDS,
-            boards: filteredBoards
-        });
-
-        return filteredBoards;
+            boards: boards
+        })
+        return boards
     } catch (err) {
-        console.error('Cannot load boards', err);
-        throw err; // The error is re-thrown to be handled by the caller
+        console.error('Cannot load boards', err)
+        throw err
     }
 }
 

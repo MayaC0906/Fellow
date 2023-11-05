@@ -21,6 +21,7 @@ export function App() {
 
 
     useEffect(() => {
+        loadUsers()
         onLoadUser()
     }, [user])
 

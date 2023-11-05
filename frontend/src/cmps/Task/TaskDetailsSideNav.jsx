@@ -2,7 +2,7 @@ import { additionTaskEdiSvg, checkList, taskSvg, workspaceSvg } from "../Svgs";
 import { DynamicTaskActions } from "../Dynamic/DynamicTaskActions";
 import { useEffect, useRef, useState } from "react";
 
-export function TaskDetailsSideNav({ editName, setEditName, onSaveTask, task, isQuickEdit, onActionDeleteTask, rtl }) {
+export function TaskDetailsSideNav({ editName, setEditName, onSaveTask, task, isQuickEdit, onActionDeleteTask, rtl, ev, setEv }) {
     const [modalPos, setModalPos] = useState({ top: '', left: '' })
     const memberBtnRef = useRef(null)
     const labelBtnRef = useRef(null)
@@ -15,13 +15,18 @@ export function TaskDetailsSideNav({ editName, setEditName, onSaveTask, task, is
         if (name === editName) {
             onCloseEditTask()
         } else {
-            setEditName(name)
             getBounds(name)
+            setEditName(name)
         }
     }
 
+    useEffect(() => {
+        updateModalPos(memberBtnRef, editName)
+    }, [ev])
+
     function onCloseEditTask() {
         setEditName('')
+        setEv(null)
     }
 
     function getBounds(name) {
@@ -54,36 +59,50 @@ export function TaskDetailsSideNav({ editName, setEditName, onSaveTask, task, is
 
     function updateModalPos(btnRef, name) {
         const screenWidth = window.innerWidth
-        let rect = btnRef.current.getBoundingClientRect()
-        let left = rect.left
-        if (screenWidth - rect.left < 320) left = (screenWidth - 330)
-        if (rtl) left = rect.right - 304
-        if (name === 'Dates') {
-            setModalPos({
-                top: - rect.height + 90,
-                left
-            })
-        } else if (name === 'Attachment') {
-            setModalPos({
-                top: rect.top - 50,
-                left
-            })
-        } else if (name === 'Label') {
-            setModalPos({
-                top: rect.top - 120,
-                left
-            })
-            // } else if (coverRef) {
-            //     setModalPos({
-            //         top: rect.top + rect.height,
-            //         left: left - 50
-            //     })
-        }
-        else {
-            setModalPos({
-                top: rect.top + rect.height + 10,
-                left
-            })
+        if (!ev) {
+            let rect = btnRef.current.getBoundingClientRect()
+            let left = rect.left
+            if (screenWidth - rect.left < 320) left = (screenWidth - 330)
+            if (rtl) left = rect.right - 304
+            if (name === 'Dates') {
+                setModalPos({
+                    top: - rect.height + 90,
+                    left
+                })
+            } else if (name === 'Attachment') {
+                setModalPos({
+                    top: rect.top - 50,
+                    left
+                })
+            } else if (name === 'Label') {
+                setModalPos({
+                    top: rect.top - 120,
+                    left
+                })
+
+            }
+            else {
+                setModalPos({
+                    top: rect.top + rect.height + 10,
+                    left
+                })
+            }
+        } else {
+            let x = ev.clientX
+            let y = ev.clientY
+            let left = ev.clientX - 32
+            if (screenWidth - x < 340) left = (screenWidth - 350)
+            if (name === 'Label') {
+                setModalPos({
+                    top: y - 100,
+                    left
+                })
+            } else {
+                setModalPos({
+                    top: y + 32,
+                    left
+                })
+            }
         }
     }
 

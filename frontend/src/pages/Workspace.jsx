@@ -23,7 +23,7 @@ export function Workspace() {
     }, [])
 
     async function onLoadBoars() {
-        const boards = await loadBoards(user)
+        const boards = await loadBoards()
         console.log('boards loaded');
         setCount(10 - boards.length)
     }

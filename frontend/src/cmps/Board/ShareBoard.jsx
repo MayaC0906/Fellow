@@ -7,6 +7,7 @@ import { loadUsers } from "../../store/actions/user.actions";
 
 export function ShareBoard({ setIsOpenShareBoard }) {
     let users = useSelector(storeState => storeState.userModule.users)
+    console.log(users);
     users = users.filter(user => user._id !== 'guest')
     const board = useSelector(storeState => storeState.boardModule.board)
     const [connectUsers, setConnectUsers] = useState(board.members)
