@@ -34,7 +34,7 @@ export function ChecklistEdit({ pos, onSaveTask, onCloseEditTask, setTask, task 
 
 
     return (
-        <section style={{top: pos.top, left: pos.left}} className="edit-modal">
+        <section style={{top: pos.top, left: pos.left}} className="edit-modal slide-up">
             <div className="title-container">
                 <p>Add checklist</p>
                 <button onClick={onCloseEditTask} className="close-modal">{additionTaskSvg.close}</button>

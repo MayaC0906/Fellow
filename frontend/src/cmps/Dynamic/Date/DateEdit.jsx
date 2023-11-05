@@ -85,7 +85,7 @@ export function DateEdit({ pos, editName, onCloseEditTask, onSaveTask, task }) {
     // console.log('due date', task.dueDate.date);
 
     return (
-        <section style={{ top: pos.top, left: pos.left }} className="edit-modal">
+        <section style={{ top: pos.top, left: pos.left }} className="edit-modal slide-up">
             <div className="title-container">
                 <p>{editName}</p>
                 <button onClick={onCloseEditTask} className="close-modal">{additionTaskSvg.close}</button>
