@@ -28,7 +28,7 @@ export function TaskMember({ taskMembersId, setEditName, editName, onSaveTask, t
 
     function toggleMemberDisplay() {
         if (editName === 'Member') setEditName('')
-        else if (editName === '') setEditName('Member')
+        else setEditName('Member')
     }
 
     async function removeMemberFromTask() {

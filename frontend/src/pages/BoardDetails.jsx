@@ -49,6 +49,7 @@ export function BoardDetails() {
 
 
 
+
     async function onLoadBoard() {
         try {
             await loadBoard(boardId)
