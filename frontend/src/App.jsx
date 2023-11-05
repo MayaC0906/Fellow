@@ -26,7 +26,6 @@ export function App() {
     }, [user])
 
     async function onLoadUser() {
-        console.log('user:', user);
         if (user?.fullname === 'Guest') return
         try {
             if (user === null) {

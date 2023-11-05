@@ -6,26 +6,23 @@ import { AddBoard } from "../cmps/Board/AddBoard"
 import { BoardList } from "../cmps/Board/BoardList"
 
 export function Workspace() {
-    let boards = useSelector(storeState => storeState.boardModule.boards)
+    const boards = useSelector(storeState => storeState.boardModule.boards)
     const user = useSelector(storeState => storeState.userModule.user)
-    // filteredBoards()
     const [isBoardAdded, setIsBoardAdded] = useState(false)
     const [addBoardPosition, setAddBoardPosition] = useState({ top: '', left: '' })
     const createBoardRef = useRef()
-    const [count, setCount] = useState(10 - boards.length)
+    const [isLoading, setIsLoading] = useState(true);
 
-    // function filteredBoards() {
 
-    // }
 
     useEffect(() => {
         onLoadBoars()
     }, [])
 
     async function onLoadBoars() {
-        const boards = await loadBoards()
+        await loadBoards(user)
         console.log('boards loaded');
-        setCount(10 - boards.length)
+        setIsLoading(false)
     }
 
     let starredBoards = getStarredBoards()
@@ -81,17 +78,19 @@ export function Workspace() {
             })
         }
     }
-    if (!boards) return <div className="loader board"><div>{loaderSvg.loader}</div></div>
+
+    if (isLoading) return <div className="loader board"><div>{loaderSvg.loader}</div></div>
     if (boards.length === 0) return (
         <div className="workspace-container">
-            <section ref={createBoardRef} className="no-board-container" onClick={onSetIsBoardAdded}>
-                <h2 className="fs14">Create new board</h2>
-                <h3 className="fs12">{count} remaining</h3>
-                {/* <h3 className="fs12">{boardCount.current} remaining</h3> */}
+            <section className="boards">
+                <section ref={createBoardRef} className="no-board-container" onClick={onSetIsBoardAdded}>
+                    <h2 className="fs14">Create new board</h2>
+                </section>
             </section>
             {isBoardAdded && <AddBoard setIsBoardAdded={setIsBoardAdded} addBoardPosition={addBoardPosition} />}
         </div>
-    ); return (
+    );
+    return (
         <section className="workspace-container flex">
             <section className="boards flex">
                 {starredBoards.length > 0 &&
@@ -117,9 +116,8 @@ export function Workspace() {
                             boards={boards}
                             onStarredBoard={onStarredBoard}
                         />
-                        <section ref={createBoardRef} className={`boards-add ${count === 0 ? 'disable' : ''}`} onClick={count > 0 ? () => onSetIsBoardAdded() : null}>
+                        <section ref={createBoardRef} className={`boards-add`} onClick={() => onSetIsBoardAdded()}>
                             <h2 className="fs14">Create new board</h2>
-                            <h3 className="fs12">{count} remaining</h3>
                         </section>
                     </ul>
                     {isBoardAdded && <AddBoard setIsBoardAdded={setIsBoardAdded} addBoardPosition={addBoardPosition} />}

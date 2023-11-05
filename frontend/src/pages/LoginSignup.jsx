@@ -1,18 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { ImgUploader } from '../cmps/Dynamic/Attachment/ImgUploader'
-import { loadUsers, login, signup } from '../store/actions/user.actions'
+import { login, signup } from '../store/actions/user.actions'
 import { useNavigate } from 'react-router'
-import { useSelector } from 'react-redux'
 
 export function LoginSignup() {
     const [credentials, setCredentials] = useState({ username: '', password: '', fullname: '' })
     const [isSignup, setIsSignup] = useState(false)
     const navigate = useNavigate()
-
-
-    // useEffect(() => {
-    //     loadUsers()
-    // }, [])
 
     function clearState() {
         setCredentials({ username: '', password: '', fullname: '', imgUrl: '' })
@@ -27,21 +21,20 @@ export function LoginSignup() {
 
     async function onConnect() {
         event.preventDefault()
-        console.log('on connect');
         try {
             if (!isSignup) {
-                console.log(1);
                 if (!credentials.username) return
-                console.log(2);
                 const user = await login(credentials)
-                console.log('login', credentials);
                 if (user) navigate('/workspace')
+                clearState()
             } else {
                 if (!credentials.username || !credentials.password || !credentials.fullname) return
-                // props.onSignup(credentials)
-                await signup(credentials)
-                navigate('/workspace')
-                clearState()
+                const user = await signup(credentials)
+                if (user) {
+                    navigate('/workspace')
+                    clearState()
+                }
+
             }
         } catch (err) {
             console.log('Could not set user', err)
@@ -77,7 +70,7 @@ export function LoginSignup() {
                         type="text"
                         name="username"
                         // value={username}
-                        placeholder="Enter your email"
+                        placeholder="Enter username"
                         onChange={handleChange}
                         required
                         autoFocus

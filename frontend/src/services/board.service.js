@@ -44,24 +44,17 @@ async function query() {
 
     let boards = await httpService.get(BASE_URL)
     let user = userService.getLoggedinUser()
-    if (user) {
-        if (user.username !== 'Guest') {
-            boards = boards.filter(board => 
-                board.members.some(boardMember => boardMember._id === user._id)
-            );
-        }
-        // else case for Guest user is implicit, no need to filter boards
-    } else {
-        console.log('No user provided, no boards will be filtered.');
-    }
-    console.log('boards: from load', boards)
-    // if (filterBy.txt) {
-    //     const regex = new RegExp(filterBy.txt, 'i')
-    //     boards = boards.filter(board => regex.test(board.title) || regex.test(board.description))
+    // if (user) {
+    //     if (user.username !== 'Guest') {
+    //         boards = boards.filter(board =>
+    //             board.members.some(boardMember => boardMember._id === user._id)
+    //         );
+    //     }
+    //     // else case for Guest user is implicit, no need to filter boards
+    // } else {
+    //     console.log('No user provided, no boards will be filtered.');
     // }
-    // if (filterBy.price) {
-    //     boards = boards.filter(board => board.price <= filterBy.price)
-    // }
+    // console.log('boards: from load', boards)
     return boards
 }
 
@@ -75,11 +68,11 @@ async function remove(boardId) {
 
 async function save(board) {
     if (board._id) {
-        socketService.emit('update-board', board)
-        const updatedBoard =  await httpService.put(BASE_URL + board._id, board)
+        const updatedBoard = await httpService.put(BASE_URL + board._id, board)
+        socketService.emit('update-board', updatedBoard)
         return updatedBoard
     } else {
-        const updatedBoard =  await httpService.post(BASE_URL, board)
+        const updatedBoard = await httpService.post(BASE_URL, board)
         return updatedBoard
     }
 }
@@ -158,7 +151,7 @@ function addActivity(board, user, txt, { group, task } = {}) {
             id: task?.id || '',
             title: task?.title || '',
         }
-       
+
     };
     board.activities.unshift(activity);
     socketService.emit('board-activity', activity)
