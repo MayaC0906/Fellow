@@ -1,10 +1,12 @@
 .workspace-container {
-    margin: auto;
-    margin-block-start: rem(40px);
-    width: rem(825px);
+    height: calc(100vh - 48px);
+    width: 100vw;
+    overflow-y: auto;
 
     .boards {
-
+        margin: auto;
+        margin-block-start: rem(40px);
+        width: rem(825px);
         flex-direction: column;
         gap: rem(48px);
 

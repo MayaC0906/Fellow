@@ -4,9 +4,18 @@
         top: 50px;
         right: 35px;
 
-        svg {
-            color: rgb(23, 43, 77);
+        .title-container {
+            button {
+
+                svg {
+                    path {
+
+                        fill: rgb(68, 84, 111);
+                    }
+                }
+            }
         }
+
 
         .edit-modal-content {
             &.shared-board {
