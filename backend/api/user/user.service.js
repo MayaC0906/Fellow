@@ -43,9 +43,11 @@ async function getById(userId) {
     }
 }
 async function getByUsername(username) {
+    username = username.toLowerCase()
+    // console.log('username after:', username);
     try {
         const collection = await dbService.getCollection('user')
-        const user = await collection.findOne({ username })
+        const user = await collection.findOne({ username: { $regex: new RegExp(`^${username}$`, 'i') } })
         return user
     } catch (err) {
         logger.error(`while finding user ${username}`, err)
@@ -90,7 +92,7 @@ async function add(user) {
             password: user.password,
             fullname: user.fullname,
             imgUrl: user.imgUrl
-            }
+        }
         const collection = await dbService.getCollection('user')
         await collection.insertOne(userToAdd)
         return userToAdd
