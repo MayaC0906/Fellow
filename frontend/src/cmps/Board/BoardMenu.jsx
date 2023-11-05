@@ -8,7 +8,7 @@ import { groupMenu } from '../Svgs'
 import { BoardActivity } from './BoardActivity'
 import { useNavigate, useParams } from 'react-router'
 import { removeBoard } from '../../store/actions/board.actions'
-
+import { MusicModal } from './MusicModal'
 
 export function BoardMenu({ setMenu, isMenuOpen }) {
     const board = useSelector((storeState) => storeState.boardModule.board)
@@ -16,7 +16,6 @@ export function BoardMenu({ setMenu, isMenuOpen }) {
     const [title, setTitle] = useState('Menu')
     const { boardId } = useParams()
     const navigate = useNavigate()
-
     const contentTitleMap = {
         aboutBoard: "About Board",
         changeBgc: "Change Background",
@@ -67,6 +66,9 @@ export function BoardMenu({ setMenu, isMenuOpen }) {
                         <section className="board-menu-info ">
                             <span className="nav-icon">{checkList.garbage}</span>
                             <p className="nav-item" onClick={deleteBoard}>Delete board</p>
+                        </section>
+                        <section>
+                            {/* <MusicModal /> */}
                         </section>
                     </section>
                 )

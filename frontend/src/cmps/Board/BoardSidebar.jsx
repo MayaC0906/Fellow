@@ -22,6 +22,15 @@ export function BoardSidebar() {
     position: { top: 0, left: 0 }
   })
   const navigate = useNavigate()
+  console.log(boards, 'from sidebar');
+
+
+  useEffect(() => {
+    if (boardId) {
+      setActiveBoardId(boardId)
+    }
+  }, [boardId])
+
 
   useEffect(() => {
     setSetSortedBoards(boards);
@@ -53,11 +62,6 @@ export function BoardSidebar() {
   }
 
 
-  useEffect(() => {
-    if (boardId) {
-      setActiveBoardId(boardId)
-    }
-  }, [boardId])
 
   function sortByAlphaB() {
     const sortedBoards = [...boards].sort((a, b) => {
@@ -184,18 +188,23 @@ export function BoardSidebar() {
                 </div>
               </article>
             </header>
-            {sortedBoards.map((boardItem) => (
-              <section
+            {sortedBoards.map((boardItem) => {
+              { console.log(boardItem) }
+              return <section
                 key={boardItem._id}
                 className={`${activeBoardId === boardItem._id ? 'active' : ''}`}
                 onClick={() => handleBoardItemClick(boardItem._id)}
               >
                 <img src={boardItem.style.backgroundImage} alt="" />
-                <Link to={`/board/${boardItem._id}`}>{boardItem.title}</Link>
+                <Link to={`/board/${boardItem._id}`}>
+                  {boardItem.title}
+                </Link>
                 <span onClick={() => deleteBoard(boardItem._id)}>{checkList.garbage}</span>
               </section>
-            ))}
+            })}
           </section>
+
+
 
         )}
       </ul>

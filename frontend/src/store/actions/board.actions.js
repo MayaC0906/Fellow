@@ -26,33 +26,17 @@ export function getActionUpdateBoard(board) {
     }
 }
 
-export async function loadBoards(user) {
+export async function loadBoards() {
     try {
-        const boards = await boardService.query();
-        console.log('Boards loaded:', boards);
-
-        let filteredBoards = boards;
-        if (user) {
-            if (user.username !== 'Guest') {
-                filteredBoards = boards.filter(board => 
-                    board.members.some(boardMember => boardMember._id === user._id)
-                );
-                console.log('Filtered boards:', filteredBoards);
-            }
-            // else case for Guest user is implicit, no need to filter boards
-        } else {
-            console.log('No user provided, no boards will be filtered.');
-        }
-
+        let boards = await boardService.query()
         store.dispatch({
             type: SET_BOARDS,
-            boards: filteredBoards
-        });
-
-        return filteredBoards;
+            boards: boards
+        })
+        return boards
     } catch (err) {
-        console.error('Cannot load boards', err);
-        throw err; // The error is re-thrown to be handled by the caller
+        console.error('Cannot load boards', err)
+        throw err
     }
 }
 
