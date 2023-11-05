@@ -75,8 +75,8 @@ async function remove(boardId) {
 
 async function save(board) {
     if (board._id) {
+        socketService.emit('update-board', board)
         const updatedBoard =  await httpService.put(BASE_URL + board._id, board)
-        socketService.emit('update-board', updatedBoard)
         return updatedBoard
     } else {
         const updatedBoard =  await httpService.post(BASE_URL, board)
