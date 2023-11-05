@@ -6,6 +6,7 @@
     justify-content: space-between;
     position: relative;
     border-bottom: 1px solid rgba(23, 43, 77, 0.16);
+    z-index: 41;
 
     .nav-links {
         display: flex;
@@ -217,6 +218,7 @@
             align-items: center;
             border-radius: 5px;
             position: relative;
+            z-index: 41;
 
             .search-input {
                 transition: ease-in .3s;

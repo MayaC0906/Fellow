@@ -10,15 +10,10 @@ import { GroupHeader } from "../cmps/Group/GroupHeader.jsx";
 import { GroupList } from "../cmps/Group/GroupList.jsx";
 import { BoardMenu } from "../cmps/Board/BoardMenu.jsx";
 import { loaderSvg } from "../cmps/Svgs.jsx";
-<<<<<<< HEAD
-import { socketService, SOCKET_EMIT_SET_TOPIC, SOCKET_EVENT_UPDATE_BOARD } from "../services/socket.service.js";
-import { getActionUpdateBoard } from "../store/actions/board.actions.js";
-=======
 import { SOCKET_EMIT_SET_TOPIC, SOCKET_EMIT_UPDATE_BOARD, SOCKET_EVENT_UPDATE_BOARD, socketService } from "../services/socket.service.js";
 // import { store } from "../store/store.js";
 
 
->>>>>>> 71fce3a2aa7bbcf762755fd33d3d8a39e0b2357e
 
 export function BoardDetails() {
     const dispatch = useDispatch()
@@ -33,21 +28,12 @@ export function BoardDetails() {
     }, [boardId])
 
     useEffect(() => {
-<<<<<<< HEAD
-        socketService.emit(SOCKET_EMIT_SET_TOPIC, boardId)
-
-
-        onLoadBoard()
-        loadBoards()
-
-    }, [boardId])
-=======
         socketService.on(SOCKET_EVENT_UPDATE_BOARD, ((board) => {
             console.log('board from inside:', board);
             dispatch({ type: SET_BOARD, board })
         }))
         onLoadBoard()
-        loadBoards()
+        // loadBoards()
 
         // return (() => {
         // socketService.off(SOCKET_EMIT_UPDATE_BOARD, board)
@@ -57,7 +43,6 @@ export function BoardDetails() {
     }, [])
 
 
->>>>>>> 71fce3a2aa7bbcf762755fd33d3d8a39e0b2357e
 
 
 
