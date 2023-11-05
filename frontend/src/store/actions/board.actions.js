@@ -27,19 +27,16 @@ export function getActionUpdateBoard(board) {
 }
 
 export async function loadBoards(user) {
-    console.log('hey');
-    console.log('user', user);
     try {
         const boards = await boardService.query();
         console.log('Boards loaded:', boards);
 
-        let filteredBoards = boards;
+        let filteredBoards = boards
         if (user) {
             if (user.username !== 'Guest') {
                 filteredBoards = boards.filter(board =>
                     board.members.some(boardMember => boardMember._id === user._id)
-                );
-                // console.log('Filtered boards:', filteredBoards);
+                )
             }
             // else case for Guest user is implicit, no need to filter boards
         } else {
@@ -48,9 +45,9 @@ export async function loadBoards(user) {
 
         store.dispatch({
             type: SET_BOARDS,
-            boards: boards
+            boards: filteredBoards
         })
-        return boards
+        return filteredBoards
     } catch (err) {
         console.error('Cannot load boards', err)
         throw err
@@ -81,28 +78,33 @@ export async function removeBoard(boardId) {
 }
 
 export async function addBoard(board, user, txt) {
+  
     try {
         const savedBoard = await boardService.save(board, user, txt)
-        store.dispatch(getActionAddBoard(savedBoard))
+        store.dispatch(getActionUpdateBoard(savedBoard))
+
         return savedBoard
     } catch (err) {
         console.log('Cannot add board', err)
+
         throw err
     }
 }
 
-export async function updateBoard(board, user, txt) {
-    // console.log('txt:', txt)
+export async function updateBoard(boardToSave, user, txt) {
+    const board = store.getState().board
+    store.dispatch(getActionAddBoard(boardToSave))
     try {
-        const savedBoard = await boardService.save(board, user, txt)
-        store.dispatch(getActionUpdateBoard(savedBoard))
-        console.log('savedBoard', savedBoard);
-        return savedBoard
+        await boardService.save(boardToSave, user, txt)
+        // return savedBoard
     } catch (err) {
         console.log('Cannot save board', err)
+        store.dispatch(getActionAddBoard(board))
         throw err
     }
 }
+
+
 
 export async function updateBoards(boards, newBoard, user, txt) {
     try {
@@ -128,6 +130,7 @@ export async function removeGroup(group, boardId, user, txt) {
         store.dispatch(getActionUpdateBoard(savedBoard))
         return group
     } catch (err) {
+        
         console.log('Cannot remove group', err)
         throw err
     }

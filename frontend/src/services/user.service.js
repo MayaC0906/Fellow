@@ -28,7 +28,6 @@ const usersStorage = [
 
 
 async function getUsers() {
-    console.log('from getusers')
 
     // let users = utilService.loadFromStorage(STORAGE_KEY)
     // if (!users || !users.length) utilService.saveToStorage(STORAGE_KEY, usersStorage)
@@ -39,7 +38,6 @@ async function getUsers() {
 }
 
 async function getById(userId) {
-    console.log('from lget by Id')
 
     // const user = await storageService.get(STORAGE_KEY, userId)
     const user = await httpService.get(`user/${userId}`)
@@ -47,7 +45,6 @@ async function getById(userId) {
 }
 
 function remove(userId) {
-    console.log('from remove')
 
     // return storageService.remove(STORAGE_KEY, userId)
     return httpService.delete(`user/${userId}`)
@@ -67,23 +64,26 @@ function remove(userId) {
 async function login(userCred) {
     // const users = await storageService.query(STORAGE_KEY)
     // const user = users.find(user => user.username.toLowerCase() === userCred.username.toLowerCase())
-    console.log('from login')
-    const user = await httpService.post('auth/login', userCred)
-    if (user) {
-        return saveLocalUser(user)
-    } else return alert('Username or passward are wrong')
+    try {
+        const user = await httpService.post('auth/login', userCred)
+        if (user) return saveLocalUser(user)
+    } catch (err) {
+        alert('Username or passward are wrong')
+    }
 }
 
 async function signup(userCred) {
-    console.log('from signup')
     if (!userCred.imgUrl) userCred.imgUrl = 'https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png'
     // const user = await storageService.post(STORAGE_KEY, userCred)
-    const user = await httpService.post('auth/signup', userCred)
-    return saveLocalUser(user)
+    try {
+        const user = await httpService.post('auth/signup', userCred)
+        return saveLocalUser(user)
+    } catch (err) {
+        alert('User name taken')
+    }
 }
 
 async function logout() {
-    console.log('from logout')
     sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER)
     return await httpService.post('auth/logout')
 }

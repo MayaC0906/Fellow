@@ -35,6 +35,7 @@ export function GroupPreview({
 	const [groupMenuPosition, setGroupMenuPosition] = useState({ top: '', left: '' })
 	const user = useSelector((storeState) => storeState.userModule.user)
 	const [prevTaskCount, setPrevTaskCount] = useState(group.tasks.length)
+	const inputRef = useRef(null);
 
 	useEffect(() => {
 		if (taskListContainerRef.current && group.tasks.length > prevTaskCount) {
@@ -91,6 +92,7 @@ export function GroupPreview({
 			await saveNewTask(board._id, group.id, newTask, user, txt)
 			setNewTask(taskService.getEmptyTask())
 			showSuccessMsg('New task added')
+			setInputExpand(true);
 		} catch (err) {
 			console.log('failed to save new task', err)
 			throw err;
@@ -101,6 +103,12 @@ export function GroupPreview({
 		let { value, name: field } = ev.target
 		setNewTask((prevGroup) => ({ ...prevGroup, [field]: value }))
 	}
+
+	useEffect(() => {
+		if (isInputExpand && inputRef.current) {
+			inputRef.current.focus();
+		}
+	}, [isInputExpand]);
 	return (
 		<section className="group-preview">
 			<section className="header-wrapper">
@@ -169,10 +177,12 @@ export function GroupPreview({
 					) : (
 						<div>
 							<textarea
+								ref={inputRef}
 								name="title"
 								placeholder="Enter a title for this card..."
 								rows={4}
 								onChange={handleChange}
+								style={{ outline: 'none' }}
 							/>
 							<section className="add-controls">
 								<Button type="submit" onClick={onSaveNewTask}>
