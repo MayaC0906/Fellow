@@ -16,9 +16,14 @@ export function TaskLabel({ taskLabelsId, setEditName, editName, setEv }) {
         setLabels(taskLabels)
     }
 
+    function onSetEdit(ev) {
+        setEv(ev)
+        toggleLabelDisplay()
+    }
+
     function toggleLabelDisplay() {
         if (editName === 'Label') setEditName('')
-        else if (editName === '') setEditName('Label')
+        else setEditName('Label')
     }
 
     return (
@@ -30,8 +35,7 @@ export function TaskLabel({ taskLabelsId, setEditName, editName, setEv }) {
                     <button className="labels-display" style={{ backgroundColor: label.color }} onClick={toggleLabelDisplay}>{label.title}</button>
                 ))}
                 <button className="labels-add clean-btn flex align-center" onClick={(event) => {
-                    setEv(event)
-                    toggleLabelDisplay()
+                    onSetEdit(event)
                 }}>{taskSvg.add}</button>
             </div>
         </section>)

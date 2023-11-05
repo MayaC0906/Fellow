@@ -12,6 +12,7 @@ export function TaskDetailsSideNav({ editName, setEditName, onSaveTask, task, is
     const coverBtnRef = useRef(null)
 
     function onOpenEditTask(name) {
+        setEv(null)
         if (name === editName) {
             onCloseEditTask()
         } else {
