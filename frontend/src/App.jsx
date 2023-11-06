@@ -41,17 +41,27 @@ export function App() {
 
 
     useEffect(() => {
-        const handleResize = () => {
-            setWindowWidth(window.innerWidth)
+        const debounce = (func, timeout = 300) => {
+            let timer;
+            return (...args) => {
+                clearTimeout(timer);
+                timer = setTimeout(() => { func.apply(this, args); }, timeout);
+            };
         };
+        const handleResize = debounce(() => {
+            setWindowWidth(window.innerWidth);
+        });
         window.addEventListener('resize', handleResize)
         return () => window.removeEventListener('resize', handleResize)
     }, []);
 
+    const shouldRenderHomeHeader = location.pathname === '/' && windowWidth >= 920;
+    const shouldRenderAppHeader = location.pathname !== '/' && location.pathname !== '/login';
 
     return (
         <div>
-            {(location.pathname !== '/login') && ((location.pathname === '/') ? <HomeHeader isLogin={isLogin} /> : <AppHeader />)}
+            {shouldRenderHomeHeader && <HomeHeader isLogin={isLogin} />}
+            {shouldRenderAppHeader && <AppHeader />}
             <main>
                 <Routes>
                     {windowWidth < 920 ? (
