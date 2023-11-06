@@ -70,10 +70,6 @@ export function AttachmentEdit({ pos, editName, onCloseEditTask, task, onSaveTas
                                 <label for="fileInput" className="custom-button">Choose a file</label>
                             </div>
                             <hr />
-                            <div className='add-attachment-link'>
-                                <h2>Search or paste a link</h2>
-                                <input type="text" placeholder='Find recent links or paste a new link' />
-                            </div>
                             <div className='attachment-actions'>
                                 <button className='cancel-btn' onClick={onCloseEditTask}>Cancel</button>
                                 <button onClick={onSaveAttachment} className={isUploading === 'uploading' ? 'disable insert-btn' : 'insert-btn'}
