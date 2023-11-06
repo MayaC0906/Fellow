@@ -27,13 +27,13 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
     const addListInput = useRef(null)
     const user = useSelector((storeState) => storeState.userModule.user)
     const [taskFilterBy, setTaskFilterby] = useState(boardService.getEmptyFilter())
-    const [filteredGroups, setFilteredGroups] = useState(groups)
+    // const [filteredGroups, setFilteredGroups] = useState(groups)
     const [checkboxContainer, setCheckboxContainer] = useState([])
 
-    useEffect(() => {
-        const filteredGroups = onFilterGroups(taskFilterBy)
-        setFilteredGroups(filteredGroups)
-    }, [taskFilterBy, groups])
+    // useEffect(() => {
+    //     setFilteredGroups(filteredGroups)
+    // }, [taskFilterBy, groups])
+    const filteredGroups = onFilterGroups(taskFilterBy)
 
     function onFilterGroups(filterBy) {
         const { txt, byMembers, byDuedate, byLabels } = filterBy
@@ -179,7 +179,7 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
 
 
 
-    async function handleDrag(result) {
+    function handleDrag(result) {
         const { destination, source, type } = result
         if (!destination || (destination.droppableId === source.droppableId && destination.index === source.index)) return
         const clonedBoard = structuredClone(board)
@@ -188,7 +188,7 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
             const [movedGroup] = updatedGroups.splice(source.index, 1)
             updatedGroups.splice(destination.index, 0, movedGroup)
             clonedBoard.groups = updatedGroups;
-            await updateBoard(clonedBoard);
+            updateBoard(clonedBoard);
         }
 
         if (type === 'tasks') {
@@ -199,7 +199,7 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
                 const [movedTask] = updatedTasks.splice(source.index, 1)
                 updatedTasks.splice(destination.index, 0, movedTask)
                 originalGroup.tasks = updatedTasks
-                await updateBoard(clonedBoard);
+                updateBoard(clonedBoard);
             } else {
                 const tasksFromOriginalGroup = [...originalGroup.tasks]
                 const tasksForTargetGroup = [...targetGroup.tasks]
@@ -209,7 +209,7 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
                 targetGroup.tasks = tasksForTargetGroup
                 const txt = `moved ${movedTask.title} from ${originalGroup.title} to ${targetGroup.title} `
 
-                await updateBoard(clonedBoard, user, txt);
+                updateBoard(clonedBoard, user, txt);
             }
         }
     }

@@ -1,7 +1,7 @@
 import { boardService } from "../../services/board.service.js";
 import { store } from '../store.js'
 import { showSuccessMsg, showErrorMsg } from '../../services/event-bus.service.js'
-import { ADD_BOARD, REMOVE_BOARD, SET_BOARD, SET_BOARDS, UNDO_REMOVE_BOARD, UPDATE_BOARD } from "../reducers/board.reducer.js";
+import { ADD_BOARD, REMOVE_BOARD, SET_BOARD, SET_BOARDS, UNDO_REMOVE_BOARD, UPDATE_BOARD, UNDO_UPDATE_BOARD } from "../reducers/board.reducer.js";
 import { taskService } from "../../services/task.service.local.js";
 import { SOCKET_EMIT_UPDATE_BOARD, socketService } from "../../services/socket.service.js";
 
@@ -92,16 +92,17 @@ export async function addBoard(board, user, txt) {
 }
 
 export async function updateBoard(boardToSave, user, txt) {
-    const board = store.getState().board
+    // console.log('board:', board)
     store.dispatch(getActionAddBoard(boardToSave))
-    
     try {
 
         await boardService.save(boardToSave, user, txt)
         // return savedBoard
     } catch (err) {
         console.log('Cannot save board', err)
-        store.dispatch(getActionAddBoard(board))
+        store.dispatch({
+            type: UNDO_UPDATE_BOARD
+        })
         throw err
     }
 }

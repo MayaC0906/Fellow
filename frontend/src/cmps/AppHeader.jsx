@@ -35,7 +35,7 @@ export function AppHeader() {
 
     useEffect(() => {
         const allActivities = boards.flatMap(board =>
-            board.activities.filter(activity => activity.byMember._id !== user?._id)
+            board.activities?.filter(activity => activity.byMember._id !== user?._id)
         )
         const sortedActivities = allActivities.sort((a, b) => b.createdAt - a.createdAt)
         setNotifications(sortedActivities)
