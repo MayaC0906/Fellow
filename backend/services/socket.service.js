@@ -11,13 +11,14 @@ export function setupSocketAPI(http) {
         }
     })
     gIo.on('connection', socket => {
-        console.log('socket it back', socket);
         logger.info(`New connected socket [id: ${socket.id}]`)
         socket.on('disconnect', socket => {
             logger.info(`Socket disconnected [id: ${socket.id}]`)
         })
         socket.on('chat-set-topic', topic => {
+            console.log('topic:', topic)
             if (socket.myTopic === topic) return
+            console.log('socket.myTopic:', socket.myTopic)
             if (socket.myTopic) {
                 socket.leave(socket.myTopic)
                 logger.info(`Socket is leaving topic ${socket.myTopic} [id: ${socket.id}]`)
