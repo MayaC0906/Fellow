@@ -1,7 +1,5 @@
 import { useSelector } from "react-redux";
-import { loadUsers } from "../store/actions/user.actions";
 import { utilService } from "../services/util.service";
-import { useEffect, useState } from "react";
 import React from 'react';
 import {
     Chart as ChartJS,
@@ -27,31 +25,19 @@ ChartJS.register(
 export function Dashboard({ setDashBoardOpen }) {
 
     const board = useSelector(storeState => storeState.boardModule.board)
-    const [usersNumber, setUsersNumber] = useState(0)
 
-    //USERS
-    useEffect(() => {
-        onLoadUsers()
-    }, [])
+    const usersNumber = board.members.length
 
     function roundNumber(num) {
         if (num === 0) return 0
         else return num.toFixed(1)
     }
 
-    async function onLoadUsers() {
-        try {
-            const users = await loadUsers()
-            setUsersNumber(users.length)
-        } catch (err) {
-            console.log('Cannot load users number', err);
-        }
-    }
     //Tasks number
 
     const overdueTasks = board.groups.reduce((count, group) => {
         const groupCount = group.tasks.reduce((groupCount, task) => {
-            if (task.dueDate.isOverdue) {
+            if (task.dueDate.isOverdue && !task.dueDate.isComplete) {
                 return groupCount + 1
             }
             return groupCount;
@@ -185,7 +171,7 @@ export function Dashboard({ setDashBoardOpen }) {
                         <tbody>
                             {sortedMembers.map(([memberName, taskCount]) => (
                                 <tr key={memberName}>
-                                    <td>{memberName}</td>
+                                    <td>{memberName.charAt(0).toUpperCase() + memberName.slice(1)}</td>
                                     <td>{taskCount}</td>
                                 </tr>
                             ))}

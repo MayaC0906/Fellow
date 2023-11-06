@@ -45,9 +45,10 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
 
     async function onCompleteDueDate(ev) {
         ev.preventDefault()
-        dueDate.isComplete = !dueDate.isComplete
+        // dueDate.isComplete = !dueDate.isComplete
+        const newTask = { ...task, dueDate: { ...task.dueDate, isComplete: !task.dueDate.isComplete } }
         try {
-            await saveNewTask(boardId, groupId, task)
+            await saveNewTask(boardId, groupId, newTask)
         } catch (err) {
             console.log(`Couldn't save task`, err);
         }

@@ -23,7 +23,6 @@ export function ShareBoard({ setIsOpenShareBoard }) {
     }
 
 
-
     async function onToggleMemberToBoard(user) {
         const userIdx = board.members.findIndex(member => member._id === user._id)
         if (userIdx === -1) {
