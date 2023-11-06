@@ -29,7 +29,7 @@ export function getActionUpdateBoard(board) {
 export async function loadBoards(user) {
     try {
         const boards = await boardService.query();
-        console.log('Boards loaded:', boards);
+        // console.log('Boards loaded:', boards);
 
         let filteredBoards = boards
         if (user) {

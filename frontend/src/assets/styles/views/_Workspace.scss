@@ -10,6 +10,10 @@
         flex-direction: column;
         gap: rem(48px);
 
+        .second-ul {
+            margin-block-end: rem(15px);
+        }
+
         &-workspace-container {
 
             .container-title {

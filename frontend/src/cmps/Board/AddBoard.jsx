@@ -34,6 +34,7 @@ export function AddBoard({ pos, setSidebarExpand, setModalState, setIsBoardAdded
                 let dominantColor = await utilService.getDominantColor(backGroundgImg)
                 savedBoard.style.dominantColor = dominantColor
                 savedBoard.style.isBright = utilService.isRgbBright(dominantColor.rgb)
+                setModalState(prevState => ({ ...prevState, isOpen: false, modal: '' }))
             } catch (err) {
                 console.log('Could not get dominant color');
             }
@@ -50,20 +51,22 @@ export function AddBoard({ pos, setSidebarExpand, setModalState, setIsBoardAdded
     }
 
 
-    function handleBoardAdded() {
-        if (getPos) setModalState(prevState => ({ ...prevState, isOpen: false }))
-        else setIsBoardAdded(false)
-
-
+    function handleBoardAdded(ev) {
+        ev.preventDefault()
+        ev.stopPropagation()
+        console.log('getpos', getPos);
+        if (getPos) {
+            setModalState(prevState => ({ ...prevState, isOpen: false, modal: '' }))
+        } else setIsBoardAdded(false)
     }
     // style={getPos ? { bottom: '0px', right: '0px' }
     return (
-        <section style={getPos ? { top: '0px', left: '15px' } : addBoardPosition}
+       <section style={getPos ? { top: '0px', left: '15px' } : addBoardPosition}
             className="edit-modal add-board">
             <div className="title-container">
                 <p className="add-board-title">Create board</p>
-                <button onClick={() => {
-                    handleBoardAdded();
+                <button onClick={(event) => {
+                    handleBoardAdded(event);
                 }} className="close-modal">{additionTaskSvg.close}</button>
             </div>
             <section className="edit-modal-content">

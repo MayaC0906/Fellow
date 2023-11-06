@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { updateBoard } from "../../store/actions/board.actions";
 import { useEffect, useState } from "react";
 import { loadUsers } from "../../store/actions/user.actions";
+import { useRef } from "react";
 
 export function ShareBoard({ setIsOpenShareBoard }) {
     let users = useSelector(storeState => storeState.userModule.users)
@@ -13,12 +14,15 @@ export function ShareBoard({ setIsOpenShareBoard }) {
     const [connectUsers, setConnectUsers] = useState(board.members)
     const [filterUsers, setFilterdUsers] = useState(users)
 
+
     function onUserSearch({ target }) {
         const filteredMembers = users.filter(user =>
             user.fullname.toLowerCase().includes(target.value.toLowerCase())
         )
         setFilterdUsers(filteredMembers)
     }
+
+
 
     async function onToggleMemberToBoard(user) {
         const userIdx = board.members.findIndex(member => member._id === user._id)

@@ -18,6 +18,7 @@ export function AppHeader() {
     const board = useSelector((storeState) => storeState.boardModule.board)
     const boards = useSelector((storeState) => storeState.boardModule.boards)
     const [modalState, setModalState] = useState({ isOpen: false, modal: '' })
+    console.log('modalState', modalState)
     const inputRef = useRef(null)
     const navigate = (useNavigate())
     const [searchInput, setSearchInput] = useState(null)
@@ -32,7 +33,6 @@ export function AppHeader() {
     const [hasUnseenActivities, setHasUnseenActivities] = useState(false)
     const [unseenActivityCount, setUnseenActivityCount] = useState(0)
     const LOCAL_STORAGE_ACTIVITIES_KEY = 'activitiesData';
-
 
     useEffect(() => {
         const allActivities = boards.flatMap(board =>
@@ -229,7 +229,7 @@ export function AppHeader() {
                                     position: 'absolute',
                                     zIndex: '1000'
                                 }}>
-                                <AddBoard pos={true} setModalState={setModalState} />
+                              <AddBoard pos={true} setModalState={setModalState} />
                             </div>}
                     </button>
                 </section>

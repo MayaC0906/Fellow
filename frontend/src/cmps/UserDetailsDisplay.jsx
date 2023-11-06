@@ -1,9 +1,12 @@
 import { useNavigate } from "react-router"
 import { logout } from "../store/actions/user.actions"
+import { additionTaskSvg } from "./Svgs";
 
 
 export function UserDetailsDisplay({ user, setIsUserDetailOpen, isUserDetailOpen }) {
     const navigate = useNavigate()
+
+
 
     async function onLogOut() {
         try {
@@ -14,12 +17,17 @@ export function UserDetailsDisplay({ user, setIsUserDetailOpen, isUserDetailOpen
             console.log('Could not log ou user', err)
         }
     }
+
+
     return (
         <div className="user-details-container">
             <div className="user-details">
-                <p>ACCOUNT</p>
+                <section>
+                    <button onClick={() => setIsUserDetailOpen(false)} className="close-modal clean-btn">{additionTaskSvg.close}</button>
+                    <p>ACCOUNT</p>
+                </section>
                 <section className="user-details-display flex">
-                    <img onClick={() => setIsUserDetailOpen(!isUserDetailOpen)} style={{ width: 32, height: 32, }} src={user.imgUrl} alt="" />
+                    <img className="insdie-img" src={user.imgUrl} alt="" />
                     <div className="user-names flex">
 
                         <h2 className="userfullname">{user.fullname}</h2>
