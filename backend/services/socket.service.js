@@ -16,9 +16,7 @@ export function setupSocketAPI(http) {
             logger.info(`Socket disconnected [id: ${socket.id}]`)
         })
         socket.on('chat-set-topic', topic => {
-            console.log('topic:', topic)
             if (socket.myTopic === topic) return
-            console.log('socket.myTopic:', socket.myTopic)
             if (socket.myTopic) {
                 socket.leave(socket.myTopic)
                 logger.info(`Socket is leaving topic ${socket.myTopic} [id: ${socket.id}]`)
@@ -27,7 +25,6 @@ export function setupSocketAPI(http) {
             socket.myTopic = topic
         })
         socket.on('board-activity', activity => {
-            console.log('activity:', activity)
             logger.info(`New chat msg from socket [id: ${socket.id}], emitting to topic ${socket.myTopic}`)
             // emits to all sockets:
             // gIo.emit('chat addMsg', msg)
