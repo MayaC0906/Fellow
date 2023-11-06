@@ -36,8 +36,8 @@ export function TaskDetails() {
 
         return () => {
             window.removeEventListener('resize', handleResize);
-        };
-    }, []);
+        }
+    }, [])
 
 
 
