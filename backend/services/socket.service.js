@@ -50,6 +50,17 @@ export function setupSocketAPI(http) {
             logger.info(`board ${board.title} updated in socket [id: ${socket.id}]`)
             gIo.to(socket.myTopic).emit('update-board', board);
         })
+        socket.on('chat-send-msg', msg => {
+            logger.info(`New chat msg from socket [id: ${socket.id}], emitting to topic ${socket.myTopic}`)
+            // emits to all sockets:
+            // gIo.emit('chat addMsg', msg)
+            // emits only to sockets in the same room
+            gIo.to(socket.myTopic).emit('chat-add-msg', msg)
+        })
+        socket.on('typing', (username) => {
+            logger.info(`${username} is typing... in socket [id: ${socket.id}]`)
+            gIo.to(socket.myTopic).emit('user-typing', username);
+        });
     })
 }
 

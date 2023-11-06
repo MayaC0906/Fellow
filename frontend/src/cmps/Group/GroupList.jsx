@@ -15,7 +15,8 @@ import { TaskFilter } from '../Task/TaskFilter.jsx'
 import { SOCKET_EMIT_UPDATE_BOARD, socketService } from '../../services/socket.service.js'
 import { store } from '../../store/store.js'
 import { getActionUpdateBoard } from '../../store/actions/board.actions.js'
-import { async } from 'regenerator-runtime'
+// import { async } from 'regenerator-runtime'
+
 export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
     const [isInputExpand, setInputExpand] = useState(false)
     const [newGroup, setNewGroup] = useState(boardService.getEmptyGroup())
@@ -206,7 +207,9 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
                 tasksForTargetGroup.splice(destination.index, 0, movedTask)
                 originalGroup.tasks = tasksFromOriginalGroup
                 targetGroup.tasks = tasksForTargetGroup
-                await updateBoard(clonedBoard);
+                const txt = `moved ${movedTask.title} from ${originalGroup.title} to ${targetGroup.title} `
+
+                await updateBoard(clonedBoard, user, txt);
             }
         }
     }

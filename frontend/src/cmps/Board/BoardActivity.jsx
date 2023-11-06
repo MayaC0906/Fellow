@@ -99,6 +99,7 @@ export function BoardActivity({ board }) {
                     position: 'absolute',
                     top: modalPosition.top,
                     left: modalPosition.left,
+                    height: 'max-content',
                     zIndex: '100',
                     background: '#ffff'
                 }}>

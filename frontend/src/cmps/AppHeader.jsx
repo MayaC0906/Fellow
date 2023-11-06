@@ -32,45 +32,55 @@ export function AppHeader() {
     let [newActivity, setNewActivity] = useState(null)
     const [hasUnseenActivities, setHasUnseenActivities] = useState(false)
     const [unseenActivityCount, setUnseenActivityCount] = useState(0)
+    const LOCAL_STORAGE_ACTIVITIES_KEY = 'activitiesData';
 
     useEffect(() => {
         const allActivities = boards.flatMap(board =>
             board.activities.filter(activity => activity.byMember._id !== user?._id)
-        );
+        )
         const sortedActivities = allActivities.sort((a, b) => b.createdAt - a.createdAt)
         setNotifications(sortedActivities)
+
+        const activitiesData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_ACTIVITIES_KEY)) || {}
         const unseenCount = sortedActivities.reduce((count, activity) => {
-            return count + (localStorage.getItem(`seenActivity_${activity.id}`) ? 0 : 1)
+            return count + (activitiesData[`seenActivity_${activity.id}`] ? 0 : 1)
         }, 0);
         setUnseenActivityCount(unseenCount)
-    }, [boards, user?._id]);
+    }, [boards, user?._id])
 
     useEffect(() => {
-        const hasUnseen = localStorage.getItem('hasUnseenActivities') === 'true'
+        const activitiesData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_ACTIVITIES_KEY)) || {}
+        const hasUnseen = activitiesData.hasUnseenActivities || false
         setHasUnseenActivities(hasUnseen)
     }, [])
 
     useEffect(() => {
         const handleNewActivity = (activity) => {
             if (activity.byMember._id === user._id) return
-            setNewActivity(activity);
-            localStorage.setItem('hasUnseenActivities', 'true')
+            setNewActivity(activity)
+            const activitiesData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_ACTIVITIES_KEY)) || {}
+            activitiesData.hasUnseenActivities = true;
+            activitiesData.unseenActivityCount = (activitiesData.unseenActivityCount || 0) + 1
+            localStorage.setItem(LOCAL_STORAGE_ACTIVITIES_KEY, JSON.stringify(activitiesData))
             setHasUnseenActivities(true)
             setUnseenActivityCount(prevCount => prevCount + 1)
-        };
+        }
 
         socketService.on('board-activity', handleNewActivity)
         return () => {
             socketService.off('board-activity', handleNewActivity)
-        };
+        }
     }, [user?._id])
 
     const handleNotificationsOpen = () => {
-        setNotificationsOpen(!isNotificationsOpen)
+        setNotificationsOpen(!isNotificationsOpen);
         if (!isNotificationsOpen) {
+            const activitiesData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_ACTIVITIES_KEY)) || {};
             notifications.forEach(activity => {
-                localStorage.setItem(`seenActivity_${activity.id}`, 'true')
+                activitiesData[`seenActivity_${activity.id}`] = true;
             });
+            activitiesData.unseenActivityCount = 0;
+            localStorage.setItem(LOCAL_STORAGE_ACTIVITIES_KEY, JSON.stringify(activitiesData));
             setUnseenActivityCount(0);
         }
     };

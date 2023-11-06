@@ -1,21 +1,25 @@
 .chat {
-    width: rem(700px);
-    height: rem(350px);
+    width: 340px;
+    height: 600px;
+    position: absolute;
+    right:0px;
+    bottom: 24px;
     overflow: scroll;
-    border: 1px solid #eee;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
     background-color: #e5ddd5;
-    position: relative;
-    // align-self: center;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    justify-content: space-between;
+    z-index: 40;
     & > div {
         display: flex;
-        padding: 15px;
+        padding: 6px;
         align-items: center;
         border-bottom: 1px solid #eee;
-        background-color: #075e54;
+        background-color: #353938;
         color: #fff;
         img{
             height: 40px;
@@ -44,7 +48,7 @@
         }
 
         button {
-            background-color: #25D366;
+            background-color: #4f504f;
             color: #fff;
             border: none;
             border-radius: 20px;
@@ -58,7 +62,7 @@
         }
     }
 
-    ul {
+    .chat-list {
         flex: 1;
         overflow-y: scroll;
         padding: 10px;
@@ -71,11 +75,60 @@
             border-radius: 8px;
             width: max-content;
             align-self: flex-end;
-
+            display: flex;
+            flex-direction: column;
             &:not(:last-child) {
                 align-self: flex-start;
                 background-color: #FFFFFF;
             }
+            span {
+                font-size: 10px;
+                font-weight: bold;
+            }   
+            .txt-area {
+                display: flex;
+                gap: 6px;
+                span {
+                    font-size: 15px;
+                }
+            }
         }
     }
+}
+
+
+.chat.minimized {
+    height: 50px;
+    overflow: hidden;
+}
+
+.typing-indicator {
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer; 
+}
+
+.chat-details {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.close-chat { 
+    border: none;
+    background: none;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.toggle-chat {
+    margin-left: auto; 
+    margin-right: 10px; 
 }

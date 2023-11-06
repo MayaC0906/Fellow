@@ -40,10 +40,6 @@ export function BoardSidebar() {
 
   function handleClick(ev, type) {
     ev.stopPropagation();
-    if (type === 'addBoard') {
-      if (boards.length === 10) return
-    }
-    // console.log('hey');
     const rect = ev.target.getBoundingClientRect()
     setModalState({
       isOpen: type === 'sort' ? true : !modalState.isOpen,

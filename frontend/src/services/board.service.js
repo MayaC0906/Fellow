@@ -66,10 +66,11 @@ async function remove(boardId) {
     return httpService.delete(BASE_URL + boardId)
 }
 
-async function save(board) {
+async function save(board, user, txt) {
     if (board._id) {
+        socketService.emit('update-board', board)
+        addActivity(board, user, txt)
         const updatedBoard = await httpService.put(BASE_URL + board._id, board)
-        socketService.emit('update-board', updatedBoard)
         return updatedBoard
     } else {
         const updatedBoard = await httpService.post(BASE_URL, board)
@@ -96,7 +97,6 @@ async function getGroupById(groupId, boardId) {
 }
 
 async function saveGroup(group, boardId, user, txt, task) {
-    console.log('user:', user)
     try {
         let board = await getById(boardId)
 

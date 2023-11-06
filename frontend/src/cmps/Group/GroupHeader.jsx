@@ -6,7 +6,8 @@ import { useParams } from 'react-router-dom'
 import { ShareBoard } from "../Board/ShareBoard";
 import { OurSiri } from "../OurSiri";
 import { Dashboard } from "../Dashboard";
-
+import { ChatApp } from '../../pages/Chat'
+import { Chat } from "@mui/icons-material";
 export function GroupHeader({ isMenuOpen, setMenu, setIsFiltersOpen, isFiltersOpen }) {
     // const { boardId } = useParams()
     const board = useSelector(storeState => storeState.boardModule.board)
@@ -20,7 +21,7 @@ export function GroupHeader({ isMenuOpen, setMenu, setIsFiltersOpen, isFiltersOp
     const [isSiriOpen, setSiriOpen] = useState(false)
     const [isPhoneDisplay, setIsPhoneDisplay] = useState(false)
     const [isDashboardOpen, setDashBoardOpen] = useState(false)
-
+    const [isChatOpen, setChatOpen] = useState(false)
     let zIndexCount = 10
 
     useEffect(() => {
@@ -92,8 +93,8 @@ export function GroupHeader({ isMenuOpen, setMenu, setIsFiltersOpen, isFiltersOp
                 <section className="group-header">
                     {!isPhoneDisplay && <button className={`btn ${isBlackOrWhite}`} onClick={() => setDashBoardOpen(!isDashboardOpen)}>{groupHeaderSvg.dashboard} <span className="dashboard">Dashboard</span></button>}
                     <button className={`${isBlackOrWhite} ` + (isPhoneDisplay ? '' : 'svg btn')} onClick={() => setIsFiltersOpen(!isFiltersOpen)}>{groupHeaderSvg.filter} <span className="filters">{isPhoneDisplay ? '' : 'Filters'}</span></button>
-                    <button className={`${isBlackOrWhite} ` + (isPhoneDisplay ? '' : 'svg btn')} onClick={() => setSiriOpen(!isSiriOpen)} >{groupHeaderSvg.speaker} <span className="siri">{isPhoneDisplay ? '' : 'Siri'}</span></button>
-
+                    <button className={`${isBlackOrWhite} ` + (isPhoneDisplay ? '' : 'svg btn')} onClick={() => setSiriOpen(!isSiriOpen)} >{groupHeaderSvg.speaker} <span className="siri">{isPhoneDisplay ? '' : 'Assistant'}</span></button>
+                    <button className={`${isBlackOrWhite} ` + (isPhoneDisplay ? '' : 'svg btn')} onClick={() => setChatOpen(!isChatOpen)} >{<Chat />} <span className="siri">{isPhoneDisplay ? '' : 'Chat'}</span></button>
                     <span className="separate-line"></span>
                     <section className="group-header img">
                         {!isPhoneDisplay &&
@@ -111,6 +112,7 @@ export function GroupHeader({ isMenuOpen, setMenu, setIsFiltersOpen, isFiltersOp
             </header>
             {isSiriOpen && <OurSiri isSiriOpen={isSiriOpen} setSiriOpen={setSiriOpen} />}
             {isDashboardOpen && <Dashboard setDashBoardOpen={setDashBoardOpen} />}
+            {isChatOpen && <ChatApp setChatOpen={setChatOpen} isChatOpen={isChatOpen} />}
         </>
     )
 }

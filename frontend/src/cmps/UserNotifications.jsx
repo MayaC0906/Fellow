@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { utilService } from "../services/util.service";
-
+import { checkList } from "./Svgs";
 export function UserNotifications({ setNewActivity, newActivity, user, isNotificationsOpen, setNotificationsOpen, notifications }) {
     const [groupedByTask, setGroupedByTask] = useState({})
 
@@ -73,7 +73,7 @@ export function UserNotifications({ setNewActivity, newActivity, user, isNotific
 
     }, [newActivity])
 
-    const notificationCount = Object.values(groupedByTask).reduce((acc, group) => acc + group.activities.length, 0)
+    // const notificationCount = Object.values(groupedByTask).reduce((acc, group) => acc + group.activities.length, 0)
 
     return (
         <div style={{ right: '0', width: '420px', position: 'absolute', zIndex: '45', height: '888px', overflow: 'auto' }} className={`board-menu notifications-modal ${isNotificationsOpen ? 'translate' : ''}`}>
@@ -82,10 +82,10 @@ export function UserNotifications({ setNewActivity, newActivity, user, isNotific
                     <header className="board-menu-header">
                         <div>
                             <div className="notification-bell">
-                                <span className="notification-count">{notificationCount}</span>
+                                {/* <span className="notification-count">{notificationCount}</span> */}
                             </div>
-                            <h3>Notifications</h3>
-                            <button className="close-btn clean-btn" onClick={() => setNotificationsOpen(!isNotificationsOpen)}>X</button>
+                            <span style={{ marginTop: '14px', fontSize: '16px' }}>Notifications</span>
+                            <button style={{ right: '8px' }} className="close-btn clean-btn" onClick={() => setNotificationsOpen(!isNotificationsOpen)}>{checkList.x}</button>
                         </div>
                     </header>
                     <hr className="divider" />
@@ -96,10 +96,9 @@ export function UserNotifications({ setNewActivity, newActivity, user, isNotific
                                     className="notification-group-header"
                                     style={{ backgroundImage: `linear-gradient(0deg, rgba(10, 11, 19, 0.7) 50%, rgba(10, 11, 19, 0.7) 0%), url(${groupData.boardBgc})` }}
                                 >
-                                    <div className="task-title-con">
-
+                                    {groupData.taskTitle && <div className="task-title-con">
                                         <div className="task-title">{groupData.taskTitle}</div>
-                                    </div>
+                                    </div>}
                                     <div className="board-group-info">
                                         <span className="board-title">{groupData.boardTitle}</span>
                                         {groupData.groupTitle && (
