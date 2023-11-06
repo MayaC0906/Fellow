@@ -18,7 +18,7 @@ export function AppHeader() {
     const board = useSelector((storeState) => storeState.boardModule.board)
     const boards = useSelector((storeState) => storeState.boardModule.boards)
     const [modalState, setModalState] = useState({ isOpen: false, modal: '' })
-    console.log('modalState', modalState)
+    // console.log('modalState', modalState)
     const inputRef = useRef(null)
     const navigate = (useNavigate())
     const [searchInput, setSearchInput] = useState(null)
@@ -219,7 +219,7 @@ export function AppHeader() {
                                     position: 'absolute',
                                     zIndex: '1000'
                                 }}>
-                              <AddBoard pos={true} setModalState={setModalState} />
+                                <AddBoard pos={true} setModalState={setModalState} />
                             </div>}
                     </button>
                 </section>

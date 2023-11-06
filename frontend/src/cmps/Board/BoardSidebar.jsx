@@ -12,7 +12,7 @@ export function BoardSidebar() {
   const [activeBoardId, setActiveBoardId] = useState(null)
   const { boardId } = useParams()
   const boards = useSelector((storeState) => storeState.boardModule.boards)
-  console.log('boards side bar', boards);
+  // console.log('boards side bar', boards);
   const board = useSelector((storeState) => storeState.boardModule.board)
   const user = useSelector((storeState) => storeState.userModule.user)
   const [showSortDropdown, setShowSortDropdown] = useState(false);

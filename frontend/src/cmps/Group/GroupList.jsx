@@ -38,6 +38,7 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
         const { txt, byMembers, byDuedate, byLabels } = filterBy
         groups = groups.map(group => {
             let filteredTasks = group.tasks
+
             if (txt) {
                 const regExp = new RegExp(txt, 'i')
                 filteredTasks = filteredTasks.filter(task => regExp.test(task.title))
@@ -45,33 +46,34 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
 
             if (byMembers) {
                 filteredTasks = filteredTasks.filter(task => {
-                    let includeTask = true
-                    if (byMembers.isAll) includeTask = includeTask && board.members.every(boardMember => task.memberIds.includes(boardMember._id))
-                    if (byMembers.isMe) includeTask = includeTask && task.memberIds.includes(user._id)
-                    if (byMembers.isNoOne) includeTask = includeTask && task.memberIds.length === 0
-                    if (byMembers.someMembers.length) includeTask = includeTask && byMembers.someMembers.some(someMember => task.memberIds.includes(someMember))
-                    return includeTask
-                })
+                    const conditions = []
+                    if (byMembers.isAll) conditions.push(board.members.every(boardMember => task.memberIds.includes(boardMember._id)))
+                    if (byMembers.isMe) conditions.push(task.memberIds.includes(user._id))
+                    if (byMembers.isNoOne) conditions.push(task.memberIds.length === 0)
+                    if (byMembers.someMembers.length) conditions.push(byMembers.someMembers.some(someMember => task.memberIds.includes(someMember)))
+                    return conditions.length === 0 || conditions.some(condition => condition)
+                });
             }
+
 
             if (byDuedate) {
                 filteredTasks = filteredTasks.filter(task => {
-                    let includeTask = true
-                    if (byDuedate.isComplete) includeTask = includeTask && task.dueDate.isComplete
-                    if (byDuedate.isDate) includeTask = includeTask && !task.dueDate.date
-                    if (byDuedate.isDuesoon) includeTask = includeTask && task.dueDate.isDueSoon
-                    if (byDuedate.isOverdue) includeTask = includeTask && task.dueDate.isOverdue
-                    return includeTask
+                    const conditions = []
+                    if (byDuedate.isComplete) conditions.push(task.dueDate.isComplete)
+                    if (byDuedate.isDate) conditions.push(!task.dueDate.date)
+                    if (byDuedate.isDuesoon) conditions.push(task.dueDate.isDueSoon && !task.dueDate.isComplete)
+                    if (byDuedate.isOverdue) conditions.push(task.dueDate.isOverdue && !task.dueDate.isComplete)
+                    return conditions.length === 0 || conditions.some(condition => condition)
                 })
             }
 
             if (byLabels) {
                 filteredTasks = filteredTasks.filter(task => {
-                    let includeTask = true
-                    if (byLabels.isNoOne) includeTask = includeTask && task.labelIds.length === 0
-                    if (byLabels.isAll) includeTask = includeTask && board.labels.every(boardLabels => task.labelIds.includes(boardLabels.id))
-                    if (byLabels.someLabel.length) includeTask = includeTask && byLabels.someLabel.some(label => task.labelIds.includes(label))
-                    return includeTask
+                    const conditions = []
+                    if (byLabels.isNoOne) conditions.push(task.labelIds.length === 0)
+                    if (byLabels.isAll) conditions.push(board.labels.every(boardLabel => task.labelIds.includes(boardLabel.id)))
+                    if (byLabels.someLabel.length) conditions.push(byLabels.someLabel.some(label => task.labelIds.includes(label)))
+                    return conditions.length === 0 || conditions.some(condition => condition)
                 })
             }
 
@@ -80,6 +82,8 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
 
         return groups
     }
+
+
 
     function handelCheckBox(checkboxName) {
         setCheckboxContainer((prevChecked) => {
@@ -293,3 +297,17 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
         </div>
     );
 }
+
+
+
+// if (byMembers) {
+//     filteredTasks = filteredTasks.filter(task => {
+//         let includeTask = false
+//         if (byMembers.isAll) includeTask = includeTask || board.members.every(boardMember => task.memberIds.includes(boardMember._id))
+//         if (byMembers.isMe) includeTask = includeTask || task.memberIds.includes(user._id)
+//         if (byMembers.isNoOne) includeTask = includeTask || task.memberIds.length === 0
+//         if (byMembers.someMembers.length) includeTask = includeTask || byMembers.someMembers.some(someMember => task.memberIds.includes(someMember))
+//         console.log(includeTask);
+//         return includeTask
+//     })
+// }

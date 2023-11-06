@@ -42,7 +42,9 @@ export function TaskDate({ task, setEditName, editName, onSaveTask }) {
     }
 
     function onCompleteDueDate() {
+        console.log('old:', task);
         const newTask = { ...task, dueDate: { ...task.dueDate, isComplete: !task.dueDate.isComplete } }
+        console.log('new:', newTask);
         const txt = `marked the due date ${task.dueDate.isComplete ? 'incomplete' : 'complete'}`
         onSaveTask(newTask, txt)
     }
