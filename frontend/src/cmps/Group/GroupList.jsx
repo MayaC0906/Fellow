@@ -27,18 +27,19 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
     const addListInput = useRef(null)
     const user = useSelector((storeState) => storeState.userModule.user)
     const [taskFilterBy, setTaskFilterby] = useState(boardService.getEmptyFilter())
-    const [filteredGroups, setFilteredGroups] = useState(groups)
+    // const [filteredGroups, setFilteredGroups] = useState(groups)
     const [checkboxContainer, setCheckboxContainer] = useState([])
 
-    useEffect(() => {
-        const filteredGroups = onFilterGroups(taskFilterBy)
-        setFilteredGroups(filteredGroups)
-    }, [taskFilterBy, groups])
+    // useEffect(() => {
+    //     setFilteredGroups(filteredGroups)
+    // }, [taskFilterBy, groups])
+    const filteredGroups = onFilterGroups(taskFilterBy)
 
     function onFilterGroups(filterBy) {
         const { txt, byMembers, byDuedate, byLabels } = filterBy
         groups = groups.map(group => {
             let filteredTasks = group.tasks
+
             if (txt) {
                 const regExp = new RegExp(txt, 'i')
                 filteredTasks = filteredTasks.filter(task => regExp.test(task.title))
@@ -46,33 +47,34 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
 
             if (byMembers) {
                 filteredTasks = filteredTasks.filter(task => {
-                    let includeTask = true
-                    if (byMembers.isAll) includeTask = includeTask && board.members.every(boardMember => task.memberIds.includes(boardMember._id))
-                    if (byMembers.isMe) includeTask = includeTask && task.memberIds.includes(user._id)
-                    if (byMembers.isNoOne) includeTask = includeTask && task.memberIds.length === 0
-                    if (byMembers.someMembers.length) includeTask = includeTask && byMembers.someMembers.some(someMember => task.memberIds.includes(someMember))
-                    return includeTask
-                })
+                    const conditions = []
+                    if (byMembers.isAll) conditions.push(board.members.every(boardMember => task.memberIds.includes(boardMember._id)))
+                    if (byMembers.isMe) conditions.push(task.memberIds.includes(user._id))
+                    if (byMembers.isNoOne) conditions.push(task.memberIds.length === 0)
+                    if (byMembers.someMembers.length) conditions.push(byMembers.someMembers.some(someMember => task.memberIds.includes(someMember)))
+                    return conditions.length === 0 || conditions.some(condition => condition)
+                });
             }
+
 
             if (byDuedate) {
                 filteredTasks = filteredTasks.filter(task => {
-                    let includeTask = true
-                    if (byDuedate.isComplete) includeTask = includeTask && task.dueDate.isComplete
-                    if (byDuedate.isDate) includeTask = includeTask && !task.dueDate.date
-                    if (byDuedate.isDuesoon) includeTask = includeTask && task.dueDate.isDueSoon
-                    if (byDuedate.isOverdue) includeTask = includeTask && task.dueDate.isOverdue
-                    return includeTask
+                    const conditions = []
+                    if (byDuedate.isComplete) conditions.push(task.dueDate.isComplete)
+                    if (byDuedate.isDate) conditions.push(!task.dueDate.date)
+                    if (byDuedate.isDuesoon) conditions.push(task.dueDate.isDueSoon && !task.dueDate.isComplete)
+                    if (byDuedate.isOverdue) conditions.push(task.dueDate.isOverdue && !task.dueDate.isComplete)
+                    return conditions.length === 0 || conditions.some(condition => condition)
                 })
             }
 
             if (byLabels) {
                 filteredTasks = filteredTasks.filter(task => {
-                    let includeTask = true
-                    if (byLabels.isNoOne) includeTask = includeTask && task.labelIds.length === 0
-                    if (byLabels.isAll) includeTask = includeTask && board.labels.every(boardLabels => task.labelIds.includes(boardLabels.id))
-                    if (byLabels.someLabel.length) includeTask = includeTask && byLabels.someLabel.some(label => task.labelIds.includes(label))
-                    return includeTask
+                    const conditions = []
+                    if (byLabels.isNoOne) conditions.push(task.labelIds.length === 0)
+                    if (byLabels.isAll) conditions.push(board.labels.every(boardLabel => task.labelIds.includes(boardLabel.id)))
+                    if (byLabels.someLabel.length) conditions.push(byLabels.someLabel.some(label => task.labelIds.includes(label)))
+                    return conditions.length === 0 || conditions.some(condition => condition)
                 })
             }
 
@@ -81,6 +83,8 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
 
         return groups
     }
+
+
 
     function handelCheckBox(checkboxName) {
         setCheckboxContainer((prevChecked) => {
@@ -175,7 +179,7 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
 
 
 
-    async function handleDrag(result) {
+    function handleDrag(result) {
         const { destination, source, type } = result
         if (!destination || (destination.droppableId === source.droppableId && destination.index === source.index)) return
         const clonedBoard = structuredClone(board)
@@ -184,7 +188,7 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
             const [movedGroup] = updatedGroups.splice(source.index, 1)
             updatedGroups.splice(destination.index, 0, movedGroup)
             clonedBoard.groups = updatedGroups;
-            await updateBoard(clonedBoard);
+            updateBoard(clonedBoard);
         }
 
         if (type === 'tasks') {
@@ -195,7 +199,7 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
                 const [movedTask] = updatedTasks.splice(source.index, 1)
                 updatedTasks.splice(destination.index, 0, movedTask)
                 originalGroup.tasks = updatedTasks
-                await updateBoard(clonedBoard);
+                updateBoard(clonedBoard);
             } else {
                 const tasksFromOriginalGroup = [...originalGroup.tasks]
                 const tasksForTargetGroup = [...targetGroup.tasks]
@@ -205,7 +209,7 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
                 targetGroup.tasks = tasksForTargetGroup
                 const txt = `moved ${movedTask.title} from ${originalGroup.title} to ${targetGroup.title} `
 
-                await updateBoard(clonedBoard, user, txt);
+                updateBoard(clonedBoard, user, txt);
             }
         }
     }
@@ -296,3 +300,17 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
         </div>
     );
 }
+
+
+
+// if (byMembers) {
+//     filteredTasks = filteredTasks.filter(task => {
+//         let includeTask = false
+//         if (byMembers.isAll) includeTask = includeTask || board.members.every(boardMember => task.memberIds.includes(boardMember._id))
+//         if (byMembers.isMe) includeTask = includeTask || task.memberIds.includes(user._id)
+//         if (byMembers.isNoOne) includeTask = includeTask || task.memberIds.length === 0
+//         if (byMembers.someMembers.length) includeTask = includeTask || byMembers.someMembers.some(someMember => task.memberIds.includes(someMember))
+//         console.log(includeTask);
+//         return includeTask
+//     })
+// }

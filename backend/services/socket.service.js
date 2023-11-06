@@ -11,7 +11,6 @@ export function setupSocketAPI(http) {
         }
     })
     gIo.on('connection', socket => {
-        console.log('socket it back', socket);
         logger.info(`New connected socket [id: ${socket.id}]`)
         socket.on('disconnect', socket => {
             logger.info(`Socket disconnected [id: ${socket.id}]`)
@@ -26,7 +25,6 @@ export function setupSocketAPI(http) {
             socket.myTopic = topic
         })
         socket.on('board-activity', activity => {
-            console.log('activity:', activity)
             logger.info(`New chat msg from socket [id: ${socket.id}], emitting to topic ${socket.myTopic}`)
             // emits to all sockets:
             // gIo.emit('chat addMsg', msg)

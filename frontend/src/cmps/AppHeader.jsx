@@ -18,7 +18,6 @@ export function AppHeader() {
     const board = useSelector((storeState) => storeState.boardModule.board)
     const boards = useSelector((storeState) => storeState.boardModule.boards)
     const [modalState, setModalState] = useState({ isOpen: false, modal: '' })
-    console.log('modalState', modalState)
     const inputRef = useRef(null)
     const navigate = (useNavigate())
     const [searchInput, setSearchInput] = useState(null)
@@ -36,7 +35,7 @@ export function AppHeader() {
 
     useEffect(() => {
         const allActivities = boards.flatMap(board =>
-            board.activities.filter(activity => activity.byMember._id !== user?._id)
+            board.activities?.filter(activity => activity.byMember._id !== user?._id)
         )
         const sortedActivities = allActivities.sort((a, b) => b.createdAt - a.createdAt)
         setNotifications(sortedActivities)
@@ -229,7 +228,7 @@ export function AppHeader() {
                                     position: 'absolute',
                                     zIndex: '1000'
                                 }}>
-                              <AddBoard pos={true} setModalState={setModalState} />
+                                <AddBoard pos={true} setModalState={setModalState} />
                             </div>}
                     </button>
                 </section>
