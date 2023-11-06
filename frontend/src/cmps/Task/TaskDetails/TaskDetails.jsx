@@ -24,10 +24,11 @@ export function TaskDetails() {
     const [imgBackground, setImgBackground] = useState('white')
     let [editName, setEditName] = useState('')
     const user = useSelector((storeState) => storeState.userModule.user)
+    const board = useSelector((storeState) => storeState.boardModule.board)
     const navigate = useNavigate()
     const [isPhoneDisplay, setIsPhoneDisplay] = useState({ isDisplay: false, isActionsShown: false })
     const [ev, setEv] = useState(null)
-
+    let groups = board.groups
 
     useEffect(() => {
         window.addEventListener('resize', handleResize);
@@ -66,10 +67,20 @@ export function TaskDetails() {
     }
 
     async function onSaveTask(updatedTask, txt) {
+        const currGroup = groups.findIndex(g => g.id === groupId)
+        if (updatedTask.id) {
+            const taskIdx = groups[currGroup].tasks.findIndex(task => task.id === updatedTask.id)
+            groups[currGroup].tasks[taskIdx] = updatedTask
+        } else {
+            updatedTask.id = utilService.makeId()
+            groups[currGroup].tasks.push(updatedTask)
+        }
+        const boardToSave = { ...board, groups: board.groups }
+        console.log(boardToSave);
         const prevTask = { ...task }
         setTask(updatedTask)
         try {
-            await saveNewTask(boardId, groupId, updatedTask, user, txt)
+            saveNewTask(boardId, groupId, updatedTask, user, txt, boardToSave)
         } catch (err) {
             console.log('cant save task');
             setTask(prevTask)
