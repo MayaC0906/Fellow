@@ -66,11 +66,13 @@ export function TaskDetails() {
     }
 
     async function onSaveTask(updatedTask, txt) {
+        const prevTask = { ...task }
+        setTask(updatedTask)
         try {
             await saveNewTask(boardId, groupId, updatedTask, user, txt)
-            setTask(updatedTask)
         } catch (err) {
             console.log('cant save task');
+            setTask(prevTask)
         }
     }
 

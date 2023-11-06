@@ -38,7 +38,6 @@ export async function loadBoards(user) {
                     board.members.some(boardMember => boardMember._id === user._id)
                 )
             }
-            // else case for Guest user is implicit, no need to filter boards
         } else {
             console.log('No user provided, no boards will be filtered.');
         }

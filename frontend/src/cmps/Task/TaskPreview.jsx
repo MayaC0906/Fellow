@@ -48,7 +48,7 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
         // dueDate.isComplete = !dueDate.isComplete
         const newTask = { ...task, dueDate: { ...task.dueDate, isComplete: !task.dueDate.isComplete } }
         try {
-            await saveNewTask(boardId, groupId, newTask)
+            saveNewTask(boardId, groupId, newTask)
         } catch (err) {
             console.log(`Couldn't save task`, err);
         }
@@ -64,18 +64,18 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
         setIsQuickEdit(true)
     }
 
-    async function onSaveTask(updatedTask) {
+    function onSaveTask(updatedTask) {
         try {
-            await saveNewTask(boardId, groupId, updatedTask)
+            saveNewTask(boardId, groupId, updatedTask)
             setTask(updatedTask)
         } catch (err) {
             console.log('cant save task');
         }
     }
 
-    async function onDeleteTask(taskId) {
+    function onDeleteTask(taskId) {
         try {
-            await deleteTask(boardId, groupId, taskId)
+            deleteTask(boardId, groupId, taskId)
         } catch (err) {
             console.log('cant save task');
         }
