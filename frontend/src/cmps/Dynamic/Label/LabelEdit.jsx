@@ -17,6 +17,7 @@ export function LabelEdit({ pos, editName, onCloseEditTask, onSaveTask, task }) 
     let groups = board.groups
 
     useEffect(() => {
+        console.log('hey');
         setLabels(board.labels)
     }, [board.labels])
 
@@ -79,10 +80,12 @@ export function LabelEdit({ pos, editName, onCloseEditTask, onSaveTask, task }) 
         try {
             let updatedLabelsIBoard = board.labels.filter(label => label.id !== labelToEdit.id)
             const newBoard = { ...board, labels: updatedLabelsIBoard }
+            console.log('new board label:', newBoard);
+            await updateBoard(newBoard)
 
             let updatedLabelsInTask = task.labelIds.filter(label => label !== labelToEdit.id)
             task = { ...task, labelIds: updatedLabelsInTask }
-            await updateBoard(newBoard)
+            // console.log('task label', task);
             await onSaveTask(task)
 
             onAddLabel('')
