@@ -3,11 +3,12 @@ import { taskService } from '../../services/task.service.local';
 import Button from '@mui/joy/Button';
 import { useSelector } from 'react-redux';
 import { showSuccessMsg } from '../../services/event-bus.service';
-import { saveNewTask } from '../../store/actions/board.actions';
+import { updateBoard } from '../../store/actions/board.actions';
 import { GroupMenu } from './GroupMenu';
 import { TaskList } from '../Task/TaskList';
 import { checkList, groupPreview } from '../Svgs';
 import { taskSvg } from '../Svgs';
+import { utilService } from '../../services/util.service';
 
 export function GroupPreview({
 	handleDrag,
@@ -36,6 +37,7 @@ export function GroupPreview({
 	const user = useSelector((storeState) => storeState.userModule.user)
 	const [prevTaskCount, setPrevTaskCount] = useState(group.tasks.length)
 	const inputRef = useRef(null);
+	let { groups } = board
 
 	useEffect(() => {
 		if (taskListContainerRef.current && group.tasks.length > prevTaskCount) {
@@ -83,15 +85,21 @@ export function GroupPreview({
 		}
 	}
 
+
 	async function onSaveNewTask(ev) {
 		ev.preventDefault()
+		const currGroup = groups.findIndex(g => g.id === group.id)
+
 		setInputExpand(false)
 		if (!newTask.title) return
+		const txt = `added ${newTask.title} to ${group.title}`
+		newTask.id = utilService.makeId()
+		groups[currGroup].tasks.push(newTask)
+		const boardToSave = { ...board, groups: board.groups }
+		console.log(boardToSave);
 		try {
-			const txt = `added ${newTask.title} to ${group.title}`
-			await saveNewTask(board._id, group.id, newTask, user, txt)
+			updateBoard(boardToSave, user, txt)
 			setNewTask(taskService.getEmptyTask())
-			showSuccessMsg('New task added')
 			setInputExpand(true);
 		} catch (err) {
 			console.log('failed to save new task', err)
