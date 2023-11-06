@@ -11,11 +11,12 @@ import { socketService } from '../services/socket.service'
 
 
 export function AppHeader() {
-    const boardStyle = useSelector((storeState) => storeState.boardModule.board.style) || null
     const user = useSelector(storeState => storeState.userModule.user)
     const [isUserDetailOpen, setIsUserDetailOpen] = useState(false)
     const [brightClass, setBrightClass] = useState(true)
     const board = useSelector((storeState) => storeState.boardModule.board)
+    console.log(board, 'board style');
+    const boardStyle = useSelector((storeState) => storeState.boardModule.board?.style) || null
     const boards = useSelector((storeState) => storeState.boardModule.boards)
     const [modalState, setModalState] = useState({ isOpen: false, modal: '' })
     const inputRef = useRef(null)

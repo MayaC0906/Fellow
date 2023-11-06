@@ -1,11 +1,12 @@
 import dayjs from "dayjs"
 import { loaderSvg, taskSvg } from "../Svgs"
-import { deleteTask, saveNewTask } from "../../store/actions/board.actions"
+import { deleteTask, saveNewTask } from "../../store/actions/board.actions.js"
 import { useNavigate, useParams } from "react-router"
 import { darken } from 'polished';
 import { useState, Fragment, useRef, useEffect, useLayoutEffect } from "react";
 import { Link } from "react-router-dom";
 import { TaskDetailsSideNav } from "./TaskDetailsSideNav";
+import { useSelector } from 'react-redux'
 
 export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels, taskMembers, taskChecklist, groupId, onScrollDown, tasks }) {
     const { dueDate } = task
@@ -17,6 +18,9 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
     const [quickEditPosition, setQuickEditPosition] = useState({ top: '', left: '' })
     const [rtl, setRtl] = useState(false)
     const navigate = useNavigate()
+    const board = useSelector((storeState) => storeState.boardModule.board)
+    const user = useSelector((storeState) => storeState.userModule.user)
+    let { groups } = board
 
     function getBounds(ev) {
         const taskRect = taskRef.current.getBoundingClientRect()
@@ -48,7 +52,7 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
         // dueDate.isComplete = !dueDate.isComplete
         const newTask = { ...task, dueDate: { ...task.dueDate, isComplete: !task.dueDate.isComplete } }
         try {
-            saveNewTask(boardId, groupId, newTask)
+            onSaveTask(newTask)
         } catch (err) {
             console.log(`Couldn't save task`, err);
         }
@@ -64,10 +68,18 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
         setIsQuickEdit(true)
     }
 
-    function onSaveTask(updatedTask) {
+    async function onSaveTask(updatedTask, txt = '') {
+        const currGroup = groups.findIndex(g => g.id === groupId)
+        if (updatedTask.id) {
+            const taskIdx = groups[currGroup].tasks.findIndex(task => task.id === updatedTask.id)
+            groups[currGroup].tasks[taskIdx] = updatedTask
+        } else {
+            updatedTask.id = utilService.makeId()
+            groups[currGroup].tasks.push(updatedTask)
+        }
+        const boardToSave = { ...board, groups: board.groups }
         try {
-            saveNewTask(boardId, groupId, updatedTask)
-            setTask(updatedTask)
+            saveNewTask(boardId, groups[currGroup].id, updatedTask, user, txt, boardToSave)
         } catch (err) {
             console.log('cant save task');
         }
