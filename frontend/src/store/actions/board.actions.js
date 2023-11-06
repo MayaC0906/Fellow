@@ -94,7 +94,9 @@ export async function addBoard(board, user, txt) {
 export async function updateBoard(boardToSave, user, txt) {
     const board = store.getState().board
     store.dispatch(getActionAddBoard(boardToSave))
+    
     try {
+
         await boardService.save(boardToSave, user, txt)
         // return savedBoard
     } catch (err) {

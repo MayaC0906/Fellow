@@ -2,94 +2,138 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import { socketService, SOCKET_EMIT_SEND_MSG, SOCKET_EVENT_ADD_MSG, SOCKET_EMIT_SET_TOPIC } from '../services/socket.service.js'
+import { updateBoard } from '../store/actions/board.actions.js'
+import { utilService } from '../services/util.service.js'
 
-export function ChatApp() {
+export function ChatApp({ isChatOpen, setChatOpen }) {
     const { boardId } = useParams()
     const [msg, setMsg] = useState({ txt: '' })
-    const [msgs, setMsgs] = useState([])
     const [topic, setTopic] = useState(boardId)
-    const [isTyping, setIsTyping] = useState(false);
-    const [typingUser, setTypingUser] = useState('');
-    // const [isBotMode, setIsBotMode] = useState(false)
-
+    const [isTyping, setIsTyping] = useState(false)
+    const [typingUser, setTypingUser] = useState('')
+    const board = useSelector((storeState) => storeState.boardModule.board)
     const user = useSelector(storeState => storeState.userModule.user)
-    // const botTimeoutRef = useRef()
+    const [isChatMinimized, setIsChatMinimized] = useState(false)
+    const messagesEndRef = useRef(null)
+    let { msgs } = board
+
+    useEffect(() => {
+        if (messagesEndRef.current) {
+            messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
+        }
+    }, [msgs])
+
+
 
     useEffect(() => {
         const userName = user.fullname
         socketService.on(SOCKET_EVENT_ADD_MSG, addMsg)
         socketService.on('user-typing', (userName) => {
-            setIsTyping(true);
-            setTypingUser(user);
+            setIsTyping(true)
+            setTypingUser(userName)
             setTimeout(() => {
-                setIsTyping(false);
-                setTypingUser('');
-            }, 10000);
+                setIsTyping(false)
+                setTypingUser('')
+            }, 3000)
         });
         return () => {
             socketService.off(SOCKET_EVENT_ADD_MSG, addMsg)
-            // botTimeoutRef.current && clearTimeout(botTimeoutRef.current)
         }
-    }, [])
+    }, [user.fullname, board])
 
-    useEffect(() => {
-        socketService.emit(SOCKET_EMIT_SET_TOPIC, topic)
-    }, [topic])
-
-    function addMsg(newMsg) {
-        setMsgs(prevMsgs => [...prevMsgs, newMsg])
+    function toggleChat() {
+        setIsChatMinimized(!isChatMinimized);
     }
 
-    // function sendBotResponse() {
-    //     // Handle case: send single bot response (debounce).
-    //     botTimeoutRef.current && clearTimeout(botTimeoutRef.current)
-    //     botTimeoutRef.current = setTimeout(() => {
-    //         setMsgs(prevMsgs => ([...prevMsgs, { from: 'Bot', txt: 'You are amazing!' }]))
-    //     }, 1250)
-    // }
+    function addMsg(newMsg) {
+        const updatedBoard = {
+            ...board,
+            msgs: board.msgs ? [...board.msgs, newMsg] : [newMsg]
+        };
+        updateBoard(updatedBoard)
+    }
+
+    function stringToColor(str) {
+        let hash = 0
+        for (let i = 0; i < str.length; i++) {
+            hash = str.charCodeAt(i) + ((hash << 5) - hash)
+        }
+
+        let color = 'rgba(';
+        for (let i = 0; i < 3; i++) {
+            const value = (hash >> (i * 8)) & 0xFF
+            color += value + ','
+        }
+        color += '0.5)'
+        return color
+    }
+
+
 
     function sendMsg(ev) {
         ev.preventDefault()
-        // onSaveToyMsg(toyId, msg.txt)
+
         const from = user?.fullname || 'Me'
-        const newMsg = { from, txt: msg.txt }
+        const newMsg = { from, txt: msg.txt, when: Date.now() }
         socketService.emit(SOCKET_EMIT_SEND_MSG, newMsg)
-        // if (isBotMode) sendBotResponse()
-        // for now - we add the msg ourself
-        // addMsg(newMsg)
         setMsg({ txt: '' })
     }
-
     function handleFormChange(ev) {
         const { name, value } = ev.target
         setMsg(prevMsg => ({ ...prevMsg, [name]: value }))
-        socketService.emit('typing', user.fullname || 'Me');
+        socketService.emit('typing', user.fullname || 'Me')
     }
-    console.log('toymsgs', typingUser);
-    console.log('isTyping', isTyping);
+    console.log('isTyping', isTyping)
+    console.log(typingUser)
     return (
-        <section className="chat">
-            <div>
-                <label>
-                    {/* <input
-                        type="radio" name="topic" value={toyId}
-                        checked={topic === toyId} onChange={({ target }) => setTopic(target.value)} /> */}
-                    <img alt="" />
-                    {isTyping && typingUser !== user.fullname && <div>{typingUser.fullname} is typing...</div>}
-                </label>
+        <section className={`chat ${isChatMinimized ? 'minimized' : ''}`}>
+            <div className="chat-header">
+                <div className="chat-details">
+
+                    <img src={board.style.backgroundImage} alt="Chat Background" />
+                    <span>{board.title}</span>
+                    {isTyping && typingUser !== user.fullname && <div className="typing-indicator">{typingUser} is typing...</div>}
+
+                </div>
+                <div className='chat-close-actions'>
+
+                    <button className="toggle-chat clean-btn" onClick={toggleChat}>
+                        {isChatMinimized ? '+' : '-'}
+                    </button>
+                    <button className="close-chat" onClick={() => setChatOpen(!isChatOpen)}>X</button>
+                </div>
             </div>
+            {!isChatMinimized && (
+                <>
+                    {msgs && (
+                        <ul className="chat-list clean-list">
+                            {msgs.map((message, index) => (
+                                <li className="msg-item" style={{ backgroundColor: stringToColor(message.from) }} key={index}>
+                                    <div className="txt-area">
+                                        <span className="chat-name">{message.from === user?.fullname ? 'Me' : message.from}:</span>
+                                        <span className="chat-txt">{message.txt}</span>
+                                    </div>
+                                    <span className="timestamp">{utilService.formatDate(message.when)}</span>
+                                </li>
+                            ))}
+                            <div ref={messagesEndRef} />
 
-
-            <ul className='clean-list'>
-                <li >{msg.from = (user?.fullname === msg.from) ? 'Me' : msg.from}: {msg.txt}</li>
-                {/* <img src="https://media.istockphoto.com/id/1403848173/vector/vector-online-chatting-pattern-online-chatting-seamless-background.jpg?s=612x612&w=0&k=20&c=W3O15mtJiNlJuIgU6S9ZlnzM_yCE27eqwTCfXGYwCSo=" alt="" /> */}
-            </ul >
-            <form onSubmit={sendMsg}>
-                <input
-                    type="text" value={msg.txt} onChange={handleFormChange}
-                    name="txt" autoComplete="off" />
-                <button>Send</button>
-            </form>
+                        </ul>
+                    )}
+                    <form className="chat-form" onSubmit={sendMsg}>
+                        <input
+                            type="text"
+                            className="input"
+                            value={msg.txt}
+                            onChange={handleFormChange}
+                            name="txt"
+                            autoComplete="off"
+                            placeholder="Type a message..."
+                        />
+                        <button className="send-btn">Send</button>
+                    </form>
+                </>
+            )}
         </section>
     )
 }

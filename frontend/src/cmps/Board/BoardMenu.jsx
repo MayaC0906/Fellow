@@ -91,8 +91,10 @@ export function BoardMenu({ setMenu, isMenuOpen }) {
                     </header>
                     <hr className="divider" />
                     {renderContent()}
+
                 </div>
             </div>
         </div>
+
     );
 }
