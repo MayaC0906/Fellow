@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 
 export function MemberEdit({ pos, editName, onCloseEditTask, onSaveTask, task }) {
     const board = useSelector(storeState => storeState.boardModule.board)
+    console.log('board memebrs:', board.members);
     const user = useSelector(storeState => storeState.userModule.user)
     const [filterMembers, setFilterdMembers] = useState(board.members)
     const [connectMembers, setConnectMembers] = useState(task.memberIds)
@@ -50,6 +51,8 @@ export function MemberEdit({ pos, editName, onCloseEditTask, onSaveTask, task })
         }
         return txt
     }
+
+    // console.log('filterMembers', filterMembers);
 
     return (
         <section style={{ top: pos.top, left: pos.left }} className="edit-modal slide-up">

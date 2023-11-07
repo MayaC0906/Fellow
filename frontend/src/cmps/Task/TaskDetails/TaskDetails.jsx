@@ -111,6 +111,7 @@ export function TaskDetails() {
         }
     }
 
+    console.log('hey');
     if (!task) return <div className="loader task-details"><div>{loaderSvg.loader}</div></div>
 
     return (
