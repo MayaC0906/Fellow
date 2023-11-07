@@ -1,18 +1,15 @@
-import { Textarea } from "@mui/joy"
-import { additionTaskSvg, loaderSvg, taskSvg } from "../Svgs"
+import { additionTaskSvg, taskSvg } from "../Svgs"
 import { useSelector } from "react-redux";
 import { updateBoard } from "../../store/actions/board.actions";
-import { useEffect, useState } from "react";
-import { loadUsers } from "../../store/actions/user.actions";
-import { useRef } from "react";
+import { useState } from "react";
 
 export function ShareBoard({ setIsOpenShareBoard }) {
-    let users = useSelector(storeState => storeState.userModule.users)
-    console.log(users);
-    users = users.filter(user => user._id !== 'guest')
+    const users = useSelector(storeState => storeState.userModule.users)
     const board = useSelector(storeState => storeState.boardModule.board)
+    const usersToDisplay = users.filter(user => user.username !== 'Guest')
     const [connectUsers, setConnectUsers] = useState(board.members)
-    const [filterUsers, setFilterdUsers] = useState(users)
+    const [filterUsers, setFilterdUsers] = useState(usersToDisplay)
+
 
 
     function onUserSearch({ target }) {

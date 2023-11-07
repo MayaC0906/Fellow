@@ -107,17 +107,21 @@ export function ChatApp({ isChatOpen, setChatOpen }) {
                 <>
                     {msgs && (
                         <ul className="chat-list clean-list">
-                            {msgs.map((message, index) => (
-                                <li className="msg-item" style={{ backgroundColor: stringToColor(message.from) }} key={index}>
-                                    <div className="txt-area">
-                                        <span className="chat-name">{message.from === user?.fullname ? 'Me' : message.from}:</span>
-                                        <span className="chat-txt">{message.txt}</span>
-                                    </div>
-                                    <span className="timestamp">{utilService.formatDate(message.when)}</span>
-                                </li>
-                            ))}
+                            {msgs.map((message, index) => {
+                                const nameColor = stringToColor(message.from);
+                                return (
+                                    <li className={`msg-item ${message.from === user?.fullname ? 'msg-mine' : 'msg-other'}`} key={index}>
+                                        <div className="txt-area">
+                                            <span className="chat-name" style={{ color: nameColor }}>
+                                                {message.from === user?.fullname ? '' : message.from + ':'}
+                                            </span>
+                                            <span className="chat-txt">{message.txt}</span>
+                                        </div>
+                                        <span className="timestamp">{utilService.formatDate(message.when)}</span>
+                                    </li>
+                                );
+                            })}
                             <div ref={messagesEndRef} />
-
                         </ul>
                     )}
                     <form className="chat-form" onSubmit={sendMsg}>

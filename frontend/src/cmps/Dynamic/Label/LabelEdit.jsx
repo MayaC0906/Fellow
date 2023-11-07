@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { Textarea } from '@mui/joy'
 import { updateBoard } from '../../../store/actions/board.actions'
 import { AddLabel } from './AddLabel'
+import { useParams } from 'react-router'
 
 export function LabelEdit({ pos, editName, onCloseEditTask, onSaveTask, task }) {
     const board = useSelector(storeState => storeState.boardModule.board)
@@ -12,8 +13,11 @@ export function LabelEdit({ pos, editName, onCloseEditTask, onSaveTask, task }) 
     const [checkedLabelsStart, setCheckedLabelsStart] = useState(task.labelIds)
     const [isLabelEdit, setIsLabelEdit] = useState(false)
     const [labelToEdit, setLabelToEdit] = useState(null)
+    const { groupId } = useParams()
+    let groups = board.groups
 
     useEffect(() => {
+        console.log('hey');
         setLabels(board.labels)
     }, [board.labels])
 
@@ -47,15 +51,42 @@ export function LabelEdit({ pos, editName, onCloseEditTask, onSaveTask, task }) 
         setLabels(filteredLabels)
     }
 
+    // async function onDeletingLabel() {
+
+    //     console.log('hey');
+    //     try {
+    //         let updatedLabelsIBoard = board.labels.filter(label => label.id !== labelToEdit.id)
+    //         let updatedLabelsInTask = task.labelIds.filter(label => label !== labelToEdit.id)
+    //         task = { ...task, labelIds: updatedLabelsInTask }
+    //         const currGroup = groups.findIndex(g => g.id === groupId)
+    //         let tasks = groups[currGroup].tasks
+    //         const currTask = tasks.findIndex(t => t.id === task.id)
+
+    //         tasks[currTask] = task
+    //         const newBoard = { ...board, labels: updatedLabelsIBoard, tasks }
+    //         console.log('new board', newBoard);
+    //         await updateBoard(newBoard)
+
+    //         // await onSaveTask(task)
+
+    //         onAddLabel('')
+    //     } catch (err) {
+    //         console.log('Cannot remove label', err)
+    //         throw err
+    //     }
+    // }
+
     async function onDeletingLabel() {
         try {
             let updatedLabelsIBoard = board.labels.filter(label => label.id !== labelToEdit.id)
             const newBoard = { ...board, labels: updatedLabelsIBoard }
-            await updateBoard(newBoard)
+            console.log('new board label:', newBoard);
 
             let updatedLabelsInTask = task.labelIds.filter(label => label !== labelToEdit.id)
             task = { ...task, labelIds: updatedLabelsInTask }
+            // console.log('task label', task);
             await onSaveTask(task)
+            await updateBoard(newBoard)
 
             onAddLabel('')
         } catch (err) {

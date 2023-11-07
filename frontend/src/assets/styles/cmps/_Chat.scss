@@ -13,8 +13,10 @@
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     justify-content: space-between;
+    overflow: none;
     z-index: 40;
     & > div {
+        overflow: none;
         display: flex;
         padding: 6px;
         align-items: center;
@@ -66,36 +68,67 @@
         flex: 1;
         overflow-y: scroll;
         padding: 10px;
-       
+        display: flex;
+        flex-direction: column;
         
         li {
             padding: 8px 10px;
             margin-bottom: 10px;
-            background-color: #DCF8C6;
             border-radius: 8px;
-            width: max-content;
-            align-self: flex-end;
+            max-width: 80%;
             display: flex;
             flex-direction: column;
-            &:not(:last-child) {
-                align-self: flex-start;
-                background-color: #FFFFFF;
-            }
+         
             span {
                 font-size: 10px;
-                font-weight: bold;
             }   
             .txt-area {
                 display: flex;
                 gap: 6px;
                 span {
-                    font-size: 15px;
+                    font-size: 13px;
                 }
             }
         }
     }
 }
 
+
+.msg-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+}
+
+.msg-mine .txt-area {
+    justify-content: flex-end; 
+}
+
+
+.msg-mine {
+    background-color: #DCF8C6;
+    align-self: flex-end;
+    align-items: flex-end; 
+}
+
+.msg-mine .txt-area {
+    display: flex;
+    gap: 6px;
+    justify-content: flex-end; 
+    span {
+        font-size: 13px;
+    }
+}
+
+.msg-mine .timestamp {
+    align-self: flex-end; 
+    font-size: 10px;
+}
+
+.msg-other {
+    background-color: #FFFFFF;
+    align-self: flex-start; 
+}
 
 .chat.minimized {
     height: 50px;
@@ -106,6 +139,7 @@
     font-size: 12px;
     margin-top: 4px;
 }
+
 
 .chat-header {
     display: flex;

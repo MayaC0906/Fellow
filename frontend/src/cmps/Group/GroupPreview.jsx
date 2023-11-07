@@ -96,11 +96,11 @@ export function GroupPreview({
 		newTask.id = utilService.makeId()
 		groups[currGroup].tasks.push(newTask)
 		const boardToSave = { ...board, groups: board.groups }
-		console.log(boardToSave);
+		console.log(boardToSave)
 		try {
-			updateBoard(boardToSave, user, txt)
+			await updateBoard(boardToSave, user, txt)
 			setNewTask(taskService.getEmptyTask())
-			setInputExpand(true);
+			setInputExpand(true)
 		} catch (err) {
 			console.log('failed to save new task', err)
 			throw err;
