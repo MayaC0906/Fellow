@@ -92,7 +92,7 @@ export async function addBoard(board, user, txt) {
 
 export async function updateBoard(boardToSave, user, txt) {
     // console.log('board:', board)
-    store.dispatch(getActionAddBoard(boardToSave))
+    store.dispatch(getActionUpdateBoard(boardToSave))
     try {
 
         await boardService.save(boardToSave, user, txt)
