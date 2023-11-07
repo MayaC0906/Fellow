@@ -40,20 +40,23 @@ export function TaskFilter({ setIsFiltersOpen, taskFilterBy, setTaskFilterby, ch
 
     function toggleFilterOptions(type, name, key) {
         let checkboxName = ''
-        switch (name) {
-            case 'me':
-            case 'all-members':
-            case 'no-members':
-            case 'no-label':
-            case 'all-labels':
-            case 'no-date':
-            case 'overdue':
-            case 'duesoon':
-            case 'complete':
-                setTaskFilterby(prevFilter => ({ ...prevFilter, [type]: { ...prevFilter[type], [key]: !prevFilter[type][key] } }))
-                break;
-            default:
-        }
+        // switch (name) {
+        //     case 'me':
+        //     case 'all-members':
+        //     case 'no-members':
+        //     case 'no-label':
+        //     case 'all-labels':
+        //     case 'no-date':
+        //     case 'overdue':
+        //     case 'duesoon':
+        //     case 'complete':
+        //         setTaskFilterby(prevFilter => ({ ...prevFilter, [type]: { ...prevFilter[type], [key]: !prevFilter[type][key] } }))
+        //         break;
+        //     default:
+        // }
+
+        if (name) setTaskFilterby(prevFilter => ({ ...prevFilter, [type]: { ...prevFilter[type], [key]: !prevFilter[type][key] } }))
+
 
         switch (key) {
             case 'someMembers':

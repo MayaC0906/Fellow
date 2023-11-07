@@ -25,6 +25,7 @@ export function boardReducer(state = initialState, action) {
     let starredBoards
     let lastBoard
     let board
+    let currBoard
     switch (action.type) {
         case SET_BOARDS:
             newState = { ...state, boards: action.boards }

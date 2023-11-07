@@ -3,7 +3,7 @@ import 'regenerator-runtime'
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
-import { addBoard, saveGroup, saveNewTask } from '../store/actions/board.actions';
+import { addBoard, saveGroup, saveNewTask, updateBoard } from '../store/actions/board.actions';
 import { boardService } from '../services/board.service.local';
 import { taskService } from '../services/task.service.local';
 import { utilService } from '../services/util.service';
@@ -25,27 +25,27 @@ export function OurSiri({ isSiriOpen, setSiriOpen }) {
     useEffect(() => {
         let timeoutId;
         if (listening && transcript) {
-            timeoutId = setTimeout(handleInterimResult, 1000);
+            timeoutId = setTimeout(handleInterimResult, 2000)
             lastResultTimeRef.current = Date.now()
         }
 
         return () => {
             clearTimeout(timeoutId);
-        };
+        }
     }, [transcript, listening]);
     const processTranscript = (transcript) => {
         getAction(transcript);
-    };
+    }
     const startListening = () => {
         resetTranscript();
         SpeechRecognition.startListening({
             continuous: true,
             language: 'en-US',
             interimResults: true
-        });
+        })
 
         lastResultTimeRef.current = Date.now();
-    };
+    }
 
     const handleInterimResult = (interimTranscript) => {
         console.log('interim', interimTranscript);
@@ -56,7 +56,8 @@ export function OurSiri({ isSiriOpen, setSiriOpen }) {
         } else {
             lastResultTimeRef.current = currentTime;
         }
-    };
+    }
+
     function findGroupByTitle(title) {
         const target = normalizeString(title)
         let bestMatch = null
@@ -85,7 +86,7 @@ export function OurSiri({ isSiriOpen, setSiriOpen }) {
                 maxSim = sim
                 bestMatch = expectedWord
             }
-        });
+        })
 
         return maxSim > 0.5 ? bestMatch : word
     }
@@ -97,7 +98,7 @@ export function OurSiri({ isSiriOpen, setSiriOpen }) {
         "create task in",
         "add board",
         "create board"
-    ];
+    ]
 
     function similarity(s1, s2) {
         let longer = s1;
@@ -146,7 +147,7 @@ export function OurSiri({ isSiriOpen, setSiriOpen }) {
                 maxSim = sim
                 bestMatch = cmd
             }
-        });
+        })
 
         return maxSim > 0.4 ? bestMatch : null
     }
@@ -204,42 +205,50 @@ export function OurSiri({ isSiriOpen, setSiriOpen }) {
         saveGroup(group, board._id, user, txt);
     }
 
+
+
     function createTaskInGroup(groupName, taskTitle) {
-        let group = findGroupByTitle(groupName);
+        const { groups } = board
+        let group = findGroupByTitle(groupName)
+        const currGroupIdx = groups.findIndex(g => g.id === group.id)
         if (group) {
-            let newTask = taskService.getEmptyTask();
-            newTask.title = taskTitle || 'New task from Siri';
-            let txt = `added a new task titled '${newTask.title}' to group '${group.title}'.`;
-            saveNewTask(board._id, group.id, newTask, txt);
+            let newTask = taskService.getEmptyTask()
+            newTask.title = taskTitle || 'New task from Siri'
+            const copyBoard = { ...board }
+            copyBoard.groups[currGroupIdx].tasks.push(newTask)
+            let txt = `added a new task titled '${newTask.title}' to group '${group.title}'.`
+            // saveNewTask(user, txt, copyBoard)
+            updateBoard(copyBoard, user, txt)
         }
     }
 
     function extractTitle(transcript) {
-        const titledKeyword = "title";
-        const indexOfTitled = transcript.indexOf(titledKeyword);
+        const titledKeyword = "title"
+        const indexOfTitled = transcript.indexOf(titledKeyword)
         if (indexOfTitled !== -1) {
-            return transcript.slice(indexOfTitled + titledKeyword.length).trim();
+            return transcript.slice(indexOfTitled + titledKeyword.length).trim()
         }
-        return null;
+        return null
     }
 
     function extractGroupNameAndTaskTitle(transcript) {
-        const inKeyword = " in ";
-        const titledKeyword = "title ";
+        const inKeyword = " in "
+        const titledKeyword = "title "
         const indexOfIn = transcript.indexOf(inKeyword);
         const indexOfTitled = transcript.indexOf(titledKeyword);
 
         if (indexOfIn !== -1 && indexOfTitled !== -1) {
-            const groupName = transcript.slice(indexOfIn + inKeyword.length, indexOfTitled).trim();
-            const taskTitle = transcript.slice(indexOfTitled + titledKeyword.length).trim();
-            return { groupName, taskTitle };
+            const groupName = transcript.slice(indexOfIn + inKeyword.length, indexOfTitled).trim()
+            const taskTitle = transcript.slice(indexOfTitled + titledKeyword.length).trim()
+            return { groupName, taskTitle }
         }
-        return null;
+        return null
     }
+
     function extractTaskTitle(transcript) {
-        const parts = transcript.split(" in ");
+        const parts = transcript.split(" in ")
         if (parts.length > 1) {
-            return parts[0].split(" ").slice(3).join(" ");
+            return parts[0].split(" ").slice(3).join(" ")
         }
         return '';
     }
