@@ -8,7 +8,7 @@ import { groupMenu } from '../Svgs'
 import { BoardActivity } from './BoardActivity'
 import { useNavigate, useParams } from 'react-router'
 import { removeBoard } from '../../store/actions/board.actions'
-import { MusicModal } from './MusicModal'
+// import { MusicModal } from './MusicModal'
 
 export function BoardMenu({ setMenu, isMenuOpen }) {
     const board = useSelector((storeState) => storeState.boardModule.board)
@@ -68,7 +68,7 @@ export function BoardMenu({ setMenu, isMenuOpen }) {
                             <p className="nav-item" onClick={deleteBoard}>Delete board</p>
                         </section>
                         <section>
-                            <MusicModal />
+                            {/* <MusicModal /> */}
                         </section>
                     </section>
                 )
