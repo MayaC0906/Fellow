@@ -75,7 +75,7 @@ export function BoardSidebar() {
   async function deleteBoard(boardId) {
     try {
       await removeBoard(boardId)
-      navigate('/workspace')
+      if (boardId===board._id) navigate('/workspace')
     } catch (err) {
       console.log('Could not delete board')
     }
