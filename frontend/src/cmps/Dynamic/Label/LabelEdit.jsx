@@ -81,12 +81,12 @@ export function LabelEdit({ pos, editName, onCloseEditTask, onSaveTask, task }) 
             let updatedLabelsIBoard = board.labels.filter(label => label.id !== labelToEdit.id)
             const newBoard = { ...board, labels: updatedLabelsIBoard }
             console.log('new board label:', newBoard);
-            await updateBoard(newBoard)
 
             let updatedLabelsInTask = task.labelIds.filter(label => label !== labelToEdit.id)
             task = { ...task, labelIds: updatedLabelsInTask }
             // console.log('task label', task);
             await onSaveTask(task)
+            await updateBoard(newBoard)
 
             onAddLabel('')
         } catch (err) {
