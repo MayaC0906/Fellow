@@ -113,6 +113,12 @@
             background-color: white;
             cursor: pointer;
 
+            &.quick-edit-task {
+                &:hover {
+                    outline: none;
+                }
+            }
+
             button {
                 margin: 0 0 8px;
                 height: 32px;
@@ -311,9 +317,11 @@
 
                         &.duedate {
                             border-radius: 3px;
+
                             .number-badge {
                                 color: rgb(23, 43, 77);
                             }
+
                             path {
                                 fill: rgb(23, 43, 77);
                             }
