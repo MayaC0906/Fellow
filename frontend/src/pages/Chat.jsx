@@ -4,6 +4,7 @@ import { useParams } from 'react-router'
 import { socketService, SOCKET_EMIT_SEND_MSG, SOCKET_EVENT_ADD_MSG, SOCKET_EMIT_SET_TOPIC } from '../services/socket.service.js'
 import { updateBoard } from '../store/actions/board.actions.js'
 import { utilService } from '../services/util.service.js'
+import { checkList } from '../cmps/Svgs.jsx'
 
 export function ChatApp({ isChatOpen, setChatOpen }) {
     const { boardId } = useParams()
@@ -100,7 +101,7 @@ export function ChatApp({ isChatOpen, setChatOpen }) {
                     <button className="toggle-chat clean-btn" onClick={toggleChat}>
                         {isChatMinimized ? '+' : '-'}
                     </button>
-                    <button className="close-chat" onClick={() => setChatOpen(!isChatOpen)}>X</button>
+                    <button className="close-chat" onClick={() => setChatOpen(!isChatOpen)}>{checkList.x}</button>
                 </div>
             </div>
             {!isChatMinimized && (
