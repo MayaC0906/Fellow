@@ -17,7 +17,7 @@ export function ChatApp({ isChatOpen, setChatOpen }) {
     const [isChatMinimized, setIsChatMinimized] = useState(false)
     const messagesEndRef = useRef(null)
     let { msgs } = board
-
+    
     useEffect(() => {
         if (messagesEndRef.current) {
             messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
