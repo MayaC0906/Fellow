@@ -99,7 +99,7 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
 
     if (!task) return <div className="loader task-preview">{loaderSvg.loader}</div>
 
-    const defaultContent = <article ref={taskRef} key={task.id} className="task">
+    const defaultContent = <article ref={taskRef} key={task.id} className={"task "+ (isQuickEdit? 'quick-edit-task': '')}>
         {!isQuickEdit && <button
             className="quick-edit-badge"
             onClick={(event) => { onOpenQuickEdit(event, task) }}>
