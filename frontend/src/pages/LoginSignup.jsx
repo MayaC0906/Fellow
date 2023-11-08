@@ -25,8 +25,10 @@ export function LoginSignup() {
             if (!isSignup) {
                 if (!credentials.username) return
                 const user = await login(credentials)
-                if (user) navigate('/workspace')
-                clearState()
+                if (user) {
+                    navigate('/workspace')
+                    clearState()
+                }
             } else {
                 if (!credentials.username || !credentials.password || !credentials.fullname) return
                 const user = await signup(credentials)

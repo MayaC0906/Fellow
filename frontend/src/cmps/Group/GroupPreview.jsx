@@ -40,12 +40,12 @@ export function GroupPreview({
 	const inputRef = useRef(null);
 	let { groups } = board
 
-	useEffect(() => {
-		if (taskListContainerRef.current && group.tasks.length > prevTaskCount) {
-			taskListContainerRef.current.scrollTop = taskListContainerRef.current.scrollHeight;
-		}
-		setPrevTaskCount(group.tasks.length)
-	}, [group.tasks.length])
+	// useEffect(() => {
+	// 	if (taskListContainerRef.current && group.tasks.length > prevTaskCount) {
+	// 		taskListContainerRef.current.scrollTop = taskListContainerRef.current.scrollHeight;
+	// 	}
+	// 	setPrevTaskCount(group.tasks.length)
+	// }, [group.tasks.length])
 
 	function toggleGroupMenu(groupId) {
 		if (openMenuGroupId === groupId) {
@@ -65,7 +65,7 @@ export function GroupPreview({
 		//   top: scrollToPosition,
 		//   behavior: 'smooth' 
 		// });
-		taskListContainerRef.current.scrollTop = taskListContainerRef.current.scrollHeight;
+		taskListContainerRef.current.scrollTop = taskListContainerRef.current.scrollHeight
 
 	}
 
@@ -101,7 +101,7 @@ export function GroupPreview({
 		try {
 			await updateBoard(boardToSave, user, txt)
 			setNewTask(taskService.getEmptyTask())
-			setInputExpand(true)
+			setInputExpand(false)
 		} catch (err) {
 			console.log('failed to save new task', err)
 			throw err;
@@ -195,7 +195,10 @@ export function GroupPreview({
 								style={{ outline: 'none' }}
 							/>
 							<section className="add-controls">
-								<Button type="submit" onClick={onSaveNewTask}>
+								<Button type="submit" onClick={(event) => {
+									onSaveNewTask(event)
+									onScrollDown()
+								}}>
 									Add card
 								</Button>
 								<div className="cancel clean-btn" onClick={() => setInputExpand(false)}>
