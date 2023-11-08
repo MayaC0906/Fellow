@@ -293,7 +293,7 @@ export function OurSiri({ isSiriOpen, setSiriOpen }) {
         });
         setTimeout(() => {
             createGroup("Done");
-        }, 4000);
+        }, 6000);
     }
 
     function createGroup(title) {
