@@ -24,6 +24,7 @@ export function GroupPreview({
 	setOpenMenuGroupId,
 	onUpdateGroup,
 	onUpdateBoard,
+	setContainerClass
 }) {
 
 	// console.log('roup:', group.tasks);
@@ -162,6 +163,7 @@ export function GroupPreview({
 			</section>
 			<section className="task-list-container" ref={taskListContainerRef}>
 				<TaskList
+					setContainerClass={setContainerClass}
 					onScrollDown={onScrollDown}
 					isLabelsShown={isLabelsShown}
 					setIsLabelsShown={setIsLabelsShown}

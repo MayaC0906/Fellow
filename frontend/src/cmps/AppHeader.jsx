@@ -173,7 +173,7 @@ export function AppHeader() {
 
     return (
         <>
-            <header className='app-header' style={{ backgroundColor: `rgb(${boardStyle?.dominantColor.rgb})` || 'white' }}>
+            <header className='app-header' style={{ backgroundColor: `rgb(${boardStyle?.dominantColor?.rgb})` || 'white' }}>
                 <section className='nav-links'>
                     <NavLink to={isPhoneDisplay.isDisplay ? "/workspace" : "/"}>
                         <div onClick={() => { setModalState(prevState => ({ ...prevState, isOpen: false, modal: '' })) }}

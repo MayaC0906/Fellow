@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { TaskDetailsSideNav } from "./TaskDetailsSideNav";
 import { useSelector } from 'react-redux'
 
-export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels, taskMembers, taskChecklist, groupId, onScrollDown, tasks }) {
+export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels, taskMembers, taskChecklist, groupId, onScrollDown, tasks, setContainerClass }) {
     const { dueDate } = task
     const { boardId } = useParams()
     let [editName, setEditName] = useState('')
@@ -22,6 +22,10 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
     const user = useSelector((storeState) => storeState.userModule.user)
     let { groups } = board
 
+    useEffect (()=> {
+        if (isQuickEdit) setContainerClass('quick-edit')
+        else setContainerClass('')
+    }, [isQuickEdit])
     function getBounds(ev) {
         const taskRect = taskRef.current.getBoundingClientRect()
         const screenWidth = window.innerWidth

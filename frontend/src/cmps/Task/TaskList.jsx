@@ -4,7 +4,7 @@ import { TaskPreview } from "./TaskPreview";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 
-export function TaskList({ handleDrag, tasks, labels, members, isLabelsShown, setIsLabelsShown, groupId, onScrollDown }) {
+export function TaskList({ handleDrag, tasks, labels, members, isLabelsShown, setIsLabelsShown, groupId, onScrollDown, setContainerClass }) {
     const { boardId } = useParams();
 
     if (!tasks) return <div>Loading...</div>;
@@ -52,6 +52,7 @@ export function TaskList({ handleDrag, tasks, labels, members, isLabelsShown, se
                                                 taskMembers={taskMembers}
                                                 taskChecklist={taskChecklist}
                                                 groupId={groupId}
+                                                setContainerClass={setContainerClass}
                                             />
                                         </div>
                                     )}

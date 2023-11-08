@@ -8,6 +8,10 @@
     margin-bottom: 8px;
     display: flex;
 
+    &.quick-edit {
+        z-index: 70;
+    }
+
     &::-webkit-scrollbar {
         -webkit-transform: translateZ(0);
         height: 12px;

@@ -29,7 +29,7 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
     const [taskFilterBy, setTaskFilterby] = useState(boardService.getEmptyFilter())
     // const [filteredGroups, setFilteredGroups] = useState(groups)
     const [checkboxContainer, setCheckboxContainer] = useState([])
-
+    const [containerClass, setContainerClass] = useState('')
     // useEffect(() => {
     //     setFilteredGroups(filteredGroups)
     // }, [taskFilterBy, groups])
@@ -216,7 +216,7 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
 
     if (!groups) return <div>Loading..</div>
     return (
-        <div className='group-list-container'>
+        <div className={'group-list-container ' + containerClass}>
             {isFiltersOpen && <TaskFilter
                 setIsFiltersOpen={setIsFiltersOpen}
                 groups={groups}
@@ -250,6 +250,7 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
                                             ref={provided.innerRef}
                                         >
                                             <GroupPreview
+                                                setContainerClass={setContainerClass}
                                                 setTaskFilterby={setTaskFilterby}
                                                 taskFilterBy={taskFilterBy}
                                                 onDuplicateGroup={onDuplicateGroup}

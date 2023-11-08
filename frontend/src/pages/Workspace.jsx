@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { loadBoards, updateBoard, updateBoards } from "../store/actions/board.actions"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { loaderSvg, workspaceSvg } from "../cmps/Svgs"
 import { AddBoard } from "../cmps/Board/AddBoard"
 import { BoardList } from "../cmps/Board/BoardList"
@@ -12,10 +12,11 @@ export function Workspace() {
     const [addBoardPosition, setAddBoardPosition] = useState({ top: '', left: '' })
     const createBoardRef = useRef()
     const [isLoading, setIsLoading] = useState(true);
-
+    const dispatch = useDispatch()
 
 
     useEffect(() => {
+        dispatch({type: 'SET_BOARD', board:{} })
         onLoadBoars()
     }, [])
 
