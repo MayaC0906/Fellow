@@ -40,37 +40,28 @@ export function TaskFilter({ setIsFiltersOpen, taskFilterBy, setTaskFilterby, ch
 
     function toggleFilterOptions(type, name, key) {
         let checkboxName = ''
-        // switch (name) {
-        //     case 'me':
-        //     case 'all-members':
-        //     case 'no-members':
-        //     case 'no-label':
-        //     case 'all-labels':
-        //     case 'no-date':
-        //     case 'overdue':
-        //     case 'duesoon':
-        //     case 'complete':
-        //         setTaskFilterby(prevFilter => ({ ...prevFilter, [type]: { ...prevFilter[type], [key]: !prevFilter[type][key] } }))
-        //         break;
-        //     default:
-        // }
+
 
         if (name) setTaskFilterby(prevFilter => ({ ...prevFilter, [type]: { ...prevFilter[type], [key]: !prevFilter[type][key] } }))
 
 
+        console.log('key:', key)
+        console.log('type:', type)
+        console.log('taskFilterBy[type][key]', taskFilterBy[type][key])
         switch (key) {
             case 'someMembers':
             case 'someLabel':
                 const someOptions = taskFilterBy[type][key]
                 if (someOptions.includes(name)) {
-                    const updated = someOptions.filter(id => id !== name);
-                    setTaskFilterby(prevFilter => ({ ...prevFilter, [type]: { ...prevFilter[type], [key]: updated } }))
+                    console.log('if');
+                    // const updated = someOptions.filter(id => id !== name)
+                    setTaskFilterby(prevFilter => ({ ...prevFilter, [type]: { ...prevFilter[type], [key]: (someOptions.filter(id => id !== name)) } }))
                 } else {
-                    setTaskFilterby(prevFilter => ({ ...prevFilter, [type]: { ...prevFilter[type], [key]: [...prevFilter[type][key], name] } }))
+                    someOptions.push(name)
+                    setTaskFilterby(prevFilter => ({ ...prevFilter, [type]: { ...prevFilter[type], [key]: someOptions } }))
                 }
                 break;
         }
-
         checkboxName = name
         if (checkboxName) handelCheckBox(checkboxName)
     }
@@ -227,3 +218,19 @@ export function TaskFilter({ setIsFiltersOpen, taskFilterBy, setTaskFilterby, ch
         </div>
     )
 }
+
+
+// switch (name) {
+//     case 'me':
+//     case 'all-members':
+//     case 'no-members':
+//     case 'no-label':
+//     case 'all-labels':
+//     case 'no-date':
+//     case 'overdue':
+//     case 'duesoon':
+//     case 'complete':
+//         setTaskFilterby(prevFilter => ({ ...prevFilter, [type]: { ...prevFilter[type], [key]: !prevFilter[type][key] } }))
+//         break;
+//     default:
+// }

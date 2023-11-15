@@ -17,7 +17,6 @@ export function LabelEdit({ pos, editName, onCloseEditTask, onSaveTask, task }) 
     let groups = board.groups
 
     useEffect(() => {
-        console.log('hey');
         setLabels(board.labels)
     }, [board.labels])
 
@@ -51,43 +50,13 @@ export function LabelEdit({ pos, editName, onCloseEditTask, onSaveTask, task }) 
         setLabels(filteredLabels)
     }
 
-    // async function onDeletingLabel() {
-
-    //     console.log('hey');
-    //     try {
-    //         let updatedLabelsIBoard = board.labels.filter(label => label.id !== labelToEdit.id)
-    //         let updatedLabelsInTask = task.labelIds.filter(label => label !== labelToEdit.id)
-    //         task = { ...task, labelIds: updatedLabelsInTask }
-    //         const currGroup = groups.findIndex(g => g.id === groupId)
-    //         let tasks = groups[currGroup].tasks
-    //         const currTask = tasks.findIndex(t => t.id === task.id)
-
-    //         tasks[currTask] = task
-    //         const newBoard = { ...board, labels: updatedLabelsIBoard, tasks }
-    //         console.log('new board', newBoard);
-    //         await updateBoard(newBoard)
-
-    //         // await onSaveTask(task)
-
-    //         onAddLabel('')
-    //     } catch (err) {
-    //         console.log('Cannot remove label', err)
-    //         throw err
-    //     }
-    // }
-
     async function onDeletingLabel() {
         try {
-            let updatedLabelsIBoard = board.labels.filter(label => label.id !== labelToEdit.id)
-            const newBoard = { ...board, labels: updatedLabelsIBoard }
-            console.log('new board label:', newBoard);
-
+            board.labels = board.labels.filter(label => label.id !== labelToEdit.id)
             let updatedLabelsInTask = task.labelIds.filter(label => label !== labelToEdit.id)
-            task = { ...task, labelIds: updatedLabelsInTask }
-            // console.log('task label', task);
-            await onSaveTask(task)
-            await updateBoard(newBoard)
-
+            const newTask = { ...task, labelIds: updatedLabelsInTask }
+            const txt = 'deleted label'
+            await onSaveTask(newTask, txt)
             onAddLabel('')
         } catch (err) {
             console.log('Cannot remove label', err)

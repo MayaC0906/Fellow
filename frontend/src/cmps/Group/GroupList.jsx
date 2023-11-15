@@ -27,12 +27,8 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
     const addListInput = useRef(null)
     const user = useSelector((storeState) => storeState.userModule.user)
     const [taskFilterBy, setTaskFilterby] = useState(boardService.getEmptyFilter())
-    // const [filteredGroups, setFilteredGroups] = useState(groups)
     const [checkboxContainer, setCheckboxContainer] = useState([])
     const [containerClass, setContainerClass] = useState('')
-    // useEffect(() => {
-    //     setFilteredGroups(filteredGroups)
-    // }, [taskFilterBy, groups])
     const filteredGroups = onFilterGroups(taskFilterBy)
 
     function onFilterGroups(filterBy) {
@@ -83,8 +79,6 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
 
         return groups
     }
-
-
 
     function handelCheckBox(checkboxName) {
         setCheckboxContainer((prevChecked) => {
@@ -251,7 +245,7 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
                                         >
                                             <GroupPreview
                                                 setContainerClass={setContainerClass}
-                                                setTaskFilterby={setTaskFilterby}
+                                                // setTaskFilterby={setTaskFilterby}
                                                 taskFilterBy={taskFilterBy}
                                                 onDuplicateGroup={onDuplicateGroup}
                                                 onEditGroup={onEditGroup}
@@ -304,14 +298,3 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
 
 
 
-// if (byMembers) {
-//     filteredTasks = filteredTasks.filter(task => {
-//         let includeTask = false
-//         if (byMembers.isAll) includeTask = includeTask || board.members.every(boardMember => task.memberIds.includes(boardMember._id))
-//         if (byMembers.isMe) includeTask = includeTask || task.memberIds.includes(user._id)
-//         if (byMembers.isNoOne) includeTask = includeTask || task.memberIds.length === 0
-//         if (byMembers.someMembers.length) includeTask = includeTask || byMembers.someMembers.some(someMember => task.memberIds.includes(someMember))
-//         console.log(includeTask);
-//         return includeTask
-//     })
-// }

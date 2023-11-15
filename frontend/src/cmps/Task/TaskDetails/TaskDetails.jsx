@@ -39,8 +39,6 @@ export function TaskDetails() {
         }
     }, [])
 
-
-
     function handleResize() {
         const screenWidth = window.innerWidth
         if (screenWidth <= 670) setIsPhoneDisplay((prevState => ({ ...prevState, isDisplay: true })))
@@ -61,7 +59,7 @@ export function TaskDetails() {
             const newTask = await loadTask(boardId, groupId, taskId)
             setTask(newTask)
         } catch (err) {
-            console.log('Can\'t load board', err);
+            console.log('Can\'t load board', err)
             throw err
         }
     }
@@ -76,7 +74,7 @@ export function TaskDetails() {
             groups[currGroup].tasks.push(updatedTask)
         }
         const boardToSave = { ...board, groups: board.groups }
-        console.log(boardToSave);
+        // console.log(boardToSave);
         const prevTask = { ...task }
         setTask(updatedTask)
         try {

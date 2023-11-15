@@ -77,7 +77,7 @@ export async function removeBoard(boardId) {
 }
 
 export async function addBoard(board, user, txt) {
-  
+
     try {
         const savedBoard = await boardService.save(board, user, txt)
         store.dispatch(getActionUpdateBoard(savedBoard))
@@ -132,7 +132,7 @@ export async function removeGroup(group, boardId, user, txt) {
         store.dispatch(getActionUpdateBoard(savedBoard))
         return group
     } catch (err) {
-        
+
         console.log('Cannot remove group', err)
         throw err
     }
@@ -140,7 +140,7 @@ export async function removeGroup(group, boardId, user, txt) {
 
 
 export async function saveNewTask(boardId, groupId, newTask, user, txt, newBoard) {
-    console.log('newBoard: fro, action', newBoard)
+    // console.log('newBoard: fro, action', newBoard)
     store.dispatch(getActionUpdateBoard(newBoard))
     try {
         // const board = await taskService.saveTask(boardId, groupId, newTask, user, txt)

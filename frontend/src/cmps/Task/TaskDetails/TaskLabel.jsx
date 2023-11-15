@@ -11,7 +11,7 @@ export function TaskLabel({ taskLabelsId, setEditName, editName, setEv }) {
         onLoadLabels(taskLabelsId)
     }, [taskLabelsId])
 
-    async function onLoadLabels(taskLabelsId) {
+    function onLoadLabels(taskLabelsId) {
         const taskLabels = board.labels.filter(label => taskLabelsId.includes(label.id))
         setLabels(taskLabels)
     }

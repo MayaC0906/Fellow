@@ -30,9 +30,21 @@
 
         .add-board {
             top: unset !important;
-            bottom: 16px !important;
-            left: 30px !important;
-            width: 87%;
+            bottom: 0px !important;
+            left: 0px !important;
+            width: 100%;
+            box-shadow: 0px -10px 6px -4px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.4s ease-in;
+
+            @keyframes add-board {
+                from {
+                    transform: translateY(100%);
+                }
+
+                to {
+                    transform: translateY(0);
+                }
+            }
 
             &-display {
                 .display-container {
@@ -73,6 +85,19 @@
             }
         }
     }
+
+    .group-list-container {
+        .filter-container {
+            width: 75%;
+            right: 0;
+
+            .members {
+                .member-select-display {
+                    width: 100%;
+                }
+            }
+        }
+    }
 }
 
 @media only screen and (max-width: 490px) {
@@ -89,7 +114,6 @@
         }
 
         .add-board {
-            left: 25.5px !important;
 
             .img-option {
                 img {

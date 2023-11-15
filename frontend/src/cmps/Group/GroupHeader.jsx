@@ -12,7 +12,9 @@ export function GroupHeader({ isMenuOpen, setMenu, setIsFiltersOpen, isFiltersOp
     // const { boardId } = useParams()
     const board = useSelector(storeState => storeState.boardModule.board)
     const user = useSelector((storeState) => storeState.userModule.user)
-    const boardFromState = useSelector(storeState => storeState.boardModule.board)
+    const membersToDisplay = board.members.filter(boardMembers => boardMembers.username !== 'Guest')
+    // const board = useSelector(storeState => storeState.boardModule.board)
+    console.log('board', board.members);
     // const boards = useSelector(storeState => storeState.boardModule.boards)
     // const [board, onSetBoard] = useState({})
     const [isBoardStarred, setIsBoardStarred] = useState(board.isStarred)
@@ -98,7 +100,7 @@ export function GroupHeader({ isMenuOpen, setMenu, setIsFiltersOpen, isFiltersOp
                     <span className="separate-line"></span>
                     <section className="group-header img">
                         {!isPhoneDisplay &&
-                            boardFromState.members.map(member => (
+                            membersToDisplay.map(member => (
                                 <section className="member-img-container flex align-center">
                                     <img className={`member-img ${isBlackOrWhite}`} src={member.imgUrl} alt="" key={member._id} style={{ zIndex: zIndexCount-- }} />
                                     <span></span>

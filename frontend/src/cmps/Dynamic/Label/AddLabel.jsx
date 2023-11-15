@@ -11,19 +11,18 @@ export function AddLabel({ pos, onCloseEditTask, onAddLabel, labelToEdit, onSave
     const { title, color } = labelToEdit
     const [colorSelected, setColorSelected] = useState(color ? color : '#60c6d2')
     const [labelTitle, setTitle] = useState(title ? title : '')
-    const user = useSelector((storeState) => storeState.userModule.user)
+
     function onSetTitle() {
         let value = event.target.value
         setTitle(value)
     }
 
     async function onSaveLabel() {
-
-        let newLabel = boardService.getEmptyLabel()
         let savedLabel
         if (labelToEdit.id) {
             savedLabel = { ...labelToEdit, color: colorSelected, title: labelTitle }
         } else {
+            let newLabel = boardService.getEmptyLabel()
             savedLabel = { ...newLabel, color: colorSelected, title: labelTitle }
         }
         task = { ...task, labelIds: [...task.labelIds, savedLabel.id] }
@@ -36,12 +35,8 @@ export function AddLabel({ pos, onCloseEditTask, onAddLabel, labelToEdit, onSave
                 board.labels.splice(labelIdx, 1, savedLabel)
             }
 
-            const newBoard = { ...board, labels: board.labels }
-
             const txt = `added label to ${task.title}.`
-            await updateBoard(newBoard)
             await onSaveTask(task, txt)
-            // console.log('task after:', task);
             setCheckedLabelsStart(task.labelIds)
             onAddLabel('')
         } catch (err) {
