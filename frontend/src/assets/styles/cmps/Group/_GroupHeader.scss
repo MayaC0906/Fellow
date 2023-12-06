@@ -61,6 +61,12 @@
                 width: 17px;
                 height: 17px;
 
+                path {
+                    width: 17px;
+                    height: 17px;
+
+                }
+
                 &:hover {
                     scale: 1.2;
                 }
@@ -69,14 +75,16 @@
     }
 
     svg {
-        width: 16px;
-        height: 16px;
+        width: 17px;
+        height: 17px;
         color: rgb(255, 255, 255);
         display: flex;
         justify-content: center;
         align-items: center;
 
         path {
+            width: 17px;
+            height: 17px;
             fill: white
         }
     }
@@ -228,24 +236,25 @@
     }
 
 
-        @media (max-width: 520px) {
-            .board-edit {
-                div {
-                    font-size: rem(16px);
-                    max-width: 163px;
-                    height: 42px;
-                    line-height: 40px;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    margin-block-end: 0;
-                    display: block;
-                    &:focus {
-                        line-height: 20px;
-                        white-space: wrap;
-                    }
+    @media (max-width: 520px) {
+        .board-edit {
+            div {
+                font-size: rem(16px);
+                max-width: 163px;
+                height: 42px;
+                line-height: 40px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                margin-block-end: 0;
+                display: block;
+
+                &:focus {
+                    line-height: 20px;
+                    white-space: wrap;
                 }
             }
         }
-    
+    }
+
 }

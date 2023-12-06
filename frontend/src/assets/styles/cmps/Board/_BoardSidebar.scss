@@ -60,7 +60,12 @@
                 border-bottom: 1px solid #dfe1e64a;
 
                 .unexpand-btn {
-
+svg {
+    color: white;
+    path {
+        fill: white
+    }
+}
                     span {
 
                         display: flex;
