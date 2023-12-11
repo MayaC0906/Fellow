@@ -104,7 +104,7 @@ export function LoginSignup() {
                 <div className='toggle-login-signup flex'>
                     {/* <hr /> */}
                     <button className='clean-btn' onClick={toggleSignup}>{!isSignup ? 'Dont have a user? signup' : 'Have a user? login'}</button>
-                    <button className='clean-btn guest' onClick={onConnectAsAUser}>Dont want to {isSignup ? 'signUp' : 'Login'}? connect as a guset</button>
+                    <button className='clean-btn guest' onClick={onConnectAsAUser}>Dont want to {isSignup ? 'signUp' : 'Login'}? connect as a guest</button>
                 </div>
             </div>
             <footer className='login-footer'>
