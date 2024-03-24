@@ -16,6 +16,7 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
     const [ev, setEv] = useState(null)
     let taskRef = useRef(null)
     const [quickEditPosition, setQuickEditPosition] = useState({ top: '', left: '' })
+    const [screenWidth, setScreenWidth] = useState(window.innerWidth)
     const [rtl, setRtl] = useState(false)
     const navigate = useNavigate()
     const board = useSelector((storeState) => storeState.boardModule.board)
@@ -26,6 +27,20 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
         if (isQuickEdit) setContainerClass('quick-edit')
         else setContainerClass('')
     }, [isQuickEdit])
+
+    useEffect(() => {
+        window.addEventListener('resize', handleResize);
+        handleResize()
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        }
+    }, [])
+
+    function handleResize() {
+        setScreenWidth (window.innerWidth)
+    }
+
     function getBounds(ev) {
         const taskRect = taskRef.current.getBoundingClientRect()
         const screenWidth = window.innerWidth
@@ -63,6 +78,11 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
     }
 
     function onOpenQuickEdit(ev) {
+        if (screenWidth<580) {
+            navigate(`${groupId}/${task.id}`)
+            return
+        } 
+       
         if (window.innerHeight - ev.clientY < taskRef.current.offsetHeight + 110) {
             onScrollDown(ev)
         }

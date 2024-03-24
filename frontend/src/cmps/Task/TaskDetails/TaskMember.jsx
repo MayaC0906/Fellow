@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { TaskMemberDetail } from "./TaskMemberDetail";
 
 
-export function TaskMember({ taskMembersId, setEditName, editName, onSaveTask, task, setEv }) {
+export function TaskMember({ taskMembersId, setEditName, editName, onSaveTask, task, setEv, isPhoneDisplay }) {
     const board = useSelector(storeState => storeState.boardModule.board)
     const user = useSelector(storeState => storeState.userModule.user)
     const [isMemberDetailOpen, setMemberDetailOpen] = useState(false)
@@ -59,13 +59,13 @@ export function TaskMember({ taskMembersId, setEditName, editName, onSaveTask, t
                     setMemberDetailOpen={setMemberDetailOpen}
                     removeMemberFromTask={removeMemberFromTask}
                 />}
-                <button onClick={(event)=>{
+                {(isPhoneDisplay.isActionsShown || !isPhoneDisplay.isDisplay ) && <button onClick={(event)=>{
                     setEv(event)
                     toggleMemberDisplay()
                 }}
                     className="members-btn clean-btn flex align-center justify-center" >
                     {taskSvg.add}
-                </button>
+                </button>}
 
                 {/* <button onClick={toggleMemberDisplay}
                     className="btn-member" >

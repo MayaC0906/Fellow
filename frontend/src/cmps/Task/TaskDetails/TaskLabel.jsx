@@ -3,7 +3,7 @@ import { taskSvg } from "../../Svgs";
 import { useSelector } from "react-redux";
 
 
-export function TaskLabel({ taskLabelsId, setEditName, editName, setEv }) {
+export function TaskLabel({ taskLabelsId, setEditName, editName, setEv, isPhoneDisplay}) {
     const board = useSelector(storeState => storeState.boardModule.board)
     const [labels, setLabels] = useState([])
 
@@ -34,9 +34,9 @@ export function TaskLabel({ taskLabelsId, setEditName, editName, setEv }) {
                 {labels.map(label => (
                     <button className="labels-display" style={{ backgroundColor: label.color }} onClick={toggleLabelDisplay}>{label.title}</button>
                 ))}
-                <button className="labels-add clean-btn flex align-center" onClick={(event) => {
+                {(isPhoneDisplay.isActionsShown || !isPhoneDisplay.isDisplay ) && <button className="labels-add clean-btn flex align-center" onClick={(event) => {
                     onSetEdit(event)
-                }}>{taskSvg.add}</button>
+                }}>{taskSvg.add}</button>}
             </div>
         </section>)
     )

@@ -88,9 +88,10 @@
 
     .group-list-container {
         .filter-container {
-            width: 75%;
+            width: 100%;
+            bottom: 0;
             right: 0;
-
+            animation: slideUp 0.2s ease-in;
             .members {
                 .member-select-display {
                     width: 100%;

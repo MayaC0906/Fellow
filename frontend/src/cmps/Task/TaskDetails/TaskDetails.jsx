@@ -176,12 +176,14 @@ export function TaskDetails() {
                                         editName={editName}
                                         onSaveTask={onSaveTask}
                                         task={task}
+                                        isPhoneDisplay={isPhoneDisplay}
                                     />
                                     <TaskLabel
                                         setEv={setEv}
                                         taskLabelsId={task.labelIds}
                                         setEditName={setEditName}
                                         editName={editName}
+                                        isPhoneDisplay={isPhoneDisplay}
                                     />
                                 </section>
 

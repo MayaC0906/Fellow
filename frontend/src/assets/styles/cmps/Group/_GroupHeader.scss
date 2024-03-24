@@ -254,6 +254,16 @@
                     white-space: wrap;
                 }
             }
+            button {
+                svg {
+                    height: 32px;
+                    width: 32px;
+                    path {
+                        height: 32px;
+                        width: 32px;
+                    }
+                }
+            }
         }
     }
 
