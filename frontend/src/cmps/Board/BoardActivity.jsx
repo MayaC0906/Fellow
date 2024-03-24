@@ -4,6 +4,8 @@ import { taskSvg } from '../Svgs'
 import { additionTaskSvg } from '../Svgs'
 import { UserActivity } from '../UserActivity'
 import { Link } from 'react-router-dom'
+import { utilService } from '../../services/util.service'
+
 export function BoardActivity({ board }) {
     const { activities } = board;
     const [selectedActivity, setSelectedActivity] = useState(null)
@@ -12,26 +14,7 @@ export function BoardActivity({ board }) {
     const [modalPosition, setModalPosition] = useState({ top: 0, left: 0 })
     const [userActivityModal, setUserActivityModal] = useState({ isOpen: false, userId: '' })
 
-    function formatDate(timestamp) {
-        const now = Date.now()
-        const differenceInSeconds = (now - timestamp) / 1000;
-        const differenceInMinutes = differenceInSeconds / 60
-        const differenceInHours = differenceInMinutes / 60
 
-        if (differenceInMinutes < 1) {
-            return 'just now'
-        } else if (differenceInHours < 1) {
-            return `${Math.round(differenceInMinutes)} minutes ago`
-        } else if (differenceInHours < 24) {
-            return `${Math.round(differenceInHours)} hours ago`
-        } else if (differenceInHours < 48) {
-            const date = new Date(timestamp * 1000)
-            return `yesterday at ${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`
-        } else {
-            const date = new Date(timestamp * 1000)
-            return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} at ${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
-        }
-    };
 
     const handleImgClick = (activity) => {
         setSelectedActivity(activity)
@@ -88,7 +71,7 @@ export function BoardActivity({ board }) {
                             }
                             return activity.txt;
                         })()}
-                        <div style={{ fontSize: '12px', color: 'grey' }}>{formatDate(activity.createdAt)}</div>
+                        <div style={{ fontSize: '12px', color: 'grey' }}>{utilService.formatDate(activity.createdAt)}</div>
                     </article>
                 </div>
             ))}
