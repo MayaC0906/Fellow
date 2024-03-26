@@ -42,15 +42,12 @@ import { setupSocketAPI } from './services/socket.service.js'
 
 // routes
 import { setupAsyncLocalStorage } from './middlewares/setupAls.middleware.js'
-import { log } from 'console'
 app.all('*', setupAsyncLocalStorage)
 
 app.use('/api/auth', authRoutes)
 app.use('/api/user', userRoutes)
 app.use('/api/board', boardRoutes)
 setupSocketAPI(server)
-
-
 
 // Make every unmatched server-side-route fall back to index.html
 // So when requesting http://localhost:3030/index.html/car/123 it will still respond with
@@ -59,13 +56,6 @@ setupSocketAPI(server)
 app.get('/**', (req, res) => {
     res.sendFile(path.resolve('public/index.html'))
 })
-
-// const port = process.env.PORT || 3030
-// server.listen(port, () => {
-//     logger.info('Server is running on port: ' + port)
-// })
-
-// import { logger } from './services/logger.service.js'
 
 // Listen will always be the last line in our server!
 const port = process.env.PORT || 3030

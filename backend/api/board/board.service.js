@@ -1,13 +1,7 @@
-import fs from 'fs'
 import mongodb from 'mongodb'
 const { ObjectId } = mongodb
-import { utilService } from '../../services/util.service.js'
 import { dbService } from '../../services/db.service.js'
 import { logger } from '../../services/logger.service.js'
-
-import { log } from 'console'
-
-
 
 export const boardService = {
     query,
@@ -15,14 +9,13 @@ export const boardService = {
     remove,
     add,
     update,
-    
+
 }
 
-async function query(filterBy = {}) {
+async function query() {
     try {
-        //  await dbService.getCollection('board');
         const collection = await dbService.getCollection('board')
-		let boards = await collection.find('').toArray()
+        let boards = await collection.find('').toArray()
         return boards
     } catch (err) {
         logger.error('Cannot find boards', err);
@@ -33,10 +26,10 @@ async function query(filterBy = {}) {
 async function getById(boardId) {
     try {
         const collection = await dbService.getCollection('board')
-        const toy = collection.findOne({ _id: ObjectId(boardId) })
-        return toy
+        const board = collection.findOne({ _id: ObjectId(boardId) })
+        return board
     } catch (err) {
-        logger.error(`while finding toy ${boardId}`, err)
+        logger.error(`while finding board ${boardId}`, err)
         throw err
     }
 }
@@ -51,19 +44,19 @@ async function remove(boardId) {
     }
 }
 
-async function add(board) {  
+async function add(board) {
     try {
         const collection = await dbService.getCollection('board')
         await collection.insertOne(board)
         return board
     } catch (err) {
-        logger.error('cannot insert toy', err)
+        logger.error('cannot insert board', err)
         throw err
     }
 }
 
 async function update(board) {
-    try {   
+    try {
         const boardToSave = { ...board }
         delete boardToSave._id
         const collection = await dbService.getCollection('board')

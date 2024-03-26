@@ -17,11 +17,9 @@ async function login(username, password) {
     logger.debug(`auth.service - login with username: ${username}`)
 
     const user = await userService.getByUsername(username)
-    console.log('user: from auth', user)
     if (!user) throw new Error('Invalid username or password')
 
     const match = await bcrypt.compare(password, user.password)
-    console.log('match:', match)
     if (!match) throw new Error('Invalid username or password')
 
     delete user.password
@@ -47,10 +45,9 @@ function validateToken(loginToken) {
     try {
         const json = cryptr.decrypt(loginToken)
         const loggedinUser = JSON.parse(json)
-        console.log('loggedinUser:', loggedinUser)
         return loggedinUser
     } catch (err) {
-        console.log('Invalid login token')
+        console.error('Invalid login token', err)
     }
     return null
 }

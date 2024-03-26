@@ -4,7 +4,6 @@ import { Server } from 'socket.io'
 var gIo = null
 
 export function setupSocketAPI(http) {
-    console.log('i enterd setup socket back')
     gIo = new Server(http, {
         cors: {
             origin: '*',
@@ -26,8 +25,6 @@ export function setupSocketAPI(http) {
         })
         socket.on('board-activity', activity => {
             logger.info(`New chat msg from socket [id: ${socket.id}], emitting to topic ${socket.myTopic}`)
-            // emits to all sockets:
-            // gIo.emit('chat addMsg', msg)
             gIo.emit('board-activity', activity);
         })
         socket.on('user-watch', userId => {
@@ -44,14 +41,11 @@ export function setupSocketAPI(http) {
             delete socket.userId
         })
         socket.on('update-board', (board) => {
-            console.log('ey');
             logger.info(`board ${board.title} updated in socket [id: ${socket.id}]`)
             gIo.to(socket.myTopic).emit('update-board', board);
         })
         socket.on('chat-send-msg', msg => {
             logger.info(`New chat msg from socket [id: ${socket.id}], emitting to topic ${socket.myTopic}`)
-            // emits to all sockets:
-            // gIo.emit('chat addMsg', msg)
             // emits only to sockets in the same room
             gIo.to(socket.myTopic).emit('chat-add-msg', msg)
         })
@@ -76,7 +70,6 @@ async function emitToUser({ type, data, userId }) {
         socket.emit(type, data)
     } else {
         logger.info(`No active socket for user: ${userId}`)
-        // _printSockets()
     }
 }
 
@@ -115,11 +108,11 @@ async function _getAllSockets() {
 
 async function _printSockets() {
     const sockets = await _getAllSockets()
-    console.log(`Sockets: (count: ${sockets.length}):`)
+    logger.info(`Sockets: (count: ${sockets.length}):`)
     sockets.forEach(_printSocket)
 }
 function _printSocket(socket) {
-    console.log(`Socket - socketId: ${socket.id} userId: ${socket.userId}`)
+    logger.info(`Socket - socketId: ${socket.id} userId: ${socket.userId}`)
 }
 
 export const socketService = {

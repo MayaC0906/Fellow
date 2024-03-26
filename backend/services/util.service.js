@@ -210,6 +210,5 @@ function isRgbBright(rgb) {
     const brightness = (r * 299 + g * 587 + b * 114) / 1000;
 
     const res = brightness >= 128 ? true : false;
-    console.log('colorRes', res);
     return res
 }

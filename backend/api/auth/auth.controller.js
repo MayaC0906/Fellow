@@ -3,7 +3,6 @@ import { logger } from '../../services/logger.service.js'
 
 export async function login(req, res) {
     const { username, password } = req.body
-    console.log('username,password:', username, password)
     try {
         const user = await authService.login(username, password)
         const loginToken = authService.getLoginToken(user)
@@ -19,11 +18,8 @@ export async function login(req, res) {
 export async function signup(req, res) {
     try {
         const { username, password, fullname, imgUrl } = req.body
-        console.log('entered signup');
         // IMPORTANT!!! 
         // Never write passwords to log file!!!
-        // logger.debug(fullname + ', ' + username + ', ' + password)
-
         const account = await authService.signup(username, password, fullname, imgUrl)
         logger.debug(`auth.route - new account created: ` + JSON.stringify(account))
 

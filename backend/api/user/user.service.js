@@ -13,17 +13,10 @@ export const userService = {
     add
 }
 
-async function query(filterBy = {}) {
-    // const criteria = _buildCriteria(filterBy)
+async function query() {
     try {
         const collection = await dbService.getCollection('user')
         var users = await collection.find().toArray()
-        // users = users.map(user => {
-        //     delete user.password
-        //     user.isHappy = true
-        //     user.createdAt = ObjectId(user._id).getTimestamp()
-        //     return user
-        // })
         return users
     } catch (err) {
         logger.error('cannot find users', err)
@@ -44,7 +37,6 @@ async function getById(userId) {
 }
 async function getByUsername(username) {
     username = username.toLowerCase()
-    // console.log('username after:', username);
     try {
         const collection = await dbService.getCollection('user')
         const user = await collection.findOne({ username: { $regex: new RegExp(`^${username}$`, 'i') } })
@@ -101,22 +93,3 @@ async function add(user) {
         throw err
     }
 }
-
-// function _buildCriteria(filterBy) {
-//     const criteria = {}
-//     if (filterBy.txt) {
-//         const txtCriteria = { $regex: filterBy.txt, $options: 'i' }
-//         criteria.$or = [
-//             {
-//                 username: txtCriteria
-//             },
-//             {
-//                 fullname: txtCriteria
-//             }
-//         ]
-//     }
-//     // if (filterBy.minBalance) {
-//     //     criteria.balance = { $gte: filterBy.minBalance }
-//     // }
-//     return criteria
-// }
