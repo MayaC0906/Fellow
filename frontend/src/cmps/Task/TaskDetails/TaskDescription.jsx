@@ -1,6 +1,7 @@
 import * as React from 'react';
+import { useState } from 'react';
+
 import Box from '@mui/joy/Box';
-import Button from '@mui/joy/Button';
 import FormControl from '@mui/joy/FormControl';
 import Textarea from '@mui/joy/Textarea';
 import IconButton from '@mui/joy/IconButton';
@@ -11,14 +12,13 @@ import FormatBold from '@mui/icons-material/FormatBold';
 import FormatItalic from '@mui/icons-material/FormatItalic';
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
 import Check from '@mui/icons-material/Check';
-import { useState } from 'react';
+
 import { taskSvg } from '../../Svgs';
 
 export function TaskDescription({ onSaveTask, task }) {
 
     const [isDescExpand, setIsDescExpand] = useState(false)
     const [description, setDescription] = useState(task.description)
-
     const [italic, setItalic] = useState(false);
     const [fontWeight, setFontWeight] = useState('normal');
     const [anchorEl, setAnchorEl] = useState(null);
@@ -44,7 +44,7 @@ export function TaskDescription({ onSaveTask, task }) {
             <div className='task-details-title '>
                 {taskSvg.description}
                 Description
-                {description && !isDescExpand && <button  onClick={onToggleDescription}>Edit</button>}
+                {description && !isDescExpand && <button onClick={onToggleDescription}>Edit</button>}
             </div>
 
             <div onClick={onToggleDescription}
@@ -52,7 +52,7 @@ export function TaskDescription({ onSaveTask, task }) {
                 {description || 'Add a more detailed description...'}
             </div>
 
-            {isDescExpand && < FormControl className="description-input" sx={{ width: '90%'}}>
+            {isDescExpand && < FormControl className="description-input" sx={{ width: '90%' }}>
                 <Textarea
                     onChange={(event) => { setDescription(event.target.value) }}
                     defaultValue={description}

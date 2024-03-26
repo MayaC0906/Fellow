@@ -1,21 +1,22 @@
 import 'regenerator-runtime'
 import React from 'react';
+import { useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
-import { addBoard, saveGroup, saveNewTask, updateBoard } from '../store/actions/board.actions';
+import { saveGroup, updateBoard } from '../store/actions/board.actions';
 import { boardService } from '../services/board.service.local';
 import { taskService } from '../services/task.service.local';
-import { utilService } from '../services/util.service';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import siri2 from '../../src/assets/img/siri2.gif';
 import unactive from '../../src/assets/img/unactive.gif';
-import { useRef, useEffect } from 'react';
+
 export function OurSiri({ isSiriOpen, setSiriOpen }) {
     const user = useSelector((storeState) => storeState.userModule.user);
     const board = useSelector((storeState) => storeState.boardModule.board);
+
+    const lastResultTimeRef = useRef(Date.now());
+
     const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition();
     const { groups } = board
-    const lastResultTimeRef = useRef(Date.now());
 
     if (!browserSupportsSpeechRecognition) {
         return <span>Your browser does not support speech recognition.</span>;
@@ -32,9 +33,11 @@ export function OurSiri({ isSiriOpen, setSiriOpen }) {
             clearTimeout(timeoutId);
         }
     }, [transcript, listening]);
+
     const processTranscript = (transcript) => {
         getAction(transcript);
     }
+
     const startListening = () => {
         resetTranscript();
         SpeechRecognition.startListening({
@@ -74,7 +77,6 @@ export function OurSiri({ isSiriOpen, setSiriOpen }) {
 
         return bestMatch
     }
-
 
     const COMMANDS = [
         "add group",
@@ -188,8 +190,6 @@ export function OurSiri({ isSiriOpen, setSiriOpen }) {
         saveGroup(group, board._id, user, txt);
     }
 
-
-
     function createTaskInGroup(groupName, taskTitle) {
         const { groups } = board
         let group = findGroupByTitle(groupName)
@@ -200,7 +200,6 @@ export function OurSiri({ isSiriOpen, setSiriOpen }) {
             const copyBoard = { ...board }
             copyBoard.groups[currGroupIdx].tasks.push(newTask)
             let txt = `added a new task titled '${newTask.title}' to group '${group.title}'.`
-            // saveNewTask(user, txt, copyBoard)
             updateBoard(copyBoard, user, txt)
         }
     }
@@ -228,13 +227,6 @@ export function OurSiri({ isSiriOpen, setSiriOpen }) {
         return null
     }
 
-    function extractTaskTitle(transcript) {
-        const parts = transcript.split(" in ")
-        if (parts.length > 1) {
-            return parts[0].split(" ").slice(3).join(" ")
-        }
-        return '';
-    }
 
 
     return (
@@ -243,10 +235,6 @@ export function OurSiri({ isSiriOpen, setSiriOpen }) {
             <div className="siri-modal">
                 <div style={{ color: 'white' }} className={`siri-container ${listening ? 'speaking' : ''}`}>
 
-                    {/* <h3>You said:</h3>
-                        <div className="transcript-display">
-                            {transcript || 'Start speaking and your words will appear here'}
-                        </div> */}
                     <button className="close-siri-btn" onClick={() => setSiriOpen(!isSiriOpen)}>&times;</button>
 
                     {listening ?
@@ -264,7 +252,7 @@ export function OurSiri({ isSiriOpen, setSiriOpen }) {
 }
 
 
-//JUST FOR DEMO 
+//JUST FOR DEMO
 
 // import 'regenerator-runtime'
 

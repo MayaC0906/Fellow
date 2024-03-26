@@ -16,7 +16,7 @@ export const utilService = {
     formatDate
 }
 
-function formatDate(timestamp){
+function formatDate(timestamp) {
     const now = Date.now()
     const differenceInSeconds = (now - timestamp) / 1000;
     const differenceInMinutes = differenceInSeconds / 60
@@ -36,26 +36,6 @@ function formatDate(timestamp){
         return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} at ${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
     }
 }
-
-
-// function formatDate(timestamp) {
-//     const now = new Date().getTime();
-//     const differenceInMilliseconds = now - timestamp;
-//     const differenceInSeconds = Math.floor(differenceInMilliseconds / 1000);
-//     const differenceInMinutes = Math.floor(differenceInSeconds / 60);
-//     const differenceInHours = Math.floor(differenceInMinutes / 60);
-//     const differenceInDays = Math.floor(differenceInHours / 24);
-    
-//     if (differenceInMinutes < 1) {
-//         return "just now";
-//     } else if (differenceInMinutes < 60) {
-//         return differenceInMinutes + " min ago";
-//     } else if (differenceInHours < 24) {
-//         return differenceInHours + " hours ago";
-//     } else {
-//         return differenceInDays + " days ago";
-//     }
-// }
 
 function makeId(length = 6) {
     var txt = ''
@@ -86,11 +66,10 @@ function getRandomIntInclusive(min, max) {
 
 function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
-  }
+}
 
 function randomPastTime() {
     const HOUR = 1000 * 60 * 60
-    const DAY = 1000 * 60 * 60 * 24
     const WEEK = 1000 * 60 * 60 * 24 * 7
 
     const pastTime = getRandomIntInclusive(HOUR, WEEK)
@@ -153,8 +132,6 @@ function getFileNameFromUrl(url) {
         console.error('Error parsing URL:', error);
     }
 }
-// Return the original URL if parsing fails or no filename found
-
 
 function formatImgTime(timestamp) {
     const now = new Date().getTime();
@@ -221,6 +198,5 @@ function isRgbBright(rgb) {
     const brightness = (r * 299 + g * 587 + b * 114) / 1000;
 
     const res = brightness >= 128 ? true : false;
-    console.log('colorRes', res);
     return res
 }

@@ -1,16 +1,19 @@
-import { DateCalendar, DateField, TimeField } from '@mui/x-date-pickers'
-import { additionTaskSvg } from '../../Svgs'
+import { useEffect, useRef, useState } from 'react'
+import { useSelector } from 'react-redux'
+
 import dayjs from 'dayjs'
+
+import { DateCalendar, DateField, TimeField } from '@mui/x-date-pickers'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { useEffect, useRef, useState } from 'react'
 import { Button } from '@mui/joy'
 import { Checkbox } from '@mui/material'
-import { useSelector } from 'react-redux'
+import { additionTaskSvg } from '../../Svgs'
 
 
 
 export function DateEdit({ pos, editName, onCloseEditTask, onSaveTask, task }) {
+
     const board = useSelector(storeState => storeState.boardModule.board)
     const [selectedDate, setSelectedDate] = useState(null)
     const [isDateSelected, setIsDateSelected] = useState(false)
@@ -32,7 +35,7 @@ export function DateEdit({ pos, editName, onCloseEditTask, onSaveTask, task }) {
                 setIsDateSelected(false)
             }
         } catch (err) {
-            console.log('Can not load due date', err)
+            console.error('Can not load due date', err)
         }
     }
 
@@ -56,7 +59,7 @@ export function DateEdit({ pos, editName, onCloseEditTask, onSaveTask, task }) {
             setIsDateSelected(true)
             onCloseEditTask('')
         } catch (err) {
-            console.log('Could not save date =>', err)
+            console.error('Could not save date =>', err)
         }
     }
 
@@ -68,7 +71,7 @@ export function DateEdit({ pos, editName, onCloseEditTask, onSaveTask, task }) {
             setIsDateSelected(false)
             onCloseEditTask('')
         } catch (err) {
-            console.log('Cannot remove due date', err)
+            console.error('Cannot remove due date', err)
         }
     }
 
@@ -81,8 +84,6 @@ export function DateEdit({ pos, editName, onCloseEditTask, onSaveTask, task }) {
             setSelectedDate(lastDate.current)
         }
     }
-
-    // console.log('due date', task.dueDate.date);
 
     return (
         <section style={{ top: pos.top, left: pos.left }} className="edit-modal slide-up">

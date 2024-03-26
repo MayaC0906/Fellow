@@ -1,7 +1,7 @@
 import { utilService } from "../../services/util.service";
 import { additionTaskSvg } from "../Svgs";
 
-export function CoverEdit({ pos, editName, onCloseEditTask, onSaveTask, task}) {
+export function CoverEdit({ pos, editName, onCloseEditTask, onSaveTask, task }) {
     const coverColors = ['#4bce97', '#f5cd47', '#fea362', '#f87168', '#9f8fef',
         '#579dff', '#6cc3e0', '#94c748', '#e774bb', '#8590a2']
 
@@ -17,7 +17,7 @@ export function CoverEdit({ pos, editName, onCloseEditTask, onSaveTask, task}) {
             const newTask = { ...task, cover: { ...task.cover, img: '', backgroundColor: '', createdAt: null } }
             onSaveTask(newTask)
         } catch (err) {
-            console.log('Cannot remove cover', err)
+            console.error('Cannot remove cover', err)
         }
     }
 
@@ -31,14 +31,14 @@ export function CoverEdit({ pos, editName, onCloseEditTask, onSaveTask, task}) {
             }
             onSaveTask(newTask)
         } catch (err) {
-            console.log('Cannot add cover', err)
+            console.error('Cannot add cover', err)
         }
     }
 
     async function onSaveAttachment(url) {
         const newAttachment = ({ id: utilService.makeId(), imgUrl: url, createdAt: Date.now() })
         task.attachments.push(newAttachment)
-        const newTask = { ...task, attachments: task.attachments}
+        const newTask = { ...task, attachments: task.attachments }
         onSaveTask(newTask)
     }
 
@@ -66,7 +66,7 @@ export function CoverEdit({ pos, editName, onCloseEditTask, onSaveTask, task}) {
     }
 
     return (
-        <section style={{top:pos.top, left: pos.left}} className="edit-modal slide-up">
+        <section style={{ top: pos.top, left: pos.left }} className="edit-modal slide-up">
             <div className="title-container">
                 <p>{editName}</p>
                 <button onClick={onCloseEditTask} className="close-modal">{additionTaskSvg.close}</button>

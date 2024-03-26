@@ -1,33 +1,33 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router'
-import { socketService, SOCKET_EMIT_SEND_MSG, SOCKET_EVENT_ADD_MSG, SOCKET_EMIT_SET_TOPIC } from '../services/socket.service.js'
+
 import { updateBoard } from '../store/actions/board.actions.js'
+
+import { socketService, SOCKET_EMIT_SEND_MSG, SOCKET_EVENT_ADD_MSG } from '../services/socket.service.js'
 import { utilService } from '../services/util.service.js'
+
 import { checkList } from '../cmps/Svgs.jsx'
 
 export function ChatApp({ isChatOpen, setChatOpen }) {
-    const { boardId } = useParams()
-    const [msg, setMsg] = useState({ txt: '' })
-    const [topic, setTopic] = useState(boardId)
-    const [isTyping, setIsTyping] = useState(false)
-    const [typingUser, setTypingUser] = useState('')
     const board = useSelector((storeState) => storeState.boardModule.board)
     const user = useSelector(storeState => storeState.userModule.user)
-    const [isChatMinimized, setIsChatMinimized] = useState(false)
+
     const messagesEndRef = useRef(null)
     let { msgs } = board
-    
+
+    const [msg, setMsg] = useState({ txt: '' })
+    const [isTyping, setIsTyping] = useState(false)
+    const [typingUser, setTypingUser] = useState('')
+    const [isChatMinimized, setIsChatMinimized] = useState(false)
+
     useEffect(() => {
         if (messagesEndRef.current) {
             messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
         }
     }, [msgs])
 
-
-
     useEffect(() => {
-        const userName = user.fullname
         socketService.on(SOCKET_EVENT_ADD_MSG, addMsg)
         socketService.on('user-typing', (userName) => {
             setIsTyping(true)
@@ -69,8 +69,6 @@ export function ChatApp({ isChatOpen, setChatOpen }) {
         return color
     }
 
-
-
     function sendMsg(ev) {
         ev.preventDefault()
 
@@ -84,8 +82,7 @@ export function ChatApp({ isChatOpen, setChatOpen }) {
         setMsg(prevMsg => ({ ...prevMsg, [name]: value }))
         socketService.emit('typing', user.fullname || 'Me')
     }
-    console.log('isTyping', isTyping)
-    console.log(typingUser)
+
     return (
         <section className={`chat ${isChatMinimized ? 'minimized' : ''}`}>
             <div className="chat-header">

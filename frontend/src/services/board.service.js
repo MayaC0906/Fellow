@@ -1,5 +1,4 @@
 
-import { storageService } from './async-storage.service.js'
 import { utilService } from './util.service.js'
 import { userService } from './user.service.js'
 import { httpService } from './http.service.js'
@@ -43,18 +42,6 @@ function getCheckListStatus(checkLists) {
 async function query() {
 
     let boards = await httpService.get(BASE_URL)
-    let user = userService.getLoggedinUser()
-    // if (user) {
-    //     if (user.username !== 'Guest') {
-    //         boards = boards.filter(board =>
-    //             board.members.some(boardMember => boardMember._id === user._id)
-    //         );
-    //     }
-    //     // else case for Guest user is implicit, no need to filter boards
-    // } else {
-    //     console.log('No user provided, no boards will be filtered.');
-    // }
-    // console.log('boards: from load', boards)
     return boards
 }
 
@@ -91,7 +78,7 @@ async function getGroupById(groupId, boardId) {
         const group = board.groups.find(group => group.id === groupId)
         return group
     } catch (err) {
-        console.log('Failed to get group', err)
+        console.error('Failed to get group', err)
         throw err
     }
 }
@@ -111,7 +98,7 @@ async function saveGroup(group, boardId, user, txt, task) {
         addActivity(board, user, txt, { group, task })
         return save(board)
     } catch (err) {
-        console.log('couldnt save group', err)
+        console.error('couldnt save group', err)
         throw err
     }
 }
@@ -126,7 +113,7 @@ async function removeGroup(group, boardId, user, txt) {
 
         return save(board)
     } catch (err) {
-        console.log('Failed to remove group', err)
+        console.error('Failed to remove group', err)
         throw err
     }
 }

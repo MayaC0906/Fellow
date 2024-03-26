@@ -1,34 +1,49 @@
+import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router"
-import { deleteTask, loadTask } from "../../../store/actions/board.actions"
-import { useEffect, useRef, useState } from "react"
 import { Link } from "react-router-dom"
-import { TaskTitle } from "./TaskTitle"
-import { TaskDescription } from "./TaskDescription"
-import { TaskDetailsSideNav } from "../TaskDetailsSideNav"
-import { loaderSvg, taskSvg } from "../../Svgs"
-import { TaskAttachments } from "./TaskAttachments"
 import { useSelector } from 'react-redux'
+
+import { deleteTask, loadTask } from "../../../store/actions/board.actions"
 import { saveNewTask } from "../../../store/actions/board.actions"
 
+import { utilService } from "../../../services/util.service"
+
+import { TaskDetailsSideNav } from "../TaskDetailsSideNav"
+import { TaskTitle } from "./TaskTitle"
+import { TaskDescription } from "./TaskDescription"
+import { TaskAttachments } from "./TaskAttachments"
 import { TaskCheckList } from "./TaskChecklist-list"
 import { TaskDate } from "./TaskDate"
 import { TaskMember } from "./TaskMember"
 import { TaskLabel } from "./TaskLabel"
-import { utilService } from "../../../services/util.service"
 import { TaskActivities } from "./TaskActivities"
+
+import { loaderSvg, taskSvg } from "../../Svgs"
 
 
 export function TaskDetails() {
+
     const { boardId, groupId, taskId } = useParams()
-    const [task, setTask] = useState('')
-    const [imgBackground, setImgBackground] = useState('white')
-    let [editName, setEditName] = useState('')
+    const navigate = useNavigate()
+
     const user = useSelector((storeState) => storeState.userModule.user)
     const board = useSelector((storeState) => storeState.boardModule.board)
-    const navigate = useNavigate()
+
+    const [task, setTask] = useState('')
+    const [imgBackground, setImgBackground] = useState('white')
+    const [editName, setEditName] = useState('')
     const [isPhoneDisplay, setIsPhoneDisplay] = useState({ isDisplay: false, isActionsShown: false })
     const [ev, setEv] = useState(null)
+
     let groups = board.groups
+
+    useEffect(() => {
+        onLoadTask(boardId, groupId, taskId)
+    }, [])
+
+    useEffect(() => {
+        onChangeBgc()
+    }, [task?.cover?.img])
 
     useEffect(() => {
         window.addEventListener('resize', handleResize);
@@ -45,14 +60,6 @@ export function TaskDetails() {
         else setIsPhoneDisplay((prevState => ({ ...prevState, isDisplay: false, isActionsShown: false })))
 
     }
-
-    useEffect(() => {
-        onLoadTask(boardId, groupId, taskId)
-    }, [])
-
-    useEffect(() => {
-        onChangeBgc()
-    }, [task?.cover?.img])
 
     async function onLoadTask(boardId, groupId, taskId) {
         try {
@@ -74,13 +81,12 @@ export function TaskDetails() {
             groups[currGroup].tasks.push(updatedTask)
         }
         const boardToSave = { ...board, groups: board.groups }
-        // console.log(boardToSave);
         const prevTask = { ...task }
         setTask(updatedTask)
         try {
             saveNewTask(boardId, groupId, updatedTask, user, txt, boardToSave)
         } catch (err) {
-            console.log('cant save task');
+            console.error('cant save task');
             setTask(prevTask)
         }
     }
@@ -89,7 +95,7 @@ export function TaskDetails() {
         try {
             await deleteTask(boardId, groupId, taskId)
         } catch (err) {
-            console.log('cant save task');
+            console.error('cant save task');
         }
     }
 
@@ -105,11 +111,10 @@ export function TaskDetails() {
             const bgc = await utilService.getDominantColor(task.cover.img)
             setImgBackground(`rgb(${bgc.rgb})`)
         } catch (err) {
-            console.log('Cannot change background', err);
+            console.error('Cannot change background', err);
         }
     }
 
-    console.log('hey');
     if (!task) return <div className="loader task-details"><div>{loaderSvg.loader}</div></div>
 
     return (

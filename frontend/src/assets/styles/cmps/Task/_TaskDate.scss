@@ -1,6 +1,5 @@
 .task {
     &-date-show {
-        // width: 264px;
         width: fit-content;
         height: 65px;
         margin: 0 8px 8px 56px;
@@ -17,7 +16,6 @@
 
 
     &-date {
-        // width: 167px;
         height: 32px;
         background-color: rgba(9, 30, 66, 0.0588235294);
         padding: rem(6px) rem(12px);
@@ -30,10 +28,6 @@
 
         &:active {
             background-color: #091E424F;
-        }
-
-        &.complete-open {
-            // width: 235px
         }
 
         &-data {

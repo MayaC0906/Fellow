@@ -1,11 +1,7 @@
 .edit-modal {
     width: 304px;
     border-radius: 8px;
-    // border: 1px solid black;
     box-shadow: 0px 8px 12px #091e4226, 0px 0px 1px #091e424f;
-
-    /// remove:
-    // position: relative;
     right: 130px;
     background-color: white;
 
@@ -21,7 +17,6 @@
             font-weight: 700;
             line-height: 16px;
             margin-bottom: 4px;
-            // margin-top: 12px;
         }
 
         .task-btn {
@@ -39,7 +34,6 @@
     }
 
     &-content {
-        // width: 280px;
         padding: 0 12px 12px 12px;
     }
 
@@ -47,7 +41,6 @@
         display: grid;
         grid-template-columns: 32px 1fr 32px;
         padding: 4px 8px;
-        // align-items: center;
         text-align: center;
         height: rem(40px);
         margin-block-end: 4px;

@@ -1,29 +1,30 @@
 import { useEffect, useState } from "react";
-import { groupHeaderSvg, workspaceSvg } from "../Svgs";
-import { updateBoard } from "../../store/actions/board.actions";
 import { useSelector } from "react-redux";
-import { useParams } from 'react-router-dom'
+
+import { updateBoard } from "../../store/actions/board.actions";
+
 import { ShareBoard } from "../Board/ShareBoard";
 import { OurSiri } from "../OurSiri";
 import { Dashboard } from "../Dashboard";
 import { ChatApp } from '../../pages/Chat'
+
 import { Chat } from "@mui/icons-material";
+import { groupHeaderSvg, workspaceSvg } from "../Svgs";
+
 export function GroupHeader({ isMenuOpen, setMenu, setIsFiltersOpen, isFiltersOpen }) {
-    // const { boardId } = useParams()
+
     const board = useSelector(storeState => storeState.boardModule.board)
     const user = useSelector((storeState) => storeState.userModule.user)
+
     const membersToDisplay = board.members.filter(boardMembers => boardMembers.username !== 'Guest')
-    // const board = useSelector(storeState => storeState.boardModule.board)
-    console.log('board', board.members);
-    // const boards = useSelector(storeState => storeState.boardModule.boards)
-    // const [board, onSetBoard] = useState({})
+
     const [isBoardStarred, setIsBoardStarred] = useState(board.isStarred)
-    // const [content, setContent] = useState('')
     const [isOpenShareBoard, setIsOpenShareBoard] = useState(false)
     const [isSiriOpen, setSiriOpen] = useState(false)
     const [isPhoneDisplay, setIsPhoneDisplay] = useState(false)
     const [isDashboardOpen, setDashBoardOpen] = useState(false)
     const [isChatOpen, setChatOpen] = useState(false)
+
     let zIndexCount = 10
 
     useEffect(() => {
@@ -43,25 +44,14 @@ export function GroupHeader({ isMenuOpen, setMenu, setIsFiltersOpen, isFiltersOp
         else setIsPhoneDisplay(true)
     }
 
-    // useEffect(() => {
-    //     onLoadBoard()
-    // }, [boardId])
-
-    // async function onLoadBoard() {
-    //     const boardToFind = boards.find(board => board._id === boardId)
-    //     onSetBoard(boardToFind)
-    //     setIsBoardStarred(boardToFind.isStarred)
-    //     setContent(boardToFind.title)
-    // }
-
-    async function onEditBoardTitle() {
+    async function onEditBoardTitle(event) {
         let value = event.target.textContent
         const txt = `renamed this board from (${board.title}).`
         const newBoard = { ...board, title: value }
         try {
             await updateBoard(newBoard, user, txt)
         } catch (err) {
-            console.log(err)
+            console.error('Failed to update board title', err)
             throw err
         }
     }
@@ -73,7 +63,7 @@ export function GroupHeader({ isMenuOpen, setMenu, setIsFiltersOpen, isFiltersOp
             await updateBoard(newBoard, user, txt)
             setIsBoardStarred(newBoard.isStarred)
         } catch (err) {
-            console.log(`Could'nt change isStarred`, err)
+            console.error(`Could'nt change isStarred`, err)
         }
     }
 
@@ -88,8 +78,8 @@ export function GroupHeader({ isMenuOpen, setMenu, setIsFiltersOpen, isFiltersOp
                 <section className="board-edit flex">
                     <div tabIndex="0" onBlur={onEditBoardTitle}
                         contentEditable={true}>{board.title}</div>
-                    {!isBoardStarred && (<button className={isBlackOrWhite} onClick={onToggleBoardStar}>{workspaceSvg.star}</button>)}
-                    {isBoardStarred && (<button className={isBlackOrWhite} onClick={onToggleBoardStar}>{groupHeaderSvg.fullStar}</button>)}
+                    {!isBoardStarred && (<button className={`${isBlackOrWhite} btn`} onClick={onToggleBoardStar}>{workspaceSvg.star}</button>)}
+                    {isBoardStarred && (<button className={`${isBlackOrWhite} btn`} onClick={onToggleBoardStar}>{groupHeaderSvg.fullStar}</button>)}
                 </section>
 
                 <section className="group-header">

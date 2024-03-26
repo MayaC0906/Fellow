@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 
 import { loadUser } from '../store/user.actions'
 import { store } from '../store/store'
+
 import { showSuccessMsg } from '../services/event-bus.service'
 import { socketService, SOCKET_EVENT_USER_UPDATED, SOCKET_EMIT_USER_WATCH } from '../services/socket.service'
 
@@ -14,7 +15,6 @@ export function UserDetails() {
 
   useEffect(() => {
     loadUser(params.id)
-
     socketService.emit(SOCKET_EMIT_USER_WATCH, params.id)
     socketService.on(SOCKET_EVENT_USER_UPDATED, onUserUpdate)
 
@@ -36,7 +36,6 @@ export function UserDetails() {
         <h3>
           {user.fullname}
         </h3>
-        {/* Demo for dynamic images: */}
         <div className="user-img" style={{ backgroundImage: `url('/img/u${0}.png')` }}>
         </div>
         <pre>

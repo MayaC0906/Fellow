@@ -1,8 +1,8 @@
-import { useParams } from 'react-router';
 import { TaskChecklistPreview } from './TaskChecklistPreview';
 
 
-export function TaskCheckList({ setEditName, setTask, onSaveTask, task }) {
+export function TaskCheckList({ setTask, onSaveTask, task }) {
+
     const { checklists } = task
 
     async function onToggleDoneTodo(listId, todoId, isDone) {
@@ -17,7 +17,7 @@ export function TaskCheckList({ setEditName, setTask, onSaveTask, task }) {
             const newTask = { ...task, checklists: updatedChecklists }
             onSaveTask(newTask)
         } catch (err) {
-            console.log('cannot toggle todo done');
+            console.error('cannot toggle todo done');
             throw err
         }
     }
@@ -28,12 +28,10 @@ export function TaskCheckList({ setEditName, setTask, onSaveTask, task }) {
             const newTask = { ...task, checklists: newChecklists }
             onSaveTask(newTask)
         } catch (err) {
-            console.log('cant delete list');
+            console.error('cant delete list');
             throw err
         }
     }
-
-
 
     async function onUpdateListTitle(listId, title) {
         try {
@@ -43,7 +41,7 @@ export function TaskCheckList({ setEditName, setTask, onSaveTask, task }) {
             const newTask = { ...task, checklists: updatedChecklists }
             onSaveTask(newTask)
         } catch (err) {
-            console.log('cannot update list title')
+            console.error('cannot update list title')
             throw err
         }
     }
@@ -60,7 +58,7 @@ export function TaskCheckList({ setEditName, setTask, onSaveTask, task }) {
             const newTask = { ...task, checklists: updatedChecklists }
             onSaveTask(newTask)
         } catch (err) {
-            console.log('cannot save todo title')
+            console.error('cannot save todo title')
             throw err
         }
     }
@@ -73,7 +71,7 @@ export function TaskCheckList({ setEditName, setTask, onSaveTask, task }) {
             const newTask = { ...task, checklists: updatedChecklists }
             onSaveTask(newTask)
         } catch (err) {
-            console.log('cannot add todo')
+            console.error('cannot add todo')
             throw err
         }
     }
@@ -88,7 +86,7 @@ export function TaskCheckList({ setEditName, setTask, onSaveTask, task }) {
             const newTask = { ...task, checklists: updatedChecklists }
             onSaveTask(newTask)
         } catch (err) {
-            console.log('cannot delete todo')
+            console.error('cannot delete todo')
             throw err
         }
     }

@@ -1,25 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux'
-import { additionTaskSvg, groupMenu, taskSvg } from '../Svgs';
+import { useSelector } from 'react-redux'
+
 import dayjs from 'dayjs';
+
+import { additionTaskSvg, groupMenu, taskSvg } from '../Svgs';
 
 export function GroupMenu({
   setInputExpand,
   onDuplicateGroup,
   group,
   onRemoveGroup,
-  setToggleGroupMenu,
   groupMenuPosition,
   setOpenMenuGroupId,
   openMenuGroupId,
   onUpdateGroup,
   onUpdateBoard
 }) {
+
   const board = useSelector((storeState) => storeState.boardModule.board)
+
+  const [menuContent, setMenuContent] = useState('');
+
   const groups = board?.groups
   const { tasks } = group
-  const [menuContent, setMenuContent] = useState('');
-  const user = useSelector((storeState) => storeState.userModule.user)
 
 
   useEffect(() => {
@@ -42,7 +45,6 @@ export function GroupMenu({
   );
   async function onSetGroupWatch() {
     const updatedGroup = { ...group, isWatch: !group.isWatch }
-    // console.log('update', updatedBoard);
     onUpdateGroup(updatedGroup)
   }
 
@@ -97,15 +99,13 @@ export function GroupMenu({
   );
 
   async function moveTasks({ target }) {
-    console.log('target', target.value);
     const currGroupPosIdx = groups.findIndex(g => g.id === group.id)
     const groupTargetIdx = target.value
     const currGroupTasks = [...group.tasks]
-    console.log('curr', currGroupTasks);
+
     groups[currGroupPosIdx].tasks.splice(0, group.tasks.length)
-    // console.log('target group tasks', targetGroupTasks);
+
     board.groups[groupTargetIdx].tasks.push(...currGroupTasks)
-    console.log('group', groups[groupTargetIdx].tasks);
 
     await onUpdateBoard(board)
   }
@@ -151,8 +151,6 @@ export function GroupMenu({
       break;
   }
 
-
-  console.log('menu-content', menuContent);
   return (
     <section className="group-edit-modal" style={style}>
       <header>

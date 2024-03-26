@@ -30,7 +30,6 @@
         border: none;
         border-radius: 4px;
 
-        // width: 100px;
         &:hover {
             background: #ffffff70;
         }
@@ -116,7 +115,6 @@
 
             span {
                 color: #ffff;
-                // display: none;
                 padding: 6px 8px;
                 transition: color 85ms ease-in;
                 font-size: 14px;
@@ -168,8 +166,6 @@
                 svg {
                     height: 26px;
                     width: 26px;
-                    // margin-left: 4px;
-
                 }
 
                 &:hover {

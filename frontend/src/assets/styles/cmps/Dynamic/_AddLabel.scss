@@ -3,7 +3,6 @@
     .title-container {
         .back-arrow {
             grid-column: 1/2;
-            // display: flex;
             align-self: center;
             border: none;
             background-color: white;
@@ -51,7 +50,6 @@
     .label {
 
         &-display {
-            // margin: 0 -12px;
             padding: 32px;
             background-color: #f7f8f9;
             height: 100px;
@@ -65,7 +63,6 @@
             border-radius: 3px;
             padding: 0 12px;
             line-height: 32px;
-            // text-justify: ;
         }
     }
 

@@ -1,30 +1,30 @@
-import { appHeaderSvg } from "../Svgs"
 import { useEffect } from "react"
+import { appHeaderSvg } from "../Svgs"
 
-export function ChangeBgcPhotos({setTitle,onChangeBoardBgc}) {
-    
+export function ChangeBgcPhotos({ setTitle, onChangeBoardBgc }) {
+
     const imgs = [
         {
             imgUrl: 'https://images.unsplash.com/photo-1698255921824-9c87f3f8514a?auto=format&fit=crop&q=80&w=2105&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             name: 'Mo',
             nameLink: 'https://unsplash.com/@mo_design_3d?utm_source=trello&utm_medium=referral&utm_campaign=api-credit'
         },
-        { 
-            imgUrl: 'https://images.unsplash.com/photo-1697577473134-46490cf51044?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 
-            name: 'Pawan Thap', 
-            nameLink: 'https://unsplash.com/@thapapawan?utm_source=trello&utm_medium=referral&utm_campaign=api-credit' 
+        {
+            imgUrl: 'https://images.unsplash.com/photo-1697577473134-46490cf51044?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            name: 'Pawan Thap',
+            nameLink: 'https://unsplash.com/@thapapawan?utm_source=trello&utm_medium=referral&utm_campaign=api-credit'
         },
-        { 
-            imgUrl: 'https://images.unsplash.com/photo-1696935518912-ee46a5c161d0?auto=format&fit=crop&q=80&w=1974&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 
-            name: 'Lucija Ros', 
-            nameLink: 'https://unsplash.com/@lucija_ros?utm_source=trello&utm_medium=referral&utm_campaign=api-credit' 
+        {
+            imgUrl: 'https://images.unsplash.com/photo-1696935518912-ee46a5c161d0?auto=format&fit=crop&q=80&w=1974&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            name: 'Lucija Ros',
+            nameLink: 'https://unsplash.com/@lucija_ros?utm_source=trello&utm_medium=referral&utm_campaign=api-credit'
         },
-        { 
+        {
             imgUrl: 'https://images.unsplash.com/photo-1697701859524-f4cc65e4747a?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-            name: 'Pawel Czerwinski', 
+            name: 'Pawel Czerwinski',
             nameLink: 'https://unsplash.com/@pawel_czerwinski?utm_source=trello&utm_medium=referral&utm_campaign=api-credit'
-         },
-         {
+        },
+        {
             imgUrl: 'https://images.unsplash.com/photo-1697297937792-ec7c0adf6c16?auto=format&fit=crop&q=80&w=1932&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             name: 'Javier Miranda',
             nameLink: 'https://unsplash.com/@nuvaproductions?utm_source=trello&utm_medium=referral&utm_campaign=api-credit'
@@ -39,7 +39,7 @@ export function ChangeBgcPhotos({setTitle,onChangeBoardBgc}) {
             name: 'Jigar Panchal',
             nameLink: 'https://unsplash.com/@brave4_heart?utm_source=trello&utm_medium=referral&utm_campaign=api-credit'
         },
-        
+
         {
             imgUrl: 'https://images.unsplash.com/photo-1697015357114-a30b4ee51659?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             name: 'Ilia Bronskiy',
@@ -65,19 +65,19 @@ export function ChangeBgcPhotos({setTitle,onChangeBoardBgc}) {
             name: 'Marek Piwnicki',
             nameLink: 'https://unsplash.com/@marekpiwnicki'
         },
-        { 
-            imgUrl: 'https://images.unsplash.com/photo-1696144706485-ff7825ec8481?auto=format&fit=crop&q=80&w=1935&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 
-            name: 'Joshua Rawson-Harris', 
-            nameLink: 'https://unsplash.com/@joshrh19?utm_source=trello&utm_medium=referral&utm_campaign=api-credit' 
+        {
+            imgUrl: 'https://images.unsplash.com/photo-1696144706485-ff7825ec8481?auto=format&fit=crop&q=80&w=1935&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            name: 'Joshua Rawson-Harris',
+            nameLink: 'https://unsplash.com/@joshrh19?utm_source=trello&utm_medium=referral&utm_campaign=api-credit'
         },
-        { 
-            imgUrl: 'https://images.unsplash.com/photo-1696595883555-5a2f5ab967f8?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 
-            name: 'Cokile Ceoi', 
-            nameLink: 'https://unsplash.com/@c0ki1e?utm_source=trello&utm_medium=referral&utm_campaign=api-credit' 
+        {
+            imgUrl: 'https://images.unsplash.com/photo-1696595883555-5a2f5ab967f8?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            name: 'Cokile Ceoi',
+            nameLink: 'https://unsplash.com/@c0ki1e?utm_source=trello&utm_medium=referral&utm_campaign=api-credit'
         },
-        { 
-            imgUrl: 'https://images.unsplash.com/photo-1697201826242-141dec817a6f?auto=format&fit=crop&q=80&w=1935&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 
-            name: 'Ander Peña', 
+        {
+            imgUrl: 'https://images.unsplash.com/photo-1697201826242-141dec817a6f?auto=format&fit=crop&q=80&w=1935&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            name: 'Ander Peña',
             nameLink: 'https://unsplash.com/@anderrek?utm_source=trello&utm_medium=referral&utm_campaign=api-credit'
         },
         {
@@ -115,32 +115,22 @@ export function ChangeBgcPhotos({setTitle,onChangeBoardBgc}) {
             name: 'Spenser Sembrat',
             nameLink: 'https://unsplash.com/@spensersembrat'
         },
-        // {
-        //     imgUrl: '',
-        //     name: '',
-        //     nameLink: ''
-        // },
-        // {
-        //     imgUrl: '',
-        //     name: '',
-        //     nameLink: ''
-        // },
     ]
 
-  
-        useEffect(() => {
-            setTitle( <span>Photos by <a style={{color: '#0c66e4'}} href="https://unsplash.com">Unsplash</a></span>);
-            return () => {
-                setTitle("Menu")
-            };
-        }, [setTitle])
-        
+
+    useEffect(() => {
+        setTitle(<span>Photos by <a style={{ color: '#0c66e4' }} href="https://unsplash.com">Unsplash</a></span>);
+        return () => {
+            setTitle("Menu")
+        };
+    }, [setTitle])
+
 
     return (
         <section className="bgc-modal-layout">
-            
+
             <div className="input-section">
-                <input type="text" 
+                <input type="text"
                     placeholder="Photos"
                 />
                 {appHeaderSvg.search}
@@ -148,19 +138,15 @@ export function ChangeBgcPhotos({setTitle,onChangeBoardBgc}) {
 
             <div className="upper-section">
                 {imgs.map(img => {
-                   return <div onClick={() => onChangeBoardBgc(img.imgUrl)} className="sq unsplash">
-                            <img src={`${img.imgUrl}`} alt="" />
-                            <article>
-                                <a style={{bottom:'0'}} href={`${img.nameLink}`}>{img.name}</a>
-                            </article>
-                        </div>                     
+                    return <div onClick={() => onChangeBoardBgc(img.imgUrl)} className="sq unsplash">
+                        <img src={`${img.imgUrl}`} alt="" />
+                        <article>
+                            <a style={{ bottom: '0' }} href={`${img.nameLink}`}>{img.name}</a>
+                        </article>
+                    </div>
                 })}
             </div>
-            {/* <footer>
-                <p>
-                    By using images from Unsplash, you agree to their <span>license</span> and <span>Terms of Service</span>
-                </p>
-            </footer> */}
+
         </section>
     )
 }

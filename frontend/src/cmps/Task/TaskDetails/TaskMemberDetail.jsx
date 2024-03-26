@@ -1,9 +1,11 @@
-import { additionTaskSvg } from "../../Svgs";
 import { useState } from "react";
 import { TaskMemberImage } from "./TaskMemberImage";
+import { additionTaskSvg } from "../../Svgs";
 
 export function TaskMemberDetail({ member, setMemberDetailOpen, removeMemberFromTask }) {
+
     const [isMemberImageOpen, setIsMemberImageOpen] = useState(false)
+    
     const { fullname, imgUrl, username } = member
 
     return isMemberImageOpen ? (

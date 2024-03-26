@@ -1,10 +1,12 @@
 import { useState } from "react"
-import { taskSvg } from "../../Svgs"
-import Textarea from '@mui/joy/Textarea';
 import { useRef } from "react";
+import Textarea from '@mui/joy/Textarea';
+import { taskSvg } from "../../Svgs"
 
 export function TaskTitle({ onSaveTask, task }) {
+
     const [titleToEdit, setTitleToEdit] = useState(task.title)
+
     const textareaRef = useRef(null);
 
     async function onEnterSaveTitle(ev) {
@@ -51,7 +53,7 @@ export function TaskTitle({ onSaveTask, task }) {
                 onBlur={onBlurSaveTitle}
                 onKeyDown={onEnterSaveTitle}
                 sx={{
-                    width: '86%', minHeight: '37px',  height: 'auto',
+                    width: '86%', minHeight: '37px', height: 'auto',
                     border: 'none', background: 'none',
                     boxShadow: 'none', borderBottom: 'none'
                 }}

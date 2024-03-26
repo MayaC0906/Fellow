@@ -9,7 +9,6 @@
 @import "basics/helpers";
 @import "basics/layout";
 @import "basics/base";
-@import "basics/links";
 @import "basics/forms";
 
 
@@ -18,7 +17,6 @@
 @import "views/HomePage";
 @import "views/BoardDetails";
 @import "views/ReviewIndex";
-// @import "views/UserDetails";
 @import "views/Workspace";
 @import "views/SearchBoard";
 
@@ -80,7 +78,6 @@
 
 // Home
 @import "cmps/Home/HomeFeatures";
-@import "cmps/Home/HomeFooter";
 @import "cmps/Home/HomeProductivity";
 @import "cmps/Home/AppHeader";
 @import "cmps/Home/AppFooter";

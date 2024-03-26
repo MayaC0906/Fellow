@@ -1,9 +1,10 @@
+import { useEffect } from "react";
 import { Checkbox } from "@mui/material";
-import { useEffect, useState } from "react";
-import { appHeaderSvg } from "../../Svgs";
 import dayjs from "dayjs";
+import { appHeaderSvg } from "../../Svgs";
 
 export function TaskDate({ task, setEditName, editName, onSaveTask }) {
+
     const { dueDate } = task
 
     useEffect(() => {
@@ -37,7 +38,7 @@ export function TaskDate({ task, setEditName, editName, onSaveTask }) {
         try {
             await onSaveTask(newTask)
         } catch (err) {
-            console.log(`Couldn't set isOverDue`, err);
+            console.error(`Couldn't set isOverDue`, err);
         }
     }
 
@@ -55,7 +56,6 @@ export function TaskDate({ task, setEditName, editName, onSaveTask }) {
     }
 
     return (
-
         dueDate.date && (
             <section className="task-display">
                 <h2 className="task-date-title">Due date</h2>

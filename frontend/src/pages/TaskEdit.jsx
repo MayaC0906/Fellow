@@ -1,6 +1,6 @@
+import { useState, useEffect } from 'react'
 import { surveyService } from "../services/survey.service.js"
 
-import { useState, useEffect } from 'react'
 export function TaskEdit() {
     const [survey, setSurvey] = useState(null)
     const [answersMap, setAnswersMap] = useState({})
@@ -12,14 +12,11 @@ export function TaskEdit() {
             })
     }, [])
 
-
-
     function onChangeVal(id, val) {
         const answersToSave = { ...answersMap }
         answersToSave[id] = val
         setAnswersMap(answersToSave)
     }
-
 
     if (!survey) return '<div></div>'
 
@@ -27,6 +24,7 @@ export function TaskEdit() {
         backgroundColor: 'lightcoral',
         padding: '5px', margin: '5px'
     }
+
     return (
         <section className="survey-app">
             <h2>Survey - {survey.title}</h2>
@@ -47,10 +45,6 @@ export function TaskEdit() {
         </section >
     )
 }
-
-
-
-
 
 function TextBox({ info, val = '', onChangeVal }) {
     const { label } = info

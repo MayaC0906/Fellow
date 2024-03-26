@@ -1,16 +1,15 @@
-import { additionTaskSvg, taskSvg } from "../Svgs"
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { updateBoard } from "../../store/actions/board.actions";
-import { useState } from "react";
+import { additionTaskSvg, taskSvg } from "../Svgs"
 
 export function ShareBoard({ setIsOpenShareBoard }) {
     const users = useSelector(storeState => storeState.userModule.users)
     const board = useSelector(storeState => storeState.boardModule.board)
     const usersToDisplay = users.filter(user => user.username !== 'Guest')
+
     const [connectUsers, setConnectUsers] = useState(board.members)
     const [filterUsers, setFilterdUsers] = useState(usersToDisplay)
-
-
 
     function onUserSearch({ target }) {
         const filteredMembers = users.filter(user =>
@@ -18,7 +17,6 @@ export function ShareBoard({ setIsOpenShareBoard }) {
         )
         setFilterdUsers(filteredMembers)
     }
-
 
     async function onToggleMemberToBoard(user) {
         const userIdx = board.members.findIndex(member => member._id === user._id)
@@ -41,7 +39,7 @@ export function ShareBoard({ setIsOpenShareBoard }) {
             await updateBoard(newBoard)
             setConnectUsers(newBoard.members)
         } catch (err) {
-            console.log('Could not save member on board');
+            console.error('Could not save member on board', err);
         }
 
     }

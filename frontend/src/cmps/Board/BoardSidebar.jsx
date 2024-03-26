@@ -1,20 +1,24 @@
 import { useState, useEffect } from "react";
 import { useSelector } from 'react-redux';
-import { boardMenu, checkList, sideBar } from "../Svgs";
-import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
-import { Block, Brightness1 } from "@mui/icons-material";
-import { lighten } from 'polished';
-import { AddBoard } from '../Board/AddBoard'
+import { Link, useParams, useNavigate } from "react-router-dom";
+
 import { removeBoard } from "../../store/actions/board.actions";
 
+import { lighten } from 'polished';
+
+import { AddBoard } from '../Board/AddBoard'
+
+import { checkList, sideBar } from "../Svgs";
+
 export function BoardSidebar() {
+  const boards = useSelector((storeState) => storeState.boardModule.boards)
+  const board = useSelector((storeState) => storeState.boardModule.board)
+
+  const { boardId } = useParams()
+  const navigate = useNavigate()
+
   const [isSidebarExpand, setSidebarExpand] = useState(false)
   const [activeBoardId, setActiveBoardId] = useState(null)
-  const { boardId } = useParams()
-  const boards = useSelector((storeState) => storeState.boardModule.boards)
-  // console.log('boards side bar', boards);
-  const board = useSelector((storeState) => storeState.boardModule.board)
-  const user = useSelector((storeState) => storeState.userModule.user)
   const [showSortDropdown, setShowSortDropdown] = useState(false);
   const [sortedBoards, setSetSortedBoards] = useState(boards)
   const [modalState, setModalState] = useState({
@@ -22,9 +26,6 @@ export function BoardSidebar() {
     type: '',
     position: { top: 0, left: 0 }
   })
-  const navigate = useNavigate()
-  console.log(boards, 'from sidebar');
-
 
   useEffect(() => {
     if (boardId) {
@@ -50,6 +51,7 @@ export function BoardSidebar() {
       }
     });
   }
+
   function handleBoardItemClick(boardId) {
     setActiveBoardId(boardId)
   }
@@ -57,8 +59,6 @@ export function BoardSidebar() {
   function handleSortClick() {
     setShowSortDropdown(!showSortDropdown);
   }
-
-
 
   function sortByAlphaB() {
     const sortedBoards = [...boards].sort((a, b) => {
@@ -75,9 +75,9 @@ export function BoardSidebar() {
   async function deleteBoard(boardId) {
     try {
       await removeBoard(boardId)
-      if (boardId===board._id) navigate('/workspace')
+      if (boardId === board._id) navigate('/workspace')
     } catch (err) {
-      console.log('Could not delete board')
+      console.error('Could not delete board', err)
     }
 
   }
@@ -186,7 +186,6 @@ export function BoardSidebar() {
               </article>
             </header>
             {sortedBoards.map((boardItem) => {
-              { console.log(boardItem) }
               return <section
                 key={boardItem._id}
                 className={`${activeBoardId === boardItem._id ? 'active' : ''}`}
@@ -200,9 +199,6 @@ export function BoardSidebar() {
               </section>
             })}
           </section>
-
-
-
         )}
       </ul>
 

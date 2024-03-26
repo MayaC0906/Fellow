@@ -14,11 +14,11 @@ import { loadUsers, login } from './store/actions/user.actions'
 import { useSelector } from 'react-redux'
 
 export function App() {
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const location = useLocation()
     const user = useSelector(storeState => storeState.userModule.user)
-    const [isLogin, setIsLogin] = useState(true)
 
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const [isLogin, setIsLogin] = useState(true)
 
     useEffect(() => {
         loadUsers()
@@ -35,10 +35,9 @@ export function App() {
                 setIsLogin(false)
             }
         } catch (err) {
-            console.log('Can not load users', err)
+            console.error('Can not load users', err)
         }
     }
-
 
     useEffect(() => {
         const debounce = (func, timeout = 300) => {

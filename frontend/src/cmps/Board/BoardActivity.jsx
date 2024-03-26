@@ -1,20 +1,21 @@
 import React from 'react'
 import { useState, useRef } from 'react'
-import { taskSvg } from '../Svgs'
-import { additionTaskSvg } from '../Svgs'
-import { UserActivity } from '../UserActivity'
 import { Link } from 'react-router-dom'
+
 import { utilService } from '../../services/util.service'
+import { UserActivity } from '../UserActivity'
+
+import { additionTaskSvg } from '../Svgs'
 
 export function BoardActivity({ board }) {
-    const { activities } = board;
-    const [selectedActivity, setSelectedActivity] = useState(null)
-    const imgRefs = useRef({});
+
+    const { activities } = board
+    const imgRefs = useRef({})
     const containerRef = useRef(null)
+
+    const [selectedActivity, setSelectedActivity] = useState(null)
     const [modalPosition, setModalPosition] = useState({ top: 0, left: 0 })
     const [userActivityModal, setUserActivityModal] = useState({ isOpen: false, userId: '' })
-
-
 
     const handleImgClick = (activity) => {
         setSelectedActivity(activity)
@@ -37,7 +38,6 @@ export function BoardActivity({ board }) {
         }))
     }
     return (
-        // <>
         <div className='bgc-modal-layout activities' ref={containerRef}>
             {activities.map((activity) => (
                 <div className='activity' key={activity.id} style={{ display: '', alignItems: 'center', marginBottom: '10px' }}>
@@ -107,7 +107,5 @@ export function BoardActivity({ board }) {
                     user={userActivityModal.user}
                 />}
         </div>
-
-        // </>
     );
 }

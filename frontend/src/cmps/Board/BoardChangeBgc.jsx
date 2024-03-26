@@ -1,29 +1,30 @@
 import React, { useState } from 'react'
-import { sideBar } from "../Svgs"
-import { ChangeBgcPhotos } from './ChangeBgcPhotos'
+import { useSelector } from 'react-redux'
+import { useNavigate } from "react-router-dom"
+
 import { utilService } from '../../services/util.service'
 import { updateBoard } from '../../store/actions/board.actions'
-import { useNavigate } from "react-router-dom"
+
+import { ChangeBgcPhotos } from './ChangeBgcPhotos'
 import { ChangeBgcColor } from './ChangeBgcColors'
-import { useSelector } from 'react-redux'
 
 
 export function BoardChangeBgc({ setTitle }) {
     const navigate = useNavigate()
     const board = useSelector((storeState) => storeState.boardModule.board)
-    const [currentContent, setCurrentContent] = useState('default')
     const user = useSelector((storeState) => storeState.userModule.user)
 
+    const [currentContent, setCurrentContent] = useState('default')
 
     function renderContent() {
-        switch(currentContent) {
+        switch (currentContent) {
             case 'changePhoto':
                 return <ChangeBgcPhotos setTitle={setTitle} onChangeBoardBgc={onChangeBoardBgc} />
             case 'changeClr':
-                return <ChangeBgcColor setTitle={setTitle} onChangeBoardBgc={onChangeBoardBgc}/>
+                return <ChangeBgcColor setTitle={setTitle} onChangeBoardBgc={onChangeBoardBgc} />
             default:
                 return (
-                    <div className="bgc-modal-layout">   
+                    <div className="bgc-modal-layout">
                         <section className="upper-section">
                             <div onClick={() => setCurrentContent('changePhoto')} className="sq sq1">
                                 <img src="https://trello.com/assets/8f9c1323c9c16601a9a4.jpg" alt="" />
@@ -34,13 +35,7 @@ export function BoardChangeBgc({ setTitle }) {
                                 <span>Colors</span>
                             </div>
                         </section>
-                        <hr className="divider"/>
-                        {/* <section className="custom-section">
-                            <div className="sq sq3">
-                                <h2>Custom</h2>
-                                <div>{sideBar.plus}</div>
-                            </div>
-                        </section> */}
+                        <hr className="divider" />
                     </div>
                 )
         }
@@ -58,7 +53,7 @@ export function BoardChangeBgc({ setTitle }) {
                 await updateBoard(boardToSave, user, txt)
                 navigate(`/board/${boardToSave._id}`)
             } catch (err) {
-                console.log('Could not change board bgc')
+                console.error('Could not change board bgc', err)
                 throw err
             }
         }

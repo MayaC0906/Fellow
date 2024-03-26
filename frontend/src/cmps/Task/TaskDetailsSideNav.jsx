@@ -1,15 +1,21 @@
-import { additionTaskEdiSvg, checkList, taskSvg, workspaceSvg } from "../Svgs";
-import { DynamicTaskActions } from "../Dynamic/DynamicTaskActions";
 import { useEffect, useRef, useState } from "react";
+import { DynamicTaskActions } from "../Dynamic/DynamicTaskActions";
+import { additionTaskEdiSvg, checkList, taskSvg, workspaceSvg } from "../Svgs";
 
 export function TaskDetailsSideNav({ editName, setEditName, onSaveTask, task, isQuickEdit, onActionDeleteTask, rtl, ev, setEv }) {
+
     const [modalPos, setModalPos] = useState({ top: '', left: '' })
+
     const memberBtnRef = useRef(null)
     const labelBtnRef = useRef(null)
     const checklistBtnRef = useRef(null)
     const dateBtnRef = useRef(null)
     const attachmentBtnRef = useRef(null)
     const coverBtnRef = useRef(null)
+
+    useEffect(() => {
+        updateModalPos(memberBtnRef, editName)
+    }, [ev])
 
     function onOpenEditTask(name) {
         setEv(null)
@@ -20,10 +26,6 @@ export function TaskDetailsSideNav({ editName, setEditName, onSaveTask, task, is
             setEditName(name)
         }
     }
-
-    useEffect(() => {
-        updateModalPos(memberBtnRef, editName)
-    }, [ev])
 
     function onCloseEditTask() {
         setEditName('')

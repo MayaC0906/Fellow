@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
 import { NavLink } from "react-router-dom/dist";
 import { loadUsers, logout } from "../store/actions/user.actions";
 

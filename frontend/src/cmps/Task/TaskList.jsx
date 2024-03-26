@@ -1,20 +1,14 @@
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { boardService } from "../../services/board.service.local";
 import { TaskPreview } from "./TaskPreview";
-import { useParams } from "react-router";
-import { Link } from "react-router-dom";
 
-export function TaskList({ handleDrag, tasks, labels, members, isLabelsShown, setIsLabelsShown, groupId, onScrollDown, setContainerClass }) {
-    const { boardId } = useParams();
+
+export function TaskList({ tasks, labels, members, isLabelsShown, setIsLabelsShown, groupId, onScrollDown, setContainerClass }) {
 
     if (!tasks) return <div>Loading...</div>;
 
-
-
     return (
-        // <DragDropContext handleDrag={handleDrag}>
         <>
-
             <Droppable droppableId={groupId}
                 key="tasks"
                 type="tasks"
@@ -63,7 +57,6 @@ export function TaskList({ handleDrag, tasks, labels, members, isLabelsShown, se
                     </section>
                 )}
             </Droppable>
-            {/* </DragDropContext> */}
         </>
     );
 }

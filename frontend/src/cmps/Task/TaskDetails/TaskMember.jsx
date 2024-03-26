@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
-import { taskSvg } from "../../Svgs";
 import { useSelector } from "react-redux";
 import { TaskMemberDetail } from "./TaskMemberDetail";
+import { taskSvg } from "../../Svgs";
 
 
 export function TaskMember({ taskMembersId, setEditName, editName, onSaveTask, task, setEv, isPhoneDisplay }) {
+
     const board = useSelector(storeState => storeState.boardModule.board)
     const user = useSelector(storeState => storeState.userModule.user)
+
     const [isMemberDetailOpen, setMemberDetailOpen] = useState(false)
     const [members, setMembers] = useState([])
     const [member, setMember] = useState([])
@@ -41,7 +43,7 @@ export function TaskMember({ taskMembersId, setEditName, editName, onSaveTask, t
             onSaveTask(newTask, txt)
             setMemberDetailOpen(false)
         } catch (err) {
-            console.log('Cannot remove member', err)
+            console.error('Cannot remove member', err)
             throw err
         }
     }
@@ -59,18 +61,13 @@ export function TaskMember({ taskMembersId, setEditName, editName, onSaveTask, t
                     setMemberDetailOpen={setMemberDetailOpen}
                     removeMemberFromTask={removeMemberFromTask}
                 />}
-                {(isPhoneDisplay.isActionsShown || !isPhoneDisplay.isDisplay ) && <button onClick={(event)=>{
+                {(isPhoneDisplay.isActionsShown || !isPhoneDisplay.isDisplay) && <button onClick={(event) => {
                     setEv(event)
                     toggleMemberDisplay()
                 }}
                     className="members-btn clean-btn flex align-center justify-center" >
                     {taskSvg.add}
                 </button>}
-
-                {/* <button onClick={toggleMemberDisplay}
-                    className="btn-member" >
-                    {taskSvg.add}
-                </button> */}
             </div>
         </section>)
     )

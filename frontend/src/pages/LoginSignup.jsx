@@ -1,9 +1,12 @@
 import { useState } from 'react'
-import { ImgUploader } from '../cmps/Dynamic/Attachment/ImgUploader'
-import { login, signup } from '../store/actions/user.actions'
 import { useNavigate } from 'react-router'
 
+import { login, signup } from '../store/actions/user.actions'
+
+import { ImgUploader } from '../cmps/Dynamic/Attachment/ImgUploader'
+
 export function LoginSignup() {
+
     const [credentials, setCredentials] = useState({ username: '', password: '', fullname: '' })
     const [isSignup, setIsSignup] = useState(false)
     const navigate = useNavigate()
@@ -19,7 +22,7 @@ export function LoginSignup() {
         setCredentials({ ...credentials, [field]: value })
     }
 
-    async function onConnect() {
+    async function onConnect(event) {
         event.preventDefault()
         try {
             if (!isSignup) {
@@ -39,7 +42,7 @@ export function LoginSignup() {
 
             }
         } catch (err) {
-            console.log('Could not set user', err)
+            console.error('Could not set user', err)
         }
     }
 
@@ -48,7 +51,7 @@ export function LoginSignup() {
             await login({ username: 'Guest', password: "1234" })
             navigate('/workspace')
         } catch (err) {
-            console.log('Could not connect as a guest', err);
+            console.error('Could not connect as a guest', err);
         }
     }
 
@@ -71,7 +74,6 @@ export function LoginSignup() {
                     <input
                         type="text"
                         name="username"
-                        // value={username}
                         placeholder="Enter username"
                         onChange={handleChange}
                         required
@@ -80,7 +82,6 @@ export function LoginSignup() {
                     <input
                         type="password"
                         name="password"
-                        // value={password}
                         placeholder="Enter password"
                         onChange={handleChange}
                         required
@@ -91,7 +92,6 @@ export function LoginSignup() {
                                 <input
                                     type="text"
                                     name="fullname"
-                                    // value={credentials.fullname}
                                     placeholder="Enter Fullname"
                                     onChange={handleChange}
                                     required
@@ -102,7 +102,6 @@ export function LoginSignup() {
                     <button>{isSignup ? 'Sign up' : 'Continue'}</button>
                 </form>
                 <div className='toggle-login-signup flex'>
-                    {/* <hr /> */}
                     <button className='clean-btn' onClick={toggleSignup}>{!isSignup ? 'Dont have a user? signup' : 'Have a user? login'}</button>
                     <button className='clean-btn guest' onClick={onConnectAsAUser}>Dont want to {isSignup ? 'signUp' : 'Login'}? connect as a guest</button>
                 </div>

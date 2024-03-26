@@ -2,7 +2,7 @@
     background: white;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Droid Sans,Helvetica Neue,sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 .notification-count {
@@ -13,6 +13,7 @@
     border-radius: 12px;
     font-size: 0.85em;
 }
+
 .board-menu-notification-content {
     width: 385px;
 }
@@ -29,22 +30,22 @@
 
 .notification-list {
     max-height: 888px;
-    
+
 }
 
 .notification-indicator {
     position: absolute;
-    top: 7px; 
-    right: 44px; 
+    top: 7px;
+    right: 44px;
     width: 16px;
     height: 16px;
     border-radius: 50%;
     background-color: red;
     position: absolute;
     color: white;
-    font-size: 12px;  
+    font-size: 12px;
     text-align: center;
-    line-height: 20px;  
+    line-height: 20px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -54,21 +55,19 @@
 .bottom-notifications-area {
     display: flex;
     flex-direction: column;
-    /* gap: 20px; */
     padding: 10px;
     background: rgba(211, 211, 211, 0.351);
     gap: 10px;
 }
+
 .notification-group {
-    // background-color: #f4f5f7;
     border-radius: 8px;
     margin-bottom: 18px;
     overflow: hidden;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
-    // padding: 14px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     display: flex;
     flex-direction: column;
-    box-shadow:  0 1px 1px rgba(9, 45, 66, 0.25), 0 0 0 1px rgba(9, 45, 66, 0.08);
+    box-shadow: 0 1px 1px rgba(9, 45, 66, 0.25), 0 0 0 1px rgba(9, 45, 66, 0.08);
 }
 
 .notification-group-header {
@@ -87,25 +86,27 @@
     border-radius: 7px;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
-    
+
 }
+
 .task-title-con {
     display: block;
     margin: 8px 8px 0 8px;
     width: calc(100% - 16px);
     text-decoration: none;
-    background-color:  #ffffff;
+    background-color: #ffffff;
     border-radius: 8px;
     box-sizing: border-box;
-    box-shadow:  0px 1px 1px #091e4240, 0px 0px 1px #091e424f;
+    box-shadow: 0px 1px 1px #091e4240, 0px 0px 1px #091e424f;
     display: block;
     position: relative;
     overflow: hidden;
     width: 95%;
     padding: 4px 0 8px 4px;
 }
+
 .notification-group-header .task-title {
-    color:  #172b4d;
+    color: #172b4d;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Noto Sans', 'Ubuntu', 'Droid Sans', 'Helvetica Neue', sans-serif;
     font-size: 14px;
     font-weight: normal;
@@ -116,9 +117,8 @@
 }
 
 .notification-group-header .board-group-info {
-    // margin-top: 8px;
-   font-size: 12px;
-   padding: 8px;
+    font-size: 12px;
+    padding: 8px;
     display: flex;
     gap: 3px;
     width: 100%;
@@ -136,26 +136,17 @@
 .notification-item {
     display: flex;
     align-items: flex-start;
-    // padding: 10px;
-    // border-bottom: 1px solid #ccc;
-    
     gap: 8px;
+
     img {
-      
-            // flex-shrink: 0;
-            width: 32px;
-            height: 32px;
-            
-            // margin-right: 10px;
-        
+        width: 32px;
+        height: 32px;
     }
 }
 
-
-
 .notification-content {
     flex-grow: 1;
-    min-width: 0; 
+    min-width: 0;
     font-size: 15px;
 }
 
@@ -178,6 +169,6 @@
 }
 
 .close-btn:hover {
-    background-color: rgba(9,30,66,.08);
+    background-color: rgba(9, 30, 66, .08);
     border-radius: 50%;
 }

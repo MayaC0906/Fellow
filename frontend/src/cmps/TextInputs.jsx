@@ -10,7 +10,6 @@ export function TextInputs({ toggle, setToggle, handleSubmit, from }) {
     function onSubmit(ev) {
         ev.preventDefault()
         console.log(txt);
-        // handleSubmit(txt)
         setTxt('')
     }
 
@@ -21,10 +20,10 @@ export function TextInputs({ toggle, setToggle, handleSubmit, from }) {
                 <div>
                     <form onSubmit={(event) => onSubmit(event)}>
                         <textarea value={txt}
-                         type="text"
-                         name="title"
-                         onChange={handleChange}
-                         ></textarea>
+                            type="text"
+                            name="title"
+                            onChange={handleChange}
+                        ></textarea>
                         <button type="submit">Add {from}</button>
                         <button onClick={() => setToggle(!toggle)}>X</button>
                     </form>

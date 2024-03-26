@@ -1,9 +1,12 @@
 import { Fragment, useState } from 'react'
-import { additionTaskSvg, taskSvg } from '../../Svgs'
-import { utilService } from '../../../services/util.service.js'
 import { useSelector } from 'react-redux'
 
+import { utilService } from '../../../services/util.service.js'
+
+import { additionTaskSvg, taskSvg } from '../../Svgs'
+
 export function AttachmentEdit({ pos, editName, onCloseEditTask, task, onSaveTask }) {
+
     const board = useSelector(storeState => storeState.boardModule.board)
     const [uploadedUrl, setUploadedUrl] = useState('')
     const [isUploading, setIsUploading] = useState('')
@@ -29,7 +32,7 @@ export function AttachmentEdit({ pos, editName, onCloseEditTask, task, onSaveTas
             const { url } = await res.json()
             setUploadedUrl(url)
         } catch (err) {
-            console.error(err)
+            console.error('Failed to upload', err)
         }
     }
 

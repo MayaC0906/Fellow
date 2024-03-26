@@ -1,26 +1,26 @@
-import { NavLink, useNavigate, useParams } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { appHeaderSvg, sideBar, taskSvg, workspaceSvg } from './Svgs'
 import { useEffect, useState, useRef } from 'react'
-import { AddBoard } from './Board/AddBoard'
-import { loadUsers, login } from '../store/actions/user.actions'
-import { UserDetailsDisplay } from './UserDetailsDisplay'
-import { updateBoards } from '../store/actions/board.actions'
-import { UserNotifications } from './UserNotifications'
 import { socketService } from '../services/socket.service'
+import { updateBoards } from '../store/actions/board.actions'
+import { AddBoard } from './Board/AddBoard'
+import { UserDetailsDisplay } from './UserDetailsDisplay'
+import { UserNotifications } from './UserNotifications'
+import { appHeaderSvg, sideBar, workspaceSvg } from './Svgs'
 
 
 export function AppHeader() {
     const user = useSelector(storeState => storeState.userModule.user)
-    const [isUserDetailOpen, setIsUserDetailOpen] = useState(false)
-    const [brightClass, setBrightClass] = useState(true)
     const board = useSelector((storeState) => storeState.boardModule.board)
-    console.log(board, 'board style');
     const boardStyle = useSelector((storeState) => storeState.boardModule.board?.style) || null
     const boards = useSelector((storeState) => storeState.boardModule.boards)
-    const [modalState, setModalState] = useState({ isOpen: false, modal: '' })
+
     const inputRef = useRef(null)
     const navigate = (useNavigate())
+
+    const [isUserDetailOpen, setIsUserDetailOpen] = useState(false)
+    const [brightClass, setBrightClass] = useState(true)
+    const [modalState, setModalState] = useState({ isOpen: false, modal: '' })
     const [searchInput, setSearchInput] = useState(null)
     const [filterdBoards, setFilterdBoards] = useState([...boards])
     const [starredBoards, setStarredBoards] = useState([])
@@ -28,10 +28,11 @@ export function AppHeader() {
     const [isPhoneDisplay, setIsPhoneDisplay] = useState({ isDisplay: false, isSearch: true })
     const [extandedWidthSearch, setExtandedWidthSearch] = useState('160px')
     const [isNotificationsOpen, setNotificationsOpen] = useState(false)
-    let [notifications, setNotifications] = useState([])
-    let [newActivity, setNewActivity] = useState(null)
-    const [hasUnseenActivities, setHasUnseenActivities] = useState(false)
+    const [notifications, setNotifications] = useState([])
+    const [newActivity, setNewActivity] = useState(null)
     const [unseenActivityCount, setUnseenActivityCount] = useState(0)
+    const [hasUnseenActivities, setHasUnseenActivities] = useState(false)
+
     const LOCAL_STORAGE_ACTIVITIES_KEY = 'activitiesData';
 
     useEffect(() => {
@@ -72,49 +73,6 @@ export function AppHeader() {
         }
     }, [user?._id])
 
-    const handleNotificationsOpen = () => {
-        setNotificationsOpen(!isNotificationsOpen);
-        if (!isNotificationsOpen) {
-            const activitiesData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_ACTIVITIES_KEY)) || {};
-            notifications.forEach(activity => {
-                activitiesData[`seenActivity_${activity.id}`] = true;
-            });
-            activitiesData.unseenActivityCount = 0;
-            localStorage.setItem(LOCAL_STORAGE_ACTIVITIES_KEY, JSON.stringify(activitiesData));
-            setUnseenActivityCount(0);
-        }
-    };
-
-    useEffect(() => {
-        window.addEventListener('resize', handleResize)
-        handleResize()
-
-        return () => {
-            window.removeEventListener('resize', handleResize)
-        }
-    }, [])
-
-
-
-    function handleResize() {
-        const screenWidth = window.innerWidth
-        if (screenWidth > 1320) {
-            setIsPhoneDisplay({ isDisplay: false, isSearch: true })
-            setExtandedWidthSearch(780)
-        }
-        else if (screenWidth >= 780 || screenWidth <= 1320) {
-            setIsPhoneDisplay({ isDisplay: false, isSearch: true })
-            setExtandedWidthSearch(screenWidth - 600)
-        }
-        if (screenWidth <= 780 && screenWidth > 530) {
-            setIsPhoneDisplay({ isDisplay: true, isSearch: true })
-            setExtandedWidthSearch(screenWidth - 270)
-        }
-        if (screenWidth <= 530) setIsPhoneDisplay({ isDisplay: true, isSearch: false })
-
-    }
-
-
     useEffect(() => {
         if (boardStyle) {
             setBrightClass(boardStyle?.isBright)
@@ -136,10 +94,48 @@ export function AppHeader() {
         setStarredBoards(newStarredBoards)
     }, [boards])
 
+    useEffect(() => {
+        window.addEventListener('resize', handleResize)
+        handleResize()
+
+        return () => {
+            window.removeEventListener('resize', handleResize)
+        }
+    }, [])
+
+    function handleResize() {
+        const screenWidth = window.innerWidth
+        if (screenWidth > 1320) {
+            setIsPhoneDisplay({ isDisplay: false, isSearch: true })
+            setExtandedWidthSearch(780)
+        }
+        else if (screenWidth >= 780 || screenWidth <= 1320) {
+            setIsPhoneDisplay({ isDisplay: false, isSearch: true })
+            setExtandedWidthSearch(screenWidth - 600)
+        }
+        if (screenWidth <= 780 && screenWidth > 530) {
+            setIsPhoneDisplay({ isDisplay: true, isSearch: true })
+            setExtandedWidthSearch(screenWidth - 270)
+        }
+        if (screenWidth <= 530) setIsPhoneDisplay({ isDisplay: true, isSearch: false })
+
+    }
+
+    const handleNotificationsOpen = () => {
+        setNotificationsOpen(!isNotificationsOpen);
+        if (!isNotificationsOpen) {
+            const activitiesData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_ACTIVITIES_KEY)) || {};
+            notifications.forEach(activity => {
+                activitiesData[`seenActivity_${activity.id}`] = true;
+            });
+            activitiesData.unseenActivityCount = 0;
+            localStorage.setItem(LOCAL_STORAGE_ACTIVITIES_KEY, JSON.stringify(activitiesData));
+            setUnseenActivityCount(0);
+        }
+    };
 
     function onCreateBoard() {
         setModalState(prevState => ({ ...prevState, isOpen: true, modal: 'create' }))
-
     }
 
     function onOpenHeaderSearch() {
@@ -167,7 +163,7 @@ export function AppHeader() {
         try {
             await updateBoards(boards, boardToChange, user, 'txt')
         } catch (err) {
-            console.log('could not star the board', err)
+            console.error('could not star the board', err)
         }
     }
 
@@ -219,7 +215,6 @@ export function AppHeader() {
                     </section>
                     <button onClick={onCreateBoard}
                         className={'create-btn' + (brightClass ? ' dark-btn' : ' light-btn')}
-                    // onBlur={() => (setModalState(prevState => ({ ...prevState, isOpen: false, modal: '' })))}
                     >{isPhoneDisplay.isDisplay ? sideBar.plus : 'Create board'}
                         {modalState.isOpen && modalState.modal === 'create' &&
                             <div className='add-board-container-header'

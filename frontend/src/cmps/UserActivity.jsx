@@ -1,19 +1,15 @@
-import { useEffect, useState, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { utilService } from '../services/util.service.js';
-// import { boardMenu } from '../../Svgs';
-import { boardMenu } from './Svgs.jsx';
 import ReactDOM from 'react-dom';
+import { useSelector } from 'react-redux';
+import { utilService } from '../services/util.service.js';
+import { boardMenu } from './Svgs.jsx';
 import { checkList } from './Svgs.jsx';
+
 export function UserActivity({ user, setUserActivityModal, isOpen }) {
-    // console.log('userId from activity', user);
 
     const board = useSelector((storeState) => storeState.boardModule.board);
-    const { activities } = board;
-    // console.log(activities);
 
+    const { activities } = board;
     const userActivities = activities.filter(activity => activity.byMember._id === user._id);
-    // console.log('user activity', userActivities);
 
 
     return ReactDOM.createPortal(
@@ -31,8 +27,6 @@ export function UserActivity({ user, setUserActivityModal, isOpen }) {
                         <div className='activity' key={activity.id} style={{ display: '', alignItems: 'center', marginBottom: '10px' }}>
                             <span>
                                 <img
-                                    // ref={(el) => imgRefs.current[activity.id] = el}
-                                    // onClick={() => handleImgClick(activity)}
                                     src={activity.byMember.imgUrl}
                                     alt={activity.byMember.fullname}
                                     style={{ width: '32px', borderRadius: '20px', marginRight: '10px' }}

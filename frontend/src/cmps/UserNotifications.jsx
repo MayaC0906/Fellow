@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { utilService } from "../services/util.service";
 import { checkList } from "./Svgs";
-export function UserNotifications({ setNewActivity, newActivity, user, isNotificationsOpen, setNotificationsOpen, notifications }) {
+
+export function UserNotifications({ newActivity, isNotificationsOpen, setNotificationsOpen, notifications }) {
+
     const [groupedByTask, setGroupedByTask] = useState({})
 
     useEffect(() => {
@@ -34,6 +36,7 @@ export function UserNotifications({ setNewActivity, newActivity, user, isNotific
     }, [notifications]);
 
     useEffect(() => {
+
         if (!newActivity) return
 
         setGroupedByTask(prevGroupedByTask => {
@@ -73,8 +76,6 @@ export function UserNotifications({ setNewActivity, newActivity, user, isNotific
 
     }, [newActivity])
 
-    // const notificationCount = Object.values(groupedByTask).reduce((acc, group) => acc + group.activities.length, 0)
-
     return (
         <div style={{ right: '0', width: '420px', position: 'absolute', zIndex: '45', height: '888px', overflow: 'auto' }} className={`board-menu notifications-modal ${isNotificationsOpen ? 'translate' : ''}`}>
             <div className="board-menu-container notifications">
@@ -82,7 +83,6 @@ export function UserNotifications({ setNewActivity, newActivity, user, isNotific
                     <header className="board-menu-header">
                         <div>
                             <div className="notification-bell">
-                                {/* <span className="notification-count">{notificationCount}</span> */}
                             </div>
                             <span style={{ marginTop: '14px', fontSize: '16px' }}>Notifications</span>
                             <button style={{ right: '8px' }} className="close-btn clean-btn" onClick={() => setNotificationsOpen(!isNotificationsOpen)}>{checkList.x}</button>

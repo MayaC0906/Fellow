@@ -1,10 +1,13 @@
-import { useSelector } from "react-redux"
-import { loaderSvg, workspaceSvg } from "../cmps/Svgs"
-import { updateBoards } from "../store/actions/board.actions"
 import { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
 import { NavLink } from "react-router-dom"
 
+import { updateBoards } from "../store/actions/board.actions"
+
+import { loaderSvg, workspaceSvg } from "../cmps/Svgs"
+
 export function SearchBoard() {
+
     const boards = useSelector((storeState) => storeState.boardModule.boards)
     const user = useSelector((storeState) => storeState.boardModule.user)
     const [filteredBoards, setFilterdBoards] = useState(boards)
@@ -20,7 +23,6 @@ export function SearchBoard() {
         }
     }, [searchInput])
 
-
     async function onStarredBoard(event, boardToChange) {
         event.preventDefault()
         event.stopPropagation()
@@ -31,7 +33,8 @@ export function SearchBoard() {
             console.log('could not star the board', err)
         }
     }
-if (!boards.length) return <div className="loader board"><div>{loaderSvg.loader}</div></div>
+
+    if (!boards.length) return <div className="loader board"><div>{loaderSvg.loader}</div></div>
     return <section className="search-board-cmp">
         <section className="search-board">
             <h3>Search</h3>
@@ -55,7 +58,7 @@ if (!boards.length) return <div className="loader board"><div>{loaderSvg.loader}
                             }
                             {
                                 !board.isStarred && <span onClick={(event) => { onStarredBoard(event, board) }}
-                                 className="empty-star-icon unStarred">{workspaceSvg.star}</span>
+                                    className="empty-star-icon unStarred">{workspaceSvg.star}</span>
                             }
                         </li>
                     </NavLink>

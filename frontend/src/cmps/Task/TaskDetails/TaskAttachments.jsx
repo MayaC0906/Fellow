@@ -3,6 +3,7 @@ import { utilService } from "../../../services/util.service"
 import { taskSvg } from "../../Svgs";
 
 export function TaskAttachments({ task, setEditName, onSaveTask }) {
+
     const board = useSelector(storeState => storeState.boardModule.board)
 
     async function onRemoveAttachment(attachmentId, url) {
@@ -18,7 +19,7 @@ export function TaskAttachments({ task, setEditName, onSaveTask }) {
             onSaveTask(newTask, txt)
 
         } catch (err) {
-            console.log('Cannot remove task attachment', err)
+            console.error('Cannot remove task attachment', err)
         }
     }
 
@@ -28,14 +29,14 @@ export function TaskAttachments({ task, setEditName, onSaveTask }) {
                 const newTask = { ...task, cover: { ...task.cover, img: '', backgroundColor: '', createdAt: null } }
                 onSaveTask(newTask)
             } catch (err) {
-                console.log('Cannot remove cover', err)
+                console.error('Cannot remove cover', err)
             }
         } else {
             try {
                 const newTask = { ...task, cover: { ...task.cover, img: url, backgroundColor: '', createdAt: Date.now() } }
                 onSaveTask(newTask)
             } catch (err) {
-                console.log('Cannot add cover', err)
+                console.error('Cannot add cover', err)
             }
         }
     }

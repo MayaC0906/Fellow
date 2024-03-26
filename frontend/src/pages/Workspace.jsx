@@ -1,28 +1,31 @@
 import { useEffect, useRef, useState } from "react"
-import { loadBoards, updateBoard, updateBoards } from "../store/actions/board.actions"
 import { useDispatch, useSelector } from "react-redux"
+
+import { loadBoards, updateBoards } from "../store/actions/board.actions"
+
 import { loaderSvg, workspaceSvg } from "../cmps/Svgs"
 import { AddBoard } from "../cmps/Board/AddBoard"
 import { BoardList } from "../cmps/Board/BoardList"
 
 export function Workspace() {
+
     const boards = useSelector(storeState => storeState.boardModule.boards)
     const user = useSelector(storeState => storeState.userModule.user)
-    const [isBoardAdded, setIsBoardAdded] = useState(false)
-    const [addBoardPosition, setAddBoardPosition] = useState({ top: '', left: '' })
+
     const createBoardRef = useRef()
-    const [isLoading, setIsLoading] = useState(true);
     const dispatch = useDispatch()
 
+    const [isBoardAdded, setIsBoardAdded] = useState(false)
+    const [addBoardPosition, setAddBoardPosition] = useState({ top: '', left: '' })
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        dispatch({type: 'SET_BOARD', board:{} })
+        dispatch({ type: 'SET_BOARD', board: {} })
         onLoadBoars()
     }, [])
 
     async function onLoadBoars() {
         await loadBoards(user)
-        console.log('boards loaded');
         setIsLoading(false)
     }
 
@@ -40,7 +43,7 @@ export function Workspace() {
             await updateBoards(boards, boardToChange, user, 'starrd')
             getStarredBoards()
         } catch (err) {
-            console.log('could not star the board', err);
+            console.error('could not star the board', err);
         }
     }
 
@@ -51,7 +54,6 @@ export function Workspace() {
 
     function getBounds() {
         const addBoarddRect = createBoardRef.current.getBoundingClientRect()
-        console.log(addBoarddRect);
 
         //DO NOT DELETE!!!!
 
@@ -68,36 +70,32 @@ export function Workspace() {
         //         left: addBoarddRect.left + 200
         //     })
         // }
+
         if (addBoarddRect.y > 540) {
-            console.log(3);
             setAddBoardPosition({
                 top: addBoarddRect.top - 350,
                 left: addBoarddRect.left + 200
             })
 
             if (addBoarddRect.y > 540 && addBoarddRect.x < 530) {
-                console.log(4);
                 setAddBoardPosition({
                     top: addBoarddRect.top - 350,
                     left: addBoarddRect.left - 317
                 })
             }
             if (addBoarddRect.y > 540 && addBoarddRect.x < 270) {
-                console.log(5);
                 setAddBoardPosition({
                     top: addBoarddRect.top - 350,
                     left: addBoarddRect.left
                 })
             }
         } else {
-            console.log('else');
             setAddBoardPosition({
                 top: addBoarddRect.top,
                 left: addBoarddRect.left + 205
             })
 
             if (addBoarddRect.x < 560) {
-                console.log(2);
                 setAddBoardPosition({
                     top: addBoarddRect.top,
                     left: addBoarddRect.left - 317
@@ -105,7 +103,6 @@ export function Workspace() {
             }
 
         }
-        console.log(addBoardPosition);
     }
 
     if (isLoading) return <div className="loader board"><div>{loaderSvg.loader}</div></div>

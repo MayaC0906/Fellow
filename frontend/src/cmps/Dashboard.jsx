@@ -1,6 +1,6 @@
+import React from 'react';
 import { useSelector } from "react-redux";
 import { utilService } from "../services/util.service";
-import React from 'react';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -148,7 +148,7 @@ export function Dashboard({ setDashBoardOpen }) {
                         <div className="tasks-status">
                             <h4 className="completed">Completed tasks</h4>
                             <span>{completedTasks} ({roundNumber((completedTasks / (leftTasks + completedTasks) * 100))} %)
-                               </span>
+                            </span>
                             <h4>Tasks left</h4>
                             <span>{leftTasks}</span>
                         </div>
@@ -160,7 +160,6 @@ export function Dashboard({ setDashBoardOpen }) {
                 </section>
 
                 <section className="tasks-per-member">
-                    {/* <h3>Tasks per member</h3> */}
                     <table>
                         <thead>
                             <tr>

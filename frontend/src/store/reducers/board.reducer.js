@@ -7,10 +7,6 @@ export const UPDATE_BOARD = 'UPDATE_BOARD'
 export const UNDO_REMOVE_BOARD = 'UNDO_REMOVE_BOARD'
 export const UNDO_UPDATE_BOARD = 'UNDO_UPDATE_BOARD'
 
-// export const STARRED_BOARD = "STARRED_BOARD"
-// export const UNSTARRED_BOARD = "UNSTARRED_BOARD"
-
-
 const initialState = {
     boards: [],
     board: {},
@@ -22,14 +18,11 @@ const initialState = {
 export function boardReducer(state = initialState, action) {
     let newState = state
     let boards
-    let starredBoards
     let lastBoard
-    let board
     let currBoard
     switch (action.type) {
         case SET_BOARDS:
             newState = { ...state, boards: action.boards }
-            // console.log('newstate:', newState.boards);
             break
         case REMOVE_BOARD:
             const lastRemovedBoard = state.boards.find(board => board._id === action.boardId)
@@ -47,20 +40,10 @@ export function boardReducer(state = initialState, action) {
             ({ lastBoard } = state)
             currBoard = lastBoard
             return { ...state, currBoard, lastBoard: null }
-        // case UPDATE_BOARD:
-        //     newState = { ...state, board: action.board }
-        //     break;
         case UNDO_REMOVE_BOARD:
             if (state.lastRemovedBoard) {
                 newState = { ...state, boards: [...state.boards, state.lastRemovedBoard], lastRemovedBoard: null }
             }
-        // case STARRED_BOARD:
-        //     newState = { ...state, starredBoards: [...state.starredBoards, action.board] }
-        //     break
-        // case UNSTARRED_BOARD:
-        //     const updatedStarredBoards = state.starredBoards.filter(starredBoard => starredBoard._id !== action.board._id)
-        //     newState = { ...state, starredBoards: updatedStarredBoards }
-        //     break
         case SET_BOARD:
             newState = { ...state, board: action.board }
             break

@@ -1,6 +1,10 @@
 import * as React from 'react';
+import { useState } from 'react';
+import { useSelector } from 'react-redux'
+
+import { boardService } from '../../../services/board.service.local';
+
 import Box from '@mui/joy/Box';
-import Button from '@mui/joy/Button';
 import FormControl from '@mui/joy/FormControl';
 import Textarea from '@mui/joy/Textarea';
 import IconButton from '@mui/joy/IconButton';
@@ -11,66 +15,55 @@ import FormatBold from '@mui/icons-material/FormatBold';
 import FormatItalic from '@mui/icons-material/FormatItalic';
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
 import Check from '@mui/icons-material/Check';
-import { useState } from 'react';
-import { taskSvg } from '../../Svgs';
-import { useSelector } from 'react-redux'
 
-import { boardService } from '../../../services/board.service.local';
-export function TaskComments({onSaveTask ,task, groupId}) {
+export function TaskComments({ onSaveTask, task, groupId }) {
+
     const [isDescExpand, setIsDescExpand] = useState(false)
     const [txt, setTxt] = useState('')
     const [italic, setItalic] = useState(false);
     const [fontWeight, setFontWeight] = useState('normal');
     const [anchorEl, setAnchorEl] = useState(null);
+
     const user = useSelector((storeState) => storeState.userModule.user)
 
     function onToggleDescription() {
         setIsDescExpand(!isDescExpand)
     }
 
-
     async function onSaveComment(ev) {
         ev.preventDefault()
         const newTask = { ...task }
-        const comment = boardService.getEmptyComment(user,txt, groupId, newTask.id)
+        const comment = boardService.getEmptyComment(user, txt, groupId, newTask.id)
         newTask.comments.push(comment)
         try {
             await onSaveTask(newTask)
             onToggleDescription()
-            console.log('Task comment added successfully')
         } catch (err) {
-            console.log('Cannot save comment', err);
+            console.error('Cannot save comment', err);
         }
     }
 
-   
-
     return (
         <section className="task-descriptoin">
-                <img 
-                    // ref={(el) => imgRefs.current[activity.id] = el}
-                    // onClick={() => handleImgClick(activity)}
-                    src={user.imgUrl}
-                    // alt={activity.byMember.fullname}
-                    style={{ 
+            <img
+                src={user.imgUrl}
+                style={{
                     height: '32px',
-                    width:'32px',
+                    width: '32px',
                     borderRadius: '50%',
                     marginLeft: '12px',
-                    marginTop:'3px',
-                    position:'absolute'
-                    }}             
-                />
-                <div onClick={onToggleDescription}
-                    className={'write-comment ' + (isDescExpand ? 'hide ' : '' + (isDescExpand ? '' : 'add-description'))}>
-                    {isDescExpand || 'Write a comment...'}
-                    {/* <style</style> */}
-                </div>
+                    marginTop: '3px',
+                    position: 'absolute'
+                }}
+            />
+            <div onClick={onToggleDescription}
+                className={'write-comment ' + (isDescExpand ? 'hide ' : '' + (isDescExpand ? '' : 'add-description'))}>
+                {isDescExpand || 'Write a comment...'}
+            </div>
 
             {isDescExpand && < FormControl className="description-input" sx={{ width: '90%' }}>
                 <Textarea
                     onChange={(event) => { setTxt(event.target.value) }}
-                    // defaultValue={description}
                     minRows={2}
                     endDecorator={
                         <Box

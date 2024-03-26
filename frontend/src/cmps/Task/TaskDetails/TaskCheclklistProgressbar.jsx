@@ -1,7 +1,7 @@
 import * as React from 'react';
+
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 
 export function TaskCheclklistProgressbar({ props }) {
@@ -17,10 +17,6 @@ export function TaskCheclklistProgressbar({ props }) {
       backgroundColor: theme.palette.mode === 'light' ? '#1a90ff' : '#308fe8',
     },
   }));
-
-  // Inspired by the former Facebook spinners.
-
-
 
   return (
     <Box sx={{ flexGrow: 1 }}>

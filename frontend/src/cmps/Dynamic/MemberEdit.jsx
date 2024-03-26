@@ -1,12 +1,16 @@
-import { Textarea } from '@mui/joy';
-import { additionTaskSvg, taskSvg } from '../Svgs'
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import { Textarea } from '@mui/joy';
+import { additionTaskSvg, taskSvg } from '../Svgs'
+
 export function MemberEdit({ pos, editName, onCloseEditTask, onSaveTask, task }) {
+
     const board = useSelector(storeState => storeState.boardModule.board)
-    const membersToDisplay = board.members.filter(boardMembers => boardMembers.username !== 'Guest')
     const user = useSelector(storeState => storeState.userModule.user)
+
+    const membersToDisplay = board.members.filter(boardMembers => boardMembers.username !== 'Guest')
+
     const [filterMembers, setFilterdMembers] = useState(membersToDisplay)
     const [connectMembers, setConnectMembers] = useState(task.memberIds)
 
@@ -36,7 +40,7 @@ export function MemberEdit({ pos, editName, onCloseEditTask, onSaveTask, task })
             onSaveTask(newTask, txt)
             setConnectMembers(newTask.memberIds)
         } catch (err) {
-            console.log('Could not save date =>', err)
+            console.error('Could not save date =>', err)
         }
     }
 

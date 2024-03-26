@@ -50,19 +50,15 @@ async function getById(boardId) {
 }
 
 async function remove(boardId) {
-    console.log('from service:', boardId);
-    // throw new Error('Nope')
     await storageService.remove(STORAGE_KEY, boardId)
 }
 
 async function save(board, user, txt) {
-    console.log('user:', user)
     var savedBoard
     if (board._id) {
         addActivity(board, user, txt)
         savedBoard = await storageService.put(STORAGE_KEY, board)
     } else {
-        // Later, owner is set by the backend
         board.createdBy = userService.getLoggedinUser()
         addActivity(board, user, txt)
 
@@ -84,16 +80,14 @@ async function getGroupById(groupId, boardId) {
         const group = board.groups.find(group => group.id === groupId)
         return group
     } catch (err) {
-        console.log('Failed to get group', err)
+        console.error('Failed to get group', err)
         throw err
     }
 }
 
 async function saveGroup(group, boardId, user, txt, task) {
-    console.log('boardId:', boardId)
     try {
         let board = await getById(boardId)
-        console.log('board:', board)
         if (group.id) {
             const idx = board.groups.findIndex((currGroup) => currGroup.id === group.id)
             board.groups.splice(idx, 1, group)
@@ -106,7 +100,7 @@ async function saveGroup(group, boardId, user, txt, task) {
 
         return save(board)
     } catch (err) {
-        console.log('couldnt save group', err)
+        console.error('couldnt save group', err)
         throw err
     }
 }
@@ -121,7 +115,7 @@ async function removeGroup(group, boardId, user, txt) {
 
         return save(board)
     } catch (err) {
-        console.log('Failed to remove group', err)
+        console.error('Failed to remove group', err)
         throw err
     }
 }
@@ -216,13 +210,7 @@ function getEmptyBoard() {
             },
         ],
         members: [
-            userService.getLoggedinUser(),
-            // {
-            //     "_id": 'guest',
-            //     "fullname": 'Guest',
-            //     "imgUrl": "https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg",
-            //     "username": 'Guest'
-            // }
+            userService.getLoggedinUser()
         ],
         groups: [
             { id: utilService.makeId(), title: '', tasks: [], style: {} }
@@ -325,13 +313,7 @@ const board = [
                 "fullname": "Sahar Machpud",
                 "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
                 "username": "Sahar"
-            },
-            // {
-            //     "_id": 'guest',
-            //     "fullname": 'Guest',
-            //     "imgUrl": "https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg",
-            //     "username": 'Guest'
-            // }
+            }
         ],
         groups: [
             {
@@ -1644,13 +1626,7 @@ const board = [
                 "fullname": "Sahar Machpud",
                 "imgUrl": "https://res.cloudinary.com/dpwmxprpp/image/upload/v1696367658/1642589384427_hywpod.jpg",
                 "username": "Sahar"
-            },
-            // {
-            //     "_id": 'guest',
-            //     "fullname": 'Guest',
-            //     "imgUrl": "https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg",
-            //     "username": 'Guest'
-            // }
+            }
         ],
         groups: [
             { id: utilService.makeId(), title: '', tasks: [], style: {} }

@@ -1,19 +1,22 @@
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { boardService } from "../../services/board.service.local";
 import { Checkbox } from "@mui/joy";
 import { additionTaskEdiSvg, additionTaskSvg, appHeaderSvg, checkList, taskSvg, workspaceSvg } from "../Svgs";
-import { useSelector } from "react-redux";
-import { useState } from "react";
-import { boardService } from "../../services/board.service.local";
-import { useRef } from "react";
-import { useEffect } from "react";
 
 export function TaskFilter({ setIsFiltersOpen, taskFilterBy, setTaskFilterby, checkboxContainer, handelCheckBox, setCheckboxContainer }) {
+
     const user = useSelector(storeState => storeState.userModule.user)
     const board = useSelector(storeState => storeState.boardModule.board)
+
     const [isOpenMemberSelect, setIsOpenMemberSelect] = useState(false)
     const [isLabelSelectOpen, setIsLabelSelectOpen] = useState(false)
+
     const firstLabels = board.labels.slice(0, 3)
+    const { txt } = taskFilterBy
 
     function getCheckBox(type, name, key) {
+
         return (
             <section className='checkbox no-labels'>
                 <Checkbox sx={{
@@ -40,21 +43,12 @@ export function TaskFilter({ setIsFiltersOpen, taskFilterBy, setTaskFilterby, ch
 
     function toggleFilterOptions(type, name, key) {
         let checkboxName = ''
-
-
         if (name) setTaskFilterby(prevFilter => ({ ...prevFilter, [type]: { ...prevFilter[type], [key]: !prevFilter[type][key] } }))
-
-
-        console.log('key:', key)
-        console.log('type:', type)
-        console.log('taskFilterBy[type][key]', taskFilterBy[type][key])
         switch (key) {
             case 'someMembers':
             case 'someLabel':
                 const someOptions = taskFilterBy[type][key]
                 if (someOptions.includes(name)) {
-                    console.log('if');
-                    // const updated = someOptions.filter(id => id !== name)
                     setTaskFilterby(prevFilter => ({ ...prevFilter, [type]: { ...prevFilter[type], [key]: (someOptions.filter(id => id !== name)) } }))
                 } else {
                     someOptions.push(name)
@@ -71,7 +65,7 @@ export function TaskFilter({ setIsFiltersOpen, taskFilterBy, setTaskFilterby, ch
         setCheckboxContainer([])
     }
 
-    const { txt } = taskFilterBy
+
     return (
         <div className="filter-container">
             <header>
@@ -218,19 +212,3 @@ export function TaskFilter({ setIsFiltersOpen, taskFilterBy, setTaskFilterby, ch
         </div>
     )
 }
-
-
-// switch (name) {
-//     case 'me':
-//     case 'all-members':
-//     case 'no-members':
-//     case 'no-label':
-//     case 'all-labels':
-//     case 'no-date':
-//     case 'overdue':
-//     case 'duesoon':
-//     case 'complete':
-//         setTaskFilterby(prevFilter => ({ ...prevFilter, [type]: { ...prevFilter[type], [key]: !prevFilter[type][key] } }))
-//         break;
-//     default:
-// }

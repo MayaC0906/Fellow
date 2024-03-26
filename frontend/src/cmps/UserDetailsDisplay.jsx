@@ -3,10 +3,9 @@ import { logout } from "../store/actions/user.actions"
 import { additionTaskSvg } from "./Svgs";
 
 
-export function UserDetailsDisplay({ user, setIsUserDetailOpen, isUserDetailOpen }) {
+export function UserDetailsDisplay({ user, setIsUserDetailOpen }) {
+
     const navigate = useNavigate()
-
-
 
     async function onLogOut() {
         try {

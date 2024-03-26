@@ -13,7 +13,7 @@ $a-h1-l: rgba(166, 197, 226, 0.16);
 $a-h2-l: rgba(255, 255, 255, 0.2);
 $a-h3-l: rgba(255, 255, 255, 0.3);
 $a-h4-l: rgba(255, 255, 255, 0.4);
-$a-h-txt-l:rgb(165, 194, 245);
+$a-h-txt-l: rgb(165, 194, 245);
 
 $a-h1-d: rgba(0, 0, 0, 0.2);
 $a-h2-d: rgba(0, 0, 0, 0.1);
@@ -48,15 +48,15 @@ $atc-bgc3: #091e4224;
 $atc-bgc4: #0052CC;
 $atc-bgc5: #0065FF;
 $atc-bgc6: #f7f8f9;
-$atc-bgc7:#a5a9a8;
-$atc-bgc9:#091e420f;
+$atc-bgc7: #a5a9a8;
+$atc-bgc9: #091e420f;
 $atc-bd1: #DFE1E6;
 $atc-bd2: #2684FF;
 
 //Cover
 $cvr-txt-1: #44546f;
-$cvr-bgc-1:#dcdfe4;
-$cvr-bgc-2:rgba(0, 0, 0, 0.5);
+$cvr-bgc-1: #dcdfe4;
+$cvr-bgc-2: rgba(0, 0, 0, 0.5);
 $cvr-bgc-3: rgba(0, 0, 0, 0.16);
 $cvr-bgc-4: #091e4224;
 $cvr-bd-1: #091e4224;
@@ -67,8 +67,8 @@ $dsh-txt2: rgb(34, 144, 34);
 $dsh-txt3: rgb(185, 33, 33);
 
 //Details
-$dtl-txt1:#42526e;
-$dtl-txt2:#172b4d;
+$dtl-txt1: #42526e;
+$dtl-txt2: #172b4d;
 $dtl-bgc1: rgba(0, 0, 0, 0.475);
 $dtl-bgc2: #091e4224;
 $dtl-bgc3: #a5a9a8;
@@ -114,13 +114,6 @@ $t-txt2: #5E6C84;
 $t-txt3: #748195;
 
 $t-pls-clr: #8791a3;
-
-
-
-
-
-
-
 
 // Breakpoints
 $mobile-breakpoint: 460px;

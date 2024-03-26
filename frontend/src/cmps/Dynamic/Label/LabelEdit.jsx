@@ -1,20 +1,21 @@
-import { useSelector } from 'react-redux'
-import { additionTaskSvg, taskSvg } from '../../Svgs'
-import { Checkbox } from '@mui/material'
 import { useEffect, useState } from 'react'
-import { Textarea } from '@mui/joy'
-import { updateBoard } from '../../../store/actions/board.actions'
+import { useSelector } from 'react-redux'
+
 import { AddLabel } from './AddLabel'
-import { useParams } from 'react-router'
+
+import { Checkbox } from '@mui/material'
+import { Textarea } from '@mui/joy'
+import { additionTaskSvg, taskSvg } from '../../Svgs'
 
 export function LabelEdit({ pos, editName, onCloseEditTask, onSaveTask, task }) {
+
     const board = useSelector(storeState => storeState.boardModule.board)
+
     const [labels, setLabels] = useState(board.labels)
     const [checkedLabelsStart, setCheckedLabelsStart] = useState(task.labelIds)
     const [isLabelEdit, setIsLabelEdit] = useState(false)
     const [labelToEdit, setLabelToEdit] = useState(null)
-    const { groupId } = useParams()
-    let groups = board.groups
+
 
     useEffect(() => {
         setLabels(board.labels)
@@ -39,7 +40,7 @@ export function LabelEdit({ pos, editName, onCloseEditTask, onSaveTask, task }) 
             onSaveTask(newTask)
             setCheckedLabelsStart(newTask.labelIds)
         } catch (err) {
-            console.log('Could not save label =>', err)
+            console.error('Could not save label =>', err)
         }
     }
 
@@ -59,7 +60,7 @@ export function LabelEdit({ pos, editName, onCloseEditTask, onSaveTask, task }) 
             await onSaveTask(newTask, txt)
             onAddLabel('')
         } catch (err) {
-            console.log('Cannot remove label', err)
+            console.error('Cannot remove label', err)
             throw err
         }
     }

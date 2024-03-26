@@ -1,14 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { taskService } from '../../services/task.service.local';
-import Button from '@mui/joy/Button';
 import { useSelector } from 'react-redux';
-import { showSuccessMsg } from '../../services/event-bus.service';
+
+import { taskService } from '../../services/task.service.local';
+import { utilService } from '../../services/util.service';
 import { updateBoard } from '../../store/actions/board.actions';
+
+import Button from '@mui/joy/Button';
 import { GroupMenu } from './GroupMenu';
 import { TaskList } from '../Task/TaskList';
 import { checkList, groupPreview } from '../Svgs';
 import { taskSvg } from '../Svgs';
-import { utilService } from '../../services/util.service';
 
 export function GroupPreview({
 	handleDrag,
@@ -26,55 +27,31 @@ export function GroupPreview({
 	onUpdateBoard,
 	setContainerClass
 }) {
-
-	// console.log('roup:', group.tasks);
+	const board = useSelector((storeState) => storeState.boardModule.board)
 
 	const taskListContainerRef = useRef(null)
+	const groupHeaderRef = useRef(null)
+	const inputRef = useRef(null);
+
+
 	const [isInputExpand, setInputExpand] = useState(false)
 	const [newTask, setNewTask] = useState(taskService.getEmptyTask())
-	const board = useSelector((storeState) => storeState.boardModule.board)
-	const groupHeaderRef = useRef(null)
 	const [groupMenuPosition, setGroupMenuPosition] = useState({ top: '', left: '' })
 	const user = useSelector((storeState) => storeState.userModule.user)
-	const [prevTaskCount, setPrevTaskCount] = useState(group.tasks.length)
-	const inputRef = useRef(null);
+
 	let { groups } = board
-
-	// useEffect(() => {
-	// 	if (taskListContainerRef.current && group.tasks.length > prevTaskCount) {
-	// 		taskListContainerRef.current.scrollTop = taskListContainerRef.current.scrollHeight;
-	// 	}
-	// 	setPrevTaskCount(group.tasks.length)
-	// }, [group.tasks.length])
-
-	function toggleGroupMenu(groupId) {
-		if (openMenuGroupId === groupId) {
-			setOpenMenuGroupId(null)
-		} else {
-			setOpenMenuGroupId(groupId)
-		}
-	}
-
-	function onScrollDown(event) {
-		// const taskListContainer = taskListContainerRef.current;
-		// const clickPosition = event.clientY;
-		// const containerTop = taskListContainer.getBoundingClientRect().top;
-		// const scrollToPosition = clickPosition  - containerTop - 50;
-
-		// taskListContainer.scrollTo({
-		//   top: scrollToPosition,
-		//   behavior: 'smooth' 
-		// });
-		taskListContainerRef.current.scrollTop = taskListContainerRef.current.scrollHeight
-
-	}
-
 
 	useEffect(() => {
 		if (openMenuGroupId !== null && groupHeaderRef.current) {
 			getBounds();
 		}
 	}, [openMenuGroupId]);
+
+	useEffect(() => {
+		if (isInputExpand && inputRef.current) {
+			inputRef.current.focus();
+		}
+	}, [isInputExpand]);
 
 	function getBounds() {
 		if (groupHeaderRef.current) {
@@ -86,6 +63,17 @@ export function GroupPreview({
 		}
 	}
 
+	function toggleGroupMenu(groupId) {
+		if (openMenuGroupId === groupId) {
+			setOpenMenuGroupId(null)
+		} else {
+			setOpenMenuGroupId(groupId)
+		}
+	}
+
+	function onScrollDown() {
+		taskListContainerRef.current.scrollTop = taskListContainerRef.current.scrollHeight
+	}
 
 	async function onSaveNewTask(ev) {
 		ev.preventDefault()
@@ -97,13 +85,12 @@ export function GroupPreview({
 		newTask.id = utilService.makeId()
 		groups[currGroup].tasks.push(newTask)
 		const boardToSave = { ...board, groups: board.groups }
-		console.log(boardToSave)
 		try {
 			await updateBoard(boardToSave, user, txt)
 			setNewTask(taskService.getEmptyTask())
 			setInputExpand(false)
 		} catch (err) {
-			console.log('failed to save new task', err)
+			console.error('failed to save new task', err)
 			throw err;
 		}
 	}
@@ -113,11 +100,6 @@ export function GroupPreview({
 		setNewTask((prevGroup) => ({ ...prevGroup, [field]: value }))
 	}
 
-	useEffect(() => {
-		if (isInputExpand && inputRef.current) {
-			inputRef.current.focus();
-		}
-	}, [isInputExpand]);
 	return (
 		<section className="group-preview">
 			<section className="header-wrapper">
@@ -128,7 +110,6 @@ export function GroupPreview({
 						id={group.id}
 						defaultValue={group.title}
 						onBlur={(event) => onEditGroup(group.id, event)}
-						// onKeyDown={(event) => onEditGroup(group.id, event)}
 						style={!group.isWatch ? { width: '83%' } : {}}
 					></input>
 					{group.isWatch && taskSvg.watch}

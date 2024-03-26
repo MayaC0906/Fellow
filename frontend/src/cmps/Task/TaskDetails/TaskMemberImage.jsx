@@ -1,6 +1,7 @@
 import { additionTaskSvg, taskSvg } from "../../Svgs";
 
 export function TaskMemberImage({ member, setIsMemberImageOpen, setMemberDetailOpen }) {
+
     const { fullname, imgUrl } = member
     return (
         <section className="edit-modal img">

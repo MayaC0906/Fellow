@@ -1,29 +1,32 @@
-import dayjs from "dayjs"
-import { loaderSvg, taskSvg } from "../Svgs"
-import { deleteTask, saveNewTask } from "../../store/actions/board.actions.js"
+import { useState, Fragment, useRef, useEffect } from "react";
 import { useNavigate, useParams } from "react-router"
-import { darken } from 'polished';
-import { useState, Fragment, useRef, useEffect, useLayoutEffect } from "react";
 import { Link } from "react-router-dom";
-import { TaskDetailsSideNav } from "./TaskDetailsSideNav";
 import { useSelector } from 'react-redux'
+import dayjs from "dayjs"
+import { darken } from 'polished';
+import { deleteTask, saveNewTask } from "../../store/actions/board.actions.js"
+import { TaskDetailsSideNav } from "./TaskDetailsSideNav";
+import { loaderSvg, taskSvg } from "../Svgs"
 
-export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels, taskMembers, taskChecklist, groupId, onScrollDown, tasks, setContainerClass }) {
-    const { dueDate } = task
-    const { boardId } = useParams()
-    let [editName, setEditName] = useState('')
+export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels, taskMembers, taskChecklist, groupId, onScrollDown, setContainerClass }) {
+
+    const board = useSelector((storeState) => storeState.boardModule.board)
+    const user = useSelector((storeState) => storeState.userModule.user)
+
+    const [editName, setEditName] = useState('')
     const [isQuickEdit, setIsQuickEdit] = useState(false)
-    const [ev, setEv] = useState(null)
-    let taskRef = useRef(null)
     const [quickEditPosition, setQuickEditPosition] = useState({ top: '', left: '' })
     const [screenWidth, setScreenWidth] = useState(window.innerWidth)
     const [rtl, setRtl] = useState(false)
+    const [ev, setEv] = useState(null)
+
     const navigate = useNavigate()
-    const board = useSelector((storeState) => storeState.boardModule.board)
-    const user = useSelector((storeState) => storeState.userModule.user)
+    let taskRef = useRef(null)
+    const { boardId } = useParams()
+    const { dueDate } = task
     let { groups } = board
 
-    useEffect (()=> {
+    useEffect(() => {
         if (isQuickEdit) setContainerClass('quick-edit')
         else setContainerClass('')
     }, [isQuickEdit])
@@ -38,7 +41,7 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
     }, [])
 
     function handleResize() {
-        setScreenWidth (window.innerWidth)
+        setScreenWidth(window.innerWidth)
     }
 
     function getBounds(ev) {
@@ -68,7 +71,6 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
 
     async function onCompleteDueDate(ev) {
         ev.preventDefault()
-        // dueDate.isComplete = !dueDate.isComplete
         const newTask = { ...task, dueDate: { ...task.dueDate, isComplete: !task.dueDate.isComplete } }
         try {
             onSaveTask(newTask)
@@ -78,11 +80,11 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
     }
 
     function onOpenQuickEdit(ev) {
-        if (screenWidth<580) {
+        if (screenWidth < 580) {
             navigate(`${groupId}/${task.id}`)
             return
-        } 
-       
+        }
+
         if (window.innerHeight - ev.clientY < taskRef.current.offsetHeight + 110) {
             onScrollDown(ev)
         }
@@ -116,6 +118,7 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
             console.log('cant save task');
         }
     }
+
     function onActionDeleteTask() {
         navigate(`/board/${boardId}`)
         onDeleteTask(task.id)
@@ -123,7 +126,7 @@ export function TaskPreview({ task, setIsLabelsShown, isLabelsShown, taskLabels,
 
     if (!task) return <div className="loader task-preview">{loaderSvg.loader}</div>
 
-    const defaultContent = <article ref={taskRef} key={task.id} className={"task "+ (isQuickEdit? 'quick-edit-task': '')}>
+    const defaultContent = <article ref={taskRef} key={task.id} className={"task " + (isQuickEdit ? 'quick-edit-task' : '')}>
         {!isQuickEdit && <button
             className="quick-edit-badge"
             onClick={(event) => { onOpenQuickEdit(event, task) }}>

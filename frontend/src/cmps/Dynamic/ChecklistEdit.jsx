@@ -1,16 +1,14 @@
-import { additionTaskSvg } from '../Svgs'
-import { Button } from '@mui/material';
-import { useParams } from "react-router";
-import { useSelector } from 'react-redux';
-import { useState, useEffect } from 'react';
-import { Textarea } from '@mui/joy';
-import { loadTask } from '../../store/actions/board.actions.js';
+import { useState } from 'react';
+
 import { taskService } from '../../services/task.service.local';
-export function ChecklistEdit({ pos, onSaveTask, onCloseEditTask, setTask, task }) {
+
+import { Textarea } from '@mui/joy';
+import { additionTaskSvg } from '../Svgs'
+
+export function ChecklistEdit({ pos, onSaveTask, onCloseEditTask, task }) {
+
     const [txt, setTxt] = useState('')
     const { checklists } = task
-
-
 
     function handleTextChange(event) {
         setTxt(event.target.value);
@@ -22,19 +20,18 @@ export function ChecklistEdit({ pos, onSaveTask, onCloseEditTask, setTask, task 
             const newList = taskService.getEmptyChecklist(txt)
             checklistsToSave.push(newList)
             const newTask = { ...task, checklists: checklistsToSave }
-            // setTask(newTask)
             const activityTxt = `added checklist ${newList.title} to "${task.title}".`
             onSaveTask(newTask, activityTxt)
             onCloseEditTask()
         } catch (err) {
-            console.log('cant save checklist', err);
+            console.error('cant save checklist', err);
             throw err
         }
     }
 
 
     return (
-        <section style={{top: pos.top, left: pos.left}} className="edit-modal slide-up">
+        <section style={{ top: pos.top, left: pos.left }} className="edit-modal slide-up">
             <div className="title-container">
                 <p>Add checklist</p>
                 <button onClick={onCloseEditTask} className="close-modal">{additionTaskSvg.close}</button>

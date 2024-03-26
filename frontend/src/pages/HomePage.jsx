@@ -1,39 +1,21 @@
 
 
 import React from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
+
+import { homePage } from '../cmps/Svgs'
+
 import { Textarea } from '@mui/joy'
 import { Button } from '@mui/joy'
-import { useState, useEffect } from 'react'
 import hero from '../assets/img/hero.png'
-// import hs1 from '../assets/img/hs1.png'
-// import hs2 from '../assets//img/hs2.png'
-import hs3 from '../assets//img/hs3.png'
-import { loadUsers, login } from '../store/actions/user.actions'
-// import logo from '../assets/img/logo.png'
-import { homePage } from '../cmps/Svgs'
-import { useSelector } from 'react-redux'
+
 export function HomePage() {
 
-    // const user = useSelector(storeState => storeState.userMoule.user)
     const hs1 = 'https://images.ctfassets.net/rz1oowkt5gyp/3N2U3C71rApm61cGFxnc2E/970b010002488a09a420282df5e7b43a/Carousel_Image_Boards_2x.png'
     const hs2 = 'https://images.ctfassets.net/rz1oowkt5gyp/3ZjLCD2fANfXYSN3ar9WpE/dc84a408c6a3ee89bee4a646ff6d5966/Lists_2x.png'
     const hs3 = 'https://images.ctfassets.net/rz1oowkt5gyp/26CA6JZeRgoOK4nuRHnIlY/060702a80cf7c3be3651d9297d196267/Carousel_Image_Cards_2x.png'
     const [img, setImg] = useState(hs1)
-    // const user = useSelector(storeState => storeState.userModule.user)
-    // useEffect(() => {
-    //     onLoadUsers()
-    // }, [])
-
-    // async function onLoadUsers() {
-    //     try {
-    //         await loadUsers()
-    //         console.log('home page');
-    //         if (!user) login({ username: 'Guest', password: '1234' })
-    //     } catch (err) {
-    //         console.log('Can not load users', err)
-    //     }
-    // }
 
     return (
         <section className='home-container'>
@@ -189,9 +171,7 @@ export function HomePage() {
                         <div className='footer-logo'>FELLOW</div>
                         <button className='clean-btn'>Log in</button>
                     </div>
-                    {/* <div</div> */}
                     <article>
-                        {/* <button className='clean-btn'></button> */}
                         <span>About Fellow</span>
                         <p>What's behind the boards</p>
                     </article>
@@ -222,8 +202,6 @@ export function HomePage() {
                     <div className='policies'>
                         <button className='clean-btn'>Privacy policy</button>
                         <button className='clean-btn'>Terms</button>
-                        {/* <button className='clean-btn'>Copy</button> */}
-                        {/* <article></article> */}
                         <span>&copy; 2023 Fellow</span>
                     </div>
                     <div className='social-links'>

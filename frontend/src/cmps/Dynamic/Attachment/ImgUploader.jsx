@@ -2,11 +2,13 @@ import { useState } from 'react'
 import { uploadService } from '../../../services/upload.service'
 
 export function ImgUploader({ onUploaded = null }) {
+
   const [imgData, setImgData] = useState({
     imgUrl: null,
     height: 500,
     width: 500,
   })
+
   const [isUploading, setIsUploading] = useState(false)
 
   async function uploadImg(ev) {

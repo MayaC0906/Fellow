@@ -1,34 +1,36 @@
 import React from 'react'
-import { useEffect, useState, useRef } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { useParams } from 'react-router-dom'
-import { showSuccessMsg, showErrorMsg } from '../../services/event-bus.service.js'
-import { boardService } from '../../services/board.service.local.js'
+import { useState, useRef } from 'react'
+import { useSelector } from 'react-redux'
+
 import { saveGroup, removeGroup } from '../../store/actions/board.actions.js'
 import { updateBoard } from '../../store/actions/board.actions.js'
-import Textarea from '@mui/joy/Textarea';
-import Button from '@mui/joy/Button';
+
+import { boardService } from '../../services/board.service.local.js'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+
 import { GroupPreview } from './GroupPreview.jsx'
-import { checkList } from '../Svgs.jsx'
 import { TaskFilter } from '../Task/TaskFilter.jsx'
-import { SOCKET_EMIT_UPDATE_BOARD, socketService } from '../../services/socket.service.js'
-import { store } from '../../store/store.js'
-import { getActionUpdateBoard } from '../../store/actions/board.actions.js'
-// import { async } from 'regenerator-runtime'
+
+import Button from '@mui/joy/Button';
+import { checkList } from '../Svgs.jsx'
+
 
 export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
+
+    const board = useSelector((storeState) => storeState.boardModule.board)
+    const user = useSelector((storeState) => storeState.userModule.user)
+
+    let groups = board?.groups
+
+    const addListInput = useRef(null)
     const [isInputExpand, setInputExpand] = useState(false)
     const [newGroup, setNewGroup] = useState(boardService.getEmptyGroup())
-    const board = useSelector((storeState) => storeState.boardModule.board)
-    let groups = board?.groups
     const [isLabelsShown, setIsLabelsShown] = useState(false)
     const [openMenuGroupId, setOpenMenuGroupId] = useState(null);
-    const addListInput = useRef(null)
-    const user = useSelector((storeState) => storeState.userModule.user)
     const [taskFilterBy, setTaskFilterby] = useState(boardService.getEmptyFilter())
     const [checkboxContainer, setCheckboxContainer] = useState([])
     const [containerClass, setContainerClass] = useState('')
+
     const filteredGroups = onFilterGroups(taskFilterBy)
 
     function onFilterGroups(filterBy) {
@@ -106,9 +108,8 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
             if (addListInput.current) {
                 addListInput.current.focus();
             }
-            // await saveGroup(group, boardId, currUser, txt);
         } catch (err) {
-            console.log('Failed to save new group', err)
+            console.error('Failed to save new group', err)
         }
     }
 
@@ -118,7 +119,7 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
         try {
             await saveGroup(groupToSave, board._id)
         } catch (err) {
-            console.log(err);
+            console.error('Failed to edit group', err);
             throw err
         }
     }
@@ -127,7 +128,7 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
         try {
             await saveGroup(group, board._id)
         } catch (err) {
-            console.log('cant sort group', err);
+            console.error('Failed to update group', err);
             throw err
         }
     }
@@ -135,9 +136,8 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
     async function onUpdateBoard(board) {
         try {
             await updateBoard(board)
-            console.log('on pdate board');
         } catch (err) {
-            console.log('cant update board from group list', err);
+            console.error('Failed to update board', err);
             throw err
         }
     }
@@ -148,14 +148,11 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
     }
 
     async function onRemoveGroup(group) {
-        console.log(group);
         try {
-            // await saveGroup(newGroup, board._id, user, txt)
             const txt = `deleted a group titled "${group.title}".`;
             await removeGroup(group, board._id, user, txt)
-            // socketService.emit(SOCKET_EMIT_UPDATE_BOARD, board)
         } catch (err) {
-            console.log('Failed to remove group', err)
+            console.error('Failed to remove group', err);
         }
     }
 
@@ -166,7 +163,7 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
             const txt = `duplicated group "${group.title}"`
             await saveGroup(duplicatedGroup, board._id, user, txt)
         } catch (err) {
-            console.log('Failed to duplicate group', err)
+            console.error('Failed to duplicate group', err)
             throw err
         }
     }
@@ -228,7 +225,6 @@ export function GroupList({ setIsFiltersOpen, isFiltersOpen }) {
                             {...provided.droppableProps}
                             ref={provided.innerRef}
                         >
-                            {/* {board?.groups?.map((group, idx) => ( */}
                             {filteredGroups.map((group, idx) => (
                                 <Draggable
                                     draggableId={group.id}

@@ -1,21 +1,24 @@
 import { useState } from 'react'
-
-import { boardMenu, checkList } from "../Svgs"
 import { useSelector } from 'react-redux'
+import { useNavigate, useParams } from 'react-router'
+
+import { removeBoard } from '../../store/actions/board.actions'
+
 import { AboutBoard } from './AboutBoard'
 import { BoardChangeBgc } from './BoardChangeBgc'
-import { groupMenu } from '../Svgs'
 import { BoardActivity } from './BoardActivity'
-import { useNavigate, useParams } from 'react-router'
-import { removeBoard } from '../../store/actions/board.actions'
-// import { MusicModal } from './MusicModal'
+
+import { boardMenu, checkList, groupMenu } from "../Svgs"
 
 export function BoardMenu({ setMenu, isMenuOpen }) {
+
     const board = useSelector((storeState) => storeState.boardModule.board)
-    const [currentContent, setCurrentContent] = useState('default')
-    const [title, setTitle] = useState('Menu')
     const { boardId } = useParams()
     const navigate = useNavigate()
+
+    const [currentContent, setCurrentContent] = useState('default')
+    const [title, setTitle] = useState('Menu')
+
     const contentTitleMap = {
         aboutBoard: "About Board",
         changeBgc: "Change Background",
@@ -33,7 +36,7 @@ export function BoardMenu({ setMenu, isMenuOpen }) {
             await removeBoard(boardId)
             navigate('/workspace')
         } catch (err) {
-            console.log('Could not delete board')
+            console.error('Could not delete board', err)
         }
 
     }
@@ -68,7 +71,6 @@ export function BoardMenu({ setMenu, isMenuOpen }) {
                             <p className="nav-item" onClick={deleteBoard}>Delete board</p>
                         </section>
                         <section>
-                            {/* <MusicModal /> */}
                         </section>
                     </section>
                 )
@@ -91,7 +93,6 @@ export function BoardMenu({ setMenu, isMenuOpen }) {
                     </header>
                     <hr className="divider" />
                     {renderContent()}
-
                 </div>
             </div>
         </div>

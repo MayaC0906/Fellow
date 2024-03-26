@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Search } from '@mui/icons-material';
-import { async } from 'regenerator-runtime';
-import { margin } from 'polished';
 
 export function MusicModal() {
+
     const [videoId, setVideoId] = useState('dmUGuJf-cgg')
     const [player, setPlayer] = useState(null);
     const [searchTerm, setSearchTerm] = useState('')
@@ -16,7 +14,6 @@ export function MusicModal() {
         thumbnail: 'https://i.ytimg.com/vi/dmUGuJf-cgg/default.jpg',
     });
 
-    console.log(currentSong, videoId, 'from here')
     useEffect(() => {
         if (window.YT && window.YT.Player) {
             createPlayer();
@@ -35,7 +32,6 @@ export function MusicModal() {
 
 
     function createPlayer() {
-        console.log('created')
         setPlayer(new window.YT.Player('videoPlayer', {
             height: '190',
             width: '140',
@@ -45,11 +41,9 @@ export function MusicModal() {
                 onReady: onPlayerReady,
             },
         }))
-        console.log(player)
     }
 
     function onPlayerReady(event) {
-        console.log('Player is ready', event.target)
         setIsPlayerReady(true);
         event.target.cueVideoById(videoId)
     }
@@ -92,7 +86,6 @@ export function MusicModal() {
 
     function playVideo() {
         if (player && isPlayerReady) {
-            console.log('Playing video')
             player.playVideo()
             setIsPlaying(true)
 
@@ -103,7 +96,6 @@ export function MusicModal() {
 
 
     function pauseVideo() {
-
         player.pauseVideo()
         setIsPlaying(false)
     }
@@ -131,7 +123,6 @@ export function MusicModal() {
             <div className="ios-modal-header">
                 <div style={{ display: 'none' }} id="videoPlayer"></div>
                 <span>Music Player</span>
-                {/* <span className="close" onClick={onClose}>&times;</span> */}
             </div>
             <form style={{ width: '0px', margin: '0px' }} onSubmit={handleSearch} className="search-form">
                 <input style={{ height: '30px' }} type="text" placeholder="Search for a song" value={searchTerm} onChange={handleSearchChange} />

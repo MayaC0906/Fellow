@@ -1,4 +1,4 @@
-export function ProductivitySection(){
+export function ProductivitySection() {
     return (
         <section className="productivity">
             <h3>TRELLO 101</h3>

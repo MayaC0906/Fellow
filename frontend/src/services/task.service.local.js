@@ -1,6 +1,6 @@
 import { boardService } from "./board.service.js"
-// import { boardService } from "./board.service.local.js" //local 
 import { utilService } from "./util.service"
+
 export const taskService = {
     getById,
     saveTask,
@@ -16,7 +16,7 @@ async function getById(boardId, groupId, taskId) {
         const task = group.tasks.find(task => task.id === taskId)
         return task
     } catch (err) {
-        console.log('couldn\'t get task', err);
+        console.error('couldn\'t get task', err);
         throw err
     }
 }
@@ -24,7 +24,6 @@ async function getById(boardId, groupId, taskId) {
 async function saveTask(boardId, groupId, newTask, user, txt) {
     try {
         let group = await boardService.getGroupById(groupId, boardId)
-        console.log('group:', group)
         if (newTask.id) {
             const taskIdx = group.tasks.findIndex(task => task.id === newTask.id)
             group.tasks[taskIdx] = newTask
@@ -34,7 +33,7 @@ async function saveTask(boardId, groupId, newTask, user, txt) {
         }
         return await boardService.saveGroup(group, boardId, user, txt, newTask)
     } catch (err) {
-        console.log('couldn\'t save task', err);
+        console.error('couldn\'t save task', err);
         throw err
     }
 }
@@ -47,7 +46,7 @@ async function deleteTask(boardId, groupId, taskId) {
 
         return await boardService.saveGroup(group, boardId)
     } catch (err) {
-        console.log('couldn\'t delete task', err);
+        console.error('couldn\'t delete task', err);
         throw err
     }
 }

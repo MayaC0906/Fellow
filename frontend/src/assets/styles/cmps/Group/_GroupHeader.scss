@@ -1,7 +1,7 @@
 .group-header {
     position: sticky;
     top: 0;
-    z-index: 40; // Ensures the header is above other content.
+    z-index: 40;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -53,7 +53,6 @@
         }
 
         button {
-            width: 32px;
             justify-content: center;
             margin-block-end: 2px;
 
@@ -98,7 +97,6 @@
         border: none;
         font-size: rem(14px);
         border-radius: 3px;
-        height: 32px;
         font-family: inherit;
 
         &:hover {
@@ -254,10 +252,12 @@
                     white-space: wrap;
                 }
             }
+
             button {
                 svg {
                     height: 32px;
                     width: 32px;
+
                     path {
                         height: 32px;
                         width: 32px;

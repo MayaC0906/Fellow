@@ -1,5 +1,5 @@
-.signup{
-        
+.signup {
+
     height: 260px;
     background: url(https://images.ctfassets.net/rz1oowkt5gyp/6Q4l8SJeMZGSu1m6W9vAjL/1021a10f6940ce44c50d0ffaefec223e/BigSwingFooterHeroGraphic__Left.svg) left center / contain no-repeat scroll padding-box border-box, url(https://images.ctfassets.net/rz1oowkt5gyp/7KsuX6srvRqJVzeAIdIzIb/da1a3319c278d251ecbd078fcffdcd23/BigSwingFooterHeroGraphic__Right.svg) right center / contain no-repeat scroll padding-box border-box, linear-gradient(60deg, rgb(82, 67, 170), rgb(237, 80, 180)) 0% 0% / auto repeat scroll padding-box border-box rgb(82, 67, 170);
     background-blend-mode: normal, normal, normal;
@@ -8,14 +8,12 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    form{
+
+    form {
         display: flex;
         gap: 20px;
         height: 70px;
         justify-content: center;
         align-items: center;
-        // input{
-        //     width: 200px;
-        // }
     }
-}    
+}

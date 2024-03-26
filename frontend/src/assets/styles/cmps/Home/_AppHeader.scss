@@ -229,7 +229,6 @@
             }
 
             &.open {
-                // width: 780px;
                 border: 1px solid rgba(0, 0, 255, 0.817);
                 background-color: white;
 
@@ -239,7 +238,6 @@
 
                 input {
                     color: rgb(105, 105, 105);
-                    // width: 745px;
                     border: none;
 
                     &::placeholder {
@@ -275,24 +273,18 @@
 
         .user-info {
             border-radius: 50%;
-            height: 32px;
-            width: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
-
+            width: 100%; 
+            aspect-ratio: 1 / 1;
             img,
             svg {
-                height: 32px;
-                width: 32px;
+                height: 24px;
+                width: 24px;
                 border-radius: 50%;
                 object-fit: cover;
-                path {          
-                    height: 32px;
-                    width: 32px;
-                }
-
             }
         }
     }
@@ -348,6 +340,4 @@
             text-decoration: none;
         }
     }
-
-    
 }

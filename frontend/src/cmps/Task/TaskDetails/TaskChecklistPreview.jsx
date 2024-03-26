@@ -1,12 +1,17 @@
 import * as React from 'react'
-import Checkbox from '@mui/material/Checkbox'
 import { useState, useEffect } from 'react'
+
+import { taskService } from '../../../services/task.service.local'
+
+import Checkbox from '@mui/material/Checkbox'
 import Textarea from '@mui/joy/Textarea'
 import Button from '@mui/joy/Button'
+
 import { checkedSvg } from '../../Svgs'
-import { taskService } from '../../../services/task.service.local'
 import { checkList } from '../../Svgs'
+
 export function TaskChecklistPreview({ onDeleteList, onAddTodo, onUpdateListTitle, onDeleteTodo, checklists, onToggleDoneTodo, onUpdateTodoTitle }) {
+
     const [localChecklists, setLocalChecklists] = useState(checklists)
     const [expandedTodo, setExpandedTodo] = useState({ listId: null, todoId: null })
     const [expandedListId, setExpandedListId] = useState(null)
@@ -19,7 +24,6 @@ export function TaskChecklistPreview({ onDeleteList, onAddTodo, onUpdateListTitl
         setLocalChecklists(checklists)
         calculateDoneTodos(checklists)
     }, [checklists]);
-
 
     async function handleToggle(listId, todoId, isDone, ev) {
         ev.stopPropagation();
@@ -100,7 +104,7 @@ export function TaskChecklistPreview({ onDeleteList, onAddTodo, onUpdateListTitl
             await onDeleteList(listId)
             calculateDoneTodos(checklists)
         } catch (err) {
-            console.log('cant delete list');
+            console.error('cant delete list');
             throw err
         }
     }
