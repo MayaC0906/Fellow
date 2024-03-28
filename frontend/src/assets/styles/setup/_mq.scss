@@ -89,9 +89,13 @@
     .group-list-container {
         .filter-container {
             width: 100%;
-            bottom: 0;
-            right: 0;
-            animation: slideUp 0.2s ease-in;
+            overflow-y: scroll;
+            animation: slideUp 0.4s ease-in;
+            position: fixed;
+            top: calc(50% + 65px);
+            left: calc(50% + 15px);
+            transform: translate(-50%, -50%);
+
             .members {
                 .member-select-display {
                     width: 100%;
@@ -447,14 +451,18 @@
     .slide-up {
         animation: slideUp 0.2s ease-in;
     }
-
     @keyframes slideUp {
-        from {
-            transform: translateY(100%);
-        }
-
-        to {
-            transform: translateY(0);
-        }
+        0% {
+            transform: translateY(100%) translateX(-50%);
+            opacity: 0;
+          }
+          50% {
+            transform: translateY(-50%) translateX(-50%);
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(-50%) translateX(-50%);
+            opacity: 1;
+          }
     }
 }
